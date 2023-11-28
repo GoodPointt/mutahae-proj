@@ -47,7 +47,7 @@ export const SkeletonProductItem = () => {
 
 const SkeletonProductsGrid = () => {
   return (
-    <SectionWrapper isHeading>
+    <SectionWrapper>
       <Grid
         as={'ul'}
         maxW={'100%'}

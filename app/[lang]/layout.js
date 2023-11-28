@@ -20,7 +20,7 @@ export async function generateStaticParams() {
 
 export default function RootLayout({ children, params }) {
   return (
-    <html lang={params.lang}>
+    <html lang={params.lang} dir={params.lang === 'he' ? 'rtl' : 'ltr'}>
       <link
         rel="icon"
         href="/icon?<generated>"
