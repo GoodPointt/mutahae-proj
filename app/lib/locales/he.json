@@ -1,0 +1,27 @@
+{
+  "page": {
+    "home": {
+      "title": "כותרת הבדיקה"
+    }
+  },
+  "header": {
+    "navItems": [
+      {
+        "title": "קָטָלוֹג",
+        "path": "/catalog"
+      },
+      {
+        "title": "על אודות",
+        "path": "/about"
+      },
+      {
+        "title": "ביקורות",
+        "path": "/reviews"
+      },
+      {
+        "title": "איש קשר",
+        "path": "/contact"
+      }
+    ]
+  }
+}

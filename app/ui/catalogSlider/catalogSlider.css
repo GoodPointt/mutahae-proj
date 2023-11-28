@@ -1,0 +1,63 @@
+.mySwiper2 {
+  /* height: 80%; */
+  width: 100%;
+}
+
+.mySwiper {
+  height: 20%;
+  box-sizing: border-box;
+  padding: 10px 0;
+}
+
+.mySwiper .swiper-slide {
+  width: 25%;
+  height: 100%;
+  opacity: 0.9;
+}
+
+.mySwiper .swiper-slide-thumb-active {
+  opacity: 1;
+}
+
+.mySwiper2 .swiper-button-prev,
+.mySwiper2 .swiper-button-next {
+  color: rgba(255, 255, 255, 0.666);
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  color: rgba(82, 174, 165, 0.5);
+  transition: all ease-in-out 500ms;
+}
+.mySwiper2 .swiper-button-prev:hover,
+.mySwiper2 .swiper-button-next:hover {
+  color: #fefefe;
+}
+
+.mySwiper2 .swiper-slide {
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.mySwiper2 {
+  border-radius: 10px;
+}
+
+.mySwiper2 .swiper-slide.swiper-slide-active .news_card {
+  @media (max-width: 1199px) {
+    transform: scale(1.05);
+    transition: all 1000ms, filter 1000ms ease-in-out;
+    filter: brightness(100%);
+  }
+}
+.mySwiper2 .swiper-slide.swiper-slide-next .news_card {
+  @media (min-width: 768px) and (max-width: 1199px) {
+    transform: scale(1.05);
+    transition: all 1000ms, filter 1000ms ease-in-out;
+    filter: brightness(100%);
+  }
+}
+
+.mySwiper2 .swiper-wrapper {
+  z-index: -1;
+}

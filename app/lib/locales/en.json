@@ -1,0 +1,27 @@
+{
+  "page": {
+    "home": {
+      "title": "TEST HEADING"
+    }
+  },
+  "header": {
+    "navItems": [
+      {
+        "title": "Catalog",
+        "path": "/catalog"
+      },
+      {
+        "title": "About",
+        "path": "/about"
+      },
+      {
+        "title": "Reviews",
+        "path": "/reviews"
+      },
+      {
+        "title": "Contact",
+        "path": "/contact"
+      }
+    ]
+  }
+}
