@@ -4,6 +4,9 @@
       "title": "TEST HEADING"
     }
   },
+  "buttons": {
+    "view": "View"
+  },
   "header": {
     "navItems": [
       {
