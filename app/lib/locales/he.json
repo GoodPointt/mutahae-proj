@@ -4,6 +4,9 @@
       "title": "כותרת הבדיקה"
     }
   },
+  "buttons": {
+    "view": "נוף"
+  },
   "header": {
     "navItems": [
       {

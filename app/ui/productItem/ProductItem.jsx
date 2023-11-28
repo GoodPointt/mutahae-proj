@@ -1,7 +1,11 @@
+// import { getDictionary } from '@/app/lib/locales/dictionary';
 import { Box, Button, Heading } from '@chakra-ui/react';
 import Link from 'next/link';
 
-const ProductItem = ({ product }) => {
+const ProductItem = async ({ product }) => {
+  // const {
+  //   buttons: { view },
+  // } = await getDictionary(lang);
   return (
     <Box
       as={'li'}
@@ -29,7 +33,6 @@ const ProductItem = ({ product }) => {
           height="360px"
           transition="all 500ms cubic-bezier(0.4, 0, 0.2, 1)"
           as="div"
-          // bgImage={`url(https://res.cloudinary.com/cloud7ty/image/upload/v1698673576/photo1696837626_ddc90a495d.jpg)`}
           bgImage={`url(${product.img})`}
           bgRepeat={'no-repeat'}
           bgPos={'center'}
@@ -50,11 +53,12 @@ const ProductItem = ({ product }) => {
           width={'100%'}
           height={'100%'}
           display={'flex'}
-          justifyContent={'space-between'}
+          justifyContent={'flex-end'}
           flexDir={'column'}
           pt={'16px'}
+          gap={4}
         >
-          <Heading color={'#fff'} fontSize={'24'} textAlign={'left'} mx={10}>
+          <Heading color={'#fff'} fontSize={'24'} textAlign={'left'} mx={4}>
             {product.title}
           </Heading>
 
