@@ -15,7 +15,7 @@ const CatalogPage = async ({ params: { lang } }) => {
   // );
 
   return (
-    <SectionWrapper isHeading>
+    <SectionWrapper>
       <Suspense fallback={<SkeletonProductsGrid />}>
         <Grid
           as={'ul'}
