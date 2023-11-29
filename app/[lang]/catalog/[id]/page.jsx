@@ -1,15 +1,11 @@
-import { getDictionary } from '@/app/lib/locales/dictionary';
-import React from 'react';
+import { fetchOneProduct } from '@/app/lib/api/instance';
+import SingleProduct from '@/app/ui/singleProduct/SingleProduct';
 
 const SingleProductPage = async ({ params: { id, lang } }) => {
-  const { page } = await getDictionary(lang);
-  // const product = await fetchProduct(id);
-  return (
-    <div>
-      <h1>{page.home.title}</h1>
-      SingleProductPgae
-    </div>
-  );
+  const { data } = await fetchOneProduct(id, lang);
+  const { attributes } = data[0];
+
+  return <SingleProduct product={attributes} />;
 };
 
 export default SingleProductPage;
