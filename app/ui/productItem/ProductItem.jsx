@@ -1,15 +1,11 @@
-// import { getDictionary } from '@/app/lib/locales/dictionary';
-import { Box, Button, Heading } from '@chakra-ui/react';
+import { Box, Button, Heading, Text } from '@chakra-ui/react';
 import Link from 'next/link';
 
-const ProductItem = async ({ product }) => {
-  // const {
-  //   buttons: { view },
-  // } = await getDictionary(lang);
+const ProductItem = async ({ product, lang }) => {
   return (
     <Box
       as={'li'}
-      key={product.id}
+      key={product.uid}
       shadow={'dark-lg'}
       position={'relative'}
       borderRadius={'10px'}
@@ -22,7 +18,7 @@ const ProductItem = async ({ product }) => {
         },
       }}
     >
-      <Link href={`/catalog/${product.id}`}>
+      <Link href={`/${lang}/catalog/${product.uid}`}>
         <Box
           borderRadius={'10px'}
           className="news_card"
@@ -33,7 +29,7 @@ const ProductItem = async ({ product }) => {
           height="360px"
           transition="all 500ms cubic-bezier(0.4, 0, 0.2, 1)"
           as="div"
-          bgImage={`url(${product.img})`}
+          bgImage={`url(${product.imgUrl})`}
           bgRepeat={'no-repeat'}
           bgPos={'center'}
           bgSize={'cover'}
@@ -58,9 +54,13 @@ const ProductItem = async ({ product }) => {
           pt={'16px'}
           gap={4}
         >
-          <Heading color={'#fff'} fontSize={'24'} textAlign={'left'} mx={4}>
+          <Heading color={'#fff'} fontSize={'24'} mx={4}>
             {product.title}
           </Heading>
+
+          <Text color={'#fff'} fontSize={'14'} mx={4}>
+            {product.descShort}
+          </Text>
 
           <Button
             variant={'solid'}
@@ -70,7 +70,7 @@ const ProductItem = async ({ product }) => {
             _hover={{ bgColor: '#81672e' }}
             borderTopRadius={0}
           >
-            View
+            {product.button}
           </Button>
         </Box>
       </Link>
