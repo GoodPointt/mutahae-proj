@@ -1,5 +1,3 @@
-'use client';
-
 import { Box, Container } from '@chakra-ui/react';
 
 const SectionWrapper = ({ children, bg = 'transparent', as = 'section' }) => {
