@@ -1,14 +1,17 @@
-import { Box, Container } from '@chakra-ui/react';
+import { Box, Container } from "@chakra-ui/react";
 
-const SectionWrapper = ({ children, bg = 'transparent', as = 'section' }) => {
+const SectionWrapper = ({ children, bg = "transparent", as = "section" }) => {
   return (
     <Box
       as={as}
       bg={bg}
-      py={{ base: '30px', lg: '50px', xl: '70px' }}
-      pt={'75px'}
+      py={{ base: "30px", lg: "50px", xl: "70px" }}
+      pt={"75px"}
+      bgRepeat={"no-repeat"}
+      bgPos={"center"}
+      bgSize={"cover"}
     >
-      <Container maxW={{ base: '744px', lg: '1000px', xl: '1176px' }} px="12px">
+      <Container maxW={{ base: "744px", lg: "1000px", xl: "1176px" }} px="12px">
         {children}
       </Container>
     </Box>

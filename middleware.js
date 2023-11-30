@@ -1,9 +1,10 @@
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
 
-import { i18n } from './i18n.config';
+import { i18n } from "./i18n.config";
 
-import { match as matchLocale } from '@formatjs/intl-localematcher';
-import Negotiator from 'negotiator';
+import { match as matchLocale } from "@formatjs/intl-localematcher";
+import Negotiator from "negotiator";
+import { cookies } from "next/headers";
 
 function getLocale(request) {
   const negotiatorHeaders = {};
@@ -22,31 +23,30 @@ function getLocale(request) {
 
 export function middleware(request) {
   const pathname = request.nextUrl.pathname;
-
   if (
     [
       // LOGOS
-      '/icon.png',
-      '/logo-small.png',
-      '/logo.png',
-      '/manifest.json',
-      '/product.png',
+      "/icon.png",
+      "/logo-small.png",
+      "/logo.png",
+      "/manifest.json",
+      "/product.png",
       //BGS
-      '/hero-bg.jpg',
-      '/about-background.jpg',
-      '/crooked-line.png',
-      '/reviews-background.jpg',
+      "/hero-bg.jpg",
+      "/about-background.jpg",
+      "/crooked-line.png",
+      "/reviews-background.jpg",
       //TEAM
-      '/team-sam.jpg',
-      '/team-simon.jpg',
-      '/team-tamara.jpg',
+      "/team-sam.jpg",
+      "/team-simon.jpg",
+      "/team-tamara.jpg",
       //PRODUCTS
-      '/mdp.jpg',
-      '/melamine.jpg',
-      '/oak.jpg',
-      '/pine.jpg',
-      '/plywood.jpg',
-      '/veneer.jpg',
+      "/mdp.jpg",
+      "/melamine.jpg",
+      "/oak.jpg",
+      "/pine.jpg",
+      "/plywood.jpg",
+      "/veneer.jpg",
     ].includes(pathname)
   )
     return;
@@ -60,7 +60,7 @@ export function middleware(request) {
 
     return NextResponse.redirect(
       new URL(
-        `/${locale}${pathname.startsWith('/') ? '' : '/'}${pathname}`,
+        `/${locale}${pathname.startsWith("/") ? "" : "/"}${pathname}`,
         request.url
       )
     );
@@ -68,5 +68,5 @@ export function middleware(request) {
 }
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image).*)'],
+  matcher: ["/((?!api|_next/static|_next/image).*)"],
 };

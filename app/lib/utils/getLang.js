@@ -1,10 +1,6 @@
-import { headers } from 'next/headers';
-
+import { cookies } from "next/headers";
 const getLang = () => {
-  const heads = headers();
-  const pathname = heads.get('next-url');
-  if (!pathname) return;
-  return pathname.split('/')[1];
+  return cookies().get("lang").value;
 };
 
 export default getLang;
