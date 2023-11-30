@@ -21,12 +21,12 @@ const SingleProduct = ({
 
   return (
     <SectionWrapper>
-      <Flex flexDir={isLargerThan480 ? 'row' : 'column'} gap={4}>
+      <Flex flexWrap={'wrap'} gap={4}>
         <Box
           display={'block'}
           pos={'relative'}
-          w={'320px'}
-          height={'auto'}
+          w={'400px'}
+          h={'380px'}
           overflow={'hidden'}
           borderRadius={'10px'}
         >
@@ -37,7 +37,7 @@ const SingleProduct = ({
             style={{
               display: 'block',
               height: '100%',
-              width: '100%',
+              maxWidth: '100%',
               objectFit: 'cover',
             }}
           />

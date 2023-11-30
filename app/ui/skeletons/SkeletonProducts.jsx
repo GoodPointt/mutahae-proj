@@ -1,5 +1,7 @@
 import { Box, Grid, Skeleton, SkeletonText } from '@chakra-ui/react';
 import SectionWrapper from '../sectionWrapper/SectionWrapper';
+import getLang from '@/app/lib/utils/getLang';
+import { getDictionary } from '@/app/lib/locales/dictionary';
 
 export const SkeletonProductItem = () => {
   return (
@@ -45,9 +47,13 @@ export const SkeletonProductItem = () => {
   );
 };
 
-const SkeletonProductsGrid = () => {
+const SkeletonProductsGrid = async () => {
+  const lang = getLang();
+  const {
+    header: { navItems },
+  } = await getDictionary(lang);
   return (
-    <SectionWrapper>
+    <SectionWrapper heading={navItems[0].title}>
       <Grid
         as={'ul'}
         maxW={'100%'}

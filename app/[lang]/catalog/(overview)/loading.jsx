@@ -1,8 +1,8 @@
 import SkeletonProductsGrid from '@/app/ui/skeletons/SkeletonProducts';
 import React from 'react';
 
-const Loading = () => {
+const LoadingCatalog = () => {
   return <SkeletonProductsGrid />;
 };
 
-export default Loading;
+export default LoadingCatalog;

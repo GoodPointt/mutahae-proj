@@ -5,12 +5,16 @@ import ProductItem from '@/app/ui/productItem/ProductItem';
 import { Suspense } from 'react';
 import SkeletonProductsGrid from '@/app/ui/skeletons/SkeletonProducts';
 import { fetchProducts } from '@/app/lib/api/instance';
+import { getDictionary } from '@/app/lib/locales/dictionary';
 
 const CatalogPage = async ({ params: { lang } }) => {
   const { data } = await fetchProducts(lang);
+  const {
+    header: { navItems },
+  } = await getDictionary(lang);
 
   return (
-    <SectionWrapper>
+    <SectionWrapper heading={navItems[0].title}>
       <Suspense fallback={<SkeletonProductsGrid />}>
         <Grid
           as={'ul'}
