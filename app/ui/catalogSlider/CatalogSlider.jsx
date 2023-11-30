@@ -12,16 +12,9 @@ import { Heading } from '@chakra-ui/react';
 import SectionWrapper from '@/app/ui/sectionWrapper/SectionWrapper';
 import ProductItem from '@/app/ui/productItem/ProductItem';
 
-const CatalogSlider = ({ products, lang }) => {
+const CatalogSlider = ({ products, lang, heading }) => {
   return (
-    <SectionWrapper>
-      <Heading
-        mb={{ base: '32px', lg: '72px' }}
-        fontSize={{ base: '2xl', lg: '4xl' }}
-        fontWeight="900"
-      >
-        Catalog
-      </Heading>
+    <SectionWrapper heading={heading}>
       <Swiper
         className="mySwiper2"
         navigation
