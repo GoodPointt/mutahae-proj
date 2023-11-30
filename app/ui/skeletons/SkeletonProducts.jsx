@@ -24,7 +24,7 @@ export const SkeletonProductItem = () => {
         bgRepeat={'no-repeat'}
         bgPos={'center'}
         bgSize={'cover'}
-      ></Skeleton>
+      />
       <Box
         borderRadius={'10px'}
         as="div"
@@ -40,7 +40,8 @@ export const SkeletonProductItem = () => {
         pt={'16px'}
         gap={4}
       >
-        <SkeletonText mx={4} skeletonHeight="6" noOfLines={1} w={'50%'} />
+        <SkeletonText mx={4} skeletonHeight="6" noOfLines={1} w={'40%'} />
+        <SkeletonText mx={4} skeletonHeight="3" noOfLines={1} w={'70%'} />
         <Skeleton startColor="#a28445;" endColor="gray.400" h={10} />
       </Box>
     </Box>
