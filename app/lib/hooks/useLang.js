@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { usePathname } from 'next/navigation';
+import { usePathname } from "next/navigation";
 
-const useLang = () => {
+export const useLang = () => {
   const pathname = usePathname();
-  return pathname.split('/')[1];
+  return pathname.split("/")[1];
 };
 
 export default useLang;
