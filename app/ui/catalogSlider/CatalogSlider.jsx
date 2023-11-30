@@ -8,7 +8,6 @@ import 'swiper/css/thumbs';
 import './catalogSlider.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
-import { Heading } from '@chakra-ui/react';
 import SectionWrapper from '@/app/ui/sectionWrapper/SectionWrapper';
 import ProductItem from '@/app/ui/productItem/ProductItem';
 
