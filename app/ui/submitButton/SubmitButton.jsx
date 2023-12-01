@@ -1,10 +1,10 @@
-import { Button } from "@chakra-ui/react";
-import { useFormStatus } from "react-dom";
+import { Button } from '@chakra-ui/react';
+import { useFormStatus } from 'react-dom';
 
 const SubmitButton = ({
   children,
-  variant = "solid",
-  bgColor = "transparent",
+  variant = 'solid',
+  bgColor = 'transparent',
 }) => {
   const { pending } = useFormStatus();
 
@@ -12,9 +12,9 @@ const SubmitButton = ({
     <Button
       variant={variant}
       bgColor={bgColor}
-      color={"white"}
-      transition={"all 0.3s"}
-      _hover={{ bgColor: "#81672e" }}
+      color={'white'}
+      transition={'all 0.3s'}
+      _hover={{ bgColor: '#81672e' }}
       type="submit"
       isLoading={pending}
       isDisabled={pending}

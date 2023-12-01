@@ -1,8 +1,18 @@
 'use client';
 
-import { Box, Flex, Heading, Text, useMediaQuery } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  Heading,
+  Input,
+  Text,
+  useDisclosure,
+} from '@chakra-ui/react';
 import Image from 'next/image';
 import SectionWrapper from '../sectionWrapper/SectionWrapper';
+import Btn from '../button/Btn';
+import ModalWindow from '../modalWindow/ModalWindow';
+import { useRef } from 'react';
 
 const SingleProduct = ({
   product: {
@@ -17,7 +27,8 @@ const SingleProduct = ({
     manufacturer,
   },
 }) => {
-  const [isLargerThan480] = useMediaQuery('(min-width: 480px)');
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const initialRef = useRef(null);
 
   return (
     <SectionWrapper>
@@ -87,6 +98,13 @@ const SingleProduct = ({
       <Text mt={4} as="p">
         {descLong}
       </Text>
+
+      <Btn onClick={onOpen}>Contact us</Btn>
+      <ModalWindow onClose={onClose} isOpen={isOpen} initialRef={initialRef}>
+        <Input bgColor={'gray.800'} ref={initialRef} type="text"></Input>
+        <Input bgColor={'gray.800'} type="text"></Input>
+        <Input bgColor={'gray.800'} type="text"></Input>
+      </ModalWindow>
     </SectionWrapper>
   );
 };
