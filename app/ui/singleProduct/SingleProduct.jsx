@@ -14,6 +14,7 @@ import Btn from '../button/Btn';
 import ModalWindow from '../modalWindow/ModalWindow';
 import { useRef } from 'react';
 import SubmitButton from '../submitButton/SubmitButton';
+import FormContact from '../formContact/FormContact';
 
 const SingleProduct = ({
   product: {
@@ -102,10 +103,7 @@ const SingleProduct = ({
 
       <Btn onClick={onOpen}>Contact us</Btn>
       <ModalWindow onClose={onClose} isOpen={isOpen}>
-        <form action="">
-          <Input ref={initialRef} bgColor={'gray.800'} type="text" />
-          <SubmitButton>Submit</SubmitButton>
-        </form>
+        <FormContact initialRef={initialRef} />
       </ModalWindow>
     </SectionWrapper>
   );

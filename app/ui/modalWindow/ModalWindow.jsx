@@ -3,7 +3,6 @@ import {
   ModalBody,
   ModalCloseButton,
   ModalContent,
-  ModalHeader,
   ModalOverlay,
 } from '@chakra-ui/react';
 
@@ -12,12 +11,13 @@ const ModalWindow = ({ onClose, isOpen, children }) => {
     <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
       <ModalContent
-        bgColor={'gray.900'}
+        pt={10}
+        bgColor={'gray.800'}
         bgSize={'cover'}
         bgPos={'center'}
         bgRepeat={'no-repeat'}
+        maxW={'840px'}
       >
-        <ModalHeader>Submit</ModalHeader>
         <ModalCloseButton _hover={{ color: '#a28445' }} />
         <ModalBody pb={6}>{children}</ModalBody>
       </ModalContent>
