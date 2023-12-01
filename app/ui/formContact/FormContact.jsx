@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   Flex,
@@ -16,17 +16,17 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 import {
   MdPhone,
   MdEmail,
   MdLocationOn,
   MdFacebook,
   MdOutlineEmail,
-} from 'react-icons/md';
-import { BsGithub, BsDiscord, BsPerson } from 'react-icons/bs';
-import SubmitButton from '../submitButton/SubmitButton';
-import ReactInputMask from 'react-input-mask';
+} from "react-icons/md";
+import { BsGithub, BsDiscord, BsPerson } from "react-icons/bs";
+import SubmitButton from "../submitButton/SubmitButton";
+import ReactInputMask from "react-input-mask";
 
 const telMask = `+972********`;
 
@@ -49,7 +49,7 @@ const FormContact = () => {
                     width="200px"
                     variant="ghost"
                     color="#DCE2FF"
-                    _hover={{ border: '2px solid #a28445' }}
+                    _hover={{ border: "2px solid #a28445" }}
                     leftIcon={<MdPhone color="#a28445" size="20px" />}
                   >
                     +91-988888888
@@ -60,7 +60,7 @@ const FormContact = () => {
                     width="200px"
                     variant="ghost"
                     color="#DCE2FF"
-                    _hover={{ border: '2px solid #a28445' }}
+                    _hover={{ border: "2px solid #a28445" }}
                     leftIcon={<MdEmail color="#a28445" size="20px" />}
                   >
                     hello@abc.com
@@ -71,7 +71,7 @@ const FormContact = () => {
                     width="200px"
                     variant="ghost"
                     color="#DCE2FF"
-                    _hover={{ border: '2px solid #a28445' }}
+                    _hover={{ border: "2px solid #a28445" }}
                     leftIcon={<MdLocationOn color="#a28445" size="20px" />}
                   >
                     Karnavati, Israel
@@ -86,29 +86,29 @@ const FormContact = () => {
               >
                 <IconButton
                   aria-label="facebook"
-                  color={'#a28445'}
+                  color={"#a28445"}
                   variant="ghost"
                   size="lg"
                   isRound={true}
-                  _hover={{ bg: '#333331' }}
+                  _hover={{ bg: "#333331" }}
                   icon={<MdFacebook size="28px" />}
                 />
                 <IconButton
                   aria-label="github"
-                  color={'#a28445'}
+                  color={"#a28445"}
                   variant="ghost"
                   size="lg"
                   isRound={true}
-                  _hover={{ bg: '#333331' }}
+                  _hover={{ bg: "#333331" }}
                   icon={<BsGithub size="28px" />}
                 />
                 <IconButton
                   aria-label="discord"
-                  color={'#a28445'}
+                  color={"#a28445"}
                   variant="ghost"
                   size="lg"
                   isRound={true}
-                  _hover={{ bg: '#333331' }}
+                  _hover={{ bg: "#333331" }}
                   icon={<BsDiscord size="28px" />}
                 />
               </HStack>
@@ -116,7 +116,7 @@ const FormContact = () => {
           </WrapItem>
           <WrapItem>
             <Box bg="white" borderRadius="lg">
-              <Box as="form" action={''} m={8} color="#0B0E3F">
+              <Box as="form" action={""} m={8} color="#0B0E3F">
                 <VStack spacing={5}>
                   <FormControl id="name">
                     <FormLabel>Your Name</FormLabel>
@@ -124,7 +124,7 @@ const FormContact = () => {
                       <InputLeftElement pointerEvents="none">
                         <BsPerson color="gray.800" />
                       </InputLeftElement>
-                      <Input type="text" size="md" />
+                      <Input autoFocus type="text" size="md" />
                     </InputGroup>
                   </FormControl>
                   <FormControl id="name">
@@ -146,8 +146,8 @@ const FormContact = () => {
                         as={ReactInputMask}
                         type="tel"
                         name="phone"
-                        border={'none'}
-                        bgColor={'blackAlpha.200'}
+                        border={"none"}
+                        bgColor={"blackAlpha.200"}
                         size="md"
                         mask={telMask}
                       />

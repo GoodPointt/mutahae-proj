@@ -1,20 +1,12 @@
-'use client';
+"use client";
 
-import {
-  Box,
-  Flex,
-  Heading,
-  Input,
-  Text,
-  useDisclosure,
-} from '@chakra-ui/react';
-import Image from 'next/image';
-import SectionWrapper from '../sectionWrapper/SectionWrapper';
-import Btn from '../button/Btn';
-import ModalWindow from '../modalWindow/ModalWindow';
-import { useRef } from 'react';
-import SubmitButton from '../submitButton/SubmitButton';
-import FormContact from '../formContact/FormContact';
+import { Box, Flex, Heading, Text, useDisclosure } from "@chakra-ui/react";
+import Image from "next/image";
+import SectionWrapper from "../sectionWrapper/SectionWrapper";
+import Btn from "../button/Btn";
+import ModalWindow from "../modalWindow/ModalWindow";
+import { useRef } from "react";
+import FormContact from "../formContact/FormContact";
 
 const SingleProduct = ({
   product: {
@@ -34,64 +26,64 @@ const SingleProduct = ({
 
   return (
     <SectionWrapper>
-      <Flex flexWrap={'wrap'} gap={4}>
+      <Flex flexWrap={"wrap"} gap={4}>
         <Box
-          display={'block'}
-          pos={'relative'}
-          w={'400px'}
-          h={'380px'}
-          overflow={'hidden'}
-          borderRadius={'10px'}
+          display={"block"}
+          pos={"relative"}
+          w={"400px"}
+          h={"380px"}
+          overflow={"hidden"}
+          borderRadius={"10px"}
         >
           <Image
             src={imgUrl}
-            alt={'product image'}
+            alt={"product image"}
             fill
             style={{
-              display: 'block',
-              height: '100%',
-              maxWidth: '100%',
-              objectFit: 'cover',
+              display: "block",
+              height: "100%",
+              maxWidth: "100%",
+              objectFit: "cover",
             }}
           />
         </Box>
-        <Flex flexDir={'column'} gap={2}>
+        <Flex flexDir={"column"} gap={2}>
           <Heading as="h2" fontWeight={900}>
             {title}
           </Heading>
-          <Text as="p" fontSize={'sm'} fontWeight={'500'}>
+          <Text as="p" fontSize={"sm"} fontWeight={"500"}>
             Length:
-            <Text as="span" fontWeight={'300'}>
+            <Text as="span" fontWeight={"300"}>
               {length}
             </Text>
           </Text>
-          <Text as="p" fontSize={'sm'} fontWeight={'500'}>
+          <Text as="p" fontSize={"sm"} fontWeight={"500"}>
             Thickness:
-            <Text as="span" fontWeight={'300'}>
+            <Text as="span" fontWeight={"300"}>
               {thickness}
             </Text>
           </Text>
-          <Text as="p" fontSize={'sm'} fontWeight={'500'}>
+          <Text as="p" fontSize={"sm"} fontWeight={"500"}>
             Width:
-            <Text as="span" fontWeight={'300'}>
+            <Text as="span" fontWeight={"300"}>
               {width}
             </Text>
           </Text>
-          <Text as="p" fontSize={'sm'} fontWeight={'500'}>
+          <Text as="p" fontSize={"sm"} fontWeight={"500"}>
             Wood:
-            <Text as="span" fontWeight={'300'}>
+            <Text as="span" fontWeight={"300"}>
               {wood}
             </Text>
           </Text>
-          <Text as="p" fontSize={'sm'} fontWeight={'500'}>
+          <Text as="p" fontSize={"sm"} fontWeight={"500"}>
             Type:
-            <Text as="span" fontWeight={'300'}>
+            <Text as="span" fontWeight={"300"}>
               {type}
             </Text>
           </Text>
-          <Text as="p" fontSize={'sm'} fontWeight={'500'}>
+          <Text as="p" fontSize={"sm"} fontWeight={"500"}>
             Manufacturer:
-            <Text as="span" fontWeight={'300'}>
+            <Text as="span" fontWeight={"300"}>
               {manufacturer}
             </Text>
           </Text>
