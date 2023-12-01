@@ -12,6 +12,10 @@ const LocaleSwitcher = () => {
   const pathName = usePathname();
   const [path, setPath] = useState(pathName);
 
+  // const lang = useLang(); //client
+  // const lang = getLang(); //server
+  // console.log(lang);
+
   useEffect(() => {
     setPath(pathName);
   }, [pathName]);
