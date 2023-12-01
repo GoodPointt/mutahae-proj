@@ -1,11 +1,7 @@
 import { Button } from '@chakra-ui/react';
 import { useFormStatus } from 'react-dom';
 
-const SubmitButton = ({
-  children,
-  variant = 'solid',
-  bgColor = 'transparent',
-}) => {
+const SubmitButton = ({ children, variant = 'solid', bgColor = '#a28445' }) => {
   const { pending } = useFormStatus();
 
   return (

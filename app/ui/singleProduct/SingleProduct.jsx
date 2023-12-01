@@ -13,6 +13,7 @@ import SectionWrapper from '../sectionWrapper/SectionWrapper';
 import Btn from '../button/Btn';
 import ModalWindow from '../modalWindow/ModalWindow';
 import { useRef } from 'react';
+import SubmitButton from '../submitButton/SubmitButton';
 
 const SingleProduct = ({
   product: {
@@ -100,10 +101,11 @@ const SingleProduct = ({
       </Text>
 
       <Btn onClick={onOpen}>Contact us</Btn>
-      <ModalWindow onClose={onClose} isOpen={isOpen} initialRef={initialRef}>
-        <Input bgColor={'gray.800'} ref={initialRef} type="text"></Input>
-        <Input bgColor={'gray.800'} type="text"></Input>
-        <Input bgColor={'gray.800'} type="text"></Input>
+      <ModalWindow onClose={onClose} isOpen={isOpen}>
+        <form action="">
+          <Input ref={initialRef} bgColor={'gray.800'} type="text" />
+          <SubmitButton>Submit</SubmitButton>
+        </form>
       </ModalWindow>
     </SectionWrapper>
   );

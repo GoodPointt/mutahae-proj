@@ -29,7 +29,7 @@ const LocaleSwitcher = () => {
             value={path}
             onChange={(e) => setPath(e.target.value)}
           />
-          <SubmitButton variant="solid">{i18n.locales[0]}</SubmitButton>
+          <SubmitButton bgColor={'transparent'}>{i18n.locales[0]}</SubmitButton>
         </form>
       </ListItem>
       <ListItem>
@@ -41,7 +41,7 @@ const LocaleSwitcher = () => {
             onChange={(e) => setPath(e.target.value)}
             value={path}
           />
-          <SubmitButton variant="solid">{i18n.locales[1]}</SubmitButton>
+          <SubmitButton bgColor={'transparent'}>{i18n.locales[1]}</SubmitButton>
         </form>
       </ListItem>
     </List>

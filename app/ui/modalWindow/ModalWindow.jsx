@@ -9,7 +9,7 @@ import {
 
 const ModalWindow = ({ onClose, isOpen, children }) => {
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
       <ModalContent
         bgColor={'gray.900'}
