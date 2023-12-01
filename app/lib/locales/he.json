@@ -5,7 +5,9 @@
     }
   },
   "buttons": {
-    "view": "נוף"
+    "view": "נוף",
+    "contact": "צור קשר",
+    "send": "שלח"
   },
   "header": {
     "navItems": [
@@ -26,6 +28,14 @@
         "path": "/contact"
       }
     ]
+  },
+  "singleProduct": {
+    "width": "רוחב: ",
+    "length": "אורך: ",
+    "thickness": "עובי: ",
+    "wood": "עץ: ",
+    "type": "סוג: ",
+    "manufacturer": "יצרן: "
   },
   "aboutUs": {
     "main": [
@@ -64,5 +74,12 @@
         "position": "Co-owner"
       }
     ]
+  },
+  "formContact": {
+    "title": "צור קשר",
+    "text": "מלא את הטופס למטה כדי ליצור קשר",
+    "nameLabel": "שם שלך",
+    "mailLabel": "אימייל",
+    "phoneLabel": "טלפון"
   }
 }

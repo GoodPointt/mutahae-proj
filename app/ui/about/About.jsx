@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import {
   Box,
   Button,
@@ -7,10 +7,10 @@ import {
   ListItem,
   Text,
   useDisclosure,
-} from "@chakra-ui/react";
-import SectionWrapper from "../sectionWrapper/SectionWrapper";
-import ModalWindow from "../modalWindow/ModalWindow";
-import FormContact from "../formContact/FormContact";
+} from '@chakra-ui/react';
+import SectionWrapper from '../sectionWrapper/SectionWrapper';
+import ModalWindow from '../modalWindow/ModalWindow';
+import FormContact from '../formContact/FormContact';
 
 const About = ({ dictionary }) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
@@ -18,54 +18,54 @@ const About = ({ dictionary }) => {
   return (
     <>
       <SectionWrapper bg="url('/about-background.jpg')">
-        <Heading as={"h2"} textTransform={"uppercase"} mb={"44px"}>
-          <Text as={"span"} color="#a28445" mr={"8px"}>
+        <Heading as={'h2'} textTransform={'uppercase'} mb={'44px'}>
+          <Text as={'span'} color="#a28445" mr={'8px'}>
             Mutag
           </Text>
           Company
         </Heading>
         <Box
-          position={"relative"}
-          py={"16px"}
-          px={"24px"}
+          position={'relative'}
+          py={'16px'}
+          px={'24px'}
           _rtl={{
             _after: {
               right: 0,
             },
           }}
           _after={{
-            display: "block",
+            display: 'block',
             content: '""',
-            position: "absolute",
+            position: 'absolute',
             top: 0,
             left: 0,
-            h: "100%",
-            w: "1px",
-            bgColor: "#a28445",
+            h: '100%',
+            w: '1px',
+            bgColor: '#a28445',
           }}
-          ml={"24px"}
-          w={"55%"}
+          ml={'24px'}
+          w={'55%'}
         >
-          <List display={"flex"} flexDirection={"column"} gap={"24px"}>
-            {dictionary?.map((el) => (
+          <List display={'flex'} flexDirection={'column'} gap={'24px'}>
+            {dictionary?.aboutUs.main.map(el => (
               <ListItem key={el.text}>
                 <Text>{el.text}</Text>
               </ListItem>
             ))}
           </List>
           <Button
-            bgColor={"#a28445"}
-            color={"#fff"}
-            _hover={{ bgColor: "#81672e" }}
-            mt={"24px"}
+            bgColor={'#a28445'}
+            color={'#fff'}
+            _hover={{ bgColor: '#81672e' }}
+            mt={'24px'}
             onClick={onOpen}
           >
-            Contact Us
+            {dictionary.buttons.contact}
           </Button>
         </Box>
       </SectionWrapper>
       <ModalWindow onClose={onClose} isOpen={isOpen}>
-        <FormContact />
+        <FormContact dictionary={dictionary} />
       </ModalWindow>
     </>
   );
