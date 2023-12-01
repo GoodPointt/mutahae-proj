@@ -1,5 +1,4 @@
 "use client";
-
 import {
   Box,
   Button,
@@ -48,7 +47,7 @@ const About = ({ dictionary }) => {
           w={"55%"}
         >
           <List display={"flex"} flexDirection={"column"} gap={"24px"}>
-            {dictionary.map((el) => (
+            {dictionary?.map((el) => (
               <ListItem key={el.text}>
                 <Text>{el.text}</Text>
               </ListItem>
