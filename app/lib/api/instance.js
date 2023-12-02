@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 export const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_STRAPI_API_URL,
@@ -19,6 +19,18 @@ export const fetchOneProduct = async (id, lang) => {
     const { data } = await instance.get(
       `/api/products?locale=${lang}&filters[uid][$eq]=${id}`
     );
+    return data;
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const createContact = async (credentials) => {
+  console.log(credentials);
+  try {
+    const { data } = await instance.post(`/api/customers/`, {
+      data: { ...credentials },
+    });
     return data;
   } catch (e) {
     console.error(e);
