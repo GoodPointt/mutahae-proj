@@ -7,6 +7,8 @@ import { Box } from '@chakra-ui/react';
 import Header from '@/app/ui/header/Header';
 import Footer from '@/app/ui/footer/Footer';
 import AnimatedMain from '../ui/AnimatedMain';
+import { getDictionary } from '../lib/locales/dictionary';
+import { fetchContacts } from '../lib/api/instance';
 
 const inter = Montserrat({ subsets: ['latin'] });
 
@@ -19,7 +21,11 @@ export async function generateStaticParams() {
   return i18n.locales.map(locale => ({ lang: locale }));
 }
 
-export default function RootLayout({ children, params }) {
+export default async function RootLayout({ children, params }) {
+  const dictionary = await getDictionary(params.lang);
+  const { data } = await fetchContacts(params.lang);
+  const { attributes } = data[0];
+
   return (
     <html lang={params.lang} dir={params.lang === 'he' ? 'rtl' : 'ltr'}>
       <link
@@ -37,7 +43,11 @@ export default function RootLayout({ children, params }) {
         fontSize={18}
       >
         <Providers>
-          <Header lang={params.lang} />
+          <Header
+            lang={params.lang}
+            dictionary={dictionary}
+            attributes={attributes}
+          />
           <AnimatedMain>{children}</AnimatedMain>
           <Footer />
         </Providers>

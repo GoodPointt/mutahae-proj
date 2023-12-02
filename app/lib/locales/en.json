@@ -5,9 +5,7 @@
     }
   },
   "buttons": {
-    "view": "View",
-    "contact": "Contact us",
-    "send": "Send"
+    "view": "View"
   },
   "header": {
     "navItems": [
@@ -28,14 +26,6 @@
         "path": "/contact"
       }
     ]
-  },
-  "singleProduct": {
-    "width": "Width: ",
-    "length": "Length: ",
-    "thickness": "Thickness: ",
-    "wood": "Wood: ",
-    "type": "Type: ",
-    "manufacturer": "Manufacturer: "
   },
   "aboutUs": {
     "main": [
@@ -82,5 +72,6 @@
     "nameLabel": "Your Name",
     "mailLabel": "Mail",
     "phoneLabel": "Phone"
-  }
+  },
+  "hero": { "title": "Create the future with quality wood" }
 }

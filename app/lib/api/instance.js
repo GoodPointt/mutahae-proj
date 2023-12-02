@@ -25,6 +25,15 @@ export const fetchOneProduct = async (id, lang) => {
   }
 };
 
+export const fetchContacts = async lang => {
+  try {
+    const { data } = await instance.get(`/api/contacts?locale=${lang}`);
+    return data;
+  } catch (e) {
+    console.error(e);
+  }
+};
+
 export const createContact = async credentials => {
   try {
     const { data } = await instance.post(`/api/customers/`, {
