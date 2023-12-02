@@ -1,18 +1,16 @@
 import { Box, List, ListItem, Text } from "@chakra-ui/react";
 import SectionWrapper from "../sectionWrapper/SectionWrapper";
-import { getDictionary } from "@/app/lib/locales/dictionary";
 
-const Features = async ({ lang }) => {
-  const {
-    aboutUs: { features },
-  } = await getDictionary(lang);
-
-  
+const Features = ({ dictionary }) => {
   return (
     <SectionWrapper bg="#000">
       <Box>
-        <List display={"grid"} gridTemplateColumns={"repeat(3, 1fr)"}>
-          {features.map((el) => (
+        <List
+          display={"grid"}
+          gridTemplateColumns={["1fr", "repeat(3, 1fr)"]}
+          gap={16}
+        >
+          {dictionary.map((el) => (
             <ListItem
               display={"flex"}
               flexDirection={"column"}
@@ -31,7 +29,12 @@ const Features = async ({ lang }) => {
                 justifyContent={"center"}
                 alignItems={"center"}
               >
-                <Text transform={"rotate(-45deg)"} color={"#a28445"} fontWeight={600} fontSize={"24px"}>
+                <Text
+                  transform={"rotate(-45deg)"}
+                  color={"#a28445"}
+                  fontWeight={600}
+                  fontSize={"24px"}
+                >
                   {el.feat}
                 </Text>
               </Box>

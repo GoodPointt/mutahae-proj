@@ -1,15 +1,17 @@
-import About from "@/app/ui/about/About";
-import Contact from "@/app/ui/contact/Contact";
-import Features from "@/app/ui/features/Features";
-import Team from "@/app/ui/team/Team";
+import { getDictionary } from '@/app/lib/locales/dictionary';
+import About from '@/app/ui/about/About';
+import Contact from '@/app/ui/contact/Contact';
+import Features from '@/app/ui/features/Features';
+import Team from '@/app/ui/team/Team';
 
-const AboutPage = ({ params: { lang } }) => {
+const AboutPage = async ({ params: { lang } }) => {
+  const dictionary = await getDictionary(lang);
   return (
     <div>
-      <About lang={lang} />
-      <Features lang={lang} />
-      <Team lang={lang} />
-      <Contact lang={lang} />
+      <About dictionary={dictionary} />
+      <Features dictionary={dictionary.aboutUs.features} />
+      <Team dictionary={dictionary.aboutUs.team} />
+      <Contact dictionary={dictionary} />
     </div>
   );
 };

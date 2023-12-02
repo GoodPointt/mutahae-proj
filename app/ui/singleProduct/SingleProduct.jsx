@@ -1,22 +1,15 @@
 'use client';
 
-import {
-  Box,
-  Flex,
-  Heading,
-  Input,
-  Text,
-  useDisclosure,
-} from '@chakra-ui/react';
+import { Box, Flex, Heading, Text, useDisclosure } from '@chakra-ui/react';
 import Image from 'next/image';
 import SectionWrapper from '../sectionWrapper/SectionWrapper';
 import Btn from '../button/Btn';
 import ModalWindow from '../modalWindow/ModalWindow';
-import { useRef } from 'react';
-import SubmitButton from '../submitButton/SubmitButton';
 import FormContact from '../formContact/FormContact';
 
 const SingleProduct = ({
+  // contacts,
+  dictionary,
   product: {
     imgUrl,
     title,
@@ -30,7 +23,6 @@ const SingleProduct = ({
   },
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const initialRef = useRef(null);
 
   return (
     <SectionWrapper>
@@ -60,37 +52,41 @@ const SingleProduct = ({
             {title}
           </Heading>
           <Text as="p" fontSize={'sm'} fontWeight={'500'}>
-            Length:
+            {dictionary.singleProduct.length}
             <Text as="span" fontWeight={'300'}>
               {length}
             </Text>
           </Text>
           <Text as="p" fontSize={'sm'} fontWeight={'500'}>
-            Thickness:
+            {dictionary.singleProduct.thickness}
             <Text as="span" fontWeight={'300'}>
               {thickness}
             </Text>
           </Text>
           <Text as="p" fontSize={'sm'} fontWeight={'500'}>
-            Width:
+            {dictionary.singleProduct.width}
+
             <Text as="span" fontWeight={'300'}>
               {width}
             </Text>
           </Text>
           <Text as="p" fontSize={'sm'} fontWeight={'500'}>
-            Wood:
+            {dictionary.singleProduct.wood}
+
             <Text as="span" fontWeight={'300'}>
               {wood}
             </Text>
           </Text>
           <Text as="p" fontSize={'sm'} fontWeight={'500'}>
-            Type:
+            {dictionary.singleProduct.type}
+
             <Text as="span" fontWeight={'300'}>
               {type}
             </Text>
           </Text>
           <Text as="p" fontSize={'sm'} fontWeight={'500'}>
-            Manufacturer:
+            {dictionary.singleProduct.manufacturer}
+
             <Text as="span" fontWeight={'300'}>
               {manufacturer}
             </Text>
@@ -101,9 +97,12 @@ const SingleProduct = ({
         {descLong}
       </Text>
 
-      <Btn onClick={onOpen}>Contact us</Btn>
+      <Btn onClick={onOpen}>{dictionary.buttons.contact}</Btn>
       <ModalWindow onClose={onClose} isOpen={isOpen}>
-        <FormContact initialRef={initialRef} />
+        <FormContact
+          dictionary={dictionary}
+          // contacts={contacts}
+        />
       </ModalWindow>
     </SectionWrapper>
   );

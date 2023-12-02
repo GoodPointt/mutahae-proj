@@ -13,7 +13,7 @@ import ProductItem from '@/app/ui/productItem/ProductItem';
 
 const CatalogSlider = ({ products, lang, heading }) => {
   return (
-    <SectionWrapper heading={heading}>
+    <SectionWrapper heading={heading} bg={"url('/crooked-line.png')"}>
       <Swiper
         className="mySwiper2"
         navigation
@@ -39,7 +39,7 @@ const CatalogSlider = ({ products, lang, heading }) => {
         modules={[Navigation]}
       >
         {products.length > 0 &&
-          products.map((product) => (
+          products.map(product => (
             <SwiperSlide key={product.attributes.uid}>
               <ProductItem product={product.attributes} lang={lang} />
             </SwiperSlide>
