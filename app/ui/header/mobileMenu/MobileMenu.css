@@ -1,12 +1,12 @@
 @keyframes moveRight {
-	0% {
-		transform: translateX(0);
-	}
-	10% {
-		transform: translateX(12%);
-	}
+  0% {
+    transform: translateX(0);
+  }
+  12% {
+    transform: translateX(12%);
+  }
 }
 
 .buttonAnimation {
-	animation: moveRight 2s linear infinite;
+  animation: moveRight 1.8s linear infinite;
 }

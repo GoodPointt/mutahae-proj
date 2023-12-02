@@ -1,8 +1,7 @@
 {
   "page": {
     "home": {
-      "title": "TEST HEADING",
-      "hero": { "title": "Create the future with quality wood" }
+      "title": "TEST HEADING"
     }
   },
   "buttons": {
@@ -73,5 +72,6 @@
     "nameLabel": "Your Name",
     "mailLabel": "Mail",
     "phoneLabel": "Phone"
-  }
+  },
+  "hero": { "title": "Create the future with quality wood" }
 }

@@ -6,41 +6,50 @@ import Providers from './providers';
 import { Box } from '@chakra-ui/react';
 import Header from '@/app/ui/header/Header';
 import Footer from '@/app/ui/footer/Footer';
+import { getDictionary } from '../lib/locales/dictionary';
+import { fetchContacts } from '../lib/api/instance';
 
 const inter = Montserrat({ subsets: ['latin'] });
 
 export const metadata = {
-	title: 'MUTAG Haetz',
-	description: 'MUTAG Haetz',
+  title: 'MUTAG Haetz',
+  description: 'MUTAG Haetz',
 };
 
 export async function generateStaticParams() {
-	return i18n.locales.map((locale) => ({ lang: locale }));
+  return i18n.locales.map(locale => ({ lang: locale }));
 }
 
-export default function RootLayout({ children, params }) {
-	return (
-		<html
-			lang={params.lang}
-			dir={params.lang === 'he' ? 'rtl' : 'ltr'}>
-			<link
-				rel="icon"
-				href="/icon?<generated>"
-				type="image/<generated>"
-				sizes="<generated>"
-			/>
-			<Box
-				as="body"
-				bg={'#181617'}
-				color={'white'}
-				className={inter.className}
-				fontSize={18}>
-				<Providers>
-					<Header lang={params.lang} />
-					<main>{children}</main>
-					<Footer />
-				</Providers>
-			</Box>
-		</html>
-	);
+export default async function RootLayout({ children, params }) {
+  const dictionary = await getDictionary(params.lang);
+  const { data } = await fetchContacts(params.lang);
+  const { attributes } = data[0];
+
+  return (
+    <html lang={params.lang} dir={params.lang === 'he' ? 'rtl' : 'ltr'}>
+      <link
+        rel="icon"
+        href="/icon?<generated>"
+        type="image/<generated>"
+        sizes="<generated>"
+      />
+      <Box
+        as="body"
+        bg={'#181617'}
+        color={'white'}
+        className={inter.className}
+        fontSize={18}
+      >
+        <Providers>
+          <Header
+            lang={params.lang}
+            dictionary={dictionary}
+            attributes={attributes}
+          />
+          <main>{children}</main>
+          <Footer />
+        </Providers>
+      </Box>
+    </html>
+  );
 }
