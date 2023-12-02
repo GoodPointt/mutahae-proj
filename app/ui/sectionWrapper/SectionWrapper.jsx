@@ -5,13 +5,15 @@ const SectionWrapper = ({
   bg = 'transparent',
   as = 'section',
   heading = '',
+  py = { base: '30px', lg: '50px', xl: '70px' },
+  pt = '75px',
 }) => {
   return (
     <Box
       as={as}
       bg={bg}
-      py={{ base: '30px', lg: '50px', xl: '70px' }}
-      pt={'75px'}
+      py={py}
+      pt={pt}
       bgRepeat={'no-repeat'}
       bgPos={'center'}
       bgSize={'cover'}
@@ -20,6 +22,7 @@ const SectionWrapper = ({
         {heading && (
           <Heading
             as={'h2'}
+            // color={'#bca26a'}
             mb={{ base: 6, lg: 8 }}
             fontWeight={900}
             fontSize={{ base: '2xl', lg: '4xl' }}
