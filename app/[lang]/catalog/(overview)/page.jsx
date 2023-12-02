@@ -14,31 +14,32 @@ const CatalogPage = async ({ params: { lang } }) => {
   } = await getDictionary(lang);
 
   return (
-    <SectionWrapper heading={navItems[0].title}>
+    <>
       <Suspense fallback={<SkeletonProductsGrid />}>
-        <Grid
-          as={'ul'}
-          maxW={'100%'}
-          gridTemplateColumns={'repeat(auto-fill, minmax(300px, 1fr))'}
-          gridGap={10}
-          m={'0 auto'}
-          padding={0}
-        >
-          {data?.length > 0 &&
-            data.map(({ attributes }) => {
-              return (
-                <ProductItem
-                  key={attributes.uid}
-                  product={attributes}
-                  lang={lang}
-                />
-              );
-            })}
-        </Grid>
+        <SectionWrapper heading={navItems[0].title}>
+          <Grid
+            as={'ul'}
+            maxW={'100%'}
+            gridTemplateColumns={'repeat(auto-fill, minmax(300px, 1fr))'}
+            gridGap={10}
+            m={'0 auto'}
+            padding={0}
+          >
+            {data?.length > 0 &&
+              data.map(({ attributes }) => {
+                return (
+                  <ProductItem
+                    key={attributes.uid}
+                    product={attributes}
+                    lang={lang}
+                  />
+                );
+              })}
+          </Grid>
+        </SectionWrapper>
       </Suspense>
-
       <Contact />
-    </SectionWrapper>
+    </>
   );
 };
 

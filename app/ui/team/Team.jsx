@@ -1,13 +1,9 @@
 import { Box, Grid, GridItem, Heading, Text } from "@chakra-ui/react";
 import SectionWrapper from "../sectionWrapper/SectionWrapper";
-import { getDictionary } from "@/app/lib/locales/dictionary";
 import { teamImgs } from "@/app/lib/data";
 import Image from "next/image";
 
-const Team = async ({ lang }) => {
-  const {
-    aboutUs: { team },
-  } = await getDictionary(lang);
+const Team = ({ dictionary }) => {
   return (
     <SectionWrapper bg="#191617">
       <Heading
@@ -18,8 +14,12 @@ const Team = async ({ lang }) => {
       >
         Our Team
       </Heading>
-      <Grid gridTemplateColumns={"repeat(3, 1fr)"} gap={"24px"} as={"ul"}>
-        {team.map((el, index) => (
+      <Grid
+        gridTemplateColumns={["1fr", "repeat(2, 1fr)", "repeat(3, 1fr)"]}
+        gap={"24px"}
+        as={"ul"}
+      >
+        {dictionary.map((el, index) => (
           <GridItem
             as={"li"}
             key={el.name}

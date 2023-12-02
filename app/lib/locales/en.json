@@ -5,7 +5,9 @@
     }
   },
   "buttons": {
-    "view": "View"
+    "view": "View",
+    "contact": "Contact us",
+    "send": "Send"
   },
   "header": {
     "navItems": [
@@ -26,6 +28,14 @@
         "path": "/contact"
       }
     ]
+  },
+  "singleProduct": {
+    "width": "Width: ",
+    "length": "Length: ",
+    "thickness": "Thickness: ",
+    "wood": "Wood: ",
+    "type": "Type: ",
+    "manufacturer": "Manufacturer: "
   },
   "aboutUs": {
     "main": [
@@ -65,5 +75,12 @@
         "position": "Co-owner"
       }
     ]
+  },
+  "formContact": {
+    "title": "Contact",
+    "text": "Fill up the form below to contact",
+    "nameLabel": "Your Name",
+    "mailLabel": "Mail",
+    "phoneLabel": "Phone"
   }
 }
