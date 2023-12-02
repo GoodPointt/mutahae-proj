@@ -6,8 +6,6 @@ import Providers from './providers';
 import { Box } from '@chakra-ui/react';
 import Header from '@/app/ui/header/Header';
 import Footer from '@/app/ui/footer/Footer';
-import { getDictionary } from '../lib/locales/dictionary';
-import { fetchContacts } from '../lib/api/instance';
 
 const inter = Montserrat({ subsets: ['latin'] });
 
@@ -33,9 +31,10 @@ export default async function RootLayout({ children, params }) {
         type="image/<generated>"
         sizes="<generated>"
       />
+
       <Box
         as="body"
-        bg={'#181617'}
+        bg={'linear-gradient(to right, #4776e6, #8e54e9)'}
         color={'white'}
         className={inter.className}
         fontSize={18}
@@ -46,7 +45,7 @@ export default async function RootLayout({ children, params }) {
             dictionary={dictionary}
             attributes={attributes}
           />
-          <main>{children}</main>
+          <AnimatedMain>{children}</AnimatedMain>
           <Footer />
         </Providers>
       </Box>
