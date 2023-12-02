@@ -15,7 +15,9 @@
     "@emotion/styled": "^11.11.0",
     "@formatjs/intl-localematcher": "^0.5.2",
     "@next/eslint-plugin-next": "14.0.1",
+    "@vis.gl/react-google-maps": "^0.4.1",
     "axios": "^1.6.2",
+    "emailjs-com": "^3.2.0",
     "framer-motion": "^10.16.12",
     "mongoose": "^8.0.0",
     "negotiator": "^0.6.3",
@@ -26,7 +28,8 @@
     "react-icons": "^4.11.0",
     "react-input-mask": "^2.0.4",
     "swiper": "^11.0.5",
-    "use-debounce": "^9.0.4"
+    "use-debounce": "^9.0.4",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "eslint": "8",
