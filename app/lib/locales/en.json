@@ -1,69 +1,70 @@
 {
-  "page": {
-    "home": {
-      "title": "TEST HEADING"
-    }
-  },
-  "buttons": {
-    "view": "View"
-  },
-  "header": {
-    "navItems": [
-      {
-        "title": "Catalog",
-        "path": "/catalog"
-      },
-      {
-        "title": "About",
-        "path": "/about"
-      },
-      {
-        "title": "Reviews",
-        "path": "/reviews"
-      },
-      {
-        "title": "Contact",
-        "path": "/contact"
-      }
-    ]
-  },
-  "aboutUs": {
-    "main": [
-      {
-        "text": "Mutag Haetz is a leading trading company specializing in the sale and distribution of wood products. The company offers a wide range of high-quality and diverse products, including oak and pine wood panels, stairs, M.D.P, and plywood."
-      },
-      {
-        "text": "Oak and pine wood panels are excellent solutions for interior design and furniture. Stairs, M.D.P, and plywood can be used to create a variety of products such as tables, clothing wardrobes, furniture, wall coverings, and more."
-      },
-      {
-        "text": "Mutag Haetz is committed to excellent service and reliability, consistently providing the best solutions to its customers in the field of wood products."
-      }
-    ],
+	"page": {
+		"home": {
+			"title": "TEST HEADING",
+			"hero": { "title": "Create the future with quality wood" }
+		}
+	},
+	"buttons": {
+		"view": "View"
+	},
+	"header": {
+		"navItems": [
+			{
+				"title": "Catalog",
+				"path": "/catalog"
+			},
+			{
+				"title": "About",
+				"path": "/about"
+			},
+			{
+				"title": "Reviews",
+				"path": "/reviews"
+			},
+			{
+				"title": "Contact",
+				"path": "/contact"
+			}
+		]
+	},
+	"aboutUs": {
+		"main": [
+			{
+				"text": "Mutag Haetz is a leading trading company specializing in the sale and distribution of wood products. The company offers a wide range of high-quality and diverse products, including oak and pine wood panels, stairs, M.D.P, and plywood."
+			},
+			{
+				"text": "Oak and pine wood panels are excellent solutions for interior design and furniture. Stairs, M.D.P, and plywood can be used to create a variety of products such as tables, clothing wardrobes, furniture, wall coverings, and more."
+			},
+			{
+				"text": "Mutag Haetz is committed to excellent service and reliability, consistently providing the best solutions to its customers in the field of wood products."
+			}
+		],
 
-    "features": [
-      {
-        "title": "Available 24/7 for any questions you may have",
-        "feat": "24/7"
-      },
-      {
-        "title": "Years on market",
-        "feat": "11"
-      },
-      {
-        "title": "Type of products",
-        "feat": "15"
-      }
-    ],
-    "team": [
-      {
-        "name": "Tamara",
-        "position": "SMM"
-      },
-      { "name": "Simon", "position": "Manager" },
-      {
-        "name": "Sam",
-        "position": "Co-owner"
-      }
-    ]
-  }
+		"features": [
+			{
+				"title": "Available 24/7 for any questions you may have",
+				"feat": "24/7"
+			},
+			{
+				"title": "Years on market",
+				"feat": "11"
+			},
+			{
+				"title": "Type of products",
+				"feat": "15"
+			}
+		],
+		"team": [
+			{
+				"name": "Tamara",
+				"position": "SMM"
+			},
+			{ "name": "Simon", "position": "Manager" },
+			{
+				"name": "Sam",
+				"position": "Co-owner"
+			}
+		]
+	}
 }
