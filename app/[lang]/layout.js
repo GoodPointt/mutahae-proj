@@ -6,6 +6,9 @@ import Providers from './providers';
 import { Box } from '@chakra-ui/react';
 import Header from '@/app/ui/header/Header';
 import Footer from '@/app/ui/footer/Footer';
+import AnimatedMain from '../ui/AnimatedMain';
+import { getDictionary } from '../lib/locales/dictionary';
+import { fetchContacts } from '../lib/api/instance';
 
 const inter = Montserrat({ subsets: ['latin'] });
 
