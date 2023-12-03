@@ -12,7 +12,11 @@
   "header": {
     "navItems": [
       {
-        "title": "קָטָלוֹג",
+        "title": "בית",
+        "path": "/"
+      },
+      {
+        "title": "קטלוג",
         "path": "/catalog"
       },
       {

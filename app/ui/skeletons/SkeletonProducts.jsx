@@ -54,7 +54,7 @@ const SkeletonProductsGrid = async () => {
     header: { navItems },
   } = await getDictionary(lang);
   return (
-    <SectionWrapper heading={navItems[0].title}>
+    <SectionWrapper heading={navItems[1].title}>
       <Grid
         as={'ul'}
         maxW={'100%'}
