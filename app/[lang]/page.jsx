@@ -23,7 +23,7 @@ const Homepage = async ({ params: { lang } }) => {
         heading={dictionary.header.navItems[1].title}
       />
       <About dictionary={dictionary} contacts={contacts} />
-      <Contact />
+      <Contact lang={lang} dictionary={dictionary} />
     </Box>
   );
 };

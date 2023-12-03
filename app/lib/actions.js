@@ -5,7 +5,6 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
 import { createContact } from './api/instance';
-import sendEmail from './utils/sendEmail';
 
 export async function createCookie(prevState, formData) {
   const { lang, path } = Object.fromEntries(formData);
@@ -24,11 +23,28 @@ export async function createCookie(prevState, formData) {
   redirect(newPath);
 }
 
-const schema = z.object({
-  name: z.string(),
-  email: z.string().email(),
-  phone: z.string().min(2).max(7),
-});
+const schema = z
+  .object({
+    name: z
+      .string()
+      .trim()
+      .min(1, { message: 'required' })
+      .regex(new RegExp(/^[a-zA-Z]+[-'s]?[a-zA-Z ]+$/), 'invalid'),
+    email: z
+      .string()
+      .trim()
+      .min(1, { message: 'required' })
+      .email({ message: 'invalid' }),
+    phone: z
+      .string()
+      .trim()
+      .min(1, { message: 'required' })
+      .regex(
+        new RegExp(/^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/),
+        'invalid'
+      ),
+  })
+  .partial();
 
 export async function submitData(prevState, formData) {
   const { name, email, phone } = Object.fromEntries(formData);
@@ -49,13 +65,9 @@ export async function submitData(prevState, formData) {
     const res = await createContact({ name, email, phone });
 
     if (res) {
-      //await sendEmail({ name, email, phone });
       return { name, email, phone, message: 'succsess' };
     }
   } catch (error) {
     console.log(error);
   }
-
-  //revalidatePath(path);
-  //redirect(newPath);
 }

@@ -10,13 +10,13 @@ const AboutPage = async ({ params: { lang } }) => {
   const {
     data: [{ attributes: contacts }],
   } = await fetchContacts(lang);
-  
+
   return (
     <div>
       <About dictionary={dictionary} contacts={contacts} />
       <Features dictionary={dictionary.aboutUs.features} />
       <Team dictionary={dictionary.aboutUs.team} />
-      <Contact dictionary={dictionary} />
+      <Contact dictionary={dictionary} lang={lang} />
     </div>
   );
 };
