@@ -1,18 +1,31 @@
-import { Box } from '@chakra-ui/react';
+import { Box, Text } from '@chakra-ui/react';
 import SectionWrapper from '../sectionWrapper/SectionWrapper';
+import Btn from '../button/Btn';
+import Link from 'next/link';
 
-const Hero = async ({ dictionary }) => {
+const Hero = async ({ dictionary, lang }) => {
   return (
-    <Box
+    <SectionWrapper
+      heading={dictionary.hero.title}
+      headingAs={'h1'}
       bg={'url("/hero-bg.jpg")'}
-      bgRepeat={'no-repeat'}
-      bgPos={'center'}
-      bgSize={'cover'}
-      width={'100%'}
-      height={{ base: '400px', lg: '600px' }}
     >
-      <SectionWrapper heading={dictionary.hero.title}></SectionWrapper>
-    </Box>
+      <Text
+        fontSize={{ base: '16px', lg: '20px' }}
+        maxW={'800px'}
+        my={{ base: '45px', lg: '110px' }}
+      >
+        {dictionary.hero.desc}
+      </Text>
+      <Box display={'flex'} gap={'32px'}>
+        <Btn as={Link} href={`/${lang}/catalog`}>
+          {dictionary.hero.btnCatalog}
+        </Btn>
+        <Btn as={Link} href={`/${lang}/about`}>
+          {dictionary.hero.btnContactUs}
+        </Btn>
+      </Box>
+    </SectionWrapper>
   );
 };
 

@@ -27,7 +27,7 @@ const MobileMenu = ({ children, isOpen, onClose }) => {
             flexDirection={'column'}
             alignItems={'center'}
             justifyContent={'space-between'}
-            py={'80px'}
+            py={'50px'}
             px={'32px'}
           >
             {children}

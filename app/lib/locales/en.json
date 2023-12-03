@@ -82,5 +82,10 @@
     "mailLabel": "Mail",
     "phoneLabel": "Phone"
   },
-  "hero": { "title": "Create the future with quality wood" }
+  "hero": {
+    "title": "Create the future with quality wood",
+    "desc": "Explore our catalog and discover how our wooden products can add a unique style and perfection to your projects",
+    "btnCatalog": "Catalog",
+    "btnContactUs": "Contact Us"
+  }
 }
