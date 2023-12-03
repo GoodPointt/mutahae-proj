@@ -23,8 +23,9 @@ export async function generateStaticParams() {
 
 export default async function RootLayout({ children, params: { lang } }) {
   const dictionary = await getDictionary(lang);
-  const { data } = await fetchContacts(lang);
-  const { attributes } = data[0];
+  const {
+    data: [{ attributes: contacts }],
+  } = await fetchContacts(lang);
 
   return (
     <html lang={lang} dir={lang === 'he' ? 'rtl' : 'ltr'}>
@@ -43,7 +44,7 @@ export default async function RootLayout({ children, params: { lang } }) {
         fontSize={18}
       >
         <Providers>
-          <Header lang={lang} dictionary={dictionary} attributes={attributes} />
+          <Header lang={lang} dictionary={dictionary} contacts={contacts} />
           <AnimatedMain>{children}</AnimatedMain>
           <Footer />
         </Providers>

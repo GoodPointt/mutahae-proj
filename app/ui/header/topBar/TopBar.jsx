@@ -3,10 +3,9 @@ import { FaLocationDot, FaPhone, FaEnvelope } from 'react-icons/fa6';
 import LocaleSwitcher from '../localeSwitcher/LocaleSwitcher';
 
 const TopBar = ({
-  lang,
   flexDir = 'row',
   gap = '0',
-  attributes: { address, email, phone },
+  contacts: { address, email, phone },
 }) => {
   const iconLink = (icon, text, href) => (
     <Link
