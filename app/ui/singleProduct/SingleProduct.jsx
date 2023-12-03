@@ -5,10 +5,10 @@ import Image from 'next/image';
 import SectionWrapper from '../sectionWrapper/SectionWrapper';
 import Btn from '../button/Btn';
 import ModalWindow from '../modalWindow/ModalWindow';
-import FormContact from '../formContact/FormContact';
+import FormContact from '../modalContact/ModalContact';
 
 const SingleProduct = ({
-  // contacts,
+  contacts,
   dictionary,
   product: {
     imgUrl,
@@ -99,10 +99,7 @@ const SingleProduct = ({
 
       <Btn onClick={onOpen}>{dictionary.buttons.contact}</Btn>
       <ModalWindow onClose={onClose} isOpen={isOpen}>
-        <FormContact
-          dictionary={dictionary}
-          // contacts={contacts}
-        />
+        <FormContact dictionary={dictionary} contacts={contacts} />
       </ModalWindow>
     </SectionWrapper>
   );

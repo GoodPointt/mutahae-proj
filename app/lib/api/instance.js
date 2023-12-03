@@ -1,11 +1,12 @@
 import axios from 'axios';
+import { cache } from 'react';
 
 export const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_STRAPI_API_URL,
 });
 instance.defaults.headers.authorization = `Bearer ${process.env.NEXT_PUBLIC_STRAPI_TOKEN}`;
 
-export const fetchProducts = async lang => {
+const getProducts = async lang => {
   try {
     const { data } = await instance.get(`/api/products?locale=${lang}`);
     return data;
@@ -14,7 +15,9 @@ export const fetchProducts = async lang => {
   }
 };
 
-export const fetchOneProduct = async (id, lang) => {
+export const fetchProducts = cache(getProducts);
+
+const getOneProducts = async (id, lang) => {
   try {
     const { data } = await instance.get(
       `/api/products?locale=${lang}&filters[uid][$eq]=${id}`
@@ -25,7 +28,9 @@ export const fetchOneProduct = async (id, lang) => {
   }
 };
 
-export const fetchContacts = async lang => {
+export const fetchOneProduct = cache(getOneProducts);
+
+export const getContacts = async lang => {
   try {
     const { data } = await instance.get(`/api/contacts?locale=${lang}`);
     return data;
@@ -33,6 +38,8 @@ export const fetchContacts = async lang => {
     console.error(e);
   }
 };
+
+export const fetchContacts = cache(getContacts);
 
 export const createContact = async credentials => {
   try {

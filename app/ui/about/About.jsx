@@ -10,9 +10,9 @@ import {
 } from '@chakra-ui/react';
 import SectionWrapper from '../sectionWrapper/SectionWrapper';
 import ModalWindow from '../modalWindow/ModalWindow';
-import FormContact from '../formContact/FormContact';
+import FormContact from '../modalContact/ModalContact';
 
-const About = ({ dictionary }) => {
+const About = ({ dictionary, contacts }) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
 
   return (
@@ -65,7 +65,7 @@ const About = ({ dictionary }) => {
         </Box>
       </SectionWrapper>
       <ModalWindow onClose={onClose} isOpen={isOpen}>
-        <FormContact dictionary={dictionary} />
+        <FormContact dictionary={dictionary} contacts={contacts} />
       </ModalWindow>
     </>
   );

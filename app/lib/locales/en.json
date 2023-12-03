@@ -5,7 +5,9 @@
     }
   },
   "buttons": {
-    "view": "View"
+    "view": "View",
+    "contact": "Contact us",
+    "send": "Send"
   },
   "header": {
     "navItems": [
@@ -27,6 +29,14 @@
       }
     ]
   },
+  "singleProduct": {
+    "width": "Width: ",
+    "length": "Length: ",
+    "thickness": "Thickness: ",
+    "wood": "Wood: ",
+    "type": "Type: ",
+    "manufacturer": "Manufacturer: "
+  },
   "aboutUs": {
     "main": [
       {
@@ -39,7 +49,6 @@
         "text": "Mutag Haetz is committed to excellent service and reliability, consistently providing the best solutions to its customers in the field of wood products."
       }
     ],
-
     "features": [
       {
         "title": "Available 24/7 for any questions you may have",

@@ -21,13 +21,13 @@ export async function generateStaticParams() {
   return i18n.locales.map(locale => ({ lang: locale }));
 }
 
-export default async function RootLayout({ children, params }) {
-  const dictionary = await getDictionary(params.lang);
-  const { data } = await fetchContacts(params.lang);
+export default async function RootLayout({ children, params: { lang } }) {
+  const dictionary = await getDictionary(lang);
+  const { data } = await fetchContacts(lang);
   const { attributes } = data[0];
 
   return (
-    <html lang={params.lang} dir={params.lang === 'he' ? 'rtl' : 'ltr'}>
+    <html lang={lang} dir={lang === 'he' ? 'rtl' : 'ltr'}>
       <link
         rel="icon"
         href="/icon?<generated>"
@@ -43,11 +43,7 @@ export default async function RootLayout({ children, params }) {
         fontSize={18}
       >
         <Providers>
-          <Header
-            lang={params.lang}
-            dictionary={dictionary}
-            attributes={attributes}
-          />
+          <Header lang={lang} dictionary={dictionary} attributes={attributes} />
           <AnimatedMain>{children}</AnimatedMain>
           <Footer />
         </Providers>

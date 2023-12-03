@@ -6,7 +6,6 @@ import {
   Heading,
   Text,
   IconButton,
-  Button,
   VStack,
   HStack,
   Wrap,
@@ -16,6 +15,7 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  InputRightElement,
 } from '@chakra-ui/react';
 import {
   MdPhone,
@@ -27,14 +27,13 @@ import {
 import { BsGithub, BsDiscord, BsPerson } from 'react-icons/bs';
 import SubmitButton from '../submitButton/SubmitButton';
 import ReactInputMask from 'react-input-mask';
+import useLang from '@/app/lib/hooks/useLang';
 
-const FormContact = ({
-  dictionary,
-  // contacts
-}) => {
+const ModalContact = ({ dictionary, contacts }) => {
+  const lang = useLang();
   return (
     <Flex>
-      <Box p={4}>
+      <Box>
         <Wrap spacing={{ base: 20, sm: 3, md: 5, lg: 20 }}>
           <WrapItem>
             <Box>
@@ -44,48 +43,59 @@ const FormContact = ({
               </Text>
               <Box py={{ base: 5, sm: 5, md: 8, lg: 10 }}>
                 <VStack pl={0} spacing={3} alignItems="flex-start">
-                  {/* <a href=`tel:${contacts.phone}`> */}
-                  <a href="tel:+491570156">
-                    <Button
-                      size="md"
-                      height="48px"
-                      width="200px"
-                      variant="ghost"
-                      color="#DCE2FF"
-                      _hover={{ border: '2px solid #a28445' }}
-                      leftIcon={<MdPhone color="#a28445" size="20px" />}
-                    >
-                      +91-988888888
-                      {/* {contacts.phone} */}
-                    </Button>
-                  </a>
-                  {/* <a href=`mailto:${contacts.mail}`> */}
-                  <a href="mailto:nowhere@mozilla.org">
-                    <Button
-                      size="md"
-                      height="48px"
-                      width="200px"
-                      variant="ghost"
-                      color="#DCE2FF"
-                      _hover={{ border: '2px solid #a28445' }}
-                      leftIcon={<MdEmail color="#a28445" size="20px" />}
-                    >
-                      {/* {contacts.mail} */}
-                      hello@abc.com
-                    </Button>
-                  </a>
-                  <Button
+                  <Box
+                    display={'flex'}
+                    gap={2}
+                    borderRadius={'5px'}
+                    p={2}
+                    as="a"
+                    href={`tel:${contacts.phone}`}
                     size="md"
-                    height="48px"
-                    width="200px"
-                    variant="ghost"
+                    minH="48px"
+                    max-width="200px"
                     color="#DCE2FF"
-                    _hover={{ border: '2px solid #a28445' }}
-                    leftIcon={<MdLocationOn color="#a28445" size="20px" />}
+                    transition="all 300ms ease"
+                    _hover={{ outline: '1px solid #a28445' }}
                   >
-                    {/* {contacts.address} */}
-                    Karnavati, Israel
-                  </Button>
+                    <MdPhone color="#a28445" size="20px" />
+                    <Text>{contacts.phone}</Text>
+                  </Box>
+
+                  <Box
+                    display={'flex'}
+                    gap={2}
+                    borderRadius={'5px'}
+                    p={2}
+                    as="a"
+                    href={`mailto:${contacts.mail}`}
+                    size="md"
+                    minH="48px"
+                    width="fit-content"
+                    color="#DCE2FF"
+                    transition="all 300ms ease"
+                    _hover={{ outline: '1px solid #a28445' }}
+                  >
+                    <MdEmail color="#a28445" size="20px" />
+                    <Text>{contacts.email}</Text>
+                  </Box>
+
+                  <Box
+                    display={'flex'}
+                    gap={2}
+                    borderRadius={'5px'}
+                    p={2}
+                    as="a"
+                    size="md"
+                    minH="48px"
+                    width="200px"
+                    color="#DCE2FF"
+                    transition="all 300ms ease"
+                    _hover={{ outline: '1px solid #a28445' }}
+                    style={{ whiteSpace: 'break-spaces' }}
+                  >
+                    <MdLocationOn color="#a28445" size="40px" />
+                    <Text>{contacts.address}</Text>
+                  </Box>
                 </VStack>
               </Box>
               <HStack
@@ -131,32 +141,60 @@ const FormContact = ({
                   <FormControl id="name">
                     <FormLabel>{dictionary.formContact.nameLabel}</FormLabel>
                     <InputGroup borderColor="#E0E1E7">
-                      <InputLeftElement pointerEvents="none">
-                        <BsPerson color="gray.800" />
-                      </InputLeftElement>
+                      {lang === 'he' ? (
+                        <InputRightElement pointerEvents="none">
+                          <BsPerson color="gray.800" />
+                        </InputRightElement>
+                      ) : (
+                        <InputLeftElement pointerEvents="none">
+                          <BsPerson color="gray.800" />
+                        </InputLeftElement>
+                      )}
                       <Input
+                        dir={lang === 'he' ? 'rtl' : 'ltr'}
                         autoFocus
                         type="text"
                         size="md"
                         bgColor={'white'}
+                        name="name"
+                        px={10}
                       />
                     </InputGroup>
                   </FormControl>
                   <FormControl id="name">
                     <FormLabel>{dictionary.formContact.mailLabel}</FormLabel>
                     <InputGroup borderColor="#E0E1E7">
-                      <InputLeftElement pointerEvents="none">
-                        <MdOutlineEmail color="gray.800" />
-                      </InputLeftElement>
-                      <Input type="text" size="md" bgColor={'white'} />
+                      {lang === 'he' ? (
+                        <InputRightElement pointerEvents="none">
+                          <MdOutlineEmail color="gray.800" />
+                        </InputRightElement>
+                      ) : (
+                        <InputLeftElement pointerEvents="none">
+                          <MdOutlineEmail color="gray.800" />
+                        </InputLeftElement>
+                      )}
+                      <Input
+                        dir={lang === 'he' ? 'rtl' : 'ltr'}
+                        type="email"
+                        size="md"
+                        bgColor={'white'}
+                        name="email"
+                        px={10}
+                      />
                     </InputGroup>
                   </FormControl>
                   <FormControl id="name">
                     <FormLabel>{dictionary.formContact.phoneLabel}</FormLabel>
                     <InputGroup borderColor="#E0E1E7">
-                      <InputLeftElement pointerEvents="none">
-                        <MdPhone color="gray.800" />
-                      </InputLeftElement>
+                      {lang === 'he' ? (
+                        <InputRightElement pointerEvents="none">
+                          <MdPhone color="gray.800" />
+                        </InputRightElement>
+                      ) : (
+                        <InputLeftElement pointerEvents="none">
+                          <MdPhone color="gray.800" />
+                        </InputLeftElement>
+                      )}
                       <Input
                         as={ReactInputMask}
                         type="tel"
@@ -164,7 +202,9 @@ const FormContact = ({
                         border={'none'}
                         bgColor={'white'}
                         size="md"
-                        mask={'+\\972-***-**-**'}
+                        mask={'+\\972-**-***-****'}
+                        textAlign={lang === 'he' ? 'right' : 'left'}
+                        px={10}
                       />
                     </InputGroup>
                   </FormControl>
@@ -179,4 +219,4 @@ const FormContact = ({
   );
 };
 
-export default FormContact;
+export default ModalContact;

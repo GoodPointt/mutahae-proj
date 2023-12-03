@@ -16,7 +16,7 @@ const ModalWindow = ({ onClose, isOpen, children }) => {
         bgSize={'cover'}
         bgPos={'center'}
         bgRepeat={'no-repeat'}
-        maxW={'840px'}
+        maxW={{ sm: '480px', md: '760px', lg: '840px' }}
       >
         <ModalCloseButton _hover={{ color: '#a28445' }} />
         <ModalBody pb={6}>{children}</ModalBody>
