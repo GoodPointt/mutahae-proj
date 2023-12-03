@@ -8,7 +8,6 @@ import Header from '@/app/ui/header/Header';
 import Footer from '@/app/ui/footer/Footer';
 import AnimatedMain from '../ui/AnimatedMain';
 import { getDictionary } from '../lib/locales/dictionary';
-import { fetchContacts } from '../lib/api/instance';
 
 const inter = Montserrat({ subsets: ['latin'] });
 
@@ -23,9 +22,6 @@ export async function generateStaticParams() {
 
 export default async function RootLayout({ children, params: { lang } }) {
   const dictionary = await getDictionary(lang);
-  const {
-    data: [{ attributes: contacts }],
-  } = await fetchContacts(lang);
 
   return (
     <html lang={lang} dir={lang === 'he' ? 'rtl' : 'ltr'}>
@@ -38,13 +34,13 @@ export default async function RootLayout({ children, params: { lang } }) {
 
       <Box
         as="body"
-        bg={'linear-gradient(to right, #4776e6, #8e54e9)'}
+        bg={'#181617'}
         color={'white'}
         className={inter.className}
         fontSize={18}
       >
         <Providers>
-          <Header lang={lang} dictionary={dictionary} contacts={contacts} />
+          <Header lang={lang} dictionary={dictionary} />
           <AnimatedMain>{children}</AnimatedMain>
           <Footer />
         </Providers>
