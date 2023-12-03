@@ -67,17 +67,20 @@
         "feat": "15"
       }
     ],
-    "team": [
-      {
-        "name": "Tamara",
-        "position": "SMM"
-      },
-      { "name": "Simon", "position": "Manager" },
-      {
-        "name": "Sam",
-        "position": "Co-owner"
-      }
-    ]
+    "team": {
+      "title": "Our Team",
+      "members": [
+        {
+          "name": "Tamara",
+          "position": "SMM"
+        },
+        { "name": "Simon", "position": "Manager" },
+        {
+          "name": "Sam",
+          "position": "Co-owner"
+        }
+      ]
+    }
   },
   "formContact": {
     "title": "Contact",

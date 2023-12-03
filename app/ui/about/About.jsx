@@ -34,7 +34,7 @@ const About = ({ dictionary, contacts }) => {
             },
           }}
           _after={{
-            display: 'block',
+            display: ['block', 'block'],
             content: '""',
             position: 'absolute',
             top: 0,
@@ -43,8 +43,9 @@ const About = ({ dictionary, contacts }) => {
             w: '1px',
             bgColor: '#a28445',
           }}
-          ml={'24px'}
-          w={'55%'}
+          fontSize={{ base: '14px', sm: '16px' }}
+          w={{ base: '100%', lg: '75%', xl: '55%' }}
+          ml={{ base: '0px', sm: '24px' }}
         >
           <List display={'flex'} flexDirection={'column'} gap={'24px'}>
             {dictionary?.aboutUs.main.map(el => (
