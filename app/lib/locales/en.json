@@ -12,6 +12,10 @@
   "header": {
     "navItems": [
       {
+        "title": "Home",
+        "path": "/"
+      },
+      {
         "title": "Catalog",
         "path": "/catalog"
       },
