@@ -6,8 +6,6 @@ const Header = async ({ lang, dictionary }) => {
     data: [{ attributes }],
   } = await fetchContacts(lang);
 
-  console.log('ATT', attributes);
-  // const { attributes } = data[0];
   return (
     <HeaderWrapper dictionary={dictionary} lang={lang} contacts={attributes} />
   );

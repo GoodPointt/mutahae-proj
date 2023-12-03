@@ -8,16 +8,19 @@ import React from 'react';
 const MenuLink = ({ item, lang }) => {
   const pathname = usePathname();
 
+  const isActive =
+    pathname === '/' + lang + item.path ||
+    (pathname === `/${lang}` && item.path === '/');
+
   return (
     <ListItem
-      key={item.title}
       _hover={{
         transform: 'translateX(5px)',
         cursor: 'pointer',
         color: '#a98841',
       }}
       transition={'all 0.3s'}
-      color={pathname.includes(item.path) && '#a98841'}
+      color={isActive ? '#a98841' : 'inherit'}
     >
       <Link
         href={'/' + lang + item.path}
