@@ -5,11 +5,14 @@ import CatalogSlider from '@/app/ui/catalogSlider/CatalogSlider';
 import Contact from '@/app/ui/contact/Contact';
 import About from '@/app/ui/about/About';
 import { getDictionary } from '@/app/lib/locales/dictionary';
-import { fetchProducts } from '../lib/api/instance';
+import { fetchContacts, fetchProducts } from '../lib/api/instance';
 
 const Homepage = async ({ params: { lang } }) => {
   const dictionary = await getDictionary(lang);
   const { data } = await fetchProducts(lang);
+  const {
+    data: [{ attributes: contacts }],
+  } = await fetchContacts(lang);
 
   return (
     <Box>
@@ -19,7 +22,7 @@ const Homepage = async ({ params: { lang } }) => {
         lang={lang}
         heading={dictionary.header.navItems[0].title}
       />
-      <About dictionary={dictionary} />
+      <About dictionary={dictionary} contacts={contacts} />
       <Contact />
     </Box>
   );
