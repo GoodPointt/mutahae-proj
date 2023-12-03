@@ -1,39 +1,39 @@
 'use client';
 
 import React from 'react';
-import { HiLocationMarker } from 'react-icons/hi';
-import { Box } from '@chakra-ui/react';
-import { APIProvider, Map, Marker } from '@vis.gl/react-google-maps';
-
-const AnyReactComponent = ({ text }) => (
-  <Box>
-    <HiLocationMarker color="crimson" size={30} />
-  </Box>
-);
+import { Box, Flex, Image, Text } from '@chakra-ui/react';
+import { APIProvider, AdvancedMarker, Map } from '@vis.gl/react-google-maps';
+import mapMarker from '../../../public/mapMarker.png';
 
 const GoogleMap = () => {
   const defaultProps = {
     center: {
-      lat: 50.46649991907429,
-      lng: 30.485238674923373,
+      lat: 31.521684,
+      lng: 34.609859,
     },
-    zoom: 11,
+    zoom: 12,
   };
 
   return (
-    <Box w={300} h={300}>
+    <Box w="100%" h={{ base: '400px', lg: '100%' }}>
       <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY}>
         <Map
           center={defaultProps.center}
           zoom={defaultProps.zoom}
-          //gestureHandling={"cooperative"}
           disableDefaultUI={true}
+          mapId={process.env.NEXT_PUBLIC_MAP_ID}
         >
-          <Marker position={defaultProps.center} />
+          <AdvancedMarker position={defaultProps.center}>
+            <Flex justify="center" flexDir="column" align="center" gap="4px">
+              <Text fontSize="md" color="#a28445">
+                Motag haetz ltd
+              </Text>
+              <Image src={mapMarker.src} alt="marker" w={30} h={30} />
+            </Flex>
+          </AdvancedMarker>
         </Map>
       </APIProvider>
     </Box>
   );
 };
 export default GoogleMap;
-///AIzaSyCWeILQzFj9MtlzhD_dtUcvV844h3g0z7E

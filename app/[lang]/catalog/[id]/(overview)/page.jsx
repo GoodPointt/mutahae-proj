@@ -21,7 +21,7 @@ const SingleProductPage = async ({ params: { id, lang } }) => {
           contacts={contacts}
         />
       </Suspense>
-      <Contact />
+      <Contact lang={lang} dictionary={dictionary} />
     </>
   );
 };

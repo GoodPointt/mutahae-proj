@@ -9,9 +9,10 @@ import { getDictionary } from '@/app/lib/locales/dictionary';
 
 const CatalogPage = async ({ params: { lang } }) => {
   const { data } = await fetchProducts(lang);
+  const dictionary = await getDictionary(lang);
   const {
     header: { navItems },
-  } = await getDictionary(lang);
+  } = dictionary;
 
   return (
     <>
@@ -38,7 +39,7 @@ const CatalogPage = async ({ params: { lang } }) => {
           </Grid>
         </SectionWrapper>
       </Suspense>
-      <Contact />
+      <Contact lang={lang} dictionary={dictionary} />
     </>
   );
 };

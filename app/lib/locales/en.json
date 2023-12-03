@@ -80,11 +80,26 @@
     ]
   },
   "formContact": {
+    "sectionTitle": "Contact us",
     "title": "Contact",
     "text": "Fill up the form below to contact",
     "nameLabel": "Your Name",
     "mailLabel": "Mail",
-    "phoneLabel": "Phone"
+    "phoneLabel": "Phone",
+    "errors": {
+      "name": {
+        "required": "Name is required",
+        "invalid": "Name should contain only alphabets"
+      },
+      "email": {
+        "required": "Email is required",
+        "invalid": "Email is not valid"
+      },
+      "phone": {
+        "required": "Phone number is required",
+        "invalid": "Phone number is not valid"
+      }
+    }
   },
   "hero": { "title": "Create the future with quality wood" }
 }

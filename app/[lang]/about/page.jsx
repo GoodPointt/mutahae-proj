@@ -6,12 +6,13 @@ import Team from '@/app/ui/team/Team';
 
 const AboutPage = async ({ params: { lang } }) => {
   const dictionary = await getDictionary(lang);
+
   return (
     <div>
       <About dictionary={dictionary} />
       <Features dictionary={dictionary.aboutUs.features} />
       <Team dictionary={dictionary.aboutUs.team} />
-      <Contact dictionary={dictionary} />
+      <Contact dictionary={dictionary} lang={lang} />
     </div>
   );
 };
