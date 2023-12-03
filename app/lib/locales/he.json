@@ -67,17 +67,20 @@
         "feat": "15"
       }
     ],
-    "team": [
-      {
-        "name": "Tamara",
-        "position": "SMM"
-      },
-      { "name": "Simon", "position": "Manager" },
-      {
-        "name": "Sam",
-        "position": "Co-owner"
-      }
-    ]
+    "team": {
+      "title": "הצוות שלנו",
+      "members": [
+        {
+          "name": "Tamara",
+          "position": "SMM"
+        },
+        { "name": "Simon", "position": "Manager" },
+        {
+          "name": "Sam",
+          "position": "Co-owner"
+        }
+      ]
+    }
   },
   "formContact": {
     "sectionTitle": "צור קשר",
@@ -101,5 +104,10 @@
       }
     }
   },
-  "hero": { "title": "צור את העתיד עם עץ איכותי" }
+  "hero": {
+    "title": "צור את העתיד עם עץ איכותי",
+    "desc": "חקור את הקטלוג שלנו וגלה כיצד מוצרי העץ שלנו יכולים להוסיף סגנון ושלמות ייחודיים לפרויקטים שלך",
+    "btnCatalog": "קָטָלוֹג",
+    "btnContactUs": "צור קשר"
+  }
 }

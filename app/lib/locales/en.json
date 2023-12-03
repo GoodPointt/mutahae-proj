@@ -67,17 +67,20 @@
         "feat": "15"
       }
     ],
-    "team": [
-      {
-        "name": "Tamara",
-        "position": "SMM"
-      },
-      { "name": "Simon", "position": "Manager" },
-      {
-        "name": "Sam",
-        "position": "Co-owner"
-      }
-    ]
+    "team": {
+      "title": "Our Team",
+      "members": [
+        {
+          "name": "Tamara",
+          "position": "SMM"
+        },
+        { "name": "Simon", "position": "Manager" },
+        {
+          "name": "Sam",
+          "position": "Co-owner"
+        }
+      ]
+    }
   },
   "formContact": {
     "sectionTitle": "Contact us",
@@ -101,5 +104,10 @@
       }
     }
   },
-  "hero": { "title": "Create the future with quality wood" }
+  "hero": {
+    "title": "Create the future with quality wood",
+    "desc": "Explore our catalog and discover how our wooden products can add a unique style and perfection to your projects",
+    "btnCatalog": "Catalog",
+    "btnContactUs": "Contact Us"
+  }
 }

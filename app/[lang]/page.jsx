@@ -16,7 +16,7 @@ const Homepage = async ({ params: { lang } }) => {
 
   return (
     <Box>
-      <Hero dictionary={dictionary} />
+      <Hero dictionary={dictionary} lang={lang} />
       <CatalogSlider
         products={data}
         lang={lang}

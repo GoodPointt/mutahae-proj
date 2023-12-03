@@ -202,3 +202,20 @@ a:hover {
 .recharts-surface {
   color: white;
 }
+
+@media (max-width: 999px) {
+  main {
+    padding-top: 80px;
+  }
+}
+
+@media (min-width: 1000px) {
+  main {
+    padding-top: 150px;
+  }
+}
+@media (min-width: 1176px) {
+  main {
+    padding-top: 155px;
+  }
+}
