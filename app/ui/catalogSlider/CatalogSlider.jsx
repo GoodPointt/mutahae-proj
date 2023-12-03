@@ -13,7 +13,10 @@ import ProductItem from '@/app/ui/productItem/ProductItem';
 
 const CatalogSlider = ({ products, lang, heading }) => {
   return (
-    <SectionWrapper heading={heading} bg={"url('/crooked-line.png')"}>
+    <SectionWrapper
+      heading={heading}
+      bg={'radial-gradient(#434343 20%, black 100%)'}
+    >
       <Swiper
         className="mySwiper2"
         navigation

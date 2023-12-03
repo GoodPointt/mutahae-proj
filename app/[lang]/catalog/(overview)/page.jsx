@@ -16,7 +16,10 @@ const CatalogPage = async ({ params: { lang } }) => {
   return (
     <>
       <Suspense fallback={<SkeletonProductsGrid />}>
-        <SectionWrapper heading={navItems[1].title}>
+        <SectionWrapper
+          heading={navItems[1].title}
+          bg={'linear-gradient(to right, #434343 0%, black 100%);'}
+        >
           <Grid
             as={'ul'}
             maxW={'100%'}

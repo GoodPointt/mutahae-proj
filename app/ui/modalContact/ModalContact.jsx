@@ -16,7 +16,6 @@ import {
   InputGroup,
   InputLeftElement,
   InputRightElement,
-  FormErrorMessage,
   FormHelperText,
 } from '@chakra-ui/react';
 import {
@@ -61,6 +60,7 @@ const ModalContact = ({ dictionary, contacts }) => {
     })();
   }, [state]);
   const lang = useLang();
+
   return (
     <Flex>
       <Box>
@@ -85,7 +85,10 @@ const ModalContact = ({ dictionary, contacts }) => {
                     max-width="200px"
                     color="#DCE2FF"
                     transition="all 300ms ease"
-                    _hover={{ outline: '1px solid #a28445' }}
+                    _hover={{
+                      color: '#a68640',
+                      transform: 'translateX(10px)',
+                    }}
                   >
                     <MdPhone color="#a28445" size="20px" />
                     <Text>{contacts.phone}</Text>
@@ -103,7 +106,10 @@ const ModalContact = ({ dictionary, contacts }) => {
                     width="fit-content"
                     color="#DCE2FF"
                     transition="all 300ms ease"
-                    _hover={{ outline: '1px solid #a28445' }}
+                    _hover={{
+                      color: '#a68640',
+                      transform: 'translateX(10px)',
+                    }}
                   >
                     <MdEmail color="#a28445" size="20px" />
                     <Text>{contacts.email}</Text>
@@ -120,7 +126,10 @@ const ModalContact = ({ dictionary, contacts }) => {
                     width="200px"
                     color="#DCE2FF"
                     transition="all 300ms ease"
-                    _hover={{ outline: '1px solid #a28445' }}
+                    _hover={{
+                      color: '#a68640',
+                      transform: 'translateX(5px)',
+                    }}
                     style={{ whiteSpace: 'break-spaces' }}
                   >
                     <MdLocationOn color="#a28445" size="40px" />
@@ -140,7 +149,8 @@ const ModalContact = ({ dictionary, contacts }) => {
                   variant="ghost"
                   size="lg"
                   isRound={true}
-                  _hover={{ bg: '#333331' }}
+                  _hover={{ bg: '#333331', transform: 'scale(1.1)' }}
+                  transition="all 300ms ease"
                   icon={<MdFacebook size="28px" />}
                 />
                 <IconButton
@@ -149,7 +159,8 @@ const ModalContact = ({ dictionary, contacts }) => {
                   variant="ghost"
                   size="lg"
                   isRound={true}
-                  _hover={{ bg: '#333331' }}
+                  _hover={{ bg: '#333331', transform: 'scale(1.1)' }}
+                  transition="all 300ms ease"
                   icon={<BsGithub size="28px" />}
                 />
                 <IconButton
@@ -158,7 +169,8 @@ const ModalContact = ({ dictionary, contacts }) => {
                   variant="ghost"
                   size="lg"
                   isRound={true}
-                  _hover={{ bg: '#333331' }}
+                  _hover={{ bg: '#333331', transform: 'scale(1.1)' }}
+                  transition="all 300ms ease"
                   icon={<BsDiscord size="28px" />}
                 />
               </HStack>
@@ -182,7 +194,11 @@ const ModalContact = ({ dictionary, contacts }) => {
                       )}
                       <Input
                         focusBorderColor="#a28445"
-                        dir={lang === 'he' ? 'rtl' : 'ltr'}
+                        style={
+                          lang === 'he'
+                            ? { direction: 'ltr', textAlign: 'right' }
+                            : null
+                        }
                         autoFocus
                         type="text"
                         size="md"
@@ -219,7 +235,6 @@ const ModalContact = ({ dictionary, contacts }) => {
                       )}
                       <Input
                         focusBorderColor="#a28445"
-                        dir={lang === 'he' ? 'rtl' : 'ltr'}
                         type="email"
                         size="md"
                         bgColor={'white'}
@@ -227,6 +242,11 @@ const ModalContact = ({ dictionary, contacts }) => {
                         px={10}
                         isInvalid={state?.errors?.email}
                         errorBorderColor="crimson"
+                        style={
+                          lang === 'he'
+                            ? { direction: 'ltr', textAlign: 'right' }
+                            : null
+                        }
                       />
                       {emailError && (
                         <FormHelperText
@@ -261,10 +281,14 @@ const ModalContact = ({ dictionary, contacts }) => {
                         bgColor={'white'}
                         size="md"
                         mask={'+\\972-**-***-****'}
-                        textAlign={lang === 'he' ? 'right' : 'left'}
                         px={10}
                         isInvalid={state?.errors?.phone}
                         errorBorderColor="crimson"
+                        style={
+                          lang === 'he'
+                            ? { direction: 'ltr', textAlign: 'right' }
+                            : null
+                        }
                       />
                       {phoneError && (
                         <FormHelperText
