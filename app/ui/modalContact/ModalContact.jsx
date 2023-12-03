@@ -199,7 +199,6 @@ const ModalContact = ({ dictionary, contacts }) => {
                             ? { direction: 'ltr', textAlign: 'right' }
                             : null
                         }
-                        autoFocus
                         type="text"
                         size="md"
                         bgColor={'white'}
