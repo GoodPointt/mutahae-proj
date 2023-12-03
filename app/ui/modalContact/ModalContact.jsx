@@ -16,6 +16,8 @@ import {
   InputGroup,
   InputLeftElement,
   InputRightElement,
+  FormErrorMessage,
+  FormHelperText,
 } from '@chakra-ui/react';
 import {
   MdPhone,
@@ -26,15 +28,43 @@ import {
 } from 'react-icons/md';
 import { BsGithub, BsDiscord, BsPerson } from 'react-icons/bs';
 import SubmitButton from '../submitButton/SubmitButton';
+import { useFormState } from 'react-dom';
+import { submitData } from '../../lib/actions';
+import sendEmail from '../../lib/utils/sendEmail';
 import ReactInputMask from 'react-input-mask';
 import useLang from '@/app/lib/hooks/useLang';
+import { useEffect } from 'react';
 
 const ModalContact = ({ dictionary, contacts }) => {
+  const [state, dispatch] = useFormState(submitData, undefined);
+
+  const nameError =
+    state?.errors?.name && state?.errors?.name.length > 0
+      ? state.errors.name[0]
+      : null;
+
+  const emailError =
+    state?.errors?.email && state?.errors?.email.length > 0
+      ? state.errors.email[0]
+      : null;
+
+  const phoneError =
+    state?.errors?.phone && state?.errors?.phone.length > 0
+      ? state.errors.phone[0]
+      : null;
+
+  useEffect(() => {
+    (() => {
+      if (state?.message === 'succsess') {
+        sendEmail(state);
+      }
+    })();
+  }, [state]);
   const lang = useLang();
   return (
     <Flex>
       <Box>
-        <Wrap spacing={{ base: 20, sm: 3, md: 5, lg: 20 }}>
+        <Wrap spacing={{ base: 20, sm: 3, md: 4, lg: 20 }}>
           <WrapItem>
             <Box>
               <Heading>{dictionary.formContact.title}</Heading>
@@ -136,7 +166,7 @@ const ModalContact = ({ dictionary, contacts }) => {
           </WrapItem>
           <WrapItem>
             <Box bgColor={'#cfd0d5'} borderRadius="lg">
-              <Box as="form" action={''} m={8} color="#0B0E3F">
+              <Box as="form" action={dispatch} m={8} color="#0B0E3F">
                 <VStack spacing={5}>
                   <FormControl id="name">
                     <FormLabel>{dictionary.formContact.nameLabel}</FormLabel>
@@ -151,6 +181,7 @@ const ModalContact = ({ dictionary, contacts }) => {
                         </InputLeftElement>
                       )}
                       <Input
+                        focusBorderColor="#a28445"
                         dir={lang === 'he' ? 'rtl' : 'ltr'}
                         autoFocus
                         type="text"
@@ -158,7 +189,20 @@ const ModalContact = ({ dictionary, contacts }) => {
                         bgColor={'white'}
                         name="name"
                         px={10}
+                        isInvalid={state?.errors?.name}
+                        errorBorderColor="crimson"
                       />
+
+                      {nameError && (
+                        <FormHelperText
+                          display={'block'}
+                          color={'crimson'}
+                          pos={'absolute'}
+                          bottom={'-20px'}
+                        >
+                          {nameError}
+                        </FormHelperText>
+                      )}
                     </InputGroup>
                   </FormControl>
                   <FormControl id="name">
@@ -174,13 +218,26 @@ const ModalContact = ({ dictionary, contacts }) => {
                         </InputLeftElement>
                       )}
                       <Input
+                        focusBorderColor="#a28445"
                         dir={lang === 'he' ? 'rtl' : 'ltr'}
                         type="email"
                         size="md"
                         bgColor={'white'}
                         name="email"
                         px={10}
+                        isInvalid={state?.errors?.email}
+                        errorBorderColor="crimson"
                       />
+                      {emailError && (
+                        <FormHelperText
+                          display={'block'}
+                          color={'crimson'}
+                          pos={'absolute'}
+                          bottom={'-20px'}
+                        >
+                          {emailError}
+                        </FormHelperText>
+                      )}
                     </InputGroup>
                   </FormControl>
                   <FormControl id="name">
@@ -196,16 +253,29 @@ const ModalContact = ({ dictionary, contacts }) => {
                         </InputLeftElement>
                       )}
                       <Input
+                        focusBorderColor="#a28445"
                         as={ReactInputMask}
                         type="tel"
                         name="phone"
-                        border={'none'}
+                        border={'1px solid transparent'}
                         bgColor={'white'}
                         size="md"
                         mask={'+\\972-**-***-****'}
                         textAlign={lang === 'he' ? 'right' : 'left'}
                         px={10}
+                        isInvalid={state?.errors?.phone}
+                        errorBorderColor="crimson"
                       />
+                      {phoneError && (
+                        <FormHelperText
+                          display={'block'}
+                          color={'crimson'}
+                          pos={'absolute'}
+                          bottom={'-20px'}
+                        >
+                          Invalid phone number
+                        </FormHelperText>
+                      )}
                     </InputGroup>
                   </FormControl>
                   <SubmitButton>{dictionary.buttons.send}</SubmitButton>

@@ -10,7 +10,7 @@ import TopBar from './topBar/TopBar';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import MobileMenu from './mobileMenu/MobileMenu';
 
-const Header = ({ lang, dictionary, attributes }) => {
+const Header = ({ lang, dictionary, contacts }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef();
 
@@ -22,7 +22,7 @@ const Header = ({ lang, dictionary, attributes }) => {
       pt="0"
     >
       <Box display={{ base: 'none', lg: 'block' }}>
-        <TopBar lang={lang} attributes={attributes} />
+        <TopBar lang={lang} contacts={contacts} />
       </Box>
       <Flex justify={'space-between'} alignItems={'center'} py={'16px'}>
         <Link href={'/' + lang}>
@@ -58,12 +58,7 @@ const Header = ({ lang, dictionary, attributes }) => {
 
       <MobileMenu isOpen={isOpen} onClose={onClose}>
         <NavBar flexDir="column" lang={lang} dictionary={dictionary} />
-        <TopBar
-          lang={lang}
-          flexDir="column"
-          gap="32px"
-          attributes={attributes}
-        />
+        <TopBar lang={lang} flexDir="column" gap="32px" contacts={contacts} />
       </MobileMenu>
     </SectionWrapper>
   );
