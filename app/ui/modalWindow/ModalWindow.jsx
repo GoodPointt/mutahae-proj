@@ -1,3 +1,6 @@
+'use client';
+
+import useLang from '@/app/lib/hooks/useLang';
 import {
   Modal,
   ModalBody,
@@ -7,12 +10,15 @@ import {
 } from '@chakra-ui/react';
 
 const ModalWindow = ({ onClose, isOpen, children }) => {
+  const lang = useLang();
+
+  const gradientDirection = lang === 'he' ? 'right' : 'left';
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
       <ModalContent
         pt={10}
-        bgColor={'gray.800'}
+        bgImage={`linear-gradient(to ${gradientDirection}, #434343 0%, black 100%)`}
         bgSize={'cover'}
         bgPos={'center'}
         bgRepeat={'no-repeat'}
