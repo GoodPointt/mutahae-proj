@@ -3,9 +3,8 @@
 import { Link } from '@chakra-ui/next-js';
 import { ListItem } from '@chakra-ui/react';
 import { usePathname } from 'next/navigation';
-import React from 'react';
 
-const MenuLink = ({ item, lang }) => {
+const MenuLink = ({ item, lang, onClose }) => {
   const pathname = usePathname();
 
   const isActive =
@@ -21,6 +20,7 @@ const MenuLink = ({ item, lang }) => {
       }}
       transition={'all 0.3s'}
       color={isActive ? '#a98841' : 'inherit'}
+      onClick={() => onClose()}
     >
       <Link
         href={'/' + lang + item.path}

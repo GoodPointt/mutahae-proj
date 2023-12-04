@@ -1,10 +1,13 @@
-import SectionWrapper from '@/app/ui/sectionWrapper/SectionWrapper';
+import { fetchContacts } from '@/app/lib/api/instance';
+import FooterWrapper from './footerWrapper/FooterWrapper';
 
-const Footer = () => {
+const Footer = async ({ lang, dictionary }) => {
+  const {
+    data: [{ attributes }],
+  } = await fetchContacts(lang);
+
   return (
-    <SectionWrapper as={'footer'} bg="black">
-      F_O_O_T_E_R
-    </SectionWrapper>
+    <FooterWrapper dictionary={dictionary} lang={lang} contacts={attributes} />
   );
 };
 

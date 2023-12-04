@@ -8,6 +8,7 @@ import Header from '@/app/ui/header/Header';
 import Footer from '@/app/ui/footer/Footer';
 import AnimatedMain from '../ui/AnimatedMain';
 import { getDictionary } from '../lib/locales/dictionary';
+import SocialLinks from '../ui/socialLinks/SocialLinks';
 
 const inter = Montserrat({ subsets: ['latin'] });
 
@@ -42,7 +43,8 @@ export default async function RootLayout({ children, params: { lang } }) {
         <Providers>
           <Header lang={lang} dictionary={dictionary} />
           <AnimatedMain>{children}</AnimatedMain>
-          <Footer />
+          <SocialLinks lang={lang} />
+          <Footer lang={lang} dictionary={dictionary} />
         </Providers>
       </Box>
     </html>
