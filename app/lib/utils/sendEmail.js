@@ -1,18 +1,12 @@
-import emailjs from "emailjs-com";
+import emailjs from 'emailjs-com';
 
-const {
-  NEXT_PUBLIC_EMAIL_JS_USER_ID,
-  NEXT_PUBLIC_EMAIL_JS_SERVICE_ID,
-  NEXT_PUBLIC_EMAIL_JS_TEMPLATE_ID,
-  NEXT_PUBLIC_TOEMAIL,
-} = process.env;
+emailjs.init(process.env.NEXT_PUBLIC_EMAIL_JS_USER_ID);
 
-emailjs.init(NEXT_PUBLIC_EMAIL_JS_USER_ID);
-
-const sendEmail = async (data) => {
+const sendEmail = async data => {
   const { name, email, phone } = data;
   const emailData = {
-    to_email: NEXT_PUBLIC_TOEMAIL,
+    // to_email: process.env.NEXT_PUBLIC_TOEMAIL,
+    to_email: 'dev6012@gmail.com',
     subject: `${name}`,
     from_name: `${name}`,
     message: `
@@ -24,12 +18,12 @@ const sendEmail = async (data) => {
 
   try {
     await emailjs.send(
-      NEXT_PUBLIC_EMAIL_JS_SERVICE_ID,
-      NEXT_PUBLIC_EMAIL_JS_TEMPLATE_ID,
+      process.env.NEXT_PUBLIC_EMAIL_JS_SERVICE_ID,
+      process.env.NEXT_PUBLIC_EMAIL_JS_TEMPLATE_ID,
       emailData
     );
   } catch (error) {
-    console.error("Error sending email:", error);
+    console.error('Error sending email:', error);
   }
 };
 

@@ -10,10 +10,11 @@ import {
 } from '@chakra-ui/react';
 
 const ModalWindow = ({
+  p = 4,
   onClose,
   isOpen,
   children,
-  maxW = { sm: '480px', md: '760px', lg: '840px' },
+  maxW = { sm: '480px', md: '740px', lg: '860px' },
 }) => {
   const lang = useLang();
 
@@ -22,7 +23,7 @@ const ModalWindow = ({
     <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
       <ModalContent
-        pt={0}
+        p={p}
         bgImage={`linear-gradient(to ${gradientDirection}, #434343 0%, black 100%)`}
         bgSize={'cover'}
         bgPos={'center'}
