@@ -109,5 +109,6 @@
     "desc": "Explore our catalog and discover how our wooden products can add a unique style and perfection to your projects",
     "btnCatalog": "Catalog",
     "btnContactUs": "Contact Us"
-  }
+  },
+  "footer": { "contacts": "Contacts and address" }
 }

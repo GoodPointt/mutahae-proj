@@ -1,10 +1,16 @@
 import { Box, Flex, Link, Text } from '@chakra-ui/react';
 import { FaLocationDot, FaPhone, FaEnvelope } from 'react-icons/fa6';
 
-const ContactsFooter = ({ contacts: { address, phone, email }, lang }) => {
+const ContactsFooter = ({
+  contacts: { address, phone, email, addressUrl },
+  lang,
+  dictionary,
+}) => {
   const iconLink = (icon, text, href) => (
     <Link
       href={href}
+      target="_blank"
+      rel="noopener noreferrer nofollow"
       display="flex"
       alignItems="center"
       color="#a28445"
@@ -30,7 +36,7 @@ const ContactsFooter = ({ contacts: { address, phone, email }, lang }) => {
       flexDirection={'column'}
       gap={'20px'}
     >
-      <Text>Contacts and address</Text>
+      <Text>{dictionary.footer.contacts}</Text>
       <Box
         as="div"
         display="flex"
@@ -39,7 +45,7 @@ const ContactsFooter = ({ contacts: { address, phone, email }, lang }) => {
         py={{ base: '12px' }}
         gap={{ base: '18px', lg: '14px', xl: '16px' }}
       >
-        {iconLink(<FaLocationDot size="24" />, address, address)}
+        {iconLink(<FaLocationDot size="24" />, address, addressUrl)}
         {iconLink(<FaPhone size="24" />, `+${phone}`, `tel:${phone}`)}
         {iconLink(<FaEnvelope size="24" />, email, `mailto:${email}`)}
       </Box>
