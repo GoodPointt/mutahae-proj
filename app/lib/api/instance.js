@@ -51,3 +51,14 @@ export const createContact = async credentials => {
     console.error(e);
   }
 };
+
+const getReviews = async lang => {
+  try {
+    const { data } = await instance.get(`/api/reviews?locale=${lang}`);
+    return data;
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const fetchReviews = cache(getReviews);

@@ -33,7 +33,6 @@ const SectionWrapper = ({
             as={headingAs}
             // color={'#bca26a'}
             mb={{ base: 6, lg: 8 }}
-            fontWeight={900}
             fontSize={{ base: '2xl', lg: '4xl' }}
           >
             {heading}
