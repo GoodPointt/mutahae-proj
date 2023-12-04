@@ -7,7 +7,7 @@ const ReviewsPage = async ({ params: { lang } }) => {
 
   return (
     <>
-      <Reviews />
+      <Reviews lang={lang} dictionary={dictionary} />
       <Contact lang={lang} dictionary={dictionary} />
     </>
   );
