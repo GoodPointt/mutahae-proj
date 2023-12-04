@@ -76,7 +76,12 @@ const HeaderWrapper = ({ lang, dictionary, contacts }) => {
           />
         </Link>
         <Box as="nav" display={{ base: 'none', lg: 'block' }}>
-          <NavBar lang={lang} flexDir="row" dictionary={dictionary} />
+          <NavBar
+            lang={lang}
+            flexDir="row"
+            dictionary={dictionary}
+            onClose={onClose}
+          />
         </Box>
         <Box display={{ base: 'block', lg: 'none' }}>
           <Button
@@ -93,7 +98,12 @@ const HeaderWrapper = ({ lang, dictionary, contacts }) => {
       </Flex>
 
       <MobileMenu isOpen={isOpen} onClose={onClose}>
-        <NavBar flexDir="column" lang={lang} dictionary={dictionary} />
+        <NavBar
+          flexDir="column"
+          lang={lang}
+          dictionary={dictionary}
+          onClose={onClose}
+        />
         <TopBar lang={lang} flexDir="column" gap="32px" contacts={contacts} />
       </MobileMenu>
     </SectionWrapper>

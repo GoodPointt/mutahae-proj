@@ -1,18 +1,7 @@
 import { Box, Flex, Link, Text } from '@chakra-ui/react';
 import { FaLocationDot, FaPhone, FaEnvelope } from 'react-icons/fa6';
-import LocaleSwitcher from '../localeSwitcher/LocaleSwitcher';
 
-const TopBar = ({
-  flexDir = 'row',
-  gap = '0',
-  contacts: {
-    address,
-    email,
-    phone,
-    // insta, fb, watsapp
-  },
-  lang,
-}) => {
+const ContactsFooter = ({ contacts: { address, phone, email }, lang }) => {
   const iconLink = (icon, text, href) => (
     <Link
       href={href}
@@ -25,7 +14,7 @@ const TopBar = ({
       {icon}
       <Box as="div" mx={2}>
         <Text
-          fontSize={{ base: '12px', lg: '14px', xl: '15px' }}
+          fontSize={{ base: '14px', lg: '16px', xl: '18px' }}
           dir={text === address && lang === 'he' ? 'rtl' : 'ltr'}
         >
           {text}
@@ -37,25 +26,25 @@ const TopBar = ({
   return (
     <Flex
       justifyContent="space-between"
-      gap={gap}
-      alignItems={'center'}
-      flexDirection={flexDir}
+      alignItems={'flex-start'}
+      flexDirection={'column'}
+      gap={'20px'}
     >
+      <Text>Contacts and address</Text>
       <Box
         as="div"
         display="flex"
-        flexDirection={{ base: 'column', lg: 'row', xl: 'row' }}
+        flexDirection={'column'}
         alignItems={'flex-start'}
         py={{ base: '12px' }}
         gap={{ base: '18px', lg: '14px', xl: '16px' }}
       >
-        {iconLink(<FaLocationDot size="22" />, address, address)}
-        {iconLink(<FaPhone size="22" />, `+${phone}`, `tel:${phone}`)}
-        {iconLink(<FaEnvelope size="22" />, email, `mailto:${email}`)}
+        {iconLink(<FaLocationDot size="24" />, address, address)}
+        {iconLink(<FaPhone size="24" />, `+${phone}`, `tel:${phone}`)}
+        {iconLink(<FaEnvelope size="24" />, email, `mailto:${email}`)}
       </Box>
-      <LocaleSwitcher />
     </Flex>
   );
 };
 
-export default TopBar;
+export default ContactsFooter;
