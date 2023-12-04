@@ -6,7 +6,6 @@ import {
   Drawer,
   DrawerBody,
   DrawerContent,
-  DrawerFooter,
   DrawerOverlay,
 } from '@chakra-ui/react';
 
@@ -48,8 +47,6 @@ const MobileMenu = ({ children, isOpen, onClose }) => {
               <FaAnglesRight />
             </Button>
           </DrawerBody>
-
-          <DrawerFooter></DrawerFooter>
         </DrawerContent>
       </Drawer>
     </>

@@ -8,6 +8,8 @@ import ContactsFooter from '../contactsFooter/ContactsFooter';
 import BottomBar from '../bottomBar/BottomBar';
 
 const FooterWrapper = ({ lang, dictionary, contacts }) => {
+  const isRTL = lang === 'he';
+
   return (
     <SectionWrapper as={'footer'} bg="black">
       <Flex
@@ -31,17 +33,17 @@ const FooterWrapper = ({ lang, dictionary, contacts }) => {
             }}
           />
         </Link>
-        <ContactsFooter contacts={contacts} lang={lang} />
+        <ContactsFooter
+          contacts={contacts}
+          lang={lang}
+          dictionary={dictionary}
+        />
         <NavBar lang={lang} flexDir="column" dictionary={dictionary} />
       </Flex>
       <Text fontSize={'14px'} textAlign={{ base: 'center', md: 'unset' }}>
-        <Text
-          as={'span'}
-          // dir={lang === 'he' ? 'ltr' : 'rtl'}
-        >
-          ©
-        </Text>{' '}
+        {!isRTL && <Text as={'span'}>©</Text>}
         2023 Mutag Haetz LTD. All rights reserved
+        {isRTL && <Text as={'span'}>©</Text>}
       </Text>
       <BottomBar />
     </SectionWrapper>
