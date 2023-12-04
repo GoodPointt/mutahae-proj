@@ -45,12 +45,14 @@ const ContactForm = ({ dictionary }) => {
           name="name"
           type="text"
           bgColor="#3b3d46"
-          placeholder="שם"
-          dir={lang === 'he' ? 'rtl' : 'ltr'}
+          placeholder={dictionary.formContact.nameLabel}
+          style={
+            lang === 'he' ? { direction: 'ltr', textAlign: 'right' } : null
+          }
           focusBorderColor="#a28445"
           border={'1px solid transparent'}
         />
-        <FormErrorMessage position="absolute" bottom="4px">
+        <FormErrorMessage fontSize={'14px'} position="absolute" bottom="4px">
           {nameError === 'required' ? name.required : name.invalid}
         </FormErrorMessage>
       </FormControl>
@@ -62,12 +64,12 @@ const ContactForm = ({ dictionary }) => {
           focusBorderColor="#a28445"
           border={'1px solid transparent'}
           bgColor="#3b3d46"
-          placeholder="טלפון"
+          placeholder={dictionary.formContact.phoneLabel}
           mask={'+\\972-**-***-****'}
           errorBorderColor="crimson"
           textAlign={lang === 'he' ? 'right' : 'left'}
         />
-        <FormErrorMessage position="absolute" bottom="4px">
+        <FormErrorMessage fontSize={'14px'} position="absolute" bottom="4px">
           {phoneError === 'required' ? phone.required : phone.invalid}
         </FormErrorMessage>
       </FormControl>
@@ -76,12 +78,14 @@ const ContactForm = ({ dictionary }) => {
           name="email"
           type="email"
           bgColor="#3b3d46"
-          placeholder="דואר אלקטרוני"
-          dir={lang === 'he' ? 'rtl' : 'ltr'}
+          placeholder={dictionary.formContact.mailLabel}
+          style={
+            lang === 'he' ? { direction: 'ltr', textAlign: 'right' } : null
+          }
           focusBorderColor="#a28445"
           border={'1px solid transparent'}
         />
-        <FormErrorMessage position="absolute" bottom="4px">
+        <FormErrorMessage fontSize={'14px'} position="absolute" bottom="4px">
           {emailError === 'required' ? email.required : email.invalid}
         </FormErrorMessage>
       </FormControl>

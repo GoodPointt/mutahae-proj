@@ -43,14 +43,14 @@
   border-radius: 10px;
 }
 
-.mySwiper2 .swiper-slide.swiper-slide-active .news_card {
+.mySwiper2 .swiper-slide.swiper-slide-active .product_card {
   @media (max-width: 1199px) {
     transform: scale(1.05);
     transition: all 1000ms, filter 1000ms ease-in-out;
     filter: brightness(100%);
   }
 }
-.mySwiper2 .swiper-slide.swiper-slide-next .news_card {
+.mySwiper2 .swiper-slide.swiper-slide-next .product_card {
   @media (min-width: 768px) and (max-width: 1199px) {
     transform: scale(1.05);
     transition: all 1000ms, filter 1000ms ease-in-out;

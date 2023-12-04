@@ -11,7 +11,7 @@ const ProductItem = async ({ product, lang }) => {
       borderRadius={'10px'}
       overflow="hidden"
       css={{
-        '&:hover .news_card': {
+        '&:hover .product_card': {
           transform: 'scale(1.03)',
           transition: 'all 500ms, filter 500ms ease-in-out',
           filter: 'brightness(100%)',
@@ -21,7 +21,7 @@ const ProductItem = async ({ product, lang }) => {
       <Link href={`/${lang}/catalog/${product.uid}`}>
         <Box
           borderRadius={'10px'}
-          className="news_card"
+          className="product_card"
           filter="brightness(80%)"
           position="relative"
           z-index="2"
@@ -29,7 +29,9 @@ const ProductItem = async ({ product, lang }) => {
           height="360px"
           transition="all 500ms cubic-bezier(0.4, 0, 0.2, 1)"
           as="div"
-          bgImage={`url(${product.imgUrl})`}
+          bgImage={
+            product.imgUrl ? `url(${product.imgUrl})` : 'url("/product.png")'
+          }
           bgRepeat={'no-repeat'}
           bgPos={'center'}
           bgSize={'cover'}

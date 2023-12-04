@@ -14,7 +14,7 @@ export const SkeletonProductItem = () => {
     >
       <Skeleton
         borderRadius={'10px'}
-        className="news_card"
+        className="product_card"
         position="relative"
         z-index="2"
         width="100%"

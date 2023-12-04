@@ -21,7 +21,7 @@ const Hero = async ({ dictionary, lang }) => {
         <Btn as={Link} href={`/${lang}/catalog`}>
           {dictionary.hero.btnCatalog}
         </Btn>
-        <Btn as={Link} href={`/${lang}/about`}>
+        <Btn as={Link} href={`/${lang}/contact`}>
           {dictionary.hero.btnContactUs}
         </Btn>
       </Box>

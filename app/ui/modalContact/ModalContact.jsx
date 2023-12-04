@@ -1,7 +1,6 @@
 'use client';
 
 import {
-  Flex,
   Box,
   Heading,
   Text,
@@ -17,15 +16,13 @@ import {
   InputLeftElement,
   InputRightElement,
   FormHelperText,
+  Link,
 } from '@chakra-ui/react';
-import {
-  MdPhone,
-  MdEmail,
-  MdLocationOn,
-  MdFacebook,
-  MdOutlineEmail,
-} from 'react-icons/md';
-import { BsGithub, BsDiscord, BsPerson } from 'react-icons/bs';
+import { MdPhone, MdEmail, MdLocationOn, MdOutlineEmail } from 'react-icons/md';
+
+import { BsWhatsapp, BsFacebook, BsInstagram } from 'react-icons/bs';
+
+import { BsPerson } from 'react-icons/bs';
 import SubmitButton from '../submitButton/SubmitButton';
 import { useFormState } from 'react-dom';
 import { submitData } from '../../lib/actions';
@@ -62,253 +59,280 @@ const ModalContact = ({ dictionary, contacts }) => {
   const lang = useLang();
 
   return (
-    <Flex>
-      <Box>
-        <Wrap spacing={{ base: 20, sm: 3, md: 4, lg: 20 }}>
-          <WrapItem>
-            <Box>
-              <Heading>{dictionary.formContact.title}</Heading>
-              <Text mt={{ sm: 3, md: 3, lg: 5 }} color="gray.500">
-                {dictionary.formContact.text}
-              </Text>
-              <Box py={{ base: 5, sm: 5, md: 8, lg: 10 }}>
-                <VStack pl={0} spacing={3} alignItems="flex-start">
-                  <Box
-                    display={'flex'}
-                    gap={2}
-                    borderRadius={'5px'}
-                    p={2}
-                    as="a"
-                    href={`tel:${contacts.phone}`}
-                    size="md"
-                    minH="48px"
-                    max-width="200px"
-                    color="#DCE2FF"
-                    transition="all 300ms ease"
-                    _hover={{
-                      color: '#a68640',
-                      transform: 'translateX(10px)',
-                    }}
-                  >
-                    <MdPhone color="#a28445" size="20px" />
-                    <Text>{contacts.phone}</Text>
-                  </Box>
-
-                  <Box
-                    display={'flex'}
-                    gap={2}
-                    borderRadius={'5px'}
-                    p={2}
-                    as="a"
-                    href={`mailto:${contacts.mail}`}
-                    size="md"
-                    minH="48px"
-                    width="fit-content"
-                    color="#DCE2FF"
-                    transition="all 300ms ease"
-                    _hover={{
-                      color: '#a68640',
-                      transform: 'translateX(10px)',
-                    }}
-                  >
-                    <MdEmail color="#a28445" size="20px" />
-                    <Text>{contacts.email}</Text>
-                  </Box>
-
-                  <Box
-                    display={'flex'}
-                    gap={2}
-                    borderRadius={'5px'}
-                    p={2}
-                    as="a"
-                    size="md"
-                    minH="48px"
-                    width="200px"
-                    color="#DCE2FF"
-                    transition="all 300ms ease"
-                    _hover={{
-                      color: '#a68640',
-                      transform: 'translateX(5px)',
-                    }}
-                    style={{ whiteSpace: 'break-spaces' }}
-                  >
-                    <MdLocationOn color="#a28445" size="40px" />
-                    <Text>{contacts.address}</Text>
-                  </Box>
-                </VStack>
-              </Box>
-              <HStack
-                mt={{ lg: 10, md: 10 }}
-                spacing={5}
-                px={5}
-                alignItems="flex-start"
+    <Wrap
+      flexDirection={'row-reverse'}
+      flexWrap={'wrap'}
+      justify={'space-between'}
+      fontSize={{ base: 'sm', lg: 'md' }}
+      align={'center'}
+    >
+      <WrapItem>
+        <Box>
+          <Heading>{dictionary.formContact.title}</Heading>
+          <Text mt={{ sm: 3, md: 3, lg: 5 }} color="gray.500">
+            {dictionary.formContact.text}
+          </Text>
+          <Box py={{ base: 5, sm: 5, md: 8, lg: 10 }}>
+            <VStack pl={0} spacing={0} alignItems="flex-start">
+              <Link
+                display={'flex'}
+                gap={2}
+                borderRadius={'5px'}
+                p={2}
+                href={`tel:${contacts.phone}`}
+                size="md"
+                minH="48px"
+                max-width="200px"
+                color="#DCE2FF"
+                transition="all 300ms ease"
+                _hover={{
+                  color: '#a68640',
+                  transform: 'translateX(10px)',
+                }}
               >
-                <IconButton
-                  aria-label="facebook"
-                  color={'#a28445'}
-                  variant="ghost"
-                  size="lg"
-                  isRound={true}
-                  _hover={{ bg: '#333331', transform: 'scale(1.1)' }}
-                  transition="all 300ms ease"
-                  icon={<MdFacebook size="28px" />}
-                />
-                <IconButton
-                  aria-label="github"
-                  color={'#a28445'}
-                  variant="ghost"
-                  size="lg"
-                  isRound={true}
-                  _hover={{ bg: '#333331', transform: 'scale(1.1)' }}
-                  transition="all 300ms ease"
-                  icon={<BsGithub size="28px" />}
-                />
-                <IconButton
-                  aria-label="discord"
-                  color={'#a28445'}
-                  variant="ghost"
-                  size="lg"
-                  isRound={true}
-                  _hover={{ bg: '#333331', transform: 'scale(1.1)' }}
-                  transition="all 300ms ease"
-                  icon={<BsDiscord size="28px" />}
-                />
-              </HStack>
-            </Box>
-          </WrapItem>
-          <WrapItem>
-            <Box bgColor={'#cfd0d5'} borderRadius="lg">
-              <Box as="form" action={dispatch} m={8} color="#0B0E3F">
-                <VStack spacing={5}>
-                  <FormControl id="name">
-                    <FormLabel>{dictionary.formContact.nameLabel}</FormLabel>
-                    <InputGroup borderColor="#E0E1E7">
-                      {lang === 'he' ? (
-                        <InputRightElement pointerEvents="none">
-                          <BsPerson color="gray.800" />
-                        </InputRightElement>
-                      ) : (
-                        <InputLeftElement pointerEvents="none">
-                          <BsPerson color="gray.800" />
-                        </InputLeftElement>
-                      )}
-                      <Input
-                        focusBorderColor="#a28445"
-                        style={
-                          lang === 'he'
-                            ? { direction: 'ltr', textAlign: 'right' }
-                            : null
-                        }
-                        type="text"
-                        size="md"
-                        bgColor={'white'}
-                        name="name"
-                        px={10}
-                        isInvalid={state?.errors?.name}
-                        errorBorderColor="crimson"
-                      />
+                <MdPhone color="#a28445" size="20px" />
+                <Text
+                  display="flex"
+                  flexDir={lang === 'he' ? 'row-reverse' : 'row'}
+                >
+                  <Box as="span">+</Box>
+                  <Box as="span">{contacts.phone}</Box>
+                </Text>
+              </Link>
 
-                      {nameError && (
-                        <FormHelperText
-                          display={'block'}
-                          color={'crimson'}
-                          pos={'absolute'}
-                          bottom={'-20px'}
-                        >
-                          {nameError}
-                        </FormHelperText>
-                      )}
-                    </InputGroup>
-                  </FormControl>
-                  <FormControl id="name">
-                    <FormLabel>{dictionary.formContact.mailLabel}</FormLabel>
-                    <InputGroup borderColor="#E0E1E7">
-                      {lang === 'he' ? (
-                        <InputRightElement pointerEvents="none">
-                          <MdOutlineEmail color="gray.800" />
-                        </InputRightElement>
-                      ) : (
-                        <InputLeftElement pointerEvents="none">
-                          <MdOutlineEmail color="gray.800" />
-                        </InputLeftElement>
-                      )}
-                      <Input
-                        focusBorderColor="#a28445"
-                        type="email"
-                        size="md"
-                        bgColor={'white'}
-                        name="email"
-                        px={10}
-                        isInvalid={state?.errors?.email}
-                        errorBorderColor="crimson"
-                        style={
-                          lang === 'he'
-                            ? { direction: 'ltr', textAlign: 'right' }
-                            : null
-                        }
-                      />
-                      {emailError && (
-                        <FormHelperText
-                          display={'block'}
-                          color={'crimson'}
-                          pos={'absolute'}
-                          bottom={'-20px'}
-                        >
-                          {emailError}
-                        </FormHelperText>
-                      )}
-                    </InputGroup>
-                  </FormControl>
-                  <FormControl id="name">
-                    <FormLabel>{dictionary.formContact.phoneLabel}</FormLabel>
-                    <InputGroup borderColor="#E0E1E7">
-                      {lang === 'he' ? (
-                        <InputRightElement pointerEvents="none">
-                          <MdPhone color="gray.800" />
-                        </InputRightElement>
-                      ) : (
-                        <InputLeftElement pointerEvents="none">
-                          <MdPhone color="gray.800" />
-                        </InputLeftElement>
-                      )}
-                      <Input
-                        focusBorderColor="#a28445"
-                        as={ReactInputMask}
-                        type="tel"
-                        name="phone"
-                        border={'1px solid transparent'}
-                        bgColor={'white'}
-                        size="md"
-                        mask={'+\\972-**-***-****'}
-                        px={10}
-                        isInvalid={state?.errors?.phone}
-                        errorBorderColor="crimson"
-                        style={
-                          lang === 'he'
-                            ? { direction: 'ltr', textAlign: 'right' }
-                            : null
-                        }
-                      />
-                      {phoneError && (
-                        <FormHelperText
-                          display={'block'}
-                          color={'crimson'}
-                          pos={'absolute'}
-                          bottom={'-20px'}
-                        >
-                          Invalid phone number
-                        </FormHelperText>
-                      )}
-                    </InputGroup>
-                  </FormControl>
-                  <SubmitButton>{dictionary.buttons.send}</SubmitButton>
-                </VStack>
-              </Box>
-            </Box>
-          </WrapItem>
-        </Wrap>
-      </Box>
-    </Flex>
+              <Link
+                display={'flex'}
+                gap={2}
+                borderRadius={'5px'}
+                p={2}
+                href={`mailto:${contacts.mail}`}
+                size="md"
+                minH="48px"
+                width="fit-content"
+                color="#DCE2FF"
+                transition="all 300ms ease"
+                _hover={{
+                  color: '#a68640',
+                  transform: 'translateX(10px)',
+                }}
+              >
+                <MdEmail color="#a28445" size="20px" />
+                <Text>{contacts.email}</Text>
+              </Link>
+
+              <Link
+                isExternal
+                href={contacts.addressUrl}
+                rel={'noopener noreferrer nofollow'}
+                display={'flex'}
+                gap={2}
+                borderRadius={'5px'}
+                p={2}
+                size="md"
+                minH="48px"
+                width="200px"
+                color="#DCE2FF"
+                transition="all 300ms ease"
+                _hover={{
+                  color: '#a68640',
+                  transform: 'translateX(5px)',
+                }}
+                style={{ whiteSpace: 'break-spaces' }}
+              >
+                <MdLocationOn color="#a28445" size="40px" />
+                <Text>{contacts.address}</Text>
+              </Link>
+            </VStack>
+          </Box>
+          <HStack spacing={1} px={5} alignItems="flex-start">
+            <IconButton
+              isExternal
+              as={'a'}
+              rel={'noopener noreferrer nofollow'}
+              aria-label="facebook"
+              icon={<BsFacebook size="28px" />}
+              href={contacts.fb}
+              target="_blank"
+              color={'#a28445'}
+              variant="ghost"
+              size="lg"
+              isRound={true}
+              _hover={{ bg: '#333331', transform: 'scale(1.1)' }}
+              transition="all 300ms ease"
+            />
+            <IconButton
+              isExternal
+              as={'a'}
+              rel={'noopener noreferrer nofollow'}
+              aria-label="instagram"
+              target="_blank"
+              icon={<BsInstagram size="28px" />}
+              href={contacts.insta}
+              color={'#a28445'}
+              variant="ghost"
+              size="lg"
+              isRound={true}
+              _hover={{ bg: '#333331', transform: 'scale(1.1)' }}
+              transition="all 300ms ease"
+            />
+            <IconButton
+              isExternal
+              as={'a'}
+              rel={'noopener noreferrer nofollow'}
+              aria-label="whatsapp"
+              icon={<BsWhatsapp size="28px" />}
+              href={contacts.watsapp}
+              target="_blank"
+              color={'#a28445'}
+              variant="ghost"
+              size="lg"
+              isRound={true}
+              _hover={{ bg: '#333331', transform: 'scale(1.1)' }}
+              transition="all 300ms ease"
+            />
+          </HStack>
+        </Box>
+      </WrapItem>
+      <WrapItem w={{ base: '100%', md: '380px' }}>
+        <Box bgColor={'#cfd0d5'} borderRadius="lg">
+          <Box as="form" action={dispatch} p={4} color="#0B0E3F">
+            <VStack spacing={5}>
+              <FormControl id="name">
+                <FormLabel>{dictionary.formContact.nameLabel}</FormLabel>
+                <InputGroup borderColor="#E0E1E7">
+                  {lang === 'he' ? (
+                    <InputRightElement pointerEvents="none">
+                      <BsPerson color="gray.800" />
+                    </InputRightElement>
+                  ) : (
+                    <InputLeftElement pointerEvents="none">
+                      <BsPerson color="gray.800" />
+                    </InputLeftElement>
+                  )}
+                  <Input
+                    focusBorderColor="#a28445"
+                    style={
+                      lang === 'he'
+                        ? { direction: 'ltr', textAlign: 'right' }
+                        : null
+                    }
+                    type="text"
+                    size="md"
+                    bgColor={'white'}
+                    name="name"
+                    px={10}
+                    isInvalid={nameError}
+                    errorBorderColor="crimson"
+                  />
+
+                  {nameError && (
+                    <FormHelperText
+                      fontSize={'13px'}
+                      display={'block'}
+                      color={'crimson'}
+                      pos={'absolute'}
+                      bottom={'-20px'}
+                    >
+                      {nameError === 'required'
+                        ? dictionary.formContact.errors.name.required
+                        : dictionary.formContact.errors.name.invalid}
+                    </FormHelperText>
+                  )}
+                </InputGroup>
+              </FormControl>
+              <FormControl id="name">
+                <FormLabel>{dictionary.formContact.mailLabel}</FormLabel>
+                <InputGroup borderColor="#E0E1E7">
+                  {lang === 'he' ? (
+                    <InputRightElement pointerEvents="none">
+                      <MdOutlineEmail color="gray.800" />
+                    </InputRightElement>
+                  ) : (
+                    <InputLeftElement pointerEvents="none">
+                      <MdOutlineEmail color="gray.800" />
+                    </InputLeftElement>
+                  )}
+                  <Input
+                    focusBorderColor="#a28445"
+                    type="email"
+                    size="md"
+                    bgColor={'white'}
+                    name="email"
+                    px={10}
+                    isInvalid={emailError}
+                    errorBorderColor="crimson"
+                    style={
+                      lang === 'he'
+                        ? { direction: 'ltr', textAlign: 'right' }
+                        : null
+                    }
+                  />
+                  {emailError && (
+                    <FormHelperText
+                      fontSize={'13px'}
+                      display={'block'}
+                      color={'crimson'}
+                      pos={'absolute'}
+                      bottom={'-20px'}
+                    >
+                      {emailError === 'required'
+                        ? dictionary.formContact.errors.email.required
+                        : dictionary.formContact.errors.email.invalid}
+                    </FormHelperText>
+                  )}
+                </InputGroup>
+              </FormControl>
+              <FormControl id="name">
+                <FormLabel>{dictionary.formContact.phoneLabel}</FormLabel>
+                <InputGroup borderColor="#E0E1E7">
+                  {lang === 'he' ? (
+                    <InputRightElement pointerEvents="none">
+                      <MdPhone color="gray.800" />
+                    </InputRightElement>
+                  ) : (
+                    <InputLeftElement pointerEvents="none">
+                      <MdPhone color="gray.800" />
+                    </InputLeftElement>
+                  )}
+                  <Input
+                    focusBorderColor="#a28445"
+                    as={ReactInputMask}
+                    type="tel"
+                    name="phone"
+                    border={'1px solid transparent'}
+                    bgColor={'white'}
+                    size="md"
+                    mask={'+\\972-**-***-****'}
+                    px={10}
+                    isInvalid={phoneError}
+                    errorBorderColor="crimson"
+                    style={
+                      lang === 'he'
+                        ? { direction: 'ltr', textAlign: 'right' }
+                        : null
+                    }
+                  />
+                  {phoneError && (
+                    <FormHelperText
+                      fontSize={'13px'}
+                      display={'block'}
+                      color={'crimson'}
+                      pos={'absolute'}
+                      bottom={'-20px'}
+                    >
+                      {phoneError === 'required'
+                        ? dictionary.formContact.errors.phone.required
+                        : dictionary.formContact.errors.phone.invalid}
+                    </FormHelperText>
+                  )}
+                </InputGroup>
+              </FormControl>
+              <SubmitButton>{dictionary.buttons.send}</SubmitButton>
+            </VStack>
+          </Box>
+        </Box>
+      </WrapItem>
+    </Wrap>
   );
 };
 
