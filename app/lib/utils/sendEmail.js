@@ -9,7 +9,7 @@ const sendEmail = async data => {
     from_name: `${name}`,
     message: `
     ✉️ Email: ${email}
-    🧔 Name: ${name}
+    🙂 Name: ${name}
     📞 Phone: ${phone}
     `,
   };

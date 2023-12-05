@@ -17,6 +17,7 @@ import {
   InputRightElement,
   FormHelperText,
   Link,
+  useToast,
 } from '@chakra-ui/react';
 
 import { MdPhone, MdEmail, MdLocationOn, MdOutlineEmail } from 'react-icons/md';
@@ -34,6 +35,7 @@ import { useEffect, useState } from 'react';
 const ModalContact = ({ dictionary, contacts, onClose }) => {
   const [state, dispatch] = useFormState(submitData, undefined);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const toast = useToast();
 
   const nameError =
     state?.errors?.name && state?.errors?.name.length > 0
@@ -57,6 +59,10 @@ const ModalContact = ({ dictionary, contacts, onClose }) => {
           setIsSubmitting(true);
           const res = await sendEmail(state);
           if (res.status === 200) {
+            toast({
+              status: 'success',
+              title: dictionary.formContact.toasts.form.success,
+            });
             onClose();
           }
         } catch (error) {
@@ -99,7 +105,7 @@ const ModalContact = ({ dictionary, contacts, onClose }) => {
                 transition="all 300ms ease"
                 _hover={{
                   color: '#a68640',
-                  transform: 'translateX(10px)',
+                  transform: 'translateX(3px)',
                 }}
               >
                 <MdPhone color="#a28445" size="20px" />
@@ -125,7 +131,7 @@ const ModalContact = ({ dictionary, contacts, onClose }) => {
                 transition="all 300ms ease"
                 _hover={{
                   color: '#a68640',
-                  transform: 'translateX(10px)',
+                  transform: 'translateX(3px)',
                 }}
               >
                 <MdEmail color="#a28445" size="20px" />
@@ -147,7 +153,7 @@ const ModalContact = ({ dictionary, contacts, onClose }) => {
                 transition="all 300ms ease"
                 _hover={{
                   color: '#a68640',
-                  transform: 'translateX(5px)',
+                  transform: 'translateX(3px)',
                 }}
                 style={{ whiteSpace: 'break-spaces' }}
               >
@@ -169,7 +175,7 @@ const ModalContact = ({ dictionary, contacts, onClose }) => {
               variant="ghost"
               size="lg"
               isRound={true}
-              _hover={{ bg: '#333331', transform: 'scale(1.1)' }}
+              _hover={{ bg: '#333331', transform: 'scale(1.06)' }}
               transition="all 300ms ease"
             />
             <IconButton
@@ -184,7 +190,7 @@ const ModalContact = ({ dictionary, contacts, onClose }) => {
               variant="ghost"
               size="lg"
               isRound={true}
-              _hover={{ bg: '#333331', transform: 'scale(1.1)' }}
+              _hover={{ bg: '#333331', transform: 'scale(1.06)' }}
               transition="all 300ms ease"
             />
             <IconButton
@@ -199,7 +205,7 @@ const ModalContact = ({ dictionary, contacts, onClose }) => {
               variant="ghost"
               size="lg"
               isRound={true}
-              _hover={{ bg: '#333331', transform: 'scale(1.1)' }}
+              _hover={{ bg: '#333331', transform: 'scale(1.06)' }}
               transition="all 300ms ease"
             />
           </HStack>

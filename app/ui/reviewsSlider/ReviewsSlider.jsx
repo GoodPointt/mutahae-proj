@@ -109,6 +109,7 @@ const ReviewsSlider = ({ reviews, lang }) => {
                   )}
                   <ModalWindow
                     p={0}
+                    isCloseButton={false}
                     isOpen={isOpen}
                     onClose={onClose}
                     maxW={{ base: '300px', md: '500px' }}
