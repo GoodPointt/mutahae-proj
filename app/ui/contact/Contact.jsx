@@ -26,14 +26,41 @@ const Contact = async ({ lang, dictionary }) => {
             {dictionary.formContact.sectionTitle}
           </Heading>
           <List mb="15px">
-            <ListItem display="flex" gap="8px" alignItems="center">
+            <ListItem
+              display="flex"
+              gap="8px"
+              alignItems="center"
+              _hover={{
+                cursor: 'pointer',
+                color: '#b1b0b0',
+              }}
+              transition={'all 0.3s'}
+            >
               <MdLocationOn color="#a28445" size="20px" />
-              <Text>{contacts.address}</Text>
+              <Link
+                _hover={{ textDecoration: 'none' }}
+                isExternal
+                href={contacts.addressUrl}
+                rel={'noopener noreferrer nofollow'}
+              >
+                <Text>{contacts.address}</Text>
+              </Link>
             </ListItem>
 
-            <ListItem display="flex" gap="8px" alignItems="center" mt="10px">
+            <ListItem
+              display="flex"
+              gap="8px"
+              alignItems="center"
+              mt="10px"
+              _hover={{
+                cursor: 'pointer',
+                color: '#b1b0b0',
+              }}
+              transition={'all 0.3s'}
+            >
               <MdPhone color="#a28445" size="20px" />
               <Link
+                _hover={{ textDecoration: 'none' }}
                 href={`tel:${contacts.phone}`}
                 display="flex"
                 flexDir={lang === 'he' ? 'row-reverse' : 'row'}
@@ -42,9 +69,24 @@ const Contact = async ({ lang, dictionary }) => {
                 {contacts.phone}
               </Link>
             </ListItem>
-            <ListItem display="flex" gap="8px" alignItems="center" mt="10px">
+            <ListItem
+              display="flex"
+              gap="8px"
+              alignItems="center"
+              mt="10px"
+              _hover={{
+                cursor: 'pointer',
+                color: '#b1b0b0',
+              }}
+              transition={'all 0.3s'}
+            >
               <MdEmail color="#a28445" size="20px" />
-              <Link href={`mailto:${contacts.mail}`}>{contacts.email}</Link>
+              <Link
+                _hover={{ textDecoration: 'none' }}
+                href={`mailto:${contacts.mail}`}
+              >
+                {contacts.email}
+              </Link>
             </ListItem>
           </List>
           <ContactForm dictionary={dictionary} />

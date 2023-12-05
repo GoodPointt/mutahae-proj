@@ -101,7 +101,11 @@ const SingleProduct = ({
 
       <Btn onClick={onOpen}>{dictionary.buttons.contact}</Btn>
       <ModalWindow onClose={onClose} isOpen={isOpen}>
-        <FormContact dictionary={dictionary} contacts={contacts} />
+        <FormContact
+          dictionary={dictionary}
+          contacts={contacts}
+          onClose={onClose}
+        />
       </ModalWindow>
     </SectionWrapper>
   );
