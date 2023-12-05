@@ -90,6 +90,11 @@
     "nameLabel": "שם שלך",
     "mailLabel": "אימייל",
     "phoneLabel": "טלפון",
+    "toasts": {
+      "form": {
+        "success": "הטופס נשלח בהצלחה"
+      }
+    },
     "errors": {
       "name": {
         "required": "שם הוא שדה חובה",

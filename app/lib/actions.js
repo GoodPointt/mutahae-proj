@@ -29,7 +29,10 @@ const schema = z
       .string()
       .trim()
       .min(1, { message: 'required' })
-      .regex(new RegExp(/^[a-zA-Z]+[-'s]?[a-zA-Z ]+$/), 'invalid'),
+      .regex(
+        new RegExp(/^[a-zA-Z\u0590-\u05FF]+[-'s]?[a-zA-Z\u0590-\u05FF ]+$/),
+        'invalid'
+      ),
     email: z
       .string()
       .trim()
