@@ -29,7 +29,6 @@ export function middleware(request) {
       '/logo-small.png',
       '/logo.png',
       '/manifest.json',
-      '/product.png',
       '/he.svg',
       '/gb.svg',
       //BGS
@@ -42,12 +41,8 @@ export function middleware(request) {
       '/team-simon.jpg',
       '/team-tamara.jpg',
       //PRODUCTS
-      '/mdp.jpg',
-      '/melamine.jpg',
-      '/oak.jpg',
-      '/pine.jpg',
-      '/plywood.jpg',
-      '/veneer.jpg',
+      '/product.png',
+      '/blur-product.jpg',
       //Reviews
       '/customerPlaceholder.jpg',
     ].includes(pathname)

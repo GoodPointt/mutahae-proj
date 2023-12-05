@@ -39,6 +39,8 @@ const SingleProduct = ({
             src={imgUrl}
             alt={'product image'}
             fill
+            placeholder="blur"
+            blurDataURL="/blur-product.jpg"
             style={{
               display: 'block',
               height: '100%',
@@ -93,7 +95,7 @@ const SingleProduct = ({
           </Text>
         </Flex>
       </Flex>
-      <Text mt={4} as="p">
+      <Text my={4} as="p">
         {descLong}
       </Text>
 

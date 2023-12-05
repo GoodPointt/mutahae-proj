@@ -1,7 +1,11 @@
-import { Box, Button, Heading, Text } from '@chakra-ui/react';
+'use client';
+
+import { Box, Button, Heading, Text, useMediaQuery } from '@chakra-ui/react';
 import Link from 'next/link';
 
-const ProductItem = async ({ product, lang }) => {
+const ProductItem = ({ product, lang }) => {
+  const [isModileScreen] = useMediaQuery('(max-width: 1024px)');
+
   return (
     <Box
       as={'li'}
@@ -22,7 +26,7 @@ const ProductItem = async ({ product, lang }) => {
         <Box
           borderRadius={'10px'}
           className="product_card"
-          filter="brightness(80%)"
+          filter={isModileScreen ? 'brightness(100%)' : 'brightness(80%)'}
           position="relative"
           z-index="2"
           width="100%"
@@ -38,7 +42,6 @@ const ProductItem = async ({ product, lang }) => {
           _hover={{
             cursor: 'pointer',
             transition: 'all 500ms ease-in-out',
-            filter: 'grayscale(100%)',
           }}
         ></Box>
         <Box
