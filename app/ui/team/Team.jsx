@@ -3,7 +3,7 @@ import SectionWrapper from '../sectionWrapper/SectionWrapper';
 import { teamImgs } from '@/app/lib/data';
 import Image from 'next/image';
 
-const Team = ({ dictionary }) => {
+const Team = ({ dictionary, members }) => {
   return (
     <SectionWrapper bg="#191617">
       <Heading
@@ -19,10 +19,10 @@ const Team = ({ dictionary }) => {
         gap={'24px'}
         as={'ul'}
       >
-        {dictionary.members.map((el, index) => (
+        {members.map(({ attributes }) => (
           <GridItem
             as={'li'}
-            key={el.name}
+            key={attributes.uid}
             borderBottom={'2px #a28445 solid'}
             position={'relative'}
             h={'520px'}
@@ -45,8 +45,8 @@ const Team = ({ dictionary }) => {
             }}
           >
             <Image
-              src={teamImgs[index]}
-              alt={teamImgs[index]}
+              src={attributes.imgUrl}
+              alt={attributes.imgUrl}
               fill
               style={{ objectFit: 'cover', height: '100%' }}
             />
@@ -61,8 +61,8 @@ const Team = ({ dictionary }) => {
               p={'16px'}
               textTransform={'uppercase'}
             >
-              <Text fontWeight={'600'}>{el.name}</Text>
-              <Text color={'#a28445'}>{el.position}</Text>
+              <Text fontWeight={'600'}>{attributes.name}</Text>
+              <Text color={'#a28445'}>{attributes.position}</Text>
             </Box>
           </GridItem>
         ))}

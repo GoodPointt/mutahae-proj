@@ -50,9 +50,3 @@ export const menuIcons = [
 
   <MdWork size={30} key={'4'} />,
 ];
-
-export const teamImgs = [
-  '/team-tamara.jpg',
-  '/team-simon.jpg',
-  '/team-sam.jpg',
-];
