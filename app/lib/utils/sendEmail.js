@@ -5,7 +5,6 @@ emailjs.init(process.env.NEXT_PUBLIC_EMAIL_JS_USER_ID);
 const sendEmail = async data => {
   const { name, email, phone } = data;
   const emailData = {
-    // to_email: 'dev6012@gmail.com',
     subject: `${name}`,
     from_name: `${name}`,
     message: `
