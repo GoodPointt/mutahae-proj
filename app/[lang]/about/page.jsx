@@ -4,6 +4,7 @@ import About from '@/app/ui/about/About';
 import Contact from '@/app/ui/contact/Contact';
 import Features from '@/app/ui/features/Features';
 import Team from '@/app/ui/team/Team';
+import { Suspense } from 'react';
 
 const AboutPage = async ({ params: { lang } }) => {
   const dictionary = await getDictionary(lang);
@@ -14,12 +15,16 @@ const AboutPage = async ({ params: { lang } }) => {
   const { data } = await fetchMembers(lang);
 
   return (
-    <div>
+    <>
       <About dictionary={dictionary} contacts={contacts} />
       <Features dictionary={dictionary.aboutUs.features} />
-      <Team dictionary={dictionary.aboutUs.team} members={data} />
+      <Suspense>
+        {data.length > 0 && (
+          <Team dictionary={dictionary.aboutUs.team} members={data} />
+        )}
+      </Suspense>
       <Contact dictionary={dictionary} lang={lang} />
-    </div>
+    </>
   );
 };
 
