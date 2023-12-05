@@ -1,6 +1,5 @@
 import { Box, Grid, GridItem, Heading, Text } from '@chakra-ui/react';
 import SectionWrapper from '../sectionWrapper/SectionWrapper';
-import { teamImgs } from '@/app/lib/data';
 import Image from 'next/image';
 
 const Team = ({ dictionary, members }) => {
