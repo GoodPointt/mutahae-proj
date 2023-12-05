@@ -68,11 +68,11 @@ const ModalContact = ({ dictionary, contacts }) => {
     >
       <WrapItem>
         <Box>
-          <Heading>{dictionary.formContact.title}</Heading>
+          <Heading as={'h4'}>{dictionary.formContact.title}</Heading>
           <Text mt={{ sm: 3, md: 3, lg: 5 }} color="gray.500">
             {dictionary.formContact.text}
           </Text>
-          <Box py={{ base: 1, md: 6, lg: 3 }}>
+          <Box py={{ base: 5, sm: 5, md: 8, lg: 10 }}>
             <VStack pl={0} spacing={0} alignItems="flex-start">
               <Link
                 display={'flex'}
@@ -144,7 +144,7 @@ const ModalContact = ({ dictionary, contacts }) => {
               </Link>
             </VStack>
           </Box>
-          <HStack spacing={3} ml={2}>
+          <HStack spacing={1} px={5} alignItems="flex-start">
             <IconButton
               isExternal
               as={'a'}
