@@ -17,11 +17,12 @@ const sendEmail = async data => {
   };
 
   try {
-    await emailjs.send(
+    const res = await emailjs.send(
       process.env.NEXT_PUBLIC_EMAIL_JS_SERVICE_ID,
       process.env.NEXT_PUBLIC_EMAIL_JS_TEMPLATE_ID,
       emailData
     );
+    return res;
   } catch (error) {
     console.error('Error sending email:', error);
   }

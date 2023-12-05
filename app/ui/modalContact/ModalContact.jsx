@@ -29,10 +29,11 @@ import { submitData } from '../../lib/actions';
 import sendEmail from '../../lib/utils/sendEmail';
 import ReactInputMask from 'react-input-mask';
 import useLang from '@/app/lib/hooks/useLang';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-const ModalContact = ({ dictionary, contacts }) => {
+const ModalContact = ({ dictionary, contacts, onClose }) => {
   const [state, dispatch] = useFormState(submitData, undefined);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const nameError =
     state?.errors?.name && state?.errors?.name.length > 0
@@ -50,11 +51,22 @@ const ModalContact = ({ dictionary, contacts }) => {
       : null;
 
   useEffect(() => {
-    (() => {
+    (async () => {
       if (state?.message === 'succsess') {
-        sendEmail(state);
+        try {
+          setIsSubmitting(true);
+          const res = await sendEmail(state);
+          if (res.status === 200) {
+            onClose();
+          }
+        } catch (error) {
+          console.error(error);
+        } finally {
+          setIsSubmitting(false);
+        }
       }
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
   const lang = useLang();
 
@@ -327,7 +339,9 @@ const ModalContact = ({ dictionary, contacts }) => {
                   )}
                 </InputGroup>
               </FormControl>
-              <SubmitButton>{dictionary.buttons.send}</SubmitButton>
+              <SubmitButton isSubmitting={isSubmitting}>
+                {dictionary.buttons.send}
+              </SubmitButton>
             </VStack>
           </Box>
         </Box>
