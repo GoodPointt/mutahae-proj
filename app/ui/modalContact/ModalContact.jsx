@@ -18,11 +18,11 @@ import {
   FormHelperText,
   Link,
 } from '@chakra-ui/react';
+
 import { MdPhone, MdEmail, MdLocationOn, MdOutlineEmail } from 'react-icons/md';
-
 import { BsWhatsapp, BsFacebook, BsInstagram } from 'react-icons/bs';
-
 import { BsPerson } from 'react-icons/bs';
+
 import SubmitButton from '../submitButton/SubmitButton';
 import { useFormState } from 'react-dom';
 import { submitData } from '../../lib/actions';
@@ -156,7 +156,7 @@ const ModalContact = ({ dictionary, contacts, onClose }) => {
               </Link>
             </VStack>
           </Box>
-          <HStack spacing={1} px={5} alignItems="flex-start">
+          <HStack spacing={3} px={0} alignItems="flex-start" p={3}>
             <IconButton
               isExternal
               as={'a'}
