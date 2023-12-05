@@ -66,7 +66,11 @@ const About = ({ dictionary, contacts }) => {
         </Box>
       </SectionWrapper>
       <ModalWindow onClose={onClose} isOpen={isOpen}>
-        <FormContact dictionary={dictionary} contacts={contacts} />
+        <FormContact
+          dictionary={dictionary}
+          contacts={contacts}
+          onClose={onClose}
+        />
       </ModalWindow>
     </>
   );
