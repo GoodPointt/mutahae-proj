@@ -31,7 +31,9 @@ const ModalWindow = ({
         maxW={maxW}
       >
         <ModalCloseButton _hover={{ color: '#a28445' }} zIndex={99} />
-        <ModalBody p={0}>{children}</ModalBody>
+        <ModalBody p={0} overflowY={'scroll'}>
+          {children}
+        </ModalBody>
       </ModalContent>
     </Modal>
   );
