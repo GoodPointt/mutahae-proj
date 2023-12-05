@@ -19,10 +19,10 @@ const About = ({ dictionary, contacts }) => {
     <>
       <SectionWrapper bg="url('/about-background.jpg')">
         <Heading as={'h2'} textTransform={'uppercase'} mb={'44px'}>
-          <Text as={'span'} color="#a28445" mr={'8px'}>
-            Mutag
+          <Text as={'span'} color="#a28445">
+            {dictionary.aboutUs.title.firstWord}&nbsp;
           </Text>
-          Company
+          {dictionary.aboutUs.title.secondWord}
         </Heading>
         <Box
           position={'relative'}
