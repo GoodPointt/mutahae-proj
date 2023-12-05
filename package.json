@@ -27,6 +27,7 @@
     "react-dom": "18",
     "react-icons": "^4.11.0",
     "react-input-mask": "^2.0.4",
+    "react-player": "^2.13.0",
     "react-swipeable": "^7.0.1",
     "swiper": "^11.0.5",
     "use-debounce": "^9.0.4",

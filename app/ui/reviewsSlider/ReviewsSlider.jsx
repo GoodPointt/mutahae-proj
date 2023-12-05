@@ -7,14 +7,7 @@ import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
-import {
-  AspectRatio,
-  Box,
-  Button,
-  Flex,
-  Text,
-  useDisclosure,
-} from '@chakra-ui/react';
+import { Box, Button, Flex, Text, useDisclosure } from '@chakra-ui/react';
 import { RiDoubleQuotesR } from 'react-icons/ri';
 import {
   TbCircleArrowLeftFilled,
@@ -22,6 +15,7 @@ import {
 } from 'react-icons/tb';
 import ModalWindow from '../modalWindow/ModalWindow';
 import { FaYoutube } from 'react-icons/fa';
+import ReactPlayer from 'react-player';
 
 const SwiperNavigation = () => {
   const swiper = useSwiper();
@@ -119,14 +113,12 @@ const ReviewsSlider = ({ reviews, lang }) => {
                     onClose={onClose}
                     maxW={{ base: '300px', md: '500px' }}
                   >
-                    <AspectRatio maxW="560px" bg="#fff" borderRadius="6px">
-                      <iframe
-                        title="naruto"
-                        src={videoUrl}
-                        allowFullScreen
-                        style={{ borderRadius: '5px' }}
-                      />
-                    </AspectRatio>
+                    <ReactPlayer
+                      url={videoUrl}
+                      width="300"
+                      height="500"
+                      controls
+                    />
                   </ModalWindow>
                 </Box>
 

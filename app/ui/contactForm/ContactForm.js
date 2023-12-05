@@ -1,7 +1,13 @@
 'use client';
 
-import { Box, FormControl, FormErrorMessage, Input } from '@chakra-ui/react';
-import React, { useEffect } from 'react';
+import {
+  Box,
+  FormControl,
+  FormErrorMessage,
+  Input,
+  useToast,
+} from '@chakra-ui/react';
+import React, { useEffect, useRef } from 'react';
 import SubmitButton from '../submitButton/SubmitButton';
 import { useFormState } from 'react-dom';
 import { submitData } from '../../lib/actions';
@@ -11,6 +17,9 @@ import ReactInputMask from 'react-input-mask';
 
 const ContactForm = ({ dictionary }) => {
   const [state, dispatch] = useFormState(submitData, undefined);
+  const toast = useToast();
+
+  const ref = useRef(null);
   const lang = useLang();
 
   const nameError =
@@ -32,14 +41,19 @@ const ContactForm = ({ dictionary }) => {
     (() => {
       if (state?.message === 'succsess') {
         sendEmail(state);
+        ref.current?.reset();
+        toast({
+          status: 'success',
+          title: dictionary.formContact.toasts.form.success,
+        });
       }
     })();
-  }, [state]);
+  }, [state, toast, dictionary]);
 
   const { name, email, phone } = dictionary.formContact.errors;
 
   return (
-    <Box as="form" action={dispatch} autoComplete="off">
+    <Box as="form" action={dispatch} autoComplete="off" ref={ref}>
       <FormControl isInvalid={nameError} pb="25px">
         <Input
           name="name"

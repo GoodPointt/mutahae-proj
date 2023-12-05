@@ -90,6 +90,11 @@
     "nameLabel": "Your Name",
     "mailLabel": "Mail",
     "phoneLabel": "Phone",
+    "toasts": {
+      "form": {
+        "success": "Form submitted successfully"
+      }
+    },
     "errors": {
       "name": {
         "required": "Name is required",
