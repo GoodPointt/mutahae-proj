@@ -62,3 +62,14 @@ const getReviews = async lang => {
 };
 
 export const fetchReviews = cache(getReviews);
+
+const getMembers = async lang => {
+  try {
+    const { data } = await instance.get(`/api/members?locale=${lang}`);
+    return data;
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const fetchMembers = cache(getMembers);

@@ -1,4 +1,4 @@
-import { fetchContacts } from '@/app/lib/api/instance';
+import { fetchContacts, fetchMembers } from '@/app/lib/api/instance';
 import { getDictionary } from '@/app/lib/locales/dictionary';
 import About from '@/app/ui/about/About';
 import Contact from '@/app/ui/contact/Contact';
@@ -11,11 +11,13 @@ const AboutPage = async ({ params: { lang } }) => {
     data: [{ attributes: contacts }],
   } = await fetchContacts(lang);
 
+  const { data } = await fetchMembers(lang);
+
   return (
     <div>
       <About dictionary={dictionary} contacts={contacts} />
       <Features dictionary={dictionary.aboutUs.features} />
-      <Team dictionary={dictionary.aboutUs.team} />
+      <Team dictionary={dictionary.aboutUs.team} members={data} />
       <Contact dictionary={dictionary} lang={lang} />
     </div>
   );
