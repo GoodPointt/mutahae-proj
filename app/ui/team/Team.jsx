@@ -44,8 +44,8 @@ const Team = ({ dictionary, members }) => {
             }}
           >
             <Image
-              src={attributes.imgUrl}
-              alt={attributes.imgUrl}
+              src={attributes?.imgUrl || '/member.png'}
+              alt={attributes?.name + ' ' + attributes?.position}
               fill
               style={{ objectFit: 'cover', height: '100%' }}
             />
@@ -60,8 +60,8 @@ const Team = ({ dictionary, members }) => {
               p={'16px'}
               textTransform={'uppercase'}
             >
-              <Text fontWeight={'600'}>{attributes.name}</Text>
-              <Text color={'#a28445'}>{attributes.position}</Text>
+              <Text fontWeight={'600'}>{attributes?.name}</Text>
+              <Text color={'#a28445'}>{attributes?.position}</Text>
             </Box>
           </GridItem>
         ))}

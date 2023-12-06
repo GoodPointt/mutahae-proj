@@ -1,22 +1,59 @@
-import { fetchContacts, fetchOneProduct } from '@/app/lib/api/instance';
+import {
+  fetchContacts,
+  fetchOneProduct,
+  fetchProducts,
+} from '@/app/lib/api/instance';
+import { notFound } from 'next/navigation';
+
 import Contact from '@/app/ui/contact/Contact';
 import SingleProduct from '@/app/ui/singleProduct/SingleProduct';
 import { Suspense } from 'react';
 import LoadingProduct from './loading';
 import { getDictionary } from '@/app/lib/locales/dictionary';
 
+export const generateStaticParams = async ({ params: { lang } }) => {
+  const { data } = await fetchProducts(lang);
+  if (data.length > 0) {
+    const productsIds = data.map(product => product.attributes.uid);
+    return productsIds.slice(0, 6);
+  }
+};
+
+export const generateMetadata = async ({ params: { id, lang } }) => {
+  const { data } = await fetchOneProduct(id, lang);
+  if (data.length === 0) {
+    return notFound();
+  }
+
+  const [{ attributes: product }] = data;
+
+  return {
+    title: product.title,
+    description: product.descShort,
+    openGraph: {
+      images: [
+        {
+          url: product.imgUrl,
+        },
+      ],
+    },
+  };
+};
+
 const SingleProductPage = async ({ params: { id, lang } }) => {
   const {
     data: [{ attributes: contacts }],
   } = await fetchContacts(lang);
   const dictionary = await getDictionary(lang);
-  const { data } = await fetchOneProduct(id, lang);
-  const { attributes } = data[0];
+  const {
+    data: [{ attributes: product }],
+  } = await fetchOneProduct(id, lang);
+
   return (
     <>
       <Suspense fallback={<LoadingProduct />}>
         <SingleProduct
-          product={attributes}
+          product={product}
           dictionary={dictionary}
           contacts={contacts}
         />

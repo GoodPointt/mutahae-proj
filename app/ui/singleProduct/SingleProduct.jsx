@@ -36,7 +36,7 @@ const SingleProduct = ({
           borderRadius={'10px'}
         >
           <Image
-            src={imgUrl}
+            src={imgUrl || '/product.png'}
             alt={'product image'}
             fill
             placeholder="blur"
@@ -51,52 +51,52 @@ const SingleProduct = ({
         </Box>
         <Flex flexDir={'column'} gap={2}>
           <Heading as="h2" fontWeight={900}>
-            {title}
+            {title || ''}
           </Heading>
           <Text as="p" fontSize={'sm'} fontWeight={'500'}>
             {dictionary.singleProduct.length}
             <Text as="span" fontWeight={'300'}>
-              {length}
+              {length || ''}
             </Text>
           </Text>
           <Text as="p" fontSize={'sm'} fontWeight={'500'}>
             {dictionary.singleProduct.thickness}
             <Text as="span" fontWeight={'300'}>
-              {thickness}
+              {thickness || ''}
             </Text>
           </Text>
           <Text as="p" fontSize={'sm'} fontWeight={'500'}>
             {dictionary.singleProduct.width}
 
             <Text as="span" fontWeight={'300'}>
-              {width}
+              {width || ''}
             </Text>
           </Text>
           <Text as="p" fontSize={'sm'} fontWeight={'500'}>
             {dictionary.singleProduct.wood}
 
             <Text as="span" fontWeight={'300'}>
-              {wood}
+              {wood || ''}
             </Text>
           </Text>
           <Text as="p" fontSize={'sm'} fontWeight={'500'}>
             {dictionary.singleProduct.type}
 
             <Text as="span" fontWeight={'300'}>
-              {type}
+              {type || ''}
             </Text>
           </Text>
           <Text as="p" fontSize={'sm'} fontWeight={'500'}>
             {dictionary.singleProduct.manufacturer}
 
             <Text as="span" fontWeight={'300'}>
-              {manufacturer}
+              {manufacturer || ''}
             </Text>
           </Text>
         </Flex>
       </Flex>
       <Text my={4} as="p">
-        {descLong}
+        {descLong || ''}
       </Text>
 
       <Btn onClick={onOpen}>{dictionary.buttons.contact}</Btn>
