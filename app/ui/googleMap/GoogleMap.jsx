@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Box, Flex, Image, Text } from '@chakra-ui/react';
+import { AspectRatio, Box, Flex, Image, Text } from '@chakra-ui/react';
 import { APIProvider, AdvancedMarker, Map } from '@vis.gl/react-google-maps';
 import mapMarker from '../../../public/mapMarker.png';
 
@@ -16,7 +16,7 @@ const GoogleMap = () => {
 
   return (
     <Box w="100%" h={{ base: '400px', lg: '100%' }}>
-      <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY}>
+      {/* <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY}>
         <Map
           center={defaultProps.center}
           zoom={defaultProps.zoom}
@@ -32,7 +32,15 @@ const GoogleMap = () => {
             </Flex>
           </AdvancedMarker>
         </Map>
-      </APIProvider>
+      </APIProvider> */}
+      <AspectRatio>
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d2307.2496485324154!2d34.60951930820427!3d31.521696408366747!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMzHCsDMxJzE3LjgiTiAzNMKwMzYnMzUuNSJF!5e1!3m2!1sen!2sua!4v1701858857244!5m2!1sen!2sua"
+          allowfullscreen=""
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </AspectRatio>
     </Box>
   );
 };
