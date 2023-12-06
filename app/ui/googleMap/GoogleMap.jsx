@@ -15,7 +15,7 @@ const GoogleMap = () => {
   };
 
   return (
-    <Box w="100%" h={{ base: '400px', lg: '100%' }}>
+    <Box w="100%" h="100%" filter="invert(1) grayscale(0.5)">
       {/* <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY}>
         <Map
           center={defaultProps.center}
@@ -33,9 +33,9 @@ const GoogleMap = () => {
           </AdvancedMarker>
         </Map>
       </APIProvider> */}
-      <AspectRatio>
+      <AspectRatio ratio={16 / 11.3}>
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d2307.2496485324154!2d34.60951930820427!3d31.521696408366747!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMzHCsDMxJzE3LjgiTiAzNMKwMzYnMzUuNSJF!5e1!3m2!1sen!2sua!4v1701858857244!5m2!1sen!2sua"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3401.0946519545955!2d34.6098535!3d31.5215602!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x150286a7b4b50667%3A0x26dfad5636bcaa2d!2sAmsterdam%20St%203%2C%20Sderot%2C%20Israel!5e0!3m2!1sen!2sua!4v1701863556645!5m2!1sen!2sua"
           allowfullscreen=""
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
