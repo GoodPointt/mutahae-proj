@@ -47,7 +47,7 @@ const TopBar = ({
         gap={{ base: '18px', lg: '14px', xl: '16px' }}
       >
         {iconLink(<FaLocationDot size="22" />, address, addressUrl)}
-        {iconLink(<FaPhone size="22" />, `+${phone}`, `tel:${phone}`)}
+        {iconLink(<FaPhone size="22" />, `+${phone}`, `tel:+${phone}`)}
         {iconLink(<FaEnvelope size="22" />, email, `mailto:${email}`)}
       </Box>
 

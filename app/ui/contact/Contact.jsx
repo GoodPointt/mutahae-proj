@@ -61,7 +61,7 @@ const Contact = async ({ lang, dictionary }) => {
               <MdPhone color="#a28445" size="20px" />
               <Link
                 _hover={{ textDecoration: 'none' }}
-                href={`tel:${contacts.phone}`}
+                href={`tel:+${contacts.phone}`}
                 display="flex"
                 flexDir={lang === 'he' ? 'row-reverse' : 'row'}
               >

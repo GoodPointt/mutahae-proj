@@ -46,7 +46,7 @@ const ContactsFooter = ({
         gap={{ base: '18px', lg: '14px', xl: '16px' }}
       >
         {iconLink(<FaLocationDot size="24" />, address, addressUrl)}
-        {iconLink(<FaPhone size="24" />, `+${phone}`, `tel:${phone}`)}
+        {iconLink(<FaPhone size="24" />, `+${phone}`, `tel:+${phone}`)}
         {iconLink(<FaEnvelope size="24" />, email, `mailto:${email}`)}
       </Box>
     </Flex>
