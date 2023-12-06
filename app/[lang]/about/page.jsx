@@ -6,6 +6,10 @@ import Features from '@/app/ui/features/Features';
 import Team from '@/app/ui/team/Team';
 import { Suspense } from 'react';
 
+export const metadata = {
+  title: 'About',
+};
+
 const AboutPage = async ({ params: { lang } }) => {
   const dictionary = await getDictionary(lang);
   const {

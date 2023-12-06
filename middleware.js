@@ -24,8 +24,12 @@ export function middleware(request) {
   const pathname = request.nextUrl.pathname;
   if (
     [
+      //SEO
+      '/sitemap.xml',
+      '/robots.txt',
+      '/opengraph-image.png',
+      '/favicon.ico',
       // LOGOS
-      '/icon.png',
       '/logo-small.png',
       '/logo.png',
       '/manifest.json',
@@ -37,6 +41,7 @@ export function middleware(request) {
       '/crooked-line.png',
       '/reviews-background.jpg',
       //TEAM
+      '/member.png',
       '/team-sam.jpg',
       '/team-simon.jpg',
       '/team-tamara.jpg',

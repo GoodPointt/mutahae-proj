@@ -13,8 +13,15 @@ import SocialLinks from '../ui/socialLinks/SocialLinks';
 const inter = Montserrat({ subsets: ['latin'] });
 
 export const metadata = {
-  title: 'MUTAG Haetz',
-  description: 'MUTAG Haetz',
+  title: {
+    default: 'MUTAG Haetz',
+    template: '%s - MUTAG Haetz',
+  },
+  description:
+    'Nature in Every Detail: Beauty and Warmth of Wood in Every Product!',
+  twitter: {
+    card: 'summary_large_image',
+  },
 };
 
 export async function generateStaticParams() {
@@ -26,13 +33,6 @@ export default async function RootLayout({ children, params: { lang } }) {
 
   return (
     <html lang={lang} dir={lang === 'he' ? 'rtl' : 'ltr'}>
-      <link
-        rel="icon"
-        href="/icon?<generated>"
-        type="image/<generated>"
-        sizes="<generated>"
-      />
-
       <Box
         as="body"
         bg={'#181617'}

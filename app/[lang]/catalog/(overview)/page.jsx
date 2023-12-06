@@ -7,6 +7,10 @@ import SkeletonProductsGrid from '@/app/ui/skeletons/SkeletonProducts';
 import { fetchProducts } from '@/app/lib/api/instance';
 import { getDictionary } from '@/app/lib/locales/dictionary';
 
+export const metadata = {
+  title: 'Catalog',
+};
+
 const CatalogPage = async ({ params: { lang } }) => {
   const { data } = await fetchProducts(lang);
   const dictionary = await getDictionary(lang);

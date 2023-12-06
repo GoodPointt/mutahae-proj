@@ -60,11 +60,11 @@ const ProductItem = ({ product, lang }) => {
           gap={4}
         >
           <Heading color={'#fff'} fontSize={'24'} mx={4}>
-            {product.title}
+            {product?.title}
           </Heading>
 
           <Text color={'#fff'} fontSize={'14'} mx={4}>
-            {product.descShort}
+            {product?.descShort}
           </Text>
 
           <Button
@@ -75,7 +75,7 @@ const ProductItem = ({ product, lang }) => {
             _hover={{ bgColor: '#81672e' }}
             borderTopRadius={0}
           >
-            {product.button}
+            {product?.button}
           </Button>
         </Box>
       </Link>

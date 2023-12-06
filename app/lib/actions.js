@@ -71,6 +71,6 @@ export async function submitData(prevState, formData) {
       return { name, email, phone, message: 'succsess' };
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
