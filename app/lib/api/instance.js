@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { cache } from 'react';
+import { notFound } from 'next/navigation';
 
 export const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_STRAPI_API_URL,
@@ -19,12 +20,20 @@ export const fetchProducts = cache(getProducts);
 
 const getOneProducts = async (id, lang) => {
   try {
-    const { data } = await instance.get(
+    const {
+      data: { data },
+    } = await instance.get(
       `/api/products?locale=${lang}&filters[uid][$eq]=${id}`
     );
-    return data;
+    if (data.length === 0) {
+      return notFound();
+    }
+    const [{ attributes: product }] = data;
+    return product;
   } catch (e) {
-    console.error(e);
+    if (e.data === undefined) {
+      return notFound();
+    }
   }
 };
 
