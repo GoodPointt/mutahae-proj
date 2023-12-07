@@ -35,10 +35,9 @@ export const generateMetadata = async ({ params: { id, lang } }) => {
 };
 
 const SingleProductPage = async ({ params: { id, lang } }) => {
-  const {
-    data: [{ attributes: contacts }],
-  } = await fetchContacts(lang);
   const dictionary = await getDictionary(lang);
+
+  const contacts = await fetchContacts(lang);
 
   const product = await fetchOneProduct(id, lang);
 

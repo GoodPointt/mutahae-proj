@@ -14,9 +14,7 @@ import { MdEmail, MdLocationOn, MdPhone } from 'react-icons/md';
 import { fetchContacts } from '../../lib/api/instance';
 
 const Contact = async ({ lang, dictionary }) => {
-  const {
-    data: [{ attributes: contacts }],
-  } = await fetchContacts(lang);
+  const contacts = await fetchContacts(lang);
 
   const { addressUrl, address, phone, email } = contacts;
 

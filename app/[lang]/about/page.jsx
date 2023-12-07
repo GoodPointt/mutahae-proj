@@ -12,9 +12,7 @@ export const metadata = {
 
 const AboutPage = async ({ params: { lang } }) => {
   const dictionary = await getDictionary(lang);
-  const {
-    data: [{ attributes: contacts }],
-  } = await fetchContacts(lang);
+  const contacts = await fetchContacts(lang);
 
   const { data } = await fetchMembers(lang);
 

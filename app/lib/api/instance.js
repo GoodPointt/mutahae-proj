@@ -48,10 +48,18 @@ export const fetchOneProduct = cache(getOneProduct);
 
 export const getContacts = async lang => {
   try {
-    const { data } = await instance.get(`/api/contacts?locale=${lang}`);
-    return data;
+    const {
+      data: { data },
+    } = await instance.get(`/api/contacts?locale=${lang}`);
+    if (data.length === 0) return notFound();
+
+    const [{ attributes }] = data;
+
+    return attributes;
   } catch (e) {
-    console.error(e);
+    if (e.data === undefined) {
+      return notFound();
+    }
   }
 };
 
@@ -70,10 +78,17 @@ export const createContact = async credentials => {
 
 const getReviews = async lang => {
   try {
-    const { data } = await instance.get(`/api/reviews?locale=${lang}`);
+    const {
+      data: { data },
+    } = await instance.get(`/api/reviews?locale=${lang}`);
+
+    if (data.length === 0) return notFound();
+
     return data;
   } catch (e) {
-    console.error(e);
+    if (e.data === undefined) {
+      return notFound();
+    }
   }
 };
 

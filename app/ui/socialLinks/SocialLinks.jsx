@@ -1,17 +1,21 @@
 import { fetchContacts } from '@/app/lib/api/instance';
 import { Box, Link } from '@chakra-ui/react';
-import { BsWhatsapp, BsFacebook, BsInstagram } from 'react-icons/bs';
+import {
+  BsWhatsapp,
+  BsFacebook,
+  BsInstagram,
+  BsTelegram,
+} from 'react-icons/bs';
 
 const SocialLinks = async ({ lang, pos = 'fixed' }) => {
-  const {
-    data: [{ attributes }],
-  } = await fetchContacts(lang);
+  const contacts = await fetchContacts(lang);
 
-  const { insta, fb, watsapp } = attributes;
+  const { insta, fb, watsapp, tg } = contacts;
 
-  const createLink = (href, icon) => (
+  const createLink = (href, icon, aria) => (
     <Link
       href={href}
+      aria-label={aria}
       target="_blank"
       rel="noopener noreferrer nofollow"
       display={'flex'}
@@ -42,9 +46,10 @@ const SocialLinks = async ({ lang, pos = 'fixed' }) => {
       gap={'3px'}
       zIndex="98"
     >
-      {createLink(fb, <BsFacebook size={28} />)}
-      {createLink(watsapp, <BsWhatsapp size={28} />)}
-      {createLink(insta, <BsInstagram size={28} />)}
+      {createLink(watsapp, <BsWhatsapp size={28} />, 'whatsapp')}
+      {createLink(tg, <BsTelegram size={28} />, 'telegram')}
+      {createLink(fb, <BsFacebook size={28} />, 'facebook')}
+      {createLink(insta, <BsInstagram size={28} />, 'instagram')}
     </Box>
   );
 };

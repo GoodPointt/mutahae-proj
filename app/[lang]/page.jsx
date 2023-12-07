@@ -15,9 +15,7 @@ export const generateStaticParams = async () => {
 const Homepage = async ({ params: { lang } }) => {
   const dictionary = await getDictionary(lang);
   const products = await fetchProducts(lang);
-  const {
-    data: [{ attributes: contacts }],
-  } = await fetchContacts(lang);
+  const contacts = await fetchContacts(lang);
 
   return (
     <Box>
