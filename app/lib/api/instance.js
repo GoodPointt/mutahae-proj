@@ -9,16 +9,23 @@ instance.defaults.headers.authorization = `Bearer ${process.env.NEXT_PUBLIC_STRA
 
 const getProducts = async lang => {
   try {
-    const { data } = await instance.get(`/api/products?locale=${lang}`);
+    const {
+      data: { data },
+    } = await instance.get(`/api/products?locale=${lang}`);
+    if (data.length === 0) {
+      return notFound();
+    }
     return data;
   } catch (e) {
-    console.error(e);
+    if (e.data === undefined) {
+      return notFound();
+    }
   }
 };
 
 export const fetchProducts = cache(getProducts);
 
-const getOneProducts = async (id, lang) => {
+const getOneProduct = async (id, lang) => {
   try {
     const {
       data: { data },
@@ -37,7 +44,7 @@ const getOneProducts = async (id, lang) => {
   }
 };
 
-export const fetchOneProduct = cache(getOneProducts);
+export const fetchOneProduct = cache(getOneProduct);
 
 export const getContacts = async lang => {
   try {

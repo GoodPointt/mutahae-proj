@@ -12,7 +12,7 @@ export const metadata = {
 };
 
 const CatalogPage = async ({ params: { lang } }) => {
-  const { data } = await fetchProducts(lang);
+  const products = await fetchProducts(lang);
   const dictionary = await getDictionary(lang);
   const {
     header: { navItems },
@@ -33,8 +33,8 @@ const CatalogPage = async ({ params: { lang } }) => {
             m={'0 auto'}
             padding={0}
           >
-            {data?.length > 0 &&
-              data.map(({ attributes }) => {
+            {products?.length > 0 &&
+              products.map(({ attributes }) => {
                 return (
                   <ProductItem
                     key={attributes.uid}
