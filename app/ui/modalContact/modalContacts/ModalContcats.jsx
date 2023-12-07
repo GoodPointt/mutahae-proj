@@ -107,7 +107,10 @@ const ModalContacts = ({ contacts, dictionary, lang }) => {
           variant="ghost"
           size="lg"
           isRound={true}
-          _hover={{ bg: '#333331', transform: 'scale(1.06)' }}
+          _hover={{
+            bg: '#333331',
+            transform: 'translateY(-3px) translateX(5px)',
+          }}
           transition="all 300ms ease"
         />
         <IconButton
@@ -122,7 +125,10 @@ const ModalContacts = ({ contacts, dictionary, lang }) => {
           variant="ghost"
           size="lg"
           isRound={true}
-          _hover={{ bg: '#333331', transform: 'scale(1.06)' }}
+          _hover={{
+            bg: '#333331',
+            transform: 'translateY(-3px) translateX(5px)',
+          }}
           transition="all 300ms ease"
         />
         <IconButton
@@ -137,7 +143,10 @@ const ModalContacts = ({ contacts, dictionary, lang }) => {
           variant="ghost"
           size="lg"
           isRound={true}
-          _hover={{ bg: '#333331', transform: 'scale(1.06)' }}
+          _hover={{
+            bg: '#333331',
+            transform: 'translateY(-3px) translateX(5px)',
+          }}
           transition="all 300ms ease"
         />
         <IconButton
@@ -152,7 +161,10 @@ const ModalContacts = ({ contacts, dictionary, lang }) => {
           variant="ghost"
           size="lg"
           isRound={true}
-          _hover={{ bg: '#333331', transform: 'scale(1.06)' }}
+          _hover={{
+            bg: '#333331',
+            transform: 'translateY(-3px) translateX(5px)',
+          }}
           transition="all 300ms ease"
         />
       </HStack>
