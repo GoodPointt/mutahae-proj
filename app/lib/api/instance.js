@@ -32,10 +32,12 @@ const getOneProduct = async (id, lang) => {
     } = await instance.get(
       `/api/products?locale=${lang}&filters[uid][$eq]=${id}`
     );
+
     if (data.length === 0) {
       return notFound();
     }
     const [{ attributes: product }] = data;
+
     return product;
   } catch (e) {
     if (e.data === undefined) {
