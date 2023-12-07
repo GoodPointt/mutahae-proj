@@ -20,6 +20,7 @@ const SingleProduct = ({
     wood,
     type,
     manufacturer,
+    uid,
   },
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -105,6 +106,8 @@ const SingleProduct = ({
           dictionary={dictionary}
           contacts={contacts}
           onClose={onClose}
+          title={title}
+          uid={uid}
         />
       </ModalWindow>
     </SectionWrapper>

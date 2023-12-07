@@ -6,7 +6,7 @@ import useLang from '@/app/lib/hooks/useLang';
 import ModalForm from './modalForm/ModalForm';
 import ModalContacts from './modalContacts/ModalContcats';
 
-const ModalContact = ({ dictionary, contacts, onClose }) => {
+const ModalContact = ({ dictionary, contacts, onClose, title, uid }) => {
   const lang = useLang();
 
   return (
@@ -25,7 +25,13 @@ const ModalContact = ({ dictionary, contacts, onClose }) => {
         />
       </WrapItem>
       <WrapItem w={{ base: '100%', md: '380px' }}>
-        <ModalForm onClose={onClose} dictionary={dictionary} lang={lang} />
+        <ModalForm
+          onClose={onClose}
+          dictionary={dictionary}
+          lang={lang}
+          title={title}
+          uid={uid}
+        />
       </WrapItem>
     </Wrap>
   );
