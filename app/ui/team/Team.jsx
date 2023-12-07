@@ -14,7 +14,11 @@ const Team = ({ dictionary, members }) => {
         {dictionary.title}
       </Heading>
       <Grid
-        gridTemplateColumns={['1fr', 'repeat(2, 1fr)', 'repeat(3, 1fr)']}
+        gridTemplateColumns={{
+          base: '1fr',
+          md: 'repeat(2, 1fr)',
+          lg: 'repeat(3, 1fr)',
+        }}
         gap={'24px'}
         as={'ul'}
       >
@@ -59,6 +63,7 @@ const Team = ({ dictionary, members }) => {
               h={'100%'}
               p={'16px'}
               textTransform={'uppercase'}
+              bg="linear-gradient(0deg,rgba(0, 0, 0, 0.7) 15%, rgba(252, 176, 69, 0) 50%)"
             >
               <Text fontWeight={'600'}>{attributes?.name}</Text>
               <Text color={'#a28445'}>{attributes?.position}</Text>
