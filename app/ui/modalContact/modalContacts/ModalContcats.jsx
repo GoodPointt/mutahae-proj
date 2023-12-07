@@ -8,7 +8,12 @@ import {
   Link,
 } from '@chakra-ui/react';
 import { MdPhone, MdEmail, MdLocationOn } from 'react-icons/md';
-import { BsWhatsapp, BsFacebook, BsInstagram } from 'react-icons/bs';
+import {
+  BsWhatsapp,
+  BsFacebook,
+  BsInstagram,
+  BsTelegram,
+} from 'react-icons/bs';
 
 const ModalContacts = ({ contacts, dictionary, lang }) => {
   return (
@@ -102,8 +107,11 @@ const ModalContacts = ({ contacts, dictionary, lang }) => {
           variant="ghost"
           size="lg"
           isRound={true}
-          _hover={{ bg: '#333331', transform: 'scale(1.06)' }}
-          transition="all 300ms ease"
+          _hover={{
+            bg: '#333331',
+            transform: 'translateY(-3px) translateX(3px)',
+          }}
+          transition="all 500ms ease"
         />
         <IconButton
           isExternal
@@ -117,8 +125,11 @@ const ModalContacts = ({ contacts, dictionary, lang }) => {
           variant="ghost"
           size="lg"
           isRound={true}
-          _hover={{ bg: '#333331', transform: 'scale(1.06)' }}
-          transition="all 300ms ease"
+          _hover={{
+            bg: '#333331',
+            transform: 'translateY(-3px) translateX(3px)',
+          }}
+          transition="all 500ms ease"
         />
         <IconButton
           isExternal
@@ -132,8 +143,29 @@ const ModalContacts = ({ contacts, dictionary, lang }) => {
           variant="ghost"
           size="lg"
           isRound={true}
-          _hover={{ bg: '#333331', transform: 'scale(1.06)' }}
-          transition="all 300ms ease"
+          _hover={{
+            bg: '#333331',
+            transform: 'translateY(-3px) translateX(3px)',
+          }}
+          transition="all 500ms ease"
+        />
+        <IconButton
+          isExternal
+          as={'a'}
+          rel={'noopener noreferrer nofollow'}
+          aria-label="whatsapp"
+          icon={<BsTelegram size="28px" />}
+          href={contacts.tg}
+          target="_blank"
+          color={'#a28445'}
+          variant="ghost"
+          size="lg"
+          isRound={true}
+          _hover={{
+            bg: '#333331',
+            transform: 'translateY(-3px) translateX(5px)',
+          }}
+          transition="all 500ms ease"
         />
       </HStack>
     </Box>
