@@ -14,7 +14,7 @@ export const generateStaticParams = async () => {
 
 const Homepage = async ({ params: { lang } }) => {
   const dictionary = await getDictionary(lang);
-  const { data } = await fetchProducts(lang);
+  const products = await fetchProducts(lang);
   const {
     data: [{ attributes: contacts }],
   } = await fetchContacts(lang);
@@ -23,7 +23,7 @@ const Homepage = async ({ params: { lang } }) => {
     <Box>
       <Hero dictionary={dictionary} lang={lang} />
       <CatalogSlider
-        products={data}
+        products={products}
         lang={lang}
         heading={dictionary.header.navItems[1].title}
       />

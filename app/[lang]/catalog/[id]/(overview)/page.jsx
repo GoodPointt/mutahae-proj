@@ -11,9 +11,9 @@ import LoadingProduct from './loading';
 import { getDictionary } from '@/app/lib/locales/dictionary';
 
 export const generateStaticParams = async ({ params: { lang } }) => {
-  const { data } = await fetchProducts(lang);
-  if (data.length > 0) {
-    const productsIds = data.map(product => product.attributes.uid);
+  const products = await fetchProducts(lang);
+  if (products.length > 0) {
+    const productsIds = products.map(product => product.attributes.uid);
     return productsIds.slice(0, 6);
   }
 };
