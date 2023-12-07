@@ -2,7 +2,7 @@ import { fetchProducts } from './lib/api/instance';
 
 export default async function sitemap() {
   const productsEn = await fetchProducts('en');
-  const postEntriesEn = productsEn.data.map(({ attributes }) => ({
+  const postEntriesEn = productsEn.map(({ attributes }) => ({
     url: `${process.env.NEXT_PUBLIC_URL}/en/${attributes.uid}`,
     lastModified: new Date(attributes.updatedAt),
     changeFrequency: 'monthly',
@@ -10,7 +10,7 @@ export default async function sitemap() {
   }));
 
   const productsHe = await fetchProducts('he');
-  const productEntriesHe = productsHe.data.map(({ attributes }) => ({
+  const productEntriesHe = productsHe.map(({ attributes }) => ({
     url: `${process.env.NEXT_PUBLIC_URL}/he/${attributes.uid}`,
     lastModified: new Date(attributes.updatedAt),
     changeFrequency: 'monthly',
