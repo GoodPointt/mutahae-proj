@@ -13,6 +13,29 @@ import SocialLinks from '../ui/socialLinks/SocialLinks';
 const inter = Montserrat({ subsets: ['latin'] });
 
 export const metadata = {
+  keywords: [
+    'лестницы',
+    'stairs',
+    'סולמות',
+    'деревянные изделия',
+    'solid wood panels',
+    'wooden products',
+    'מוצרים מעץ',
+    'щиты из цельного дерева',
+    'לוחות עץ',
+    'полки',
+    'shelves',
+    'מדפים',
+    'столешницы',
+    'countertops',
+    'דודים',
+    'деревянные полы',
+    'wooden floors',
+    'רצפות עץ',
+    'дуб',
+    'oak',
+    'אלון',
+  ],
   title: {
     default: 'MUTAG Haetz',
     template: '%s - MUTAG Haetz',
