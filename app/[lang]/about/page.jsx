@@ -14,16 +14,14 @@ const AboutPage = async ({ params: { lang } }) => {
   const dictionary = await getDictionary(lang);
   const contacts = await fetchContacts(lang);
 
-  const { data } = await fetchMembers(lang);
+  const members = await fetchMembers(lang);
 
   return (
     <>
       <About dictionary={dictionary} contacts={contacts} />
       <Features dictionary={dictionary.aboutUs.features} />
       <Suspense>
-        {data.length > 0 && (
-          <Team dictionary={dictionary.aboutUs.team} members={data} />
-        )}
+        <Team dictionary={dictionary.aboutUs.team} members={members} />
       </Suspense>
       <Contact dictionary={dictionary} lang={lang} />
     </>
