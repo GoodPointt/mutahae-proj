@@ -109,9 +109,9 @@ const ModalContacts = ({ contacts, dictionary, lang }) => {
           isRound={true}
           _hover={{
             bg: '#333331',
-            transform: 'translateY(-3px) translateX(5px)',
+            transform: 'translateY(-3px) translateX(3px)',
           }}
-          transition="all 300ms ease"
+          transition="all 500ms ease"
         />
         <IconButton
           isExternal
@@ -127,9 +127,9 @@ const ModalContacts = ({ contacts, dictionary, lang }) => {
           isRound={true}
           _hover={{
             bg: '#333331',
-            transform: 'translateY(-3px) translateX(5px)',
+            transform: 'translateY(-3px) translateX(3px)',
           }}
-          transition="all 300ms ease"
+          transition="all 500ms ease"
         />
         <IconButton
           isExternal
@@ -145,9 +145,9 @@ const ModalContacts = ({ contacts, dictionary, lang }) => {
           isRound={true}
           _hover={{
             bg: '#333331',
-            transform: 'translateY(-3px) translateX(5px)',
+            transform: 'translateY(-3px) translateX(3px)',
           }}
-          transition="all 300ms ease"
+          transition="all 500ms ease"
         />
         <IconButton
           isExternal
@@ -165,7 +165,7 @@ const ModalContacts = ({ contacts, dictionary, lang }) => {
             bg: '#333331',
             transform: 'translateY(-3px) translateX(5px)',
           }}
-          transition="all 300ms ease"
+          transition="all 500ms ease"
         />
       </HStack>
     </Box>
