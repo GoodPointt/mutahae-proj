@@ -18,6 +18,8 @@ const Contact = async ({ lang, dictionary }) => {
     data: [{ attributes: contacts }],
   } = await fetchContacts(lang);
 
+  const { addressUrl, address, phone, email } = contacts;
+
   return (
     <SectionWrapper bg="#282828">
       <Flex gap={30} flexDirection={{ base: 'column', lg: 'row' }}>
@@ -26,27 +28,31 @@ const Contact = async ({ lang, dictionary }) => {
             {dictionary.formContact.sectionTitle}
           </Heading>
           <List mb="15px">
-            <ListItem
-              display="flex"
-              gap="8px"
-              alignItems="center"
-              _hover={{
-                cursor: 'pointer',
-                color: '#b1b0b0',
-              }}
-              transition={'all 0.3s'}
-            >
-              <MdLocationOn color="#a28445" size="20px" />
-              <Link
-                _hover={{ textDecoration: 'none' }}
-                isExternal
-                href={contacts.addressUrl}
-                rel={'noopener noreferrer nofollow'}
+            {address && (
+              <ListItem
+                display="flex"
+                gap="8px"
+                alignItems="center"
+                _hover={{
+                  cursor: 'pointer',
+                  color: '#b1b0b0',
+                }}
+                transition={'all 0.3s'}
               >
-                <Text>{contacts.address}</Text>
-              </Link>
-            </ListItem>
-
+                <MdLocationOn color="#a28445" size="20px" />
+                {addressUrl && address && (
+                  <Link
+                    _hover={{ textDecoration: 'none' }}
+                    isExternal
+                    href={addressUrl}
+                    rel={'noopener noreferrer nofollow'}
+                  >
+                    <Text>{address}</Text>
+                  </Link>
+                )}
+                {!addressUrl && address && <Text>{address}</Text>}
+              </ListItem>
+            )}
             <ListItem
               display="flex"
               gap="8px"
@@ -59,15 +65,17 @@ const Contact = async ({ lang, dictionary }) => {
               transition={'all 0.3s'}
             >
               <MdPhone color="#a28445" size="20px" />
-              <Link
-                _hover={{ textDecoration: 'none' }}
-                href={`tel:+${contacts.phone}`}
-                display="flex"
-                flexDir={lang === 'he' ? 'row-reverse' : 'row'}
-              >
-                <Box as="span">+</Box>
-                {contacts.phone}
-              </Link>
+              {phone && (
+                <Link
+                  _hover={{ textDecoration: 'none' }}
+                  href={`tel:+${phone}`}
+                  display="flex"
+                  flexDir={lang === 'he' ? 'row-reverse' : 'row'}
+                >
+                  <Box as="span">+</Box>
+                  {phone}
+                </Link>
+              )}
             </ListItem>
             <ListItem
               display="flex"
@@ -81,12 +89,14 @@ const Contact = async ({ lang, dictionary }) => {
               transition={'all 0.3s'}
             >
               <MdEmail color="#a28445" size="20px" />
-              <Link
-                _hover={{ textDecoration: 'none' }}
-                href={`mailto:${contacts.mail}`}
-              >
-                {contacts.email}
-              </Link>
+              {email && (
+                <Link
+                  _hover={{ textDecoration: 'none' }}
+                  href={`mailto:${email}`}
+                >
+                  {email}
+                </Link>
+              )}
             </ListItem>
           </List>
           <ContactForm dictionary={dictionary} />
