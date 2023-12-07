@@ -1,7 +1,7 @@
 import {
   fetchContacts,
   fetchOneProduct,
-  fetchProducts,
+  // fetchProducts,
 } from '@/app/lib/api/instance';
 
 import Contact from '@/app/ui/contact/Contact';
@@ -10,13 +10,13 @@ import { Suspense } from 'react';
 import LoadingProduct from './loading';
 import { getDictionary } from '@/app/lib/locales/dictionary';
 
-export const generateStaticParams = async ({ params: { lang } }) => {
-  const products = await fetchProducts(lang);
-  if (products.length > 0) {
-    const productsIds = products.map(product => product.attributes.uid);
-    return productsIds.slice(0, 6);
-  }
-};
+// export const generateStaticParams = async ({ params: { lang } }) => {
+//   const products = await fetchProducts(lang);
+//   if (products.length > 0) {
+//     const productsIds = products.map(product => product.attributes.uid);
+//     return productsIds.slice(0, 6);
+//   }
+// };
 
 export const generateMetadata = async ({ params: { id, lang } }) => {
   const product = await fetchOneProduct(id, lang);
