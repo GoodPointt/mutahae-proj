@@ -3,7 +3,6 @@ import {
   fetchOneProduct,
   fetchProducts,
 } from '@/app/lib/api/instance';
-import { notFound } from 'next/navigation';
 
 import Contact from '@/app/ui/contact/Contact';
 import SingleProduct from '@/app/ui/singleProduct/SingleProduct';
@@ -20,12 +19,7 @@ export const generateStaticParams = async ({ params: { lang } }) => {
 };
 
 export const generateMetadata = async ({ params: { id, lang } }) => {
-  const { data } = await fetchOneProduct(id, lang);
-  if (data.length === 0) {
-    return notFound();
-  }
-
-  const [{ attributes: product }] = data;
+  const product = await fetchOneProduct(id, lang);
 
   return {
     title: product.title,
@@ -45,9 +39,8 @@ const SingleProductPage = async ({ params: { id, lang } }) => {
     data: [{ attributes: contacts }],
   } = await fetchContacts(lang);
   const dictionary = await getDictionary(lang);
-  const {
-    data: [{ attributes: product }],
-  } = await fetchOneProduct(id, lang);
+
+  const product = await fetchOneProduct(id, lang);
 
   return (
     <>

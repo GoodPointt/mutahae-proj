@@ -1,6 +1,6 @@
 import { Center, Heading, Text } from '@chakra-ui/react';
 import Link from 'next/link';
-import Btn from '../ui/button/Btn';
+import Btn from '@/app/ui/button/Btn';
 
 const NotFound = () => {
   return (
@@ -11,7 +11,7 @@ const NotFound = () => {
       <Text>Looks like this page doesn&apos;t exist.</Text>
 
       <Link href="/">
-        <Btn>Return Home</Btn>
+        <Btn>Let&apos;s try again</Btn>
       </Link>
     </Center>
   );
