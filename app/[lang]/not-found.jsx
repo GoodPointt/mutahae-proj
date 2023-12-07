@@ -6,12 +6,12 @@ const NotFound = () => {
   return (
     <Center flexDir={'column'} gap={6} h={480}>
       <Heading as={'h1'} fontWeight={'bold'}>
-        Not Found _NOT_FOUND.jsx
+        Not Found
       </Heading>
       <Text>Looks like this page doesn&apos;t exist.</Text>
 
       <Link href="/">
-        <Btn>Return Home</Btn>
+        <Btn>Let&apos;s try again</Btn>
       </Link>
     </Center>
   );
