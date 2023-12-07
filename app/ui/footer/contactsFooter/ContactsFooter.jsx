@@ -8,8 +8,8 @@ const ContactsFooter = ({
 }) => {
   const iconLink = (icon, text, href) => (
     <Link
-      href={href}
-      target="_blank"
+      href={href || '/'}
+      target={!href.includes('tel') ? '_blank' : null}
       rel="noopener noreferrer nofollow"
       display="flex"
       alignItems="center"
@@ -23,7 +23,7 @@ const ContactsFooter = ({
           fontSize={{ base: '14px', lg: '16px', xl: '18px' }}
           dir={text === address && lang === 'he' ? 'rtl' : 'ltr'}
         >
-          {text}
+          {text || ''}
         </Text>
       </Box>
     </Link>
