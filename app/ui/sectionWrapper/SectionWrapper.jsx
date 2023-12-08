@@ -27,11 +27,7 @@ const SectionWrapper = ({
       w={w}
       zIndex={zIndex}
     >
-      <Container
-        as={'article'}
-        maxW={{ base: '744px', lg: '1000px', xl: '1176px' }}
-        px="12px"
-      >
+      <Container maxW={{ base: '744px', lg: '1000px', xl: '1176px' }} px="12px">
         {heading && (
           <Heading
             as={headingAs}
