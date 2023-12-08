@@ -16,6 +16,7 @@ const SingleProduct = ({
     length,
     width,
     descLong,
+    descShort,
     thickness,
     wood,
     type,
@@ -37,10 +38,11 @@ const SingleProduct = ({
         >
           <Image
             src={imgUrl || '/product.png'}
-            alt={'product image'}
+            alt={title + '' + descShort || 'product image'}
             fill
             placeholder="blur"
             blurDataURL="/blur-product.jpg"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             style={{
               display: 'block',
               height: '100%',
