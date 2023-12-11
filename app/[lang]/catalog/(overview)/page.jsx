@@ -9,6 +9,17 @@ import { getDictionary } from '@/app/lib/locales/dictionary';
 
 export const metadata = {
   title: 'Catalog',
+  alternates: {
+    canonical: '/',
+    languages: {
+      en: '/en',
+      he: '/he',
+    },
+  },
+  metadataBase: new URL(process.env.NEXT_PUBLIC_URL),
+  openGraph: {
+    images: '/opengraph-image.png',
+  },
 };
 
 const CatalogPage = async ({ params: { lang } }) => {

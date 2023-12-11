@@ -9,7 +9,7 @@ import { Suspense } from 'react';
 export const metadata = {
   title: 'About',
   alternates: {
-    canonical: '/about',
+    canonical: '/',
     languages: {
       en: '/en',
       he: '/he',
