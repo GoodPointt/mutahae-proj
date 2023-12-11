@@ -18,7 +18,6 @@ export async function generateStaticParams() {
 }
 
 export const generateMetadata = async ({ params: { lang } }) => {
-  const dictionary = await getDictionary(lang);
   const heroFields = await fetchHero(lang);
 
   return {
@@ -95,7 +94,7 @@ export const generateMetadata = async ({ params: { lang } }) => {
       default: 'MUTAG Haetz',
       template: '%s - MUTAG Haetz',
     },
-    description: heroFields.title || dictionary.hero.title,
+    description: heroFields.title,
     alternates: {
       canonical: '/',
       languages: {
