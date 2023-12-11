@@ -1,9 +1,4 @@
 {
-  "page": {
-    "home": {
-      "title": "TEST HEADING"
-    }
-  },
   "buttons": {
     "view": "View",
     "contact": "Contact us",

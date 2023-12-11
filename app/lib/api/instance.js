@@ -7,6 +7,26 @@ export const instance = axios.create({
 });
 instance.defaults.headers.authorization = `Bearer ${process.env.NEXT_PUBLIC_STRAPI_TOKEN}`;
 
+const getHero = async lang => {
+  try {
+    const {
+      data: {
+        data: { attributes },
+      },
+    } = await instance.get(`/api/hero?locale=${lang}`);
+    // if (data.length === 0) {
+    //   return notFound();
+    // }
+
+    return attributes;
+  } catch (e) {
+    if (e.data === undefined) {
+      return notFound();
+    }
+  }
+};
+export const fetchHero = cache(getHero);
+
 const getProducts = async lang => {
   try {
     const {
