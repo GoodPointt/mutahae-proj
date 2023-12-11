@@ -13,7 +13,6 @@ import SocialLinks from '../ui/socialLinks/SocialLinks';
 const inter = Montserrat({ subsets: ['latin'] });
 
 export const metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_URL),
   alternates: {
     canonical: '/',
     languages: {
@@ -21,6 +20,7 @@ export const metadata = {
       he: '/he',
     },
   },
+  metadataBase: new URL(process.env.NEXT_PUBLIC_URL),
   openGraph: {
     images: '/opengraph-image.png',
   },

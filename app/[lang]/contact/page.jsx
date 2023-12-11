@@ -3,6 +3,17 @@ import Contact from '@/app/ui/contact/Contact';
 
 export const metadata = {
   title: 'Contact',
+  alternates: {
+    canonical: '/',
+    languages: {
+      en: '/en',
+      he: '/he',
+    },
+  },
+  metadataBase: new URL(process.env.NEXT_PUBLIC_URL),
+  openGraph: {
+    images: '/opengraph-image.png',
+  },
 };
 
 const ContactPage = async ({ params: { lang } }) => {
