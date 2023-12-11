@@ -7,19 +7,25 @@ import SkeletonProductsGrid from '@/app/ui/skeletons/SkeletonProducts';
 import { fetchProducts } from '@/app/lib/api/instance';
 import { getDictionary } from '@/app/lib/locales/dictionary';
 
-export const metadata = {
-  title: 'Catalog',
-  alternates: {
-    canonical: '/',
-    languages: {
-      en: '/en',
-      he: '/he',
+export const generateMetadata = async ({ params: { lang } }) => {
+  const {
+    header: { navItems },
+  } = await getDictionary(lang);
+
+  return {
+    title: navItems[1].title,
+    alternates: {
+      canonical: '/',
+      languages: {
+        en: '/en',
+        he: '/he',
+      },
     },
-  },
-  metadataBase: new URL(process.env.NEXT_PUBLIC_URL),
-  openGraph: {
-    images: '/opengraph-image.png',
-  },
+    metadataBase: new URL(process.env.NEXT_PUBLIC_URL),
+    openGraph: {
+      images: '/opengraph-image.png',
+    },
+  };
 };
 
 const CatalogPage = async ({ params: { lang } }) => {

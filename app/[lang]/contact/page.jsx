@@ -3,12 +3,15 @@ import { getDictionary } from '@/app/lib/locales/dictionary';
 import Contact from '@/app/ui/contact/Contact';
 
 export const generateMetadata = async ({ params: { lang } }) => {
+  const {
+    header: { navItems },
+  } = await getDictionary(lang);
   const contacts = await fetchContacts(lang);
 
   const { address, phone, email } = contacts;
 
   return {
-    title: 'Contact',
+    title: navItems[4].title,
     alternates: {
       canonical: '/',
       languages: {

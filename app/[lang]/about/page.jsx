@@ -6,19 +6,25 @@ import Features from '@/app/ui/features/Features';
 import Team from '@/app/ui/team/Team';
 import { Suspense } from 'react';
 
-export const metadata = {
-  title: 'About',
-  alternates: {
-    canonical: '/',
-    languages: {
-      en: '/en',
-      he: '/he',
+export const generateMetadata = async ({ params: { lang } }) => {
+  const {
+    header: { navItems },
+  } = await getDictionary(lang);
+
+  return {
+    title: navItems[2].title,
+    alternates: {
+      canonical: '/',
+      languages: {
+        en: '/en',
+        he: '/he',
+      },
     },
-  },
-  metadataBase: new URL(process.env.NEXT_PUBLIC_URL),
-  openGraph: {
-    images: '/opengraph-image.png',
-  },
+    metadataBase: new URL(process.env.NEXT_PUBLIC_URL),
+    openGraph: {
+      images: '/opengraph-image.png',
+    },
+  };
 };
 
 const AboutPage = async ({ params: { lang } }) => {
