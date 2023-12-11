@@ -13,6 +13,17 @@ import SocialLinks from '../ui/socialLinks/SocialLinks';
 const inter = Montserrat({ subsets: ['latin'] });
 
 export const metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_URL),
+  alternates: {
+    canonical: '/',
+    languages: {
+      en: '/en',
+      he: '/he',
+    },
+  },
+  openGraph: {
+    images: '/opengraph-image.png',
+  },
   keywords: [
     'лестницы',
     'stairs',
