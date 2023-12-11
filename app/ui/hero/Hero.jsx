@@ -8,7 +8,7 @@ const Hero = async ({ dictionary, lang }) => {
   const heroFields = await fetchHero(lang);
   return (
     <SectionWrapper
-      heading={heroFields.title || dictionary.hero.title}
+      heading={heroFields.title || ''}
       headingAs={'h1'}
       bg={'url("/hero-bg.jpg")'}
     >
@@ -17,7 +17,7 @@ const Hero = async ({ dictionary, lang }) => {
         maxW={'800px'}
         my={{ base: '45px', lg: '110px' }}
       >
-        {heroFields.desc || dictionary.hero.desc}
+        {heroFields.desc || ''}
       </Text>
       <Box display={'flex'} gap={'32px'}>
         <Btn as={Link} href={`/${lang}/catalog`}>
