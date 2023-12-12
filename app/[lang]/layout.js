@@ -9,42 +9,33 @@ import Footer from '@/app/ui/footer/Footer';
 import AnimatedMain from '../ui/AnimatedMain';
 import { getDictionary } from '../lib/locales/dictionary';
 import SocialLinks from '../ui/socialLinks/SocialLinks';
+import { metaKeywords } from '../lib/data';
+import { fetchContacts } from '../lib/api/instance';
 
 const inter = Montserrat({ subsets: ['latin'] });
 
-export const metadata = {
-  keywords: [
-    'лестницы',
-    'stairs',
-    'סולמות',
-    'деревянные изделия',
-    'solid wood panels',
-    'wooden products',
-    'מוצרים מעץ',
-    'щиты из цельного дерева',
-    'לוחות עץ',
-    'полки',
-    'shelves',
-    'מדפים',
-    'столешницы',
-    'countertops',
-    'דודים',
-    'деревянные полы',
-    'wooden floors',
-    'רצפות עץ',
-    'дуб',
-    'oak',
-    'אלון',
-  ],
-  title: {
-    default: 'MUTAG Haetz',
-    template: '%s - MUTAG Haetz',
-  },
-  description:
-    'Nature in Every Detail: Beauty and Warmth of Wood in Every Product!',
-  twitter: {
-    card: 'summary_large_image',
-  },
+export const generateMetadata = async ({ params: { lang } }) => {
+  return {
+    keywords: metaKeywords,
+    title: {
+      default: 'MUTAG Haetz',
+      template: '%s - MUTAG Haetz',
+    },
+    description:
+      lang === 'en'
+        ? 'Wood bringing nature to your home – quality and admiration in every board and beam!'
+        : 'עץ שמביא את הטבע לביתך – איכות ואדמירציה בכל לוח וקורה',
+    twitter: {
+      card: 'summary_large_image',
+    },
+    openGraph: {
+      images: [
+        {
+          url: '/opengraph-image.png',
+        },
+      ],
+    },
+  };
 };
 
 export async function generateStaticParams() {
@@ -53,6 +44,7 @@ export async function generateStaticParams() {
 
 export default async function RootLayout({ children, params: { lang } }) {
   const dictionary = await getDictionary(lang);
+  const contacts = await fetchContacts(lang);
 
   return (
     <html lang={lang} dir={lang === 'he' ? 'rtl' : 'ltr'}>
@@ -64,10 +56,10 @@ export default async function RootLayout({ children, params: { lang } }) {
         fontSize={18}
       >
         <Providers>
-          <Header lang={lang} dictionary={dictionary} />
+          <Header lang={lang} dictionary={dictionary} contacts={contacts} />
           <AnimatedMain>{children}</AnimatedMain>
-          <SocialLinks lang={lang} />
-          <Footer lang={lang} dictionary={dictionary} />
+          <SocialLinks lang={lang} contacts={contacts} />
+          <Footer lang={lang} dictionary={dictionary} contacts={contacts} />
         </Providers>
       </Box>
     </html>

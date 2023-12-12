@@ -4,19 +4,26 @@ import SectionWrapper from '@/app/ui/sectionWrapper/SectionWrapper';
 import ProductItem from '@/app/ui/productItem/ProductItem';
 import { Suspense } from 'react';
 import SkeletonProductsGrid from '@/app/ui/skeletons/SkeletonProducts';
-import { fetchProducts } from '@/app/lib/api/instance';
+// import { fetchProducts } from '@/app/lib/api/instance';
 import { getDictionary } from '@/app/lib/locales/dictionary';
+import { fetchContacts, fetchProducts } from '@/app/lib/api/instance';
 
 export const metadata = {
   title: 'Catalog',
 };
 
 const CatalogPage = async ({ params: { lang } }) => {
-  const products = await fetchProducts(lang);
+  // const products = await fetchProducts(lang);
   const dictionary = await getDictionary(lang);
   const {
     header: { navItems },
   } = dictionary;
+
+  // eslint-disable-next-line no-undef
+  const [products, contacts] = await Promise.all([
+    fetchProducts(lang),
+    fetchContacts(lang),
+  ]);
 
   return (
     <>
@@ -46,7 +53,7 @@ const CatalogPage = async ({ params: { lang } }) => {
           </Grid>
         </SectionWrapper>
       </Suspense>
-      <Contact lang={lang} dictionary={dictionary} />
+      <Contact lang={lang} dictionary={dictionary} contacts={contacts} />
     </>
   );
 };

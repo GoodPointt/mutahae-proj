@@ -1,4 +1,4 @@
-import { fetchContacts } from '@/app/lib/api/instance';
+// import { fetchContacts } from '@/app/lib/api/instance';
 import { Box, Link } from '@chakra-ui/react';
 import {
   BsWhatsapp,
@@ -7,8 +7,8 @@ import {
   BsTelegram,
 } from 'react-icons/bs';
 
-const SocialLinks = async ({ lang, pos = 'fixed' }) => {
-  const contacts = await fetchContacts(lang);
+const SocialLinks = async ({ lang, pos = 'fixed', contacts }) => {
+  // const contacts = await fetchContacts(lang);
 
   const { insta, fb, watsapp, tg } = contacts;
 

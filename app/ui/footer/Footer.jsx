@@ -1,8 +1,8 @@
-import { fetchContacts } from '@/app/lib/api/instance';
+// import { fetchContacts } from '@/app/lib/api/instance';
 import FooterWrapper from './footerWrapper/FooterWrapper';
 
-const Footer = async ({ lang, dictionary }) => {
-  const contacts = await fetchContacts(lang);
+const Footer = async ({ lang, dictionary, contacts }) => {
+  // const contacts = await fetchContacts(lang);
 
   return (
     <FooterWrapper dictionary={dictionary} lang={lang} contacts={contacts} />

@@ -14,8 +14,14 @@ import { fetchContacts, fetchProducts } from '../lib/api/instance';
 
 const Homepage = async ({ params: { lang } }) => {
   const dictionary = await getDictionary(lang);
-  const products = await fetchProducts(lang);
-  const contacts = await fetchContacts(lang);
+  // const products = await fetchProducts(lang);
+  // const contacts = await fetchContacts(lang);
+
+  // eslint-disable-next-line no-undef
+  const [products, contacts] = await Promise.all([
+    fetchProducts(lang),
+    fetchContacts(lang),
+  ]);
 
   return (
     <Box>
@@ -26,7 +32,7 @@ const Homepage = async ({ params: { lang } }) => {
         heading={dictionary.header.navItems[1].title}
       />
       <About dictionary={dictionary} contacts={contacts} />
-      <Contact lang={lang} dictionary={dictionary} />
+      <Contact lang={lang} dictionary={dictionary} contacts={contacts} />
     </Box>
   );
 };

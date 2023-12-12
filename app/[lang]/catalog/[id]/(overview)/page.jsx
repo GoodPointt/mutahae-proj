@@ -37,9 +37,14 @@ export const generateMetadata = async ({ params: { id, lang } }) => {
 const SingleProductPage = async ({ params: { id, lang } }) => {
   const dictionary = await getDictionary(lang);
 
-  const contacts = await fetchContacts(lang);
+  // const contacts = await fetchContacts(lang);
+  // const product = await fetchOneProduct(id, lang);
 
-  const product = await fetchOneProduct(id, lang);
+  // eslint-disable-next-line no-undef
+  const [product, contacts] = await Promise.all([
+    fetchOneProduct(id, lang),
+    fetchContacts(lang),
+  ]);
 
   return (
     <>
@@ -50,7 +55,7 @@ const SingleProductPage = async ({ params: { id, lang } }) => {
           contacts={contacts}
         />
       </Suspense>
-      <Contact lang={lang} dictionary={dictionary} />
+      <Contact lang={lang} dictionary={dictionary} contacts={contacts} />
     </>
   );
 };
