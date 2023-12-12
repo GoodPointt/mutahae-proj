@@ -1,9 +1,4 @@
 {
-  "page": {
-    "home": {
-      "title": "TEST HEADING"
-    }
-  },
   "buttons": {
     "view": "View",
     "contact": "Contact us",
@@ -111,7 +106,7 @@
     }
   },
   "hero": {
-    "title": "Nature in Every Detail: Beauty and Warmth of Wood in Every Product!",
+    "title": "Wood bringing nature to your home – quality and admiration in every board and beam!",
     "desc": "Explore our catalog and discover how our wooden products can add a unique style and perfection to your projects",
     "btnCatalog": "Catalog",
     "btnContactUs": "Contact Us"
