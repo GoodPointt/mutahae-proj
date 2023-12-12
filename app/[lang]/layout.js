@@ -18,8 +18,8 @@ export const generateMetadata = async ({ params: { lang } }) => {
   return {
     keywords: metaKeywords,
     title: {
-      default: 'MUTAG Haetz',
-      template: '%s - MUTAG Haetz',
+      default: lang === 'en' ? 'Mutag Haetz' : 'מותג העץ',
+      template: `%s - ${lang === 'en' ? 'Mutag Haetz' : 'מותג העץ'}`,
     },
     description:
       lang === 'en'
@@ -28,17 +28,12 @@ export const generateMetadata = async ({ params: { lang } }) => {
     twitter: {
       card: 'summary_large_image',
     },
-
-    alternates: {
-      canonical: '/',
-      languages: {
-        en: '/en',
-        he: '/he',
-      },
-    },
-    metadataBase: new URL(process.env.NEXT_PUBLIC_URL),
     openGraph: {
-      images: '/opengraph-image.png',
+      images: [
+        {
+          url: '/opengraph-image.png',
+        },
+      ],
     },
   };
 };
