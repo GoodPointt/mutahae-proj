@@ -14,6 +14,7 @@ import {
   BsInstagram,
   BsTelegram,
 } from 'react-icons/bs';
+import { FaViber } from 'react-icons/fa';
 
 const ModalContacts = ({ contacts, dictionary, lang }) => {
   return (
@@ -153,9 +154,27 @@ const ModalContacts = ({ contacts, dictionary, lang }) => {
           isExternal
           as={'a'}
           rel={'noopener noreferrer nofollow'}
-          aria-label="whatsapp"
+          aria-label="telegram"
           icon={<BsTelegram size="28px" />}
           href={contacts.tg}
+          target="_blank"
+          color={'#a28445'}
+          variant="ghost"
+          size="lg"
+          isRound={true}
+          _hover={{
+            bg: '#333331',
+            transform: 'translateY(-3px) translateX(5px)',
+          }}
+          transition="all 500ms ease"
+        />
+        <IconButton
+          isExternal
+          as={'a'}
+          rel={'noopener noreferrer nofollow'}
+          aria-label="viber"
+          icon={<FaViber size="28px" />}
+          href={contacts.viber}
           target="_blank"
           color={'#a28445'}
           variant="ghost"
