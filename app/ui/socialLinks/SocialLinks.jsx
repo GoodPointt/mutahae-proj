@@ -6,14 +6,16 @@ import {
   BsInstagram,
   BsTelegram,
 } from 'react-icons/bs';
+import { FaViber } from 'react-icons/fa';
 
 const SocialLinks = async ({ lang, pos = 'fixed', contacts }) => {
   // const contacts = await fetchContacts(lang);
 
-  const { insta, fb, watsapp, tg } = contacts;
+  const { insta, fb, watsapp, tg, viber } = contacts;
 
   const socialLinks = [
     { link: watsapp, icon: <BsWhatsapp size={28} />, label: 'whatsapp' },
+    { link: viber, icon: <FaViber size={28} />, label: 'viber' },
     { link: tg, icon: <BsTelegram size={28} />, label: 'telegram' },
     { link: fb, icon: <BsFacebook size={28} />, label: 'facebook' },
     { link: insta, icon: <BsInstagram size={28} />, label: 'instagram' },
