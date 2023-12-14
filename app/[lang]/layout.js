@@ -52,6 +52,12 @@ export default async function RootLayout({ children, params: { lang } }) {
 
   return (
     <html lang={lang} dir={lang === 'he' ? 'rtl' : 'ltr'}>
+      <link
+        rel="icon"
+        href={`${process.env.NEXT_PUBLIC_URL}/favicon.ico`}
+        type="image/x-icon"
+        sizes="48x48"
+      />
       <Box
         as="body"
         bg={'#181617'}
