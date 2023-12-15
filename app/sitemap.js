@@ -19,6 +19,12 @@ export default async function sitemap() {
 
   return [
     {
+      url: process.env.NEXT_PUBLIC_URL + '/favicon.ico',
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.3,
+    },
+    {
       url: process.env.NEXT_PUBLIC_URL + '/en',
       lastModified: new Date(),
       changeFrequency: 'yearly',
