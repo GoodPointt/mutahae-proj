@@ -10,13 +10,15 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import SectionWrapper from '@/app/ui/sectionWrapper/SectionWrapper';
 import ProductItem from '@/app/ui/productItem/ProductItem';
+import CatalogDesc from '../catalogDesc/CatalogDesc';
 
-const CatalogSlider = ({ products, lang, heading }) => {
+const CatalogSlider = ({ products, lang, heading, dictionary }) => {
   return (
     <SectionWrapper
       heading={heading}
       bg={'radial-gradient(#434343 20%, black 100%)'}
     >
+      {<CatalogDesc dictionary={dictionary} />}
       <Swiper
         className="mySwiper2"
         navigation

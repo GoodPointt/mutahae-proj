@@ -58,6 +58,28 @@ export default async function RootLayout({ children, params: { lang } }) {
         type="image/x-icon"
         sizes="48x48"
       />
+      <link
+        rel="apple-touch-icon"
+        sizes="76x76"
+        href={`${process.env.NEXT_PUBLIC_URL}/apple-touch-icon.png`}
+      />
+      <link
+        rel="icon"
+        type="image/png"
+        sizes="32x32"
+        href={`${process.env.NEXT_PUBLIC_URL}/favicon-32x32.png`}
+      />
+      <link
+        rel="icon"
+        type="image/png"
+        sizes="16x16"
+        href={`${process.env.NEXT_PUBLIC_URL}/favicon-16x16.png`}
+      />
+      <link
+        rel="mask-icon"
+        href={`${process.env.NEXT_PUBLIC_URL}/safari-pinned-tab.svg`}
+        color="#5bbad5"
+      />
       <Box
         as="body"
         bg={'#181617'}

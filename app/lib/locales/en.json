@@ -40,13 +40,16 @@
     "title": { "firstWord": "Mutag", "secondWord": "Company" },
     "main": [
       {
-        "text": "Mutag Haetz is a leading trading company specializing in the sale and distribution of wood products. The company offers a wide range of high-quality and diverse products, including oak and pine wood panels, stairs, M.D.P, and plywood."
+        "text": "Discover the timeless beauty of wood with our exceptional company, Mutag Haetz, based in the vibrant city of Sederot, Israel. We are seasoned artisans and developers passionate about crafting exquisite pieces from premium oak wood, offering a splendid selection that includes Lami Oak, Oak BIO Board, and Oak Timber."
       },
       {
-        "text": "Oak and pine wood panels are excellent solutions for interior design and furniture. Stairs, M.D.P, and plywood can be used to create a variety of products such as tables, clothing wardrobes, furniture, wall coverings, and more."
+        "text": "At Mutag Haetz, we take pride in transforming oak wood into masterpieces, ranging from elegant stairs that elevate your space to unique creations using the finest wood materials. Immerse yourself in the warmth and authenticity of our oak wood, meticulously curated to meet the highest standards."
       },
       {
-        "text": "Mutag Haetz is committed to excellent service and reliability, consistently providing the best solutions to its customers in the field of wood products."
+        "text": "Our craftsmanship extends to the innovative use of materials like the environmentally friendly Lami Oak and the versatile Oak BIO Board. These materials open doors to endless possibilities, allowing us to create bespoke pieces that harmonize with any interior. Whether you envision stylish furniture or eye-catching wall coverings, our dedication to excellence ensures each creation is a true work of art."
+      },
+      {
+        "text": "Mutag Haetz welcomes you to experience the sophistication and craftsmanship of our wooden wonders in the cities of Ashkelon, Ashdod, Be'er Sheva, Kiryat Gat, Netivot, Ofakim, Jerusalem, Tel Aviv, Haifa, Rishon LeZion, Petah Tikva, Netanya, Herzliya, Holon, Eilat, Beer Sheva, Kfar Saba, Rehovot, Hod HaSharon, and Modiin. Elevate your living space with the natural allure of our wood products, where every piece tells a story of artistry and enduring quality. Choose Mutag Haetz for an unparalleled journey into the world of exquisite wooden creations."
       }
     ],
     "features": [
@@ -111,5 +114,8 @@
     "btnCatalog": "Catalog",
     "btnContactUs": "Contact Us"
   },
-  "footer": { "contacts": "Contacts and address" }
+  "footer": { "contacts": "Contacts and address" },
+  "catalog": {
+    "desc": "Explore the epitome of craftsmanship in our catalog, where every product tells a story of timeless elegance. Our collection showcases the beauty of oak wood in various forms, from exquisite oak stairs that redefine your space to the raw allure of solid oak timber. Dive into the versatility of our offerings, including the environmentally conscious Lami Oak and innovative Oak BIO Board, crafted to inspire your interior design journey. Each product in our wood collection reflects a commitment to quality, ensuring that every piece, whether it's a simple wood panel or a complex timber creation, is a testament to the natural beauty and enduring charm of wood. Welcome to a world where wood becomes art, and every selection, from oak stairs to timber wonders, transforms your space into a masterpiece."
+  }
 }

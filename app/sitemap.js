@@ -1,21 +1,21 @@
-// import { fetchProducts } from './lib/api/instance';
+import { fetchProducts } from './lib/api/instance';
 
 export default async function sitemap() {
-  // const productsEn = await fetchProducts('en');
-  // const postEntriesEn = productsEn.map(({ attributes }) => ({
-  //   url: `${process.env.NEXT_PUBLIC_URL}/en/${attributes.uid}`,
-  //   lastModified: new Date(attributes.updatedAt),
-  //   changeFrequency: 'monthly',
-  //   priority: 1,
-  // }));
+  const productsEn = await fetchProducts('en');
+  const postEntriesEn = productsEn.map(({ attributes }) => ({
+    url: `${process.env.NEXT_PUBLIC_URL}/en/${attributes.uid}`,
+    lastModified: new Date(attributes.updatedAt),
+    changeFrequency: 'monthly',
+    priority: 1,
+  }));
 
-  // const productsHe = await fetchProducts('he');
-  // const productEntriesHe = productsHe.map(({ attributes }) => ({
-  //   url: `${process.env.NEXT_PUBLIC_URL}/he/${attributes.uid}`,
-  //   lastModified: new Date(attributes.updatedAt),
-  //   changeFrequency: 'monthly',
-  //   priority: 1,
-  // }));
+  const productsHe = await fetchProducts('he');
+  const productEntriesHe = productsHe.map(({ attributes }) => ({
+    url: `${process.env.NEXT_PUBLIC_URL}/he/${attributes.uid}`,
+    lastModified: new Date(attributes.updatedAt),
+    changeFrequency: 'monthly',
+    priority: 1,
+  }));
 
   return [
     {
@@ -78,7 +78,7 @@ export default async function sitemap() {
       changeFrequency: 'monthly',
       priority: 0.8,
     },
-    // ...postEntriesEn,
-    // ...productEntriesHe,
+    ...postEntriesEn,
+    ...productEntriesHe,
   ];
 }

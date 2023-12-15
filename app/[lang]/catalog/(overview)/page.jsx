@@ -7,6 +7,7 @@ import SkeletonProductsGrid from '@/app/ui/skeletons/SkeletonProducts';
 // import { fetchProducts } from '@/app/lib/api/instance';
 import { getDictionary } from '@/app/lib/locales/dictionary';
 import { fetchContacts, fetchProducts } from '@/app/lib/api/instance';
+import CatalogDesc from '@/app/ui/catalogDesc/CatalogDesc';
 
 export const metadata = {
   title: 'Catalog',
@@ -32,6 +33,7 @@ const CatalogPage = async ({ params: { lang } }) => {
           heading={navItems[1].title}
           bg={'linear-gradient(to right, #434343 0%, black 100%)'}
         >
+          <CatalogDesc dictionary={dictionary} />
           <Grid
             as={'ul'}
             maxW={'100%'}
