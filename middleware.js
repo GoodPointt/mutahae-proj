@@ -28,13 +28,17 @@ export function middleware(request) {
       '/sitemap.xml',
       '/robots.txt',
       '/opengraph-image.png',
-      '/favicon.ico',
       // LOGOS
       '/logo-small.png',
       '/logo.png',
       '/manifest.json',
       '/he.svg',
       '/gb.svg',
+      '/favicon.ico',
+      '/apple-touch-icon.png',
+      '/favicon-32x32.png',
+      '/favicon-16x16.png',
+      '/safari-pinned-tab.svg',
       //BGS
       '/hero-bg.jpg',
       '/about-background.jpg',

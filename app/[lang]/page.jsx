@@ -29,6 +29,7 @@ const Homepage = async ({ params: { lang } }) => {
       <CatalogSlider
         products={products}
         lang={lang}
+        dictionary={dictionary}
         heading={dictionary.header.navItems[1].title}
       />
       <About dictionary={dictionary} contacts={contacts} />
