@@ -53,7 +53,11 @@ const SingleProduct = ({
           />
         </Box>
         <Flex flexDir={'column'} gap={2}>
-          <Heading as="h2" fontWeight={900}>
+          <Heading
+            as="h2"
+            mb={{ base: 6, lg: 8 }}
+            fontSize={{ base: '2xl', lg: '4xl' }}
+          >
             {title || ''}
           </Heading>
           <Text as="p" fontSize={'sm'} fontWeight={'500'}>

@@ -4,6 +4,13 @@ import Contact from '@/app/ui/contact/Contact';
 
 export const metadata = {
   title: 'Contact',
+  alternates: {
+    canonical: '/contact',
+    languages: {
+      en: '/en/contact',
+      he: '/he/contact',
+    },
+  },
 };
 
 const ContactPage = async ({ params: { lang } }) => {

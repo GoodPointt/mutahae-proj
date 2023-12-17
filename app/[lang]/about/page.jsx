@@ -8,6 +8,13 @@ import { Suspense } from 'react';
 
 export const metadata = {
   title: 'About',
+  alternates: {
+    canonical: '/about',
+    languages: {
+      en: '/en/about',
+      he: '/he/about',
+    },
+  },
 };
 
 const AboutPage = async ({ params: { lang } }) => {

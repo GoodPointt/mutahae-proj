@@ -23,6 +23,13 @@ export const generateMetadata = async ({ params: { id, lang } }) => {
 
   return {
     title: product.title,
+    alternates: {
+      canonical: `/catalog/${id}`,
+      languages: {
+        en: `/en/catalog/${id}`,
+        he: `/he/catalog/${id}`,
+      },
+    },
     description: product.descShort,
     openGraph: {
       images: [
