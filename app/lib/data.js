@@ -19,6 +19,8 @@ export const menuIcons = [
 ];
 
 export const metaKeywords = [
+  'israel',
+  'Israel',
   'лестницы',
   'stairs',
   'סולמות',
@@ -146,4 +148,7 @@ export const metaKeywords = [
   'Modiin',
   'מוֹדִיעִין',
   'Модиин',
+  'Sderot',
+  'שדרות',
+  'ישראל',
 ];

@@ -11,6 +11,13 @@ import CatalogDesc from '@/app/ui/catalogDesc/CatalogDesc';
 
 export const metadata = {
   title: 'Catalog',
+  alternates: {
+    canonical: '/catalog',
+    languages: {
+      en: '/en/catalog',
+      he: '/he/catalog',
+    },
+  },
 };
 
 const CatalogPage = async ({ params: { lang } }) => {

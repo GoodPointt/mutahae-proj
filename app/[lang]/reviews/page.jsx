@@ -5,6 +5,13 @@ import { fetchContacts, fetchReviews } from '@/app/lib/api/instance';
 
 export const metadata = {
   title: 'Reviews',
+  alternates: {
+    canonical: '/reviews',
+    languages: {
+      en: '/en/reviews',
+      he: '/he/reviews',
+    },
+  },
 };
 
 const ReviewsPage = async ({ params: { lang } }) => {
