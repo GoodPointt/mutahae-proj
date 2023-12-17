@@ -56,6 +56,7 @@ const SkeletonProductsGrid = async () => {
   return (
     <SectionWrapper heading={navItems[1].title}>
       <SkeletonText
+        display={{ base: 'none', lg: 'block' }}
         mb={8}
         skeletonHeight="2"
         noOfLines={6}

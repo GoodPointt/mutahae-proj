@@ -35,6 +35,7 @@ const CatalogPage = async ({ params: { lang } }) => {
 
   return (
     <>
+      <SkeletonProductsGrid />
       <Suspense fallback={<SkeletonProductsGrid />}>
         <SectionWrapper
           heading={navItems[1].title}
