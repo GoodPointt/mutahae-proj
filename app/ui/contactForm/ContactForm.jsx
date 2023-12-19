@@ -24,6 +24,7 @@ import ModalWindow from '../modalWindow/ModalWindow';
 
 const ContactForm = ({ dictionary }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   const [state, dispatch] = useFormState(submitData, undefined);
   const toast = useToast();
 
@@ -79,15 +80,32 @@ const ContactForm = ({ dictionary }) => {
           {nameError === 'required' ? name.required : name.invalid}
         </FormErrorMessage>
       </FormControl>
+
+      <FormControl isInvalid={emailError} pb="25px">
+        <Input
+          name="email"
+          type="email"
+          bgColor="#3b3d46"
+          placeholder={dictionary.formContact.mailLabel}
+          style={
+            lang === 'he' ? { direction: 'ltr', textAlign: 'right' } : null
+          }
+          focusBorderColor="#a28445"
+          border={'1px solid transparent'}
+        />
+        <FormErrorMessage fontSize={'14px'} position="absolute" bottom="4px">
+          {emailError === 'required' ? email.required : email.invalid}
+        </FormErrorMessage>
+      </FormControl>
       <FormControl isInvalid={phoneError} pb="25px">
         <InputGroup>
           {lang === 'he' ? (
             <InputRightElement pointerEvents="none" right={-2.5}>
-              <FaAsterisk size={10} color="crimson" />
+              <FaAsterisk size={6} color="crimson" />
             </InputRightElement>
           ) : (
             <InputLeftElement pointerEvents="none" left={-2.5}>
-              <FaAsterisk size={10} color="crimson" />
+              <FaAsterisk size={6} color="crimson" />
             </InputLeftElement>
           )}
           <Input
@@ -107,22 +125,6 @@ const ContactForm = ({ dictionary }) => {
         </InputGroup>
         <FormErrorMessage fontSize={'14px'} position="absolute" bottom="4px">
           {phoneError === 'required' ? phone.required : phone.invalid}
-        </FormErrorMessage>
-      </FormControl>
-      <FormControl isInvalid={emailError} pb="25px">
-        <Input
-          name="email"
-          type="email"
-          bgColor="#3b3d46"
-          placeholder={dictionary.formContact.mailLabel}
-          style={
-            lang === 'he' ? { direction: 'ltr', textAlign: 'right' } : null
-          }
-          focusBorderColor="#a28445"
-          border={'1px solid transparent'}
-        />
-        <FormErrorMessage fontSize={'14px'} position="absolute" bottom="4px">
-          {emailError === 'required' ? email.required : email.invalid}
         </FormErrorMessage>
       </FormControl>
       <SubmitButton>{dictionary.buttons.send}</SubmitButton>
