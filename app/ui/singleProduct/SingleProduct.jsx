@@ -5,7 +5,7 @@ import Image from 'next/image';
 import SectionWrapper from '../sectionWrapper/SectionWrapper';
 import Btn from '../button/Btn';
 import ModalWindow from '../modalWindow/ModalWindow';
-import FormContact from '../modalContact/ModalContact';
+import ModalContact from '../modalContact/ModalContact';
 
 const SingleProduct = ({
   contacts,
@@ -106,9 +106,43 @@ const SingleProduct = ({
         {descLong || ''}
       </Text>
 
-      <Btn onClick={onOpen}>{dictionary.buttons.contact}</Btn>
+      <Btn onClick={onOpen}>{dictionary.buttons.buy}</Btn>
+
+      <Heading mt={4} as={'h4'} fontSize={'24px'}>
+        {dictionary.singleProduct.pickup.title}
+      </Heading>
+      <Flex as={'ul'} flexDir={'column'} mt={2} gap={2}>
+        <li>
+          <Text fontSize={'small'} fontWeight={'600'}>
+            {dictionary.singleProduct.pickup.self.split(':')[0]}
+            <Text as={'span'} color={'#dfdede'} fontWeight={'400'}>
+              :{dictionary.singleProduct.pickup.self.split(':')[1]}
+            </Text>
+          </Text>
+        </li>
+
+        {dictionary.singleProduct.pickup.zones.length > 0 &&
+          dictionary.singleProduct.pickup.zones.map((zone, idx) => (
+            <li key={idx}>
+              <Text fontSize={'small'} fontWeight={'600'}>
+                {zone.split(':')[0]}:
+                <Text as={'span'} color={'#dfdede'} fontWeight={'400'}>
+                  {zone.split(':')[1]}
+                </Text>
+              </Text>
+            </li>
+          ))}
+        {dictionary.singleProduct.pickup.pss.length > 0 &&
+          dictionary.singleProduct.pickup.pss.map((ps, idx) => (
+            <li key={idx}>
+              <Text fontSize={'small'} fontWeight={'600'}>
+                {ps}
+              </Text>
+            </li>
+          ))}
+      </Flex>
       <ModalWindow onClose={onClose} isOpen={isOpen}>
-        <FormContact
+        <ModalContact
           dictionary={dictionary}
           contacts={contacts}
           onClose={onClose}

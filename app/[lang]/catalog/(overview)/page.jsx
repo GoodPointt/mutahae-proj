@@ -4,10 +4,8 @@ import SectionWrapper from '@/app/ui/sectionWrapper/SectionWrapper';
 import ProductItem from '@/app/ui/productItem/ProductItem';
 import { Suspense } from 'react';
 import SkeletonProductsGrid from '@/app/ui/skeletons/SkeletonProducts';
-// import { fetchProducts } from '@/app/lib/api/instance';
 import { getDictionary } from '@/app/lib/locales/dictionary';
 import { fetchContacts, fetchProducts } from '@/app/lib/api/instance';
-import CatalogDesc from '@/app/ui/catalogDesc/CatalogDesc';
 
 export const metadata = {
   title: 'Catalog',
@@ -21,7 +19,6 @@ export const metadata = {
 };
 
 const CatalogPage = async ({ params: { lang } }) => {
-  // const products = await fetchProducts(lang);
   const dictionary = await getDictionary(lang);
   const {
     header: { navItems },
@@ -40,7 +37,6 @@ const CatalogPage = async ({ params: { lang } }) => {
           heading={navItems[1].title}
           bg={'linear-gradient(to right, #434343 0%, black 100%)'}
         >
-          <CatalogDesc dictionary={dictionary} />
           <Grid
             as={'ul'}
             maxW={'100%'}
