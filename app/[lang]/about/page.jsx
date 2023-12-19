@@ -19,8 +19,6 @@ export const metadata = {
 
 const AboutPage = async ({ params: { lang } }) => {
   const dictionary = await getDictionary(lang);
-  // const contacts = await fetchContacts(lang);
-  // const members = await fetchMembers(lang);
 
   //eslint-disable-next-line no-undef
   const [contacts, members] = await Promise.all([
