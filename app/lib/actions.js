@@ -54,8 +54,6 @@ export async function submitData(prevState, formData) {
     phone,
   });
 
-  console.log(validatedFields.data);
-
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
