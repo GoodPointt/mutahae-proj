@@ -33,6 +33,7 @@ const getProducts = async lang => {
     if (data.length === 0) {
       return notFound();
     }
+
     return data;
   } catch (e) {
     if (e.data === undefined) {
@@ -96,11 +97,11 @@ export const createContact = async credentials => {
   }
 };
 
-const getReviews = async lang => {
+const getPosts = async lang => {
   try {
     const {
       data: { data },
-    } = await instance.get(`/api/reviews?locale=${lang}`);
+    } = await instance.get(`/api/posts?locale=${lang}`);
 
     if (data.length === 0) return notFound();
 
@@ -112,7 +113,7 @@ const getReviews = async lang => {
   }
 };
 
-export const fetchReviews = cache(getReviews);
+export const fetchPosts = cache(getPosts);
 
 const getMembers = async lang => {
   try {

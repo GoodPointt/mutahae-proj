@@ -18,13 +18,16 @@ export const generateMetadata = async ({ params: { lang } }) => {
   return {
     keywords: metaKeywords,
     title: {
-      default: lang === 'en' ? 'Mutag Haetz' : 'מותג העץ',
+      default:
+        lang === 'en'
+          ? 'Mutag Haetz - Oak Board | Oak Timber | Oak Finger Joint | Oak Stairs | Oak Board BIO | Oak Vario'
+          : "עץ אלון | לאמי אלון |  אלון ואריו |  בוצ'ר אלון | מדרגות אלון - מותג העץ",
       template: `%s - ${lang === 'en' ? 'Mutag Haetz' : 'מותג העץ'}`,
     },
     description:
       lang === 'en'
-        ? 'Wood bringing nature to your home – quality and admiration in every board and beam!'
-        : 'עץ שמביא את הטבע לביתך – איכות ואדמירציה בכל לוח וקורה',
+        ? 'High-quality wood products: Oak stairs, beech, and oak BIO boards. Crafted with care, bringing the warmth and beauty of wood to Israel. Expertise and quality in every project, capturing the authentic feel of oak wood.'
+        : 'מוצרי עץ באיכות גבוהה: מדרגות אלון, בוצ’ר, ולוחות ואריו. אנו יוצרים בקפידה ומביאים לישראל את חמימות ויופי העץ. איכות והתמחות בכל פרוייקט, מהתחושה האותנטית של עץ אלון.',
     twitter: {
       card: 'summary_large_image',
     },
@@ -58,28 +61,6 @@ export default async function RootLayout({ children, params: { lang } }) {
         type="image/x-icon"
         sizes="48x48"
       />
-      {/* <link
-        rel="apple-touch-icon"
-        sizes="76x76"
-        href={`${process.env.NEXT_PUBLIC_URL}/apple-touch-icon.png`}
-      />
-      <link
-        rel="icon"
-        type="image/png"
-        sizes="32x32"
-        href={`${process.env.NEXT_PUBLIC_URL}/favicon-32x32.png`}
-      />
-      <link
-        rel="icon"
-        type="image/png"
-        sizes="16x16"
-        href={`${process.env.NEXT_PUBLIC_URL}/favicon-16x16.png`}
-      />
-      <link
-        rel="mask-icon"
-        href={`${process.env.NEXT_PUBLIC_URL}/safari-pinned-tab.svg`}
-        color="#5bbad5"
-      /> */}
       <Box
         as="body"
         bg={'#181617'}

@@ -20,8 +20,8 @@
         "path": "/about"
       },
       {
-        "title": "Reviews",
-        "path": "/reviews"
+        "title": "Blog",
+        "path": "/blog"
       },
       {
         "title": "Contact",
@@ -56,16 +56,13 @@
     "title": { "firstWord": "Mutag", "secondWord": "Company" },
     "main": [
       {
-        "text": "Discover the timeless beauty of wood with our exceptional company, Mutag Haetz, based in the vibrant city of Sderot, Israel. We are seasoned artisans and developers passionate about crafting exquisite pieces from premium oak wood, offering a splendid selection that includes Lami Oak, Oak BIO Board, and Oak Timber."
+        "text": "Mutag Haetz, located in the city of Sderot, is a company with over a decade of successful experience. The company has established itself as a leading figure wood products, specializing in the sale of high-quality oak wood items."
       },
       {
-        "text": "At Mutag Haetz, we take pride in transforming oak wood into masterpieces, ranging from elegant stairs that elevate your space to unique creations using the finest wood materials. Immerse yourself in the warmth and authenticity of our oak wood, meticulously curated to meet the highest standards."
+        "text": "In the import sector, Mutag Haetz boasts rich experience and proven reliability. As an experienced importer, the company focuses on marketing a wide variety of products, including Oak wood, Oak panels, slabs, Finger-joint and more."
       },
       {
-        "text": "Our craftsmanship extends to the innovative use of materials like the environmentally friendly Lami Oak and the versatile Oak BIO Board. These materials open doors to endless possibilities, allowing us to create bespoke pieces that harmonize with any interior. Whether you envision stylish furniture or eye-catching wall coverings, our dedication to excellence ensures each creation is a true work of art."
-      },
-      {
-        "text": "Mutag Haetz welcomes you to experience the sophistication and craftsmanship of our wooden wonders in the cities of Ashkelon, Ashdod, Be'er Sheva, Kiryat Gat, Netivot, Ofakim, Jerusalem, Tel Aviv, Haifa, Rishon LeZion, Petah Tikva, Netanya, Herzliya, Holon, Eilat, Beer Sheva, Kfar Saba, Rehovot, Hod HaSharon, and Modiin. Elevate your living space with the natural allure of our wood products, where every piece tells a story of artistry and enduring quality. Choose Mutag Haetz for an unparalleled journey into the world of exquisite wooden creations."
+        "text": "Mutag Haetz prides itself on its ability to deliver products of utmost quality. Additionally, the company offers a diverse range of products, including dictums, complementary accessories, and more, ensuring comprehensive and reliable solutions for every project."
       }
     ],
     "features": [
@@ -133,8 +130,23 @@
     "btnCatalog": "Catalog",
     "btnContactUs": "Contact Us"
   },
-  "footer": { "contacts": "Contacts and address" },
+  "footer": { "contacts": "Contacts and address", "products": "Our Products" },
   "catalog": {
     "desc": "Explore the epitome of craftsmanship in our catalog, where every product tells a story of timeless elegance. Our collection showcases the beauty of oak wood in various forms, from exquisite oak stairs that redefine your space to the raw allure of solid oak timber. Dive into the versatility of our offerings, including the environmentally conscious Lami Oak and innovative Oak BIO Board, crafted to inspire your interior design journey. Each product in our wood collection reflects a commitment to quality, ensuring that every piece, whether it's a simple wood panel or a complex timber creation, is a testament to the natural beauty and enduring charm of wood. Welcome to a world where wood becomes art, and every selection, from oak stairs to timber wonders, transforms your space into a masterpiece."
+  },
+  "contactDesc": {
+    "title": "Efficient Oak Delivery Solutions Across Israel: Connecting Cities, Meeting Your Needs!",
+    "towns": "We are delighted to be your suppliers in various cities, including Ashkelon, Ashdod, Be'er Sheva, Kiryat Gat, Netivot, Ofakim, Jerusalem, Tel Aviv, Haifa, Rishon LeZion, Petah Tikva, Netanya, Herzliya, Holon, Eilat, Beer Sheva, Kfar Saba, Rehovot, Hod HaSharon, and Modiin.",
+    "delivery": "Our trucks and couriers are ready to deliver to your location. Don't forget that we are available for communication on social networks,",
+    "linkPhone": "by phone",
+    "askQuestions": "and through a convenient form on the website. Stay connected, and our managers will be sure to answer all your questions."
+  },
+  "pageLinksText": {
+    "catalog": {
+      "fromBlog": "You can familiarize yourself with the details of the products in the",
+      "fromAbout": "You can also find something interesting for yourself by checking out our",
+      "linkName": "CATALOG",
+      "link": "/catalog"
+    }
   }
 }

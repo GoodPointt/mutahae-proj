@@ -49,7 +49,7 @@ export default async function sitemap() {
       priority: 0.8,
     },
     {
-      url: process.env.NEXT_PUBLIC_URL + '/en' + '/reviews',
+      url: process.env.NEXT_PUBLIC_URL + '/en' + '/blog',
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,
@@ -79,7 +79,7 @@ export default async function sitemap() {
       priority: 0.8,
     },
     {
-      url: process.env.NEXT_PUBLIC_URL + '/he' + '/reviews',
+      url: process.env.NEXT_PUBLIC_URL + '/he' + '/blog',
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,

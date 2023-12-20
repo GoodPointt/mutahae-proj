@@ -47,7 +47,7 @@ const SwiperNavigation = () => {
   );
 };
 
-const ReviewsSlider = ({ reviews, lang }) => {
+const BlogsSlider = ({ posts, lang }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -63,17 +63,10 @@ const ReviewsSlider = ({ reviews, lang }) => {
         },
       }}
     >
-      {reviews.length > 0 &&
-        reviews.map(review => {
+      {posts?.length > 0 &&
+        posts?.map(review => {
           const {
-            attributes: {
-              imgUrl,
-              uid,
-              customerPosition,
-              desc,
-              customerName,
-              videoUrl,
-            },
+            attributes: { imgUrl, uid, title, desc, videoUrl },
           } = review;
 
           return (
@@ -88,8 +81,8 @@ const ReviewsSlider = ({ reviews, lang }) => {
               >
                 <Box position="relative" w={200} height={200}>
                   <Image
-                    src={imgUrl || '/customerPlaceholder.jpg'}
-                    alt={customerPosition}
+                    src={imgUrl || '/blur-product.jpg'}
+                    alt={title}
                     fill
                     style={{
                       objectFit: 'cover',
@@ -132,25 +125,23 @@ const ReviewsSlider = ({ reviews, lang }) => {
                   pt="60px"
                   pb="25px"
                 >
+                  {title && (
+                    <Text fontSize="28px" mb={4}>
+                      {' '}
+                      {title}
+                    </Text>
+                  )}
+
                   <Box position="absolute" top={0}>
                     <RiDoubleQuotesR size="40px" color="#a28445" />
                   </Box>
-
                   {desc && <Text mb="30px">{desc}</Text>}
-                  {customerName && (
-                    <Text fontSize="15px" textTransform="uppercase">
-                      {customerName}
-                    </Text>
-                  )}
-                  {customerPosition && (
-                    <Text fontSize="15px"> {customerPosition}</Text>
-                  )}
                 </Box>
               </Box>
             </SwiperSlide>
           );
         })}
-      {reviews.length > 0 && (
+      {posts?.length > 0 && (
         <Flex
           gap="8px"
           mt="8px"
@@ -163,4 +154,4 @@ const ReviewsSlider = ({ reviews, lang }) => {
   );
 };
 
-export default ReviewsSlider;
+export default BlogsSlider;
