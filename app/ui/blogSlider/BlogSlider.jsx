@@ -47,7 +47,7 @@ const SwiperNavigation = () => {
   );
 };
 
-const BlogsSlider = ({ posts, lang }) => {
+const BlogSlider = ({ posts, lang }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -56,6 +56,10 @@ const BlogsSlider = ({ posts, lang }) => {
       navigation={false}
       loop
       slidesPerView={'auto'}
+      autoplay={{
+        delay: 15000,
+        disableOnInteraction: true,
+      }}
       breakpoints={{
         320: {
           slidesPerView: 1,
@@ -84,6 +88,9 @@ const BlogsSlider = ({ posts, lang }) => {
                     src={imgUrl || '/blur-product.jpg'}
                     alt={title}
                     fill
+                    placeholder="blur"
+                    blurDataURL="/blur-product.jpg"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     style={{
                       objectFit: 'cover',
                     }}
@@ -123,11 +130,10 @@ const BlogsSlider = ({ posts, lang }) => {
                   flexDirection="column"
                   justifyContent="center"
                   pt="60px"
-                  pb="25px"
+                  pb="30px"
                 >
                   {title && (
                     <Text fontSize="28px" mb={4}>
-                      {' '}
                       {title}
                     </Text>
                   )}
@@ -141,7 +147,7 @@ const BlogsSlider = ({ posts, lang }) => {
             </SwiperSlide>
           );
         })}
-      {posts?.length > 0 && (
+      {posts?.length > 0 && posts?.length !== 1 && (
         <Flex
           gap="8px"
           mt="8px"
@@ -154,4 +160,4 @@ const BlogsSlider = ({ posts, lang }) => {
   );
 };
 
-export default BlogsSlider;
+export default BlogSlider;

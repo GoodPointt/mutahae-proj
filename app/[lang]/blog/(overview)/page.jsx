@@ -2,6 +2,8 @@ import Contact from '@/app/ui/contact/Contact';
 import Blog from '@/app/ui/blog/Blog';
 import { getDictionary } from '@/app/lib/locales/dictionary';
 import { fetchContacts, fetchPosts } from '@/app/lib/api/instance';
+import { Suspense } from 'react';
+import SkeletonBlog from '@/app/ui/skeletons/SkeletonBlog';
 
 export const metadata = {
   title: 'Blog',
@@ -14,7 +16,7 @@ export const metadata = {
   },
 };
 
-const ReviewsPage = async ({ params: { lang } }) => {
+const BlogPage = async ({ params: { lang } }) => {
   const dictionary = await getDictionary(lang);
   // eslint-disable-next-line no-undef
   const [contacts, posts] = await Promise.all([
@@ -24,11 +26,12 @@ const ReviewsPage = async ({ params: { lang } }) => {
 
   return (
     <>
-      <Blog lang={lang} dictionary={dictionary} posts={posts} />
-
+      <Suspense fallback={<SkeletonBlog />}>
+        <Blog lang={lang} dictionary={dictionary} posts={posts} />
+      </Suspense>
       <Contact lang={lang} dictionary={dictionary} contacts={contacts} />
     </>
   );
 };
 
-export default ReviewsPage;
+export default BlogPage;

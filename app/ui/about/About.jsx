@@ -11,7 +11,7 @@ import {
 import SectionWrapper from '../sectionWrapper/SectionWrapper';
 import ModalWindow from '../modalWindow/ModalWindow';
 import FormContact from '../modalContact/ModalContact';
-import Link from 'next/link';
+import TextLink from '../textLink/TextLink';
 
 const About = ({ dictionary, contacts, lang }) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
@@ -57,18 +57,11 @@ const About = ({ dictionary, contacts, lang }) => {
           </List>
           <Text mt={'32px'}>
             {dictionary.pageLinksText.catalog.fromAbout}
-            <Link
+            <TextLink
               href={`/${lang}/${dictionary.pageLinksText.catalog.link}`}
-              style={{
-                marginLeft: '5px',
-                marginRight: '5px',
-                color: '#a28445',
-                fontSize: '20px',
-                fontWeight: '600',
-              }}
             >
               {dictionary.pageLinksText.catalog.linkName}
-            </Link>
+            </TextLink>
           </Text>
           <Button
             bgColor={'#a28445'}
