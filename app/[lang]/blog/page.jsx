@@ -1,15 +1,15 @@
 import Contact from '@/app/ui/contact/Contact';
-import Reviews from '@/app/ui/reviews/Reviews';
+import Blog from '@/app/ui/blog/Blog';
 import { getDictionary } from '@/app/lib/locales/dictionary';
-import { fetchContacts, fetchReviews } from '@/app/lib/api/instance';
+import { fetchContacts, fetchPosts } from '@/app/lib/api/instance';
 
 export const metadata = {
-  title: 'Reviews',
+  title: 'Blog',
   alternates: {
-    canonical: '/reviews',
+    canonical: '/blog',
     languages: {
-      en: '/en/reviews',
-      he: '/he/reviews',
+      en: '/en/blog',
+      he: '/he/blog',
     },
   },
 };
@@ -17,14 +17,15 @@ export const metadata = {
 const ReviewsPage = async ({ params: { lang } }) => {
   const dictionary = await getDictionary(lang);
   // eslint-disable-next-line no-undef
-  const [contacts, reviews] = await Promise.all([
+  const [contacts, posts] = await Promise.all([
     fetchContacts(lang),
-    fetchReviews(lang),
+    fetchPosts(lang),
   ]);
 
   return (
     <>
-      <Reviews lang={lang} dictionary={dictionary} reviews={reviews} />
+      <Blog lang={lang} dictionary={dictionary} posts={posts} />
+
       <Contact lang={lang} dictionary={dictionary} contacts={contacts} />
     </>
   );

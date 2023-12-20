@@ -30,7 +30,7 @@ const AboutPage = async ({ params: { lang } }) => {
 
   return (
     <>
-      <About dictionary={dictionary} contacts={contacts} />
+      <About dictionary={dictionary} contacts={contacts} lang={lang} />
       <Features dictionary={dictionary.aboutUs.features} />
       <Suspense>
         <Team dictionary={dictionary.aboutUs.team} members={members} />
