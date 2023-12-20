@@ -6,17 +6,11 @@ import Contact from '@/app/ui/contact/Contact';
 import About from '@/app/ui/about/About';
 import { getDictionary } from '@/app/lib/locales/dictionary';
 import { fetchContacts, fetchProducts } from '../lib/api/instance';
-// import { i18n } from '@/i18n.config';
 
-// export const generateStaticParams = async () => {
-//   return i18n.locales;
-// };
 
 const Homepage = async ({ params: { lang } }) => {
   const dictionary = await getDictionary(lang);
-  // const products = await fetchProducts(lang);
-  // const contacts = await fetchContacts(lang);
-
+  
   // eslint-disable-next-line no-undef
   const [products, contacts] = await Promise.all([
     fetchProducts(lang),

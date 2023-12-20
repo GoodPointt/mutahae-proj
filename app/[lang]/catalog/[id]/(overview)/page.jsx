@@ -10,6 +10,8 @@ import { Suspense } from 'react';
 import LoadingProduct from './loading';
 import { getDictionary } from '@/app/lib/locales/dictionary';
 
+//Prefetching first six items of collection to generate pages on server before visiting:
+
 // export const generateStaticParams = async ({ params: { lang } }) => {
 //   const products = await fetchProducts(lang);
 //   if (products.length > 0) {
@@ -43,9 +45,6 @@ export const generateMetadata = async ({ params: { id, lang } }) => {
 
 const SingleProductPage = async ({ params: { id, lang } }) => {
   const dictionary = await getDictionary(lang);
-
-  // const contacts = await fetchContacts(lang);
-  // const product = await fetchOneProduct(id, lang);
 
   // eslint-disable-next-line no-undef
   const [product, contacts] = await Promise.all([

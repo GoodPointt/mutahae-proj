@@ -2,7 +2,8 @@
   "buttons": {
     "view": "View",
     "contact": "Contact us",
-    "send": "Send"
+    "send": "Send",
+    "buy": "BUY"
   },
   "header": {
     "navItems": [
@@ -34,7 +35,22 @@
     "thickness": "Thickness: ",
     "wood": "Wood: ",
     "type": "Type: ",
-    "manufacturer": "Manufacturer: "
+    "manufacturer": "Manufacturer: ",
+    "pickup": {
+      "title": "Delivery",
+      "self": "Self-Pickup: Collection of products from the store, address Amsterdam Street 3, Sderot.",
+      "zones": [
+        "Zone 1: Ra'anana, Ashkelon, Kiryat Malachi, Kiryat Gat, Ashdod, and surrounding settlements - ₪250.00",
+        "Zone 2: Rehovot, Givatayim, Ramat Hasharon, Petah Tikva, Rosh HaAyin, Tel Aviv, and surrounding settlements - ₪350.00",
+        "Zone 3: Sderot, Be'er Sheva, Ofakim, Netivot, Ashkelon, and settlements in the surrounding area - ₪300.00",
+        "Zone 4: Jerusalem, Beit Shemesh, and surrounding settlements - ₪500.00",
+        "Zone 5: Hadera, Netanya, Haifa, and settlements in the north - ₪900.00"
+      ],
+      "pss": [
+        "* Orders over ₪5000 - 50% discount.",
+        "** Orders over ₪10,000 - 80% discount."
+      ]
+    }
   },
   "aboutUs": {
     "title": { "firstWord": "Mutag", "secondWord": "Company" },
@@ -87,7 +103,10 @@
     "phoneLabel": "Phone",
     "toasts": {
       "form": {
-        "success": "Form submitted successfully"
+        "success": "Form submitted successfully",
+        "successMsg1": "Thanks for choosing our premium wood products.",
+        "successMsg2": "We're committed to swift communication—expect us to reach out promptly.  We're here to meet your wood supply needs efficiently.",
+        "successMsg3": "Feel free to contact us via social networks as well. We're here to meet your wood supply needs efficiently."
       }
     },
     "errors": {

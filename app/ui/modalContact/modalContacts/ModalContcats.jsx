@@ -72,7 +72,6 @@ const ModalContacts = ({ contacts, dictionary, lang }) => {
           </Link>
 
           <Link
-            isExternal
             href={contacts.addressUrl}
             rel={'noopener noreferrer nofollow'}
             display={'flex'}
@@ -95,9 +94,8 @@ const ModalContacts = ({ contacts, dictionary, lang }) => {
           </Link>
         </VStack>
       </Box>
-      <HStack spacing={3} px={0} alignItems="flex-start" p={3}>
+      <HStack spacing={2} px={0} alignItems="flex-start" p={3}>
         <IconButton
-          isExternal
           as={'a'}
           rel={'noopener noreferrer nofollow'}
           aria-label="facebook"
@@ -106,7 +104,7 @@ const ModalContacts = ({ contacts, dictionary, lang }) => {
           target="_blank"
           color={'#a28445'}
           variant="ghost"
-          size="lg"
+          size="md"
           isRound={true}
           _hover={{
             bg: '#333331',
@@ -115,7 +113,6 @@ const ModalContacts = ({ contacts, dictionary, lang }) => {
           transition="all 500ms ease"
         />
         <IconButton
-          isExternal
           as={'a'}
           rel={'noopener noreferrer nofollow'}
           aria-label="instagram"
@@ -124,7 +121,7 @@ const ModalContacts = ({ contacts, dictionary, lang }) => {
           href={contacts.insta}
           color={'#a28445'}
           variant="ghost"
-          size="lg"
+          size="md"
           isRound={true}
           _hover={{
             bg: '#333331',
@@ -133,7 +130,6 @@ const ModalContacts = ({ contacts, dictionary, lang }) => {
           transition="all 500ms ease"
         />
         <IconButton
-          isExternal
           as={'a'}
           rel={'noopener noreferrer nofollow'}
           aria-label="whatsapp"
@@ -142,7 +138,7 @@ const ModalContacts = ({ contacts, dictionary, lang }) => {
           target="_blank"
           color={'#a28445'}
           variant="ghost"
-          size="lg"
+          size="md"
           isRound={true}
           _hover={{
             bg: '#333331',
@@ -151,7 +147,6 @@ const ModalContacts = ({ contacts, dictionary, lang }) => {
           transition="all 500ms ease"
         />
         <IconButton
-          isExternal
           as={'a'}
           rel={'noopener noreferrer nofollow'}
           aria-label="telegram"
@@ -160,7 +155,7 @@ const ModalContacts = ({ contacts, dictionary, lang }) => {
           target="_blank"
           color={'#a28445'}
           variant="ghost"
-          size="lg"
+          size="md"
           isRound={true}
           _hover={{
             bg: '#333331',
@@ -169,7 +164,6 @@ const ModalContacts = ({ contacts, dictionary, lang }) => {
           transition="all 500ms ease"
         />
         <IconButton
-          isExternal
           as={'a'}
           rel={'noopener noreferrer nofollow'}
           aria-label="viber"
@@ -178,7 +172,7 @@ const ModalContacts = ({ contacts, dictionary, lang }) => {
           target="_blank"
           color={'#a28445'}
           variant="ghost"
-          size="lg"
+          size="md"
           isRound={true}
           _hover={{
             bg: '#333331',
