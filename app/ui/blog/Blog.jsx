@@ -1,8 +1,8 @@
 import React from 'react';
 import SectionWrapper from '../sectionWrapper/SectionWrapper';
-import BlogsSlider from '../BlogsSlider/BlogsSlider';
 import { Text } from '@chakra-ui/react';
 import Link from 'next/link';
+import BlogsSlider from '../blogsSlider/BlogsSlider';
 
 const Blog = async ({ lang, dictionary, posts }) => {
   return (
