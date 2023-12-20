@@ -29,6 +29,8 @@ const ContactForm = ({ dictionary }) => {
   const toast = useToast();
 
   const ref = useRef(null);
+  const maskedInputRef = useRef(null);
+
   const lang = useLang();
 
   const nameError =
@@ -51,6 +53,8 @@ const ContactForm = ({ dictionary }) => {
       if (state?.message === 'succsess') {
         sendEmail(state);
         ref.current?.reset();
+        maskedInputRef.current.value = '';
+
         toast({
           status: 'success',
           title: dictionary.formContact.toasts.form.success,
@@ -109,6 +113,7 @@ const ContactForm = ({ dictionary }) => {
             </InputLeftElement>
           )}
           <Input
+            ref={maskedInputRef}
             pl={lang === 'en' ? 4 : null}
             pr={lang === 'he' ? 4 : null}
             name="phone"
