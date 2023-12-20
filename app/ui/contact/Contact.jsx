@@ -11,7 +11,8 @@ import SectionWrapper from '../sectionWrapper/SectionWrapper';
 import GoogleMap from '../googleMap/GoogleMap';
 import ContactForm from '../contactForm/ContactForm';
 import { MdEmail, MdLocationOn, MdPhone } from 'react-icons/md';
-const Contact = async ({ lang, dictionary, contacts }) => {
+
+const Contact = ({ lang, dictionary, contacts }) => {
   const { addressUrl, address, phone, email } = contacts;
 
   return (
