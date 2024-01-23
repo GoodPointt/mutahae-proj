@@ -11,6 +11,7 @@ import {
   InputRightElement,
   FormHelperText,
   useToast,
+  Text,
 } from '@chakra-ui/react';
 import { MdPhone, MdOutlineEmail } from 'react-icons/md';
 import { BsPerson } from 'react-icons/bs';
@@ -21,7 +22,7 @@ import { submitData } from '@/app/lib/actions';
 import SubmitButton from '@/app/ui/submitButton/SubmitButton';
 import ReactInputMask from 'react-input-mask';
 
-const ModalForm = ({ onClose, dictionary, lang }) => {
+const ModalForm = ({ setIsSuccess, dictionary, lang, title, uid }) => {
   const [state, dispatch] = useFormState(submitData, undefined);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -30,13 +31,13 @@ const ModalForm = ({ onClose, dictionary, lang }) => {
       if (state?.message === 'succsess') {
         try {
           setIsSubmitting(true);
-          const res = await sendEmail(state);
+          const res = await sendEmail({ ...state, title, uid });
           if (res.status === 200) {
             toast({
               status: 'success',
               title: dictionary.formContact.toasts.form.success,
             });
-            onClose();
+            setIsSuccess(true);
           }
         } catch (error) {
           console.error(error);
@@ -154,7 +155,12 @@ const ModalForm = ({ onClose, dictionary, lang }) => {
             </InputGroup>
           </FormControl>
           <FormControl id="name">
-            <FormLabel>{dictionary.formContact.phoneLabel}</FormLabel>
+            <FormLabel>
+              <Text as={'span'} color={'crimson'}>
+                *
+              </Text>
+              {dictionary.formContact.phoneLabel}
+            </FormLabel>
             <InputGroup borderColor="#E0E1E7">
               {lang === 'he' ? (
                 <InputRightElement pointerEvents="none">

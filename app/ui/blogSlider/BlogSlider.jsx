@@ -7,7 +7,14 @@ import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
-import { Box, Button, Flex, Text, useDisclosure } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Divider,
+  Flex,
+  Text,
+  useDisclosure,
+} from '@chakra-ui/react';
 import { RiDoubleQuotesR } from 'react-icons/ri';
 import {
   TbCircleArrowLeftFilled,
@@ -19,6 +26,7 @@ import ReactPlayer from 'react-player';
 
 const SwiperNavigation = () => {
   const swiper = useSwiper();
+
   return (
     <>
       <Button
@@ -28,7 +36,9 @@ const SwiperNavigation = () => {
         pl={0}
         pr={0}
         _hover={{ bg: 'transparent' }}
-        onClick={() => swiper.slidePrev()}
+        onClick={() => {
+          swiper.slideNext();
+        }}
       >
         <TbCircleArrowLeftFilled fontSize="30px" color="#a28445" />
       </Button>
@@ -39,7 +49,9 @@ const SwiperNavigation = () => {
         pl={0}
         pr={0}
         _hover={{ bg: 'transparent' }}
-        onClick={() => swiper.slideNext()}
+        onClick={() => {
+          swiper.slideNext();
+        }}
       >
         <TbCircleArrowRightFilled fontSize="30px" color="#a28445" />
       </Button>
@@ -47,8 +59,11 @@ const SwiperNavigation = () => {
   );
 };
 
-const ReviewsSlider = ({ reviews, lang }) => {
+const BlogSlider = ({ posts, lang }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const defaultVideo =
+    'https://res.cloudinary.com/dyeasxvro/video/upload/v1701638779/promtest_e550ba050d.mp4';
 
   return (
     <Swiper
@@ -56,6 +71,7 @@ const ReviewsSlider = ({ reviews, lang }) => {
       navigation={false}
       loop
       slidesPerView={'auto'}
+      autoHeight
       breakpoints={{
         320: {
           slidesPerView: 1,
@@ -63,34 +79,34 @@ const ReviewsSlider = ({ reviews, lang }) => {
         },
       }}
     >
-      {reviews.length > 0 &&
-        reviews.map(review => {
+      {posts?.length > 0 &&
+        posts?.map(review => {
           const {
-            attributes: {
-              imgUrl,
-              uid,
-              customerPosition,
-              desc,
-              customerName,
-              videoUrl,
-            },
+            attributes: { imgUrl, uid, title, desc, videoUrl, preview },
           } = review;
 
           return (
-            <SwiperSlide key={uid} width="100%">
+            <SwiperSlide key={uid} className="scrollBarStyle">
               <Box
-                display="flex"
-                gap="40px"
-                borderBottom="2px solid #a28445"
+                display={'flex'}
+                gap={{ md: '20px', lg: '40px' }}
                 w="100%"
                 flexDirection={{ base: 'column', md: 'row' }}
-                alignItems="center"
+                alignItems="flex-start"
               >
-                <Box position="relative" w={200} height={200}>
+                <Box
+                  position="relative"
+                  w={{ base: '100%', md: '400px', xl: '600px' }}
+                  height={200}
+                  mt={'40px'}
+                >
                   <Image
-                    src={imgUrl || '/customerPlaceholder.jpg'}
-                    alt={customerPosition}
+                    src={imgUrl || '/blur-product.jpg'}
+                    alt={title}
                     fill
+                    placeholder="blur"
+                    blurDataURL="/blur-product.jpg"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     style={{
                       objectFit: 'cover',
                     }}
@@ -115,10 +131,11 @@ const ReviewsSlider = ({ reviews, lang }) => {
                     maxW={{ base: '300px', md: '500px' }}
                   >
                     <ReactPlayer
-                      url={videoUrl}
+                      url={videoUrl || defaultVideo}
                       width="300"
                       height="500"
                       controls
+                      playing
                     />
                   </ModalWindow>
                 </Box>
@@ -130,37 +147,53 @@ const ReviewsSlider = ({ reviews, lang }) => {
                   flexDirection="column"
                   justifyContent="center"
                   pt="60px"
-                  pb="25px"
                 >
+                  {title && (
+                    <Text fontSize="28px" mb={4}>
+                      {title}
+                    </Text>
+                  )}
                   <Box position="absolute" top={0}>
                     <RiDoubleQuotesR size="40px" color="#a28445" />
                   </Box>
-
-                  {desc && <Text mb="30px">{desc}</Text>}
-                  {customerName && (
-                    <Text fontSize="15px" textTransform="uppercase">
-                      {customerName}
+                  {preview && (
+                    <Text fontSize={{ base: '12px', lg: '13px', xl: '14px' }}>
+                      {preview}
                     </Text>
-                  )}
-                  {customerPosition && (
-                    <Text fontSize="15px"> {customerPosition}</Text>
                   )}
                 </Box>
               </Box>
+
+              {desc.split('/n').map((el, index) => (
+                <Text
+                  key={index}
+                  mt={'5px'}
+                  fontSize={{ base: '12px', lg: '13px', xl: '14px' }}
+                >
+                  {el}
+                </Text>
+              ))}
+
+              <Divider
+                mt={'32px'}
+                borderBottom="2px solid #a28445"
+                h={'2px'}
+                width={'100%'}
+              ></Divider>
+              {posts?.length > 0 && posts?.length !== 1 && (
+                <Flex
+                  gap="8px"
+                  mt="8px"
+                  flexDirection={lang === 'he' ? 'row-reverse' : 'row'}
+                >
+                  <SwiperNavigation />
+                </Flex>
+              )}
             </SwiperSlide>
           );
         })}
-      {reviews.length > 0 && (
-        <Flex
-          gap="8px"
-          mt="8px"
-          flexDirection={lang === 'he' ? 'row-reverse' : 'row'}
-        >
-          <SwiperNavigation />
-        </Flex>
-      )}
     </Swiper>
   );
 };
 
-export default ReviewsSlider;
+export default BlogSlider;

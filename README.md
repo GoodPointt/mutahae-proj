@@ -21,7 +21,7 @@ facilitated through a user-friendly contact form.
    - Styling enhancements provided by Chakra UI for an aesthetically pleasing
      user interface.
 
-2. **Backend: Strapi CMS**
+2. **Backend: Strapi CMS** https://github.com/MutagHaetz/mutag-admin-panel
 
    - Deployment of Strapi as both the backend and Content Management System
      (CMS).

@@ -1,13 +1,9 @@
 {
-  "page": {
-    "home": {
-      "title": "TEST HEADING"
-    }
-  },
   "buttons": {
     "view": "View",
     "contact": "Contact us",
-    "send": "Send"
+    "send": "Send",
+    "buy": "BUY"
   },
   "header": {
     "navItems": [
@@ -24,8 +20,8 @@
         "path": "/about"
       },
       {
-        "title": "Reviews",
-        "path": "/reviews"
+        "title": "Blog",
+        "path": "/blog"
       },
       {
         "title": "Contact",
@@ -39,19 +35,35 @@
     "thickness": "Thickness: ",
     "wood": "Wood: ",
     "type": "Type: ",
-    "manufacturer": "Manufacturer: "
+    "manufacturer": "Manufacturer: ",
+    "price": "Price: ",
+    "pickup": {
+      "title": "Delivery",
+      "self": "Self-Pickup: Collection of products from the store, address Amsterdam Street 3, Sderot.",
+      "zones": [
+        "Zone 1: Ra'anana, Ashkelon, Kiryat Malachi, Kiryat Gat, Ashdod, and surrounding settlements - ₪250.00",
+        "Zone 2: Rehovot, Givatayim, Ramat Hasharon, Petah Tikva, Rosh HaAyin, Tel Aviv, and surrounding settlements - ₪350.00",
+        "Zone 3: Sderot, Be'er Sheva, Ofakim, Netivot, Ashkelon, and settlements in the surrounding area - ₪300.00",
+        "Zone 4: Jerusalem, Beit Shemesh, and surrounding settlements - ₪500.00",
+        "Zone 5: Hadera, Netanya, Haifa, and settlements in the north - ₪900.00"
+      ],
+      "pss": [
+        "* Orders over ₪5000 - 50% discount.",
+        "** Orders over ₪10,000 - 80% discount."
+      ]
+    }
   },
   "aboutUs": {
     "title": { "firstWord": "Mutag", "secondWord": "Company" },
     "main": [
       {
-        "text": "Mutag Haetz is a leading trading company specializing in the sale and distribution of wood products. The company offers a wide range of high-quality and diverse products, including oak and pine wood panels, stairs, M.D.P, and plywood."
+        "text": "Mutag Haetz, located in the city of Sderot, is a company with over a decade of successful experience. The company has established itself as a leading figure wood products, specializing in the sale of high-quality oak wood items."
       },
       {
-        "text": "Oak and pine wood panels are excellent solutions for interior design and furniture. Stairs, M.D.P, and plywood can be used to create a variety of products such as tables, clothing wardrobes, furniture, wall coverings, and more."
+        "text": "In the import sector, Mutag Haetz boasts rich experience and proven reliability. As an experienced importer, the company focuses on marketing a wide variety of products, including Oak wood, Oak panels, slabs, Finger-joint and more."
       },
       {
-        "text": "Mutag Haetz is committed to excellent service and reliability, consistently providing the best solutions to its customers in the field of wood products."
+        "text": "Mutag Haetz prides itself on its ability to deliver products of utmost quality. Additionally, the company offers a diverse range of products, including dictums, complementary accessories, and more, ensuring comprehensive and reliable solutions for every project."
       }
     ],
     "features": [
@@ -92,7 +104,10 @@
     "phoneLabel": "Phone",
     "toasts": {
       "form": {
-        "success": "Form submitted successfully"
+        "success": "Form submitted successfully",
+        "successMsg1": "Thanks for choosing our premium wood products.",
+        "successMsg2": "We're committed to swift communication—expect us to reach out promptly.  We're here to meet your wood supply needs efficiently.",
+        "successMsg3": "Feel free to contact us via social networks as well. We're here to meet your wood supply needs efficiently."
       }
     },
     "errors": {
@@ -111,10 +126,28 @@
     }
   },
   "hero": {
-    "title": "Nature in Every Detail: Beauty and Warmth of Wood in Every Product!",
+    "title": "Wood bringing nature to your home – quality and admiration in every board and beam!",
     "desc": "Explore our catalog and discover how our wooden products can add a unique style and perfection to your projects",
     "btnCatalog": "Catalog",
     "btnContactUs": "Contact Us"
   },
-  "footer": { "contacts": "Contacts and address" }
+  "footer": { "contacts": "Contacts and address", "products": "Our Products" },
+  "catalog": {
+    "desc": "Explore the epitome of craftsmanship in our catalog, where every product tells a story of timeless elegance. Our collection showcases the beauty of oak wood in various forms, from exquisite oak stairs that redefine your space to the raw allure of solid oak timber. Dive into the versatility of our offerings, including the environmentally conscious Lami Oak and innovative Oak BIO Board, crafted to inspire your interior design journey. Each product in our wood collection reflects a commitment to quality, ensuring that every piece, whether it's a simple wood panel or a complex timber creation, is a testament to the natural beauty and enduring charm of wood. Welcome to a world where wood becomes art, and every selection, from oak stairs to timber wonders, transforms your space into a masterpiece."
+  },
+  "contactDesc": {
+    "title": "Efficient Oak Delivery Solutions Across Israel: Connecting Cities, Meeting Your Needs!",
+    "towns": "We are delighted to be your suppliers in various cities, including Ashkelon, Ashdod, Be'er Sheva, Kiryat Gat, Netivot, Ofakim, Jerusalem, Tel Aviv, Haifa, Rishon LeZion, Petah Tikva, Netanya, Herzliya, Holon, Eilat, Beer Sheva, Kfar Saba, Rehovot, Hod HaSharon, and Modiin.",
+    "delivery": "Our trucks and couriers are ready to deliver to your location. Don't forget that we are available for communication on social networks,",
+    "linkPhone": "by phone",
+    "askQuestions": "and through a convenient form on the website. Stay connected, and our managers will be sure to answer all your questions."
+  },
+  "pageLinksText": {
+    "catalog": {
+      "fromBlog": "You can familiarize yourself with the details of the products in the",
+      "fromAbout": "You can also find something interesting for yourself by checking out our",
+      "linkName": "CATALOG",
+      "link": "/catalog"
+    }
+  }
 }

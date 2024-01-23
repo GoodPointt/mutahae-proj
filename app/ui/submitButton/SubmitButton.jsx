@@ -8,6 +8,7 @@ const SubmitButton = ({
   px = '18px',
   hover = '#81672e',
   isSubmitting = false,
+  dis = false,
 }) => {
   const { pending } = useFormStatus();
 
@@ -21,7 +22,7 @@ const SubmitButton = ({
       _hover={{ bgColor: hover }}
       type="submit"
       isLoading={pending || isSubmitting}
-      isDisabled={pending || isSubmitting}
+      isDisabled={pending || isSubmitting || dis}
     >
       {children}
     </Button>

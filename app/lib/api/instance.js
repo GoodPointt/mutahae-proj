@@ -7,6 +7,24 @@ export const instance = axios.create({
 });
 instance.defaults.headers.authorization = `Bearer ${process.env.NEXT_PUBLIC_STRAPI_TOKEN}`;
 
+const getHero = async lang => {
+  try {
+    const {
+      data: {
+        data: { attributes },
+      },
+    } = await instance.get(`/api/hero?locale=${lang}`);
+
+    return attributes;
+  } catch (e) {
+    if (!e.data || e.data === undefined) {
+      return notFound();
+    }
+  }
+};
+
+export const fetchHero = cache(getHero);
+
 const getProducts = async lang => {
   try {
     const {
@@ -15,6 +33,7 @@ const getProducts = async lang => {
     if (data.length === 0) {
       return notFound();
     }
+
     return data;
   } catch (e) {
     if (e.data === undefined) {
@@ -78,11 +97,11 @@ export const createContact = async credentials => {
   }
 };
 
-const getReviews = async lang => {
+const getPosts = async lang => {
   try {
     const {
       data: { data },
-    } = await instance.get(`/api/reviews?locale=${lang}`);
+    } = await instance.get(`/api/posts?locale=${lang}`);
 
     if (data.length === 0) return notFound();
 
@@ -94,7 +113,7 @@ const getReviews = async lang => {
   }
 };
 
-export const fetchReviews = cache(getReviews);
+export const fetchPosts = cache(getPosts);
 
 const getMembers = async lang => {
   try {

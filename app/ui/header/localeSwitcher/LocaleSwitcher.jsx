@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { i18n } from '@/i18n.config';
+import { i18n } from '@/app/lib/locales/i18n.config';
 import { Box, List, ListItem, VisuallyHiddenInput } from '@chakra-ui/react';
 import { useFormState } from 'react-dom';
 import { createCookie } from '@/app/lib/actions';
@@ -34,6 +34,7 @@ const LocaleSwitcher = () => {
             bgColor={'transparent'}
             px={'2px'}
             hover={'transparent'}
+            dis={path.includes(i18n.locales[0])}
           >
             <Box
               display={'block'}
@@ -67,7 +68,11 @@ const LocaleSwitcher = () => {
             onChange={e => setPath(e.target.value)}
             value={path}
           />
-          <SubmitButton bgColor={'transparent'} hover={'transparent'}>
+          <SubmitButton
+            bgColor={'transparent'}
+            hover={'transparent'}
+            dis={path.includes(i18n.locales[1])}
+          >
             <Box
               display={'block'}
               pos={'relative'}

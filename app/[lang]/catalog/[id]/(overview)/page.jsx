@@ -9,6 +9,9 @@ import SingleProduct from '@/app/ui/singleProduct/SingleProduct';
 import { Suspense } from 'react';
 import LoadingProduct from './loading';
 import { getDictionary } from '@/app/lib/locales/dictionary';
+import DeliveryInfo from '@/app/ui/deliveryInfo/DeliveryInfo';
+
+//Prefetching first six items of collection to generate pages on server before visiting:
 
 // export const generateStaticParams = async ({ params: { lang } }) => {
 //   const products = await fetchProducts(lang);
@@ -23,6 +26,13 @@ export const generateMetadata = async ({ params: { id, lang } }) => {
 
   return {
     title: product.title,
+    alternates: {
+      canonical: `/catalog/${id}`,
+      languages: {
+        en: `/en/catalog/${id}`,
+        he: `/he/catalog/${id}`,
+      },
+    },
     description: product.descShort,
     openGraph: {
       images: [
@@ -37,20 +47,23 @@ export const generateMetadata = async ({ params: { id, lang } }) => {
 const SingleProductPage = async ({ params: { id, lang } }) => {
   const dictionary = await getDictionary(lang);
 
-  const contacts = await fetchContacts(lang);
-
-  const product = await fetchOneProduct(id, lang);
+  // eslint-disable-next-line no-undef
+  const [product, contacts] = await Promise.all([
+    fetchOneProduct(id, lang),
+    fetchContacts(lang),
+  ]);
 
   return (
     <>
-      <Suspense fallback={<LoadingProduct />}>
+      <Suspense fallback={<LoadingProduct dictionary={dictionary} />}>
         <SingleProduct
           product={product}
           dictionary={dictionary}
           contacts={contacts}
         />
       </Suspense>
-      <Contact lang={lang} dictionary={dictionary} />
+      <DeliveryInfo dictionary={dictionary} />
+      <Contact lang={lang} dictionary={dictionary} contacts={contacts} />
     </>
   );
 };

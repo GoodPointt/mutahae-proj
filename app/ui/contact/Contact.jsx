@@ -11,11 +11,8 @@ import SectionWrapper from '../sectionWrapper/SectionWrapper';
 import GoogleMap from '../googleMap/GoogleMap';
 import ContactForm from '../contactForm/ContactForm';
 import { MdEmail, MdLocationOn, MdPhone } from 'react-icons/md';
-import { fetchContacts } from '../../lib/api/instance';
 
-const Contact = async ({ lang, dictionary }) => {
-  const contacts = await fetchContacts(lang);
-
+const Contact = ({ lang, dictionary, contacts }) => {
   const { addressUrl, address, phone, email } = contacts;
 
   return (
@@ -37,13 +34,13 @@ const Contact = async ({ lang, dictionary }) => {
                 }}
                 transition={'all 0.3s'}
               >
-                <MdLocationOn color="#a28445" size="20px" />
+                <MdLocationOn color="#a28445" size="24px" />
                 {addressUrl && address && (
                   <Link
                     _hover={{ textDecoration: 'none' }}
-                    isExternal
                     href={addressUrl}
                     rel={'noopener noreferrer nofollow'}
+                    target="_blank"
                   >
                     <Text>{address}</Text>
                   </Link>

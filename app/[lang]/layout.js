@@ -1,6 +1,6 @@
 import { Montserrat } from 'next/font/google';
 import '@/app/ui/globals.css';
-import { i18n } from 'i18n.config';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 import Providers from './providers';
 import { Box } from '@chakra-ui/react';
@@ -9,53 +9,42 @@ import Footer from '@/app/ui/footer/Footer';
 import AnimatedMain from '../ui/AnimatedMain';
 import { getDictionary } from '../lib/locales/dictionary';
 import SocialLinks from '../ui/socialLinks/SocialLinks';
+import { metaKeywords } from '../lib/data';
+import { fetchContacts } from '../lib/api/instance';
+import Script from 'next/script';
+import { i18n } from '../lib/locales/i18n.config';
 
 const inter = Montserrat({ subsets: ['latin'] });
 
-export const metadata = {
-  alternates: {
-    canonical: '/',
-    languages: {
-      en: '/en',
-      he: '/he',
+export const generateMetadata = async ({ params: { lang } }) => {
+  return {
+    keywords: metaKeywords,
+    title: {
+      default:
+        lang === 'en'
+          ? 'Mutag Haetz - Oak Board | Oak Timber | Oak Finger Joint | Oak Stairs | Oak Board BIO | Oak Vario'
+          : "עץ אלון | לאמי אלון |  אלון ואריו |  בוצ'ר אלון | מדרגות אלון - מותג העץ",
+      template: `%s - ${lang === 'en' ? 'Mutag Haetz' : 'מותג העץ'}`,
     },
-  },
-  metadataBase: new URL(process.env.NEXT_PUBLIC_URL),
-  openGraph: {
-    images: '/opengraph-image.png',
-  },
-  keywords: [
-    'лестницы',
-    'stairs',
-    'סולמות',
-    'деревянные изделия',
-    'solid wood panels',
-    'wooden products',
-    'מוצרים מעץ',
-    'щиты из цельного дерева',
-    'לוחות עץ',
-    'полки',
-    'shelves',
-    'מדפים',
-    'столешницы',
-    'countertops',
-    'דודים',
-    'деревянные полы',
-    'wooden floors',
-    'רצפות עץ',
-    'дуб',
-    'oak',
-    'אלון',
-  ],
-  title: {
-    default: 'MUTAG Haetz',
-    template: '%s - MUTAG Haetz',
-  },
-  description:
-    'Nature in Every Detail: Beauty and Warmth of Wood in Every Product!',
-  twitter: {
-    card: 'summary_large_image',
-  },
+    description:
+      lang === 'en'
+        ? 'High-quality wood products: Oak stairs, beech, and oak BIO boards. Crafted with care, bringing the warmth and beauty of wood to Israel. Expertise and quality in every project, capturing the authentic feel of oak wood.'
+        : 'מוצרי עץ באיכות גבוהה: מדרגות אלון, בוצ’ר, ולוחות ואריו. אנו יוצרים בקפידה ומביאים לישראל את חמימות ויופי העץ. איכות והתמחות בכל פרוייקט, מהתחושה האותנטית של עץ אלון.',
+    twitter: {
+      card: 'summary_large_image',
+    },
+    alternates: {
+      canonical: '/',
+      languages: {
+        en: '/en',
+        he: '/he',
+      },
+    },
+    metadataBase: new URL(process.env.NEXT_PUBLIC_URL),
+    openGraph: {
+      images: '/opengraph-image.png',
+    },
+  };
 };
 
 export async function generateStaticParams() {
@@ -64,9 +53,31 @@ export async function generateStaticParams() {
 
 export default async function RootLayout({ children, params: { lang } }) {
   const dictionary = await getDictionary(lang);
+  const contacts = await fetchContacts(lang);
 
   return (
     <html lang={lang} dir={lang === 'he' ? 'rtl' : 'ltr'}>
+      <link
+        rel="icon"
+        href={`${process.env.NEXT_PUBLIC_URL}/favicon.ico`}
+        type="image/x-icon"
+        sizes="48x48"
+      />
+      {/* <!-- Google tag (gtag.js) --> */}
+      <Script
+        async
+        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`}
+      />
+      <Script id="google-analytics">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}');
+        `}
+      </Script>
+
       <Box
         as="body"
         bg={'#181617'}
@@ -75,10 +86,13 @@ export default async function RootLayout({ children, params: { lang } }) {
         fontSize={18}
       >
         <Providers>
-          <Header lang={lang} dictionary={dictionary} />
-          <AnimatedMain>{children}</AnimatedMain>
-          <SocialLinks lang={lang} />
-          <Footer lang={lang} dictionary={dictionary} />
+          <Header lang={lang} dictionary={dictionary} contacts={contacts} />
+          <AnimatedMain>
+            {children}
+            <SpeedInsights />
+          </AnimatedMain>
+          <SocialLinks lang={lang} contacts={contacts} />
+          <Footer lang={lang} dictionary={dictionary} contacts={contacts} />
         </Providers>
       </Box>
     </html>

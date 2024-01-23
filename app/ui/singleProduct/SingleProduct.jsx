@@ -5,7 +5,8 @@ import Image from 'next/image';
 import SectionWrapper from '../sectionWrapper/SectionWrapper';
 import Btn from '../button/Btn';
 import ModalWindow from '../modalWindow/ModalWindow';
-import FormContact from '../modalContact/ModalContact';
+import ModalContact from '../modalContact/ModalContact';
+import { TiShoppingCart } from 'react-icons/ti';
 
 const SingleProduct = ({
   contacts,
@@ -21,6 +22,8 @@ const SingleProduct = ({
     wood,
     type,
     manufacturer,
+    uid,
+    price,
   },
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -52,61 +55,96 @@ const SingleProduct = ({
           />
         </Box>
         <Flex flexDir={'column'} gap={2}>
-          <Heading as="h2" fontWeight={900}>
+          <Heading
+            as="h2"
+            mb={{ base: 6, lg: 8 }}
+            fontSize={{ base: '2xl', lg: '4xl' }}
+          >
             {title || ''}
           </Heading>
-          <Text as="p" fontSize={'sm'} fontWeight={'500'}>
-            {dictionary.singleProduct.length}
-            <Text as="span" fontWeight={'300'}>
-              {length || ''}
+          {length && (
+            <Text as="p" fontSize={'sm'} fontWeight={'600'}>
+              {dictionary.singleProduct.length}
+              <Text as="span" fontWeight={'400'}>
+                {length || ''}
+              </Text>
             </Text>
-          </Text>
-          <Text as="p" fontSize={'sm'} fontWeight={'500'}>
-            {dictionary.singleProduct.thickness}
-            <Text as="span" fontWeight={'300'}>
-              {thickness || ''}
+          )}
+          {thickness && (
+            <Text as="p" fontSize={'sm'} fontWeight={'600'}>
+              {dictionary.singleProduct.thickness}
+              <Text as="span" fontWeight={'400'}>
+                {thickness || ''}
+              </Text>
             </Text>
-          </Text>
-          <Text as="p" fontSize={'sm'} fontWeight={'500'}>
-            {dictionary.singleProduct.width}
+          )}
+          {width && (
+            <Text as="p" fontSize={'sm'} fontWeight={'600'}>
+              {dictionary.singleProduct.width}
 
-            <Text as="span" fontWeight={'300'}>
-              {width || ''}
+              <Text as="span" fontWeight={'400'}>
+                {width || ''}
+              </Text>
             </Text>
-          </Text>
-          <Text as="p" fontSize={'sm'} fontWeight={'500'}>
-            {dictionary.singleProduct.wood}
+          )}
+          {wood && (
+            <Text as="p" fontSize={'sm'} fontWeight={'600'}>
+              {dictionary.singleProduct.wood}
 
-            <Text as="span" fontWeight={'300'}>
-              {wood || ''}
+              <Text as="span" fontWeight={'400'}>
+                {wood || ''}
+              </Text>
             </Text>
-          </Text>
-          <Text as="p" fontSize={'sm'} fontWeight={'500'}>
-            {dictionary.singleProduct.type}
+          )}
+          {type && (
+            <Text as="p" fontSize={'sm'} fontWeight={'600'}>
+              {dictionary.singleProduct.type}
 
-            <Text as="span" fontWeight={'300'}>
-              {type || ''}
+              <Text as="span" fontWeight={'400'}>
+                {type || ''}
+              </Text>
             </Text>
-          </Text>
-          <Text as="p" fontSize={'sm'} fontWeight={'500'}>
-            {dictionary.singleProduct.manufacturer}
+          )}
+          {manufacturer && (
+            <Text as="p" fontSize={'sm'} fontWeight={'600'}>
+              {dictionary.singleProduct.manufacturer}
 
-            <Text as="span" fontWeight={'300'}>
-              {manufacturer || ''}
+              <Text as="span" fontWeight={'400'}>
+                {manufacturer || ''}
+              </Text>
             </Text>
-          </Text>
+          )}
+          <Box mt={'auto'}>
+            {price && (
+              <Text as="p" fontSize={'large'} fontWeight={'600'}>
+                {dictionary.singleProduct.price}
+                <Text as="span" fontWeight={'400'}>
+                  {price || ''}
+                </Text>
+              </Text>
+            )}
+            <Box width={'fit-content'}>
+              <Btn onClick={onOpen}>
+                <Text as={'span'} minW={10}>
+                  <TiShoppingCart size={24} />
+                </Text>
+
+                {dictionary.buttons.buy}
+              </Btn>
+            </Box>
+          </Box>
         </Flex>
       </Flex>
       <Text my={4} as="p">
         {descLong || ''}
       </Text>
-
-      <Btn onClick={onOpen}>{dictionary.buttons.contact}</Btn>
       <ModalWindow onClose={onClose} isOpen={isOpen}>
-        <FormContact
+        <ModalContact
           dictionary={dictionary}
           contacts={contacts}
           onClose={onClose}
+          title={title}
+          uid={uid}
         />
       </ModalWindow>
     </SectionWrapper>

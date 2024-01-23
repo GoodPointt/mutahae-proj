@@ -1,4 +1,4 @@
-import { Flex, Skeleton, SkeletonText } from '@chakra-ui/react';
+import { Box, Flex, Skeleton, SkeletonText } from '@chakra-ui/react';
 
 const SkeletonSingleProduct = () => {
   return (
@@ -14,9 +14,21 @@ const SkeletonSingleProduct = () => {
           endColor="gray.400"
         />
 
-        <Flex flexDir={'column'} gap={6} width={'200px'}>
+        <Flex flexDir={'column'} gap={12} width={'200px'}>
           <SkeletonText mt={3} noOfLines={1} spacing="1" skeletonHeight="9" />
-          <SkeletonText noOfLines={6} spacing="4" skeletonHeight="3" />
+          <SkeletonText noOfLines={5} spacing="4" skeletonHeight="2" />
+          <Box mt={'auto'}>
+            <SkeletonText noOfLines={1} skeletonHeight="3" mb={3} w={'80%'} />
+
+            <SkeletonText
+              noOfLines={1}
+              spacing="1"
+              skeletonHeight="9"
+              startColor="#ad9a74"
+              endColor="gray.400"
+              w={'60%'}
+            />
+          </Box>
         </Flex>
       </Flex>
       <SkeletonText mt={4} noOfLines={6} spacing="2" skeletonHeight="2" />

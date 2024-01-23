@@ -9,32 +9,31 @@ import { Suspense } from 'react';
 export const metadata = {
   title: 'About',
   alternates: {
-    canonical: '/',
+    canonical: '/about',
     languages: {
-      en: '/en',
-      he: '/he',
+      en: '/en/about',
+      he: '/he/about',
     },
-  },
-  metadataBase: new URL(process.env.NEXT_PUBLIC_URL),
-  openGraph: {
-    images: '/opengraph-image.png',
   },
 };
 
 const AboutPage = async ({ params: { lang } }) => {
   const dictionary = await getDictionary(lang);
-  const contacts = await fetchContacts(lang);
 
-  const members = await fetchMembers(lang);
+  //eslint-disable-next-line no-undef
+  const [contacts, members] = await Promise.all([
+    fetchContacts(lang),
+    fetchMembers(lang),
+  ]);
 
   return (
     <>
-      <About dictionary={dictionary} contacts={contacts} />
+      <About dictionary={dictionary} contacts={contacts} lang={lang} />
       <Features dictionary={dictionary.aboutUs.features} />
       <Suspense>
         <Team dictionary={dictionary.aboutUs.team} members={members} />
       </Suspense>
-      <Contact dictionary={dictionary} lang={lang} />
+      <Contact dictionary={dictionary} lang={lang} contacts={contacts} />
     </>
   );
 };

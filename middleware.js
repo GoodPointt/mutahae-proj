@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-import { i18n } from './i18n.config';
+import { i18n } from './app/lib/locales/i18n.config';
 
 import { match as matchLocale } from '@formatjs/intl-localematcher';
 import Negotiator from 'negotiator';
@@ -28,13 +28,17 @@ export function middleware(request) {
       '/sitemap.xml',
       '/robots.txt',
       '/opengraph-image.png',
-      '/favicon.ico',
       // LOGOS
       '/logo-small.png',
       '/logo.png',
       '/manifest.json',
       '/he.svg',
       '/gb.svg',
+      '/favicon.ico',
+      '/apple-touch-icon.png',
+      '/favicon-32x32.png',
+      '/favicon-16x16.png',
+      '/safari-pinned-tab.svg',
       //BGS
       '/hero-bg.jpg',
       '/about-background.jpg',

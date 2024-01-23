@@ -3,7 +3,7 @@ import { fetchProducts } from './lib/api/instance';
 export default async function sitemap() {
   const productsEn = await fetchProducts('en');
   const postEntriesEn = productsEn.map(({ attributes }) => ({
-    url: `${process.env.NEXT_PUBLIC_URL}/en/${attributes.uid}`,
+    url: `${process.env.NEXT_PUBLIC_URL}/en/catalog/${attributes.uid}`,
     lastModified: new Date(attributes.updatedAt),
     changeFrequency: 'monthly',
     priority: 1,
@@ -11,13 +11,19 @@ export default async function sitemap() {
 
   const productsHe = await fetchProducts('he');
   const productEntriesHe = productsHe.map(({ attributes }) => ({
-    url: `${process.env.NEXT_PUBLIC_URL}/he/${attributes.uid}`,
+    url: `${process.env.NEXT_PUBLIC_URL}/he/catalog/${attributes.uid}`,
     lastModified: new Date(attributes.updatedAt),
     changeFrequency: 'monthly',
     priority: 1,
   }));
 
   return [
+    {
+      url: process.env.NEXT_PUBLIC_URL + '/favicon.ico',
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.3,
+    },
     {
       url: process.env.NEXT_PUBLIC_URL + '/en',
       lastModified: new Date(),
@@ -43,7 +49,7 @@ export default async function sitemap() {
       priority: 0.8,
     },
     {
-      url: process.env.NEXT_PUBLIC_URL + '/en' + '/reviews',
+      url: process.env.NEXT_PUBLIC_URL + '/en' + '/blog',
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,
@@ -73,7 +79,7 @@ export default async function sitemap() {
       priority: 0.8,
     },
     {
-      url: process.env.NEXT_PUBLIC_URL + '/he' + '/reviews',
+      url: process.env.NEXT_PUBLIC_URL + '/he' + '/blog',
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,
