@@ -1,7 +1,7 @@
 import SkeletonBlog from '@/app/ui/skeletons/SkeletonBlog';
 
 const LoadingBlog = () => {
-  return <SkeletonBlog />;
+	return <SkeletonBlog />;
 };
 
 export default LoadingBlog;

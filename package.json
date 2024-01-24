@@ -1,39 +1,60 @@
 {
-  "name": "next14-admin-panel",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "@chakra-ui/next-js": "^2.1.5",
-    "@chakra-ui/react": "^2.8.1",
-    "@emotion/react": "^11.11.1",
-    "@emotion/styled": "^11.11.0",
-    "@formatjs/intl-localematcher": "^0.5.2",
-    "@next/eslint-plugin-next": "14.0.1",
-    "@vercel/speed-insights": "^1.0.2",
-    "@vis.gl/react-google-maps": "^0.4.1",
-    "axios": "^1.6.2",
-    "emailjs-com": "^3.2.0",
-    "framer-motion": "^10.16.12",
-    "negotiator": "^0.6.3",
-    "next": "^14.1.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-icons": "^4.11.0",
-    "react-input-mask": "^2.0.4",
-    "react-player": "^2.13.0",
-    "react-swipeable": "^7.0.1",
-    "swiper": "^11.0.5",
-    "use-debounce": "^9.0.4",
-    "zod": "^3.22.4"
-  },
-  "devDependencies": {
-    "eslint": "8",
-    "eslint-config-next": "^14.1.0"
-  }
+	"name": "next14-admin-panel",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"prettier:format": "prettier --write .",
+		"prettier:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json}\"",
+		"lint": "next lint",
+		"eslint:format": "eslint app --fix",
+		"prepare": "husky install"
+	},
+	"lint-staged": {
+		"**/*.{js,jsx,ts,tsx}": [
+			"yarn prettier:format",
+			"yarn eslint:format"
+		]
+	},
+	"dependencies": {
+		"@chakra-ui/next-js": "^2.1.5",
+		"@chakra-ui/react": "^2.8.1",
+		"@emotion/react": "^11.11.1",
+		"@emotion/styled": "^11.11.0",
+		"@formatjs/intl-localematcher": "^0.5.2",
+		"@next/eslint-plugin-next": "14.0.1",
+		"@vercel/speed-insights": "^1.0.2",
+		"@vis.gl/react-google-maps": "^0.4.1",
+		"axios": "^1.6.2",
+		"emailjs-com": "^3.2.0",
+		"framer-motion": "^10.16.12",
+		"negotiator": "^0.6.3",
+		"next": "^14.1.0",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"react-icons": "^4.11.0",
+		"react-input-mask": "^2.0.4",
+		"react-player": "^2.13.0",
+		"react-swipeable": "^7.0.1",
+		"strip-ansi": "^7.1.0",
+		"swiper": "^11.0.5",
+		"use-debounce": "^9.0.4",
+		"zod": "^3.22.4"
+	},
+	"devDependencies": {
+		"eslint": "^8.56.0",
+		"eslint-config-next": "^14.1.0",
+		"eslint-config-prettier": "8.4.0",
+		"eslint-plugin-prettier": "4.0.0",
+		"eslint-plugin-react": "^7.33.2",
+		"eslint-plugin-react-hooks": "^4.6.0",
+		"eslint-plugin-security": "^2.1.0",
+		"eslint-plugin-simple-import-sort": "^10.0.0",
+		"eslint-plugin-sonarjs": "^0.23.0",
+		"husky": "^8.0.3",
+		"lint-staged": "^15.2.0",
+		"prettier": "2.5.1"
+	}
 }
