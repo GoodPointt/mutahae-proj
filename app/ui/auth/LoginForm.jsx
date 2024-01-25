@@ -3,7 +3,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useFormState } from 'react-dom';
 
-import { Box, FormControl, FormErrorMessage, Input } from '@chakra-ui/react';
+import { Box, FormControl, Input } from '@chakra-ui/react';
 
 import { loginAction } from '../../lib/actions';
 
@@ -43,7 +43,7 @@ const LoginForm = ({ dictionary, lang }) => {
 		})();
 	}, [state]);
 
-	const { email, password } = dictionary.formContact.errors;
+	// const { email, password } = dictionary.formContact.errors;
 
 	return (
 		<SectionWrapper>
@@ -68,9 +68,9 @@ const LoginForm = ({ dictionary, lang }) => {
 						border={'1px solid transparent'}
 						borderRadius={'2px'}
 					/>
-					<FormErrorMessage fontSize={'14px'} position="absolute" bottom="4px">
+					{/* <FormErrorMessage fontSize={'14px'} position="absolute" bottom="4px">
 						{emailError === 'required' ? email.required : email.invalid}
-					</FormErrorMessage>
+					</FormErrorMessage> */}
 				</FormControl>
 				<FormControl isInvalid={passwordError} pb="25px">
 					<Input
@@ -85,11 +85,11 @@ const LoginForm = ({ dictionary, lang }) => {
 						border={'1px solid transparent'}
 						borderRadius={'2px'}
 					/>
-					<FormErrorMessage fontSize={'14px'} position="absolute" bottom="4px">
+					{/* <FormErrorMessage fontSize={'14px'} position="absolute" bottom="4px">
 						{passwordError === 'required'
 							? password.required
 							: password.invalid}
-					</FormErrorMessage>
+					</FormErrorMessage> */}
 				</FormControl>
 				<SubmitButton>{dictionary.buttons.send}</SubmitButton>
 			</Box>
