@@ -48,7 +48,7 @@ const LocaleSwitcher = () => {
 							borderRadius={'10px'}
 						>
 							<Image
-								src={'/gb.svg'}
+								src={'/img/gb.svg'}
 								alt={'product image'}
 								fill
 								style={{
@@ -85,7 +85,7 @@ const LocaleSwitcher = () => {
 							borderRadius={'10px'}
 						>
 							<Image
-								src={'/he.svg'}
+								src={'/img/he.svg'}
 								alt={'product image'}
 								fill
 								style={{

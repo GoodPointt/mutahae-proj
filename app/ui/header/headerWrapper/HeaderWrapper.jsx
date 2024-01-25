@@ -65,7 +65,7 @@ const HeaderWrapper = ({ lang, dictionary, contacts }) => {
 			<Flex justify={'space-between'} alignItems={'center'} py={'16px'}>
 				<Link href={'/' + lang}>
 					<Image
-						src={'/logo.png'}
+						src={'/img/logo.png'}
 						alt="logo"
 						width="180"
 						height="60"

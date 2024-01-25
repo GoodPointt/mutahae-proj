@@ -14,7 +14,7 @@ const Hero = async ({ dictionary, lang }) => {
 		<SectionWrapper
 			heading={title ?? dictionary.hero.title}
 			headingAs={'h1'}
-			bg={'url("/hero-bg.jpg")'}
+			bg={'url("/img/hero-bg.jpg")'}
 		>
 			<Text
 				fontSize={{ base: '16px', lg: '20px' }}

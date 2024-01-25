@@ -26,7 +26,7 @@ const FooterWrapper = ({ lang, dictionary, contacts, products }) => {
 			>
 				<Link href={'/' + lang}>
 					<Image
-						src={'/logo.png'}
+						src={'/img/logo.png'}
 						alt="logo"
 						width="300"
 						height="100"
@@ -95,11 +95,11 @@ const FooterWrapper = ({ lang, dictionary, contacts, products }) => {
 							}}
 						>
 							<Image
-								src={el.attributes.imgUrl || '/product.png'}
+								src={el.attributes.imgUrl || '/img/product.png'}
 								alt={el.attributes.title + '' + el.descShort || 'product image'}
 								fill
 								placeholder="blur"
-								blurDataURL="/blur-product.jpg"
+								blurDataURL="/img/blur-product.jpg"
 								sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 								style={{ objectFit: 'cover' }}
 							/>
