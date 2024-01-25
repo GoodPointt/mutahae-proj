@@ -50,7 +50,7 @@ const Team = ({ dictionary, members }) => {
 						}}
 					>
 						<Image
-							src={attributes?.imgUrl || '/member.png'}
+							src={attributes?.imgUrl || '/img/member.png'}
 							alt={attributes?.name + ' ' + attributes?.position}
 							fill
 							style={{ objectFit: 'cover', height: '100%' }}

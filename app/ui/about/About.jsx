@@ -19,7 +19,7 @@ const About = ({ dictionary, contacts, lang }) => {
 
 	return (
 		<>
-			<SectionWrapper bg="url('/about-background.jpg')">
+			<SectionWrapper bg="url('/img/about-background.jpg')">
 				<Heading as={'h2'} textTransform={'uppercase'} mb={'44px'}>
 					<Text as={'span'} color="#a28445">
 						{dictionary.aboutUs.title.firstWord}&nbsp;

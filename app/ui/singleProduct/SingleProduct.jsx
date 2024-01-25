@@ -42,11 +42,11 @@ const SingleProduct = ({
 					borderRadius={'10px'}
 				>
 					<Image
-						src={imgUrl || '/product.png'}
+						src={imgUrl || '/img/product.png'}
 						alt={title + '' + descShort || 'product image'}
 						fill
 						placeholder="blur"
-						blurDataURL="/blur-product.jpg"
+						blurDataURL="/img/blur-product.jpg"
 						sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 						style={{
 							display: 'block',
