@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { Box, Button, Heading, Text, useMediaQuery } from '@chakra-ui/react';
+import Start from '../svg/Star';
 
 const ProductItem = ({ product, lang }) => {
 	const [isModileScreen] = useMediaQuery('(max-width: 1024px)');
@@ -14,7 +15,7 @@ const ProductItem = ({ product, lang }) => {
 			key={product.uid}
 			shadow={'dark-lg'}
 			position={'relative'}
-			borderRadius={'10px'}
+			borderRadius={'2px'}
 			overflow="hidden"
 			css={{
 				'&:hover .product_card': {
@@ -27,7 +28,7 @@ const ProductItem = ({ product, lang }) => {
 			<Link href={`/${lang}/catalog/${product.uid}`}>
 				<article>
 					<Box
-						borderRadius={'10px'}
+						borderRadius={'2px'}
 						className="product_card"
 						filter={isModileScreen ? 'brightness(100%)' : 'brightness(80%)'}
 						position="relative"
@@ -52,8 +53,8 @@ const ProductItem = ({ product, lang }) => {
 						/>
 					</Box>
 					<Box
-						borderRadius={'10px'}
-						bg="linear-gradient(0deg,rgba(0, 0, 0, 0.7) 15%, rgba(252, 176, 69, 0) 50%)"
+						borderRadius={'2px'}
+						bg="rgba(0, 0, 0, 0.60)"
 						position={'absolute'}
 						top="0"
 						zIndex={'2'}
@@ -65,6 +66,16 @@ const ProductItem = ({ product, lang }) => {
 						pt={'16px'}
 						gap={4}
 					>
+						<Box
+							as={'span'}
+							width={'24px'}
+							position={'absolute'}
+							top={'20px'}
+							right={'20px'}
+							zIndex={'4px'}
+						>
+							{Start()}
+						</Box>
 						<Heading color={'#fff'} fontSize={'24'} mx={4}>
 							{product?.title || ''}
 						</Heading>
@@ -80,6 +91,7 @@ const ProductItem = ({ product, lang }) => {
 							transition={'all 0.3s'}
 							_hover={{ bgColor: '#81672e' }}
 							borderTopRadius={0}
+							borderBottomRadius={'2px'}
 							aria-label={product?.button || ''}
 						>
 							{product?.button || ''}

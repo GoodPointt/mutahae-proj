@@ -131,7 +131,7 @@
 	},
 	"hero": {
 		"title": "Wood bringing nature to your home – quality and admiration in every board and beam!",
-		"desc": "Explore our catalog and discover how our wooden products can add a unique style and perfection to your projects",
+		"desc": "High-quality wood products: Oak stairs, finger joint , and vario boards. Crafted with care, bringing the warmth and beauty of wood to Israel. Expertise and quality in every project, capturing the authentic feel of oak wood.",
 		"btnCatalog": "Catalog",
 		"btnContactUs": "Contact Us"
 	},
@@ -153,5 +153,16 @@
 			"linkName": "CATALOG",
 			"link": "/catalog"
 		}
+	},
+	"benefits": {
+		"title": "Wood bringing nature to your home – quality and admiration in every board and beam!",
+		"benefitsList": [
+			"Expertise and quality in every project, capturing the authentic feel of oak wood.",
+			"Expertise and quality in every project, capturing the authentic feel of oak wood.",
+			"Expertise and quality in every project, capturing the authentic feel of oak wood.",
+			"Expertise and quality in every project, capturing the authentic feel of oak wood.",
+			"Expertise and quality in every project, capturing the authentic feel of oak wood.",
+			"Expertise and quality in every project, capturing the authentic feel of oak wood."
+		]
 	}
 }

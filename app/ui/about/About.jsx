@@ -70,6 +70,7 @@ const About = ({ dictionary, contacts, lang }) => {
 						_hover={{ bgColor: '#81672e' }}
 						mt={'24px'}
 						onClick={onOpen}
+						borderRadius={'2px'}
 					>
 						{dictionary.buttons.contact}
 					</Button>

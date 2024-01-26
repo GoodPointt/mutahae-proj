@@ -1,36 +1,41 @@
 import Link from 'next/link';
 
-import { Box, Text } from '@chakra-ui/react';
-
-import { fetchHero } from '@/app/lib/api/instance';
-
+import { Flex, Text, Heading } from '@chakra-ui/react';
 import Btn from '../button/Btn';
 import SectionWrapper from '../sectionWrapper/SectionWrapper';
 
 const Hero = async ({ dictionary, lang }) => {
-	const { title, desc } = await fetchHero(lang);
-
 	return (
 		<SectionWrapper
-			heading={title ?? dictionary.hero.title}
-			headingAs={'h1'}
 			bg={'url("/img/hero-bg.jpg")'}
+			style={{
+				paddingTop: '218px',
+				paddingBottom: '218px',
+			}}
 		>
-			<Text
-				fontSize={{ base: '16px', lg: '20px' }}
-				maxW={'800px'}
-				my={{ base: '45px', lg: '110px' }}
+			<Heading
+				as={'h1'}
+				maxW={'731px'}
+				fontSize={'40.5px'}
+				lineHeight={'48.6px'}
+				marginBottom={'20px'}
 			>
-				{desc ?? dictionary.hero.desc}
+				{dictionary.hero.title}
+			</Heading>
+			<Text fontSize={'16px'} maxW={'800px'} mb={'30px'}>
+				{dictionary.hero.desc}
 			</Text>
-			<Box display={'flex'} gap={'32px'}>
+			<Flex
+				flexDir={{ base: 'column', sm: 'row' }}
+				gap={{ base: '10px', sm: '20px' }}
+			>
 				<Btn as={Link} href={`/${lang}/catalog`}>
 					{dictionary.hero.btnCatalog}
 				</Btn>
 				<Btn as={Link} href={`/${lang}/contact`}>
 					{dictionary.hero.btnContactUs}
 				</Btn>
-			</Box>
+			</Flex>
 		</SectionWrapper>
 	);
 };

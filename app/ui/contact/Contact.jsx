@@ -18,13 +18,17 @@ const Contact = ({ lang, dictionary, contacts }) => {
 	const { addressUrl, address, phone, email } = contacts;
 
 	return (
-		<SectionWrapper bg="#282828">
+		<SectionWrapper
+			bg={
+				'linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(25,25,25,1) 50%, rgba(0,0,0,1) 100%)'
+			}
+		>
 			<Flex gap={30} flexDirection={{ base: 'column', lg: 'row' }}>
 				<Box w="100%" maxW={{ base: '100%', lg: '300px' }}>
-					<Heading textTransform="uppercase" mb="15px">
+					<Heading textTransform="uppercase" mb="30px">
 						{dictionary.formContact.sectionTitle}
 					</Heading>
-					<List mb="15px">
+					<List mb="30px">
 						{address && (
 							<ListItem
 								display="flex"

@@ -127,7 +127,7 @@
 	},
 	"hero": {
 		"title": "עץ שמביא את הטבע לביתך – איכות ואדמירציה בכל לוח וקורה",
-		"desc": "חקור את הקטלוג שלנו וגלה כיצד מוצרי העץ שלנו יכולים להוסיף סגנון ושלמות ייחודיים לפרויקטים שלך",
+		"desc": "מוצרי עץ באיכות גבוהה: מדרגות אלון, חיבור אצבע, ולוחות וריו. מעוצבים בקפידה, מביאים את החום והיופי של העץ לישראל. מומחיות ואיכות בכל פרויקט, שמכודדת את התחושה האותנטית של עץ אלון.",
 		"btnCatalog": "קטלוג",
 		"btnContactUs": "צור קשר"
 	},
@@ -149,5 +149,16 @@
 			"linkName": "קטלוג",
 			"link": "/catalog"
 		}
+	},
+	"benefits": {
+		"title": "Wood bringing nature to your home – quality and admiration in every board and beam!",
+		"benefitsList": [
+			"Expertise and quality in every project, capturing the authentic feel of oak wood.",
+			"Expertise and quality in every project, capturing the authentic feel of oak wood.",
+			"Expertise and quality in every project, capturing the authentic feel of oak wood.",
+			"Expertise and quality in every project, capturing the authentic feel of oak wood.",
+			"Expertise and quality in every project, capturing the authentic feel of oak wood.",
+			"Expertise and quality in every project, capturing the authentic feel of oak wood."
+		]
 	}
 }

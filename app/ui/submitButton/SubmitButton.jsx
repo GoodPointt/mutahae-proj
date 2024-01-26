@@ -17,6 +17,8 @@ const SubmitButton = ({
 		<Button
 			variant={variant}
 			bgColor={bgColor}
+			borderRadius={'2px'}
+			w={'100%'}
 			px={px}
 			color={'white'}
 			transition={'all 0.3s'}
