@@ -1,4 +1,5 @@
 import { Box, Grid, GridItem, Heading, Text } from '@chakra-ui/react';
+
 import SectionWrapper from '../sectionWrapper/SectionWrapper';
 import BenefitIcon1 from '../svg/BenefitIcon1';
 import BenefitIcon2 from '../svg/BenefitIcon2';

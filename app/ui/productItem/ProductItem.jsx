@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { Box, Button, Heading, Text, useMediaQuery } from '@chakra-ui/react';
+
 import Start from '../svg/Star';
 
 const ProductItem = ({ product, lang }) => {
