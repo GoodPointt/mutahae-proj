@@ -1,26 +1,8 @@
-import { FaEnvelope, FaLocationDot, FaPhone } from 'react-icons/fa6';
-
 import { Box, Flex, Link, Text } from '@chakra-ui/react';
 
-const ContactsFooter = ({ contacts, lang, dictionary }) => {
-	const iconData = [
-		{
-			icon: <FaLocationDot size="24" />,
-			text: contacts.address,
-			href: contacts.addressUrl,
-		},
-		{
-			icon: <FaPhone size="24" />,
-			text: `+${contacts.phone}`,
-			href: `tel:+${contacts.phone}`,
-		},
-		{
-			icon: <FaEnvelope size="24" />,
-			text: contacts.email,
-			href: `mailto:${contacts.email}`,
-		},
-	];
+import { iconData } from '@/app/lib/data';
 
+const ContactsFooter = ({ contacts, lang, dictionary }) => {
 	const renderIconLink = ({ icon, text, href }) => (
 		<Box as="li" key={href}>
 			<Link
@@ -31,8 +13,9 @@ const ContactsFooter = ({ contacts, lang, dictionary }) => {
 				display="flex"
 				alignItems="center"
 				color="#a28445"
+				fill="#A28445"
 				transition={'all 0.3s'}
-				_hover={{ color: '#81672e' }}
+				_hover={{ color: '#81672e', fill: '#81672e' }}
 			>
 				{icon}
 				<Box as="div" mx={2}>
@@ -63,7 +46,7 @@ const ContactsFooter = ({ contacts, lang, dictionary }) => {
 				py={{ base: '12px' }}
 				gap={{ base: '18px', lg: '14px', xl: '16px' }}
 			>
-				{iconData.map(renderIconLink)}
+				{iconData(contacts).map(renderIconLink)}
 			</Box>
 		</Flex>
 	);

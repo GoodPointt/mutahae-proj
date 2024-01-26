@@ -4,7 +4,14 @@ import { menuIcons } from '@/app/lib/data';
 
 import MenuLink from './menuLink/MenuLink';
 
-const NavBar = ({ lang, flexDir = 'row', dictionary, onClose, mr = '0' }) => {
+const NavBar = ({
+	lang,
+	flexDir = 'row',
+	dictionary,
+	onClose,
+	mr = '0',
+	visibleIcon,
+}) => {
 	return (
 		<Flex justify={'space-between'} mr={mr}>
 			<List display={'flex'} gap={'24px'} flexDirection={flexDir}>
@@ -18,6 +25,7 @@ const NavBar = ({ lang, flexDir = 'row', dictionary, onClose, mr = '0' }) => {
 								item={item}
 								lang={lang}
 								onClose={onClose}
+								visibleIcon={visibleIcon}
 							/>
 						);
 					})}

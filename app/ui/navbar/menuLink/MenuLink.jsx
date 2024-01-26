@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import { Link } from '@chakra-ui/next-js';
 import { ListItem } from '@chakra-ui/react';
 
-const MenuLink = ({ item, lang, onClose }) => {
+const MenuLink = ({ item, lang, onClose, visibleIcon = false }) => {
 	const pathname = usePathname();
 
 	const isActive =
@@ -17,10 +17,8 @@ const MenuLink = ({ item, lang, onClose }) => {
 			_hover={{
 				transform: 'translateX(5px)',
 				cursor: 'pointer',
-				color: '#a98841',
 			}}
 			transition={'all 0.3s'}
-			color={isActive ? '#a98841' : 'inherit'}
 			onClick={() => onClose()}
 		>
 			<Link
@@ -28,12 +26,19 @@ const MenuLink = ({ item, lang, onClose }) => {
 				display={'flex'}
 				align={'center'}
 				gap={1}
+				color={isActive ? '#a98841' : 'white'}
+				fill={isActive ? '#a98841' : 'white'}
 				textDecor={'none'}
-				fontSize={'md'}
+				fontSize={'18px'}
 				fontWeight={400}
-				_hover={{ textDecoration: 'none' }}
+				transition={'all 0.3s'}
+				_hover={{
+					textDecoration: 'none',
+					fill: '#a98841',
+					color: '#a98841',
+				}}
 			>
-				{item.icon} {item.title}
+				{visibleIcon && item.icon} {item.title}
 			</Link>
 		</ListItem>
 	);

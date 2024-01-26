@@ -1,26 +1,9 @@
-// import { fetchContacts } from '@/app/lib/api/instance';
-import {
-	BsFacebook,
-	BsInstagram,
-	BsTelegram,
-	BsWhatsapp,
-} from 'react-icons/bs';
-import { FaViber } from 'react-icons/fa';
-
 import { Box, Link } from '@chakra-ui/react';
 
+import { socialLinks } from '@/app/lib/data';
+
 const SocialLinks = async ({ lang, pos = 'fixed', contacts }) => {
-	// const contacts = await fetchContacts(lang);
-
 	const { insta, fb, watsapp, tg, viber } = contacts;
-
-	const socialLinks = [
-		{ link: watsapp, icon: <BsWhatsapp size={28} />, label: 'whatsapp' },
-		{ link: viber, icon: <FaViber size={28} />, label: 'viber' },
-		{ link: tg, icon: <BsTelegram size={28} />, label: 'telegram' },
-		{ link: fb, icon: <BsFacebook size={28} />, label: 'facebook' },
-		{ link: insta, icon: <BsInstagram size={28} />, label: 'instagram' },
-	];
 
 	const createLink = (href, icon, aria) => (
 		<Box as="li" key={aria}>
@@ -48,8 +31,8 @@ const SocialLinks = async ({ lang, pos = 'fixed', contacts }) => {
 		</Box>
 	);
 
-	const renderedLinks = socialLinks.map(({ link, icon, label }) =>
-		createLink(link, icon, label)
+	const renderedLinks = socialLinks(insta, fb, watsapp, tg, viber).map(
+		({ link, icon, label }) => createLink(link, icon, label)
 	);
 
 	const position = lang === 'en' ? 'right' : 'left';
@@ -58,7 +41,7 @@ const SocialLinks = async ({ lang, pos = 'fixed', contacts }) => {
 		<Box
 			as="ul"
 			position={pos}
-			bottom={'20%'}
+			top={{ base: '65%', lg: '20%' }}
 			style={{ [position]: 0 }}
 			display={'flex'}
 			flexDirection={'column'}

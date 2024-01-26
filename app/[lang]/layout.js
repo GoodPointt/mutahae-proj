@@ -1,6 +1,6 @@
 import { Montserrat } from 'next/font/google';
-import Script from 'next/script';
 
+// import Script from 'next/script';
 import Footer from '@/app/ui/footer/Footer';
 import Header from '@/app/ui/header/Header.jsx';
 import AnimatedMain from '../ui/AnimatedMain';
@@ -61,14 +61,14 @@ export default async function RootLayout({ children, params: { lang } }) {
 
 	return (
 		<html lang={lang} dir={lang === 'he' ? 'rtl' : 'ltr'}>
-			<link
+			{/* <link
 				rel="icon"
 				href={`${process.env.NEXT_PUBLIC_URL}/favicon.ico`}
 				type="image/x-icon"
 				sizes="48x48"
-			/>
+			/> */}
 			{/* <!-- Google tag (gtag.js) --> */}
-			<Script
+			{/* <Script
 				async
 				src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`}
 			/>
@@ -80,7 +80,7 @@ export default async function RootLayout({ children, params: { lang } }) {
 
           gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}');
         `}
-			</Script>
+			</Script> */}
 
 			<Box
 				as="body"
