@@ -2,12 +2,12 @@ import About from '@/app/ui/about/About';
 import CatalogSlider from '@/app/ui/catalogSlider/CatalogSlider';
 import Contact from '@/app/ui/contact/Contact';
 import Hero from '@/app/ui/hero/Hero';
+import Benefits from '../ui/benefits/Benefits';
 
 import { Box } from '@chakra-ui/react';
 
 import { getDictionary } from '@/app/lib/locales/dictionary';
 import { fetchContacts, fetchProducts } from '../lib/api/instance';
-import Benefits from '../ui/benefits/Benefits';
 
 const Homepage = async ({ params: { lang } }) => {
 	const dictionary = await getDictionary(lang);
