@@ -76,6 +76,7 @@ const ContactForm = ({ dictionary }) => {
 					name="name"
 					type="text"
 					bgColor="#3b3d46"
+					borderRadius={'2px'}
 					placeholder={dictionary.formContact.nameLabel}
 					style={
 						lang === 'he' ? { direction: 'ltr', textAlign: 'right' } : null
@@ -93,6 +94,7 @@ const ContactForm = ({ dictionary }) => {
 					name="email"
 					type="email"
 					bgColor="#3b3d46"
+					borderRadius={'2px'}
 					placeholder={dictionary.formContact.mailLabel}
 					style={
 						lang === 'he' ? { direction: 'ltr', textAlign: 'right' } : null
@@ -125,6 +127,7 @@ const ContactForm = ({ dictionary }) => {
 						focusBorderColor="#a28445"
 						border={'1px solid transparent'}
 						bgColor="#3b3d46"
+						borderRadius={'2px'}
 						placeholder={dictionary.formContact.phoneLabel}
 						mask={'+\\972-**-***-****'}
 						errorBorderColor="crimson"

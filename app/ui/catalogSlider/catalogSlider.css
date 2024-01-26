@@ -1,6 +1,6 @@
 .mySwiper2 {
 	width: 100%;
-	border-radius: 10px;
+	border-radius: 2px;
 }
 
 .mySwiper2 .swiper-button-prev,
@@ -15,7 +15,7 @@
 
 .mySwiper2 .swiper-slide {
 	overflow: hidden;
-	border-radius: 10px;
+	border-radius: 2px;
 }
 
 .mySwiper2 .swiper-slide.swiper-slide-active .product_card {

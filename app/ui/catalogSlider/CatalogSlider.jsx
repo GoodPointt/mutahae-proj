@@ -18,7 +18,9 @@ const CatalogSlider = ({ products, lang, heading }) => {
 	return (
 		<SectionWrapper
 			heading={heading}
-			bg={'radial-gradient(#434343 20%, black 100%)'}
+			bg={
+				'linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(25,25,25,1) 50%, rgba(0,0,0,1) 100%)'
+			}
 		>
 			<Swiper
 				className="mySwiper2"
