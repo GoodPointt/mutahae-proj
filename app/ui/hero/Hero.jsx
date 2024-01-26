@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
-import { Flex, Text, Heading } from '@chakra-ui/react';
+import { Flex, Heading, Text } from '@chakra-ui/react';
+
 import Btn from '../button/Btn';
 import SectionWrapper from '../sectionWrapper/SectionWrapper';
 
@@ -9,15 +10,15 @@ const Hero = async ({ dictionary, lang }) => {
 		<SectionWrapper
 			bg={'url("/img/hero-bg.jpg")'}
 			style={{
-				paddingTop: '218px',
-				paddingBottom: '218px',
+				paddingTop: '156px',
+				paddingBottom: '156px',
 			}}
 		>
 			<Heading
 				as={'h1'}
 				maxW={'731px'}
-				fontSize={'40.5px'}
-				lineHeight={'48.6px'}
+				fontSize={{ base: '27px', lg: '40.5px' }}
+				lineHeight={{ base: '35.91px', lg: '48.6px' }}
 				marginBottom={'20px'}
 			>
 				{dictionary.hero.title}
