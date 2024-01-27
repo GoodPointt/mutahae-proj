@@ -3,7 +3,8 @@
 		"view": "View",
 		"contact": "Contact us",
 		"send": "Send",
-		"buy": "BUY"
+		"buy": "BUY",
+		"forgotPass": "*Forgot your password?"
 	},
 	"header": {
 		"navItems": [
@@ -96,12 +97,14 @@
 		}
 	},
 	"formContact": {
+		"login": "Login",
 		"sectionTitle": "Contact us",
 		"title": "Contact",
 		"text": "Fill up the form below to contact",
 		"nameLabel": "Your Name",
 		"mailLabel": "Mail",
 		"phoneLabel": "Phone",
+		"passwordLabel": "Password",
 		"toasts": {
 			"form": {
 				"success": "Form submitted successfully",
