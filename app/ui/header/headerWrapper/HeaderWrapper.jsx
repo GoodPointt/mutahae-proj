@@ -99,6 +99,7 @@ const HeaderWrapper = ({ lang, dictionary, contacts, authToken }) => {
 						displayIcons={['SEARCH_ICON', 'BAG_ICON']}
 						lang={lang}
 						authToken={authToken}
+						display={'flex'}
 					/>
 					<Button
 						variant={'ghost'}
