@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { GiHamburgerMenu } from 'react-icons/gi';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -10,10 +9,14 @@ import SectionWrapper from '@/app/ui/sectionWrapper/SectionWrapper';
 
 import { Box, Button, Flex, useDisclosure } from '@chakra-ui/react';
 
+import Burger from '../../svg/Burger';
+import LocaleSwitcher from '../localeSwitcher/LocaleSwitcher';
 import MobileMenu from '../mobileMenu/MobileMenu';
+import ProfileMenu from '../mobileMenu/profileMenu/ProfileMenu';
 import TopBar from '../topBar/TopBar';
+import TopMenu from '../topMenu/TopMenu';
 
-const HeaderWrapper = ({ lang, dictionary, contacts }) => {
+const HeaderWrapper = ({ lang, dictionary, contacts, authToken }) => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const btnRef = useRef();
 
@@ -59,8 +62,13 @@ const HeaderWrapper = ({ lang, dictionary, contacts }) => {
 			zIndex="99"
 			style={headerStyle}
 		>
-			<Box display={{ base: 'none', lg: 'block' }}>
-				<TopBar lang={lang} contacts={contacts} />
+			<Box
+				display={{ base: 'none', lg: 'flex' }}
+				alignItems={'center'}
+				justifyContent={'space-between'}
+			>
+				<TopBar lang={lang} contacts={contacts} authToken={authToken} />
+				<LocaleSwitcher />
 			</Box>
 			<Flex justify={'space-between'} alignItems={'center'} py={'16px'}>
 				<Link href={'/' + lang}>
@@ -85,7 +93,13 @@ const HeaderWrapper = ({ lang, dictionary, contacts }) => {
 						onClose={onClose}
 					/>
 				</Box>
-				<Box display={{ base: 'block', lg: 'none' }}>
+
+				<Box display={{ base: 'flex', lg: 'none' }} gap={{ sm: '40px' }}>
+					<TopMenu
+						displayIcons={['SEARCH_ICON', 'BAG_ICON']}
+						lang={lang}
+						authToken={authToken}
+					/>
 					<Button
 						variant={'ghost'}
 						color={'#a98841'}
@@ -94,7 +108,7 @@ const HeaderWrapper = ({ lang, dictionary, contacts }) => {
 						onClick={onOpen}
 						ref={btnRef}
 					>
-						<GiHamburgerMenu size={'40'} />
+						<Burger />
 					</Button>
 				</Box>
 			</Flex>
@@ -105,8 +119,16 @@ const HeaderWrapper = ({ lang, dictionary, contacts }) => {
 					lang={lang}
 					dictionary={dictionary}
 					onClose={onClose}
+					visibleIcon={true}
+				/>
+				<ProfileMenu
+					authToken={authToken}
+					lang={lang}
+					onClose={onClose}
+					dictionary={dictionary}
 				/>
 				<TopBar lang={lang} flexDir="column" gap="32px" contacts={contacts} />
+				<LocaleSwitcher />
 			</MobileMenu>
 		</SectionWrapper>
 	);

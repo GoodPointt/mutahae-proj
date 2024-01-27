@@ -1,28 +1,10 @@
-import { FaEnvelope, FaLocationDot, FaPhone } from 'react-icons/fa6';
-
 import { Box, Flex, Link, Text } from '@chakra-ui/react';
 
-import LocaleSwitcher from '../localeSwitcher/LocaleSwitcher';
+import { iconData } from '@/app/lib/data';
 
-const TopBar = ({ flexDir = 'row', gap = '0', contacts, lang }) => {
-	const iconData = [
-		{
-			icon: <FaLocationDot size="22" />,
-			text: contacts.address,
-			href: contacts.addressUrl,
-		},
-		{
-			icon: <FaPhone size="22" />,
-			text: `+${contacts.phone}`,
-			href: `tel:+${contacts.phone}`,
-		},
-		{
-			icon: <FaEnvelope size="22" />,
-			text: contacts.email,
-			href: `mailto:${contacts.email}`,
-		},
-	];
+import TopMenu from '../topMenu/TopMenu';
 
+const TopBar = ({ flexDir = 'row', gap = '0', contacts, lang, authToken }) => {
 	const renderIconLink = ({ icon, text, href }) => (
 		<Box as="li" key={href}>
 			<Link
@@ -33,13 +15,14 @@ const TopBar = ({ flexDir = 'row', gap = '0', contacts, lang }) => {
 				display="flex"
 				alignItems="center"
 				color="#a28445"
+				fill="#A28445"
 				transition={'all 0.3s'}
-				_hover={{ color: '#81672e' }}
+				_hover={{ color: '#81672e', fill: '#81672e' }}
 			>
 				{icon}
 				<Box as="div" mx={2}>
 					<Text
-						fontSize={{ base: '12px', lg: '14px', xl: '15px' }}
+						fontSize={{ base: '12px' }}
 						dir={text === contacts.address && lang === 'he' ? 'rtl' : 'ltr'}
 					>
 						{text || ''}
@@ -53,21 +36,22 @@ const TopBar = ({ flexDir = 'row', gap = '0', contacts, lang }) => {
 		<Flex
 			justifyContent="space-between"
 			gap={gap}
-			alignItems="center"
+			alignItems={{ base: 'none', lg: 'center' }}
 			flexDirection={flexDir}
+			w={'87%'}
 		>
 			<Box
 				as="ul"
 				display="flex"
 				flexDirection={{ base: 'column', lg: 'row', xl: 'row' }}
 				alignItems="flex-start"
-				py={{ base: '12px' }}
+				py={{ base: '12px', md: '0' }}
 				gap={{ base: '18px', lg: '14px', xl: '16px' }}
 			>
-				{iconData.map(renderIconLink)}
+				{iconData(contacts).map(renderIconLink)}
 			</Box>
 
-			<LocaleSwitcher />
+			<TopMenu lang={lang} authToken={authToken} />
 		</Flex>
 	);
 };

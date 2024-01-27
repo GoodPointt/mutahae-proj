@@ -1,21 +1,49 @@
-import {
-	MdAnalytics,
-	MdHome,
-	MdPhonelinkRing,
-	MdShoppingBag,
-	MdSupervisedUserCircle,
-} from 'react-icons/md';
+import AboutPageNavIcon from '../ui/svg/AboutPageNavIcon';
+import BlogPageNavIcon from '../ui/svg/BlogPageNavIcon';
+import CatalogPageNavIcon from '../ui/svg/CatalogPageNavIcon';
+import ContactPageNavIcon from '../ui/svg/ContactPageNavIcon';
+import EmailIcon from '../ui/svg/EmailIcon';
+import FacebookIcon from '../ui/svg/FacebookIcon';
+import HomePageNavIcon from '../ui/svg/HomePageNavIcon';
+import InstagramIcon from '../ui/svg/InstagramIcon';
+import LocationIcon from '../ui/svg/LocationIcon';
+import PhoneIcon from '../ui/svg/PhoneIcon';
+import Tg from '../ui/svg/Tg';
+import Viber from '../ui/svg/Viber';
+import WhatsApp from '../ui/svg/WhatsApp';
 
 export const menuIcons = [
-	<MdHome size={30} key={'0'} />,
+	<HomePageNavIcon key={'0'} />,
+	<CatalogPageNavIcon key={'1'} />,
+	<AboutPageNavIcon size={30} key={'2'} />,
+	<BlogPageNavIcon key={'3'} />,
+	<ContactPageNavIcon key={'4'} />,
+];
 
-	<MdShoppingBag size={30} key={'1'} />,
+export const iconData = contacts => [
+	{
+		icon: <LocationIcon />,
+		text: contacts.address,
+		href: contacts.addressUrl,
+	},
+	{
+		icon: <PhoneIcon />,
+		text: `+${contacts.phone}`,
+		href: `tel:+${contacts.phone}`,
+	},
+	{
+		icon: <EmailIcon />,
+		text: contacts.email,
+		href: `mailto:${contacts.email}`,
+	},
+];
 
-	<MdAnalytics size={30} key={'2'} />,
-
-	<MdSupervisedUserCircle size={30} key={'3'} />,
-
-	<MdPhonelinkRing size={30} key={'4'} />,
+export const socialLinks = (watsapp, viber, tg, fb, insta) => [
+	{ link: watsapp, icon: <WhatsApp />, label: 'whatsapp' },
+	{ link: viber, icon: <Viber />, label: 'viber' },
+	{ link: tg, icon: <Tg />, label: 'telegram' },
+	{ link: fb, icon: <FacebookIcon />, label: 'facebook' },
+	{ link: insta, icon: <InstagramIcon />, label: 'instagram' },
 ];
 
 export const metaKeywords = [
