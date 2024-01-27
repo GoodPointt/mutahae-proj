@@ -14,7 +14,12 @@ const TopMenu = ({
 	authToken,
 	serchRef,
 	bagRef,
-	displayIcons = ['SEARCH_ICON', 'PROFILE_ICON', 'FAVORITE_ICON', 'BAG_ICON'],
+	displayIcons = [
+		'SEARCH_ICON',
+		'PROFILE_ICON',
+		authToken && 'FAVORITE_ICON',
+		'BAG_ICON',
+	],
 	display = 'none',
 }) => {
 	//убрать потом юзРеф когда будут рефы с поиска и сумки
