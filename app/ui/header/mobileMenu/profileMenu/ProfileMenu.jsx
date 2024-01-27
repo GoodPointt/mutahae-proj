@@ -21,7 +21,7 @@ const ProfileMenu = ({ authToken, lang, onClose, dictionary }) => {
 	// pathname.includes(profilePathname) || pathname.includes(favoritePathname);
 
 	return (
-		<Flex as={'ul'} flexDir={'column'} gap={'32px'}>
+		<Flex as={'ul'} flexDir={'column'} gap={'20px'}>
 			<Box
 				as={'li'}
 				onClick={onClose}

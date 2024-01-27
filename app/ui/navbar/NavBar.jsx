@@ -14,7 +14,7 @@ const NavBar = ({
 }) => {
 	return (
 		<Flex justify={'space-between'} mr={mr}>
-			<List display={'flex'} gap={'24px'} flexDirection={flexDir}>
+			<List display={'flex'} gap={'20px'} flexDirection={flexDir}>
 				{dictionary.header.navItems.length > 0 &&
 					dictionary.header.navItems.map((item, idx) => {
 						item.icon = menuIcons[idx];

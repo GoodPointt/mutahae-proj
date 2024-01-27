@@ -14,7 +14,13 @@ const TopMenu = ({
 	authToken,
 	serchRef,
 	bagRef,
-	displayIcons = ['SEARCH_ICON', 'PROFILE_ICON', 'FAVORITE_ICON', 'BAG_ICON'],
+	displayIcons = [
+		'SEARCH_ICON',
+		'PROFILE_ICON',
+		authToken && 'FAVORITE_ICON',
+		'BAG_ICON',
+	],
+	display = 'none',
 }) => {
 	//убрать потом юзРеф когда будут рефы с поиска и сумки
 	const refSearch = useRef() || serchRef;
@@ -66,7 +72,12 @@ const TopMenu = ({
 	// };
 
 	return (
-		<Box as={'ul'} display={'flex'} gap={'4px'} alignItems={'center'}>
+		<Box
+			as={'ul'}
+			display={{ base: display, lg: 'flex' }}
+			gap={'4px'}
+			alignItems={'center'}
+		>
 			{Object.entries(mapIcon).map(([id, item], idx) => {
 				if (displayIcons.includes(id)) {
 					return (
