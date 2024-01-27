@@ -3,7 +3,8 @@
 		"view": "נוף",
 		"contact": "צור קשר",
 		"send": "שלח",
-		"buy": "לקנייה"
+		"buy": "לקנייה",
+		"forgotPass": "?שכחת ססמה*"
 	},
 	"header": {
 		"navItems": [
@@ -96,12 +97,14 @@
 		}
 	},
 	"formContact": {
+		"login": "התחברות",
 		"sectionTitle": "צור קשר",
 		"title": "צור קשר",
 		"text": "מלא את הטופס למטה כדי ליצור קשר",
 		"nameLabel": "שם שלך",
 		"mailLabel": "אימייל",
 		"phoneLabel": "טלפון",
+		"passwordLabel": "סיסמה",
 		"toasts": {
 			"form": {
 				"success": "הטופס נשלח בהצלחה",
