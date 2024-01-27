@@ -5,7 +5,8 @@
 		"send": "Send",
 		"buy": "BUY",
 		"bag": "Add to bag",
-		"forgotPass": "*Forgot your password?"
+		"forgotPass": "*Forgot your password?",
+		"createAcc": "Create account"
 	},
 	"header": {
 		"navItems": [
@@ -100,10 +101,12 @@
 	},
 	"formContact": {
 		"login": "Login",
+		"register": "Create account",
 		"sectionTitle": "Contact us",
 		"title": "Contact",
 		"text": "Fill up the form below to contact",
-		"nameLabel": "Your Name",
+		"nameLabel": "First name",
+		"lastNameLabel": "Last name",
 		"mailLabel": "Mail",
 		"phoneLabel": "Phone",
 		"passwordLabel": "Password",
@@ -112,13 +115,19 @@
 				"success": "Form submitted successfully",
 				"successMsg1": "Thanks for choosing our premium wood products.",
 				"successMsg2": "We're committed to swift communication—expect us to reach out promptly.  We're here to meet your wood supply needs efficiently.",
-				"successMsg3": "Feel free to contact us via social networks as well. We're here to meet your wood supply needs efficiently."
+				"successMsg3": "Feel free to contact us via social networks as well. We're here to meet your wood supply needs efficiently.",
+				"loginWarning": "Invalid email or password",
+				"registerWarning": "Email already taken"
 			}
 		},
 		"errors": {
 			"name": {
 				"required": "Name is required",
 				"invalid": "Name should contain only alphabets"
+			},
+			"lastName": {
+				"required": "Last name is required",
+				"invalid": "Last name should contain only alphabets"
 			},
 			"email": {
 				"required": "Email is required",
@@ -130,7 +139,7 @@
 			},
 			"password": {
 				"required": "Password is required",
-				"invalid": "Password is not valid"
+				"invalid": "Password must be at least 6 characters long"
 			}
 		}
 	},

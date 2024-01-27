@@ -36,7 +36,7 @@ const ProviderButton = ({ style, variant }) => {
 				fontWeight={500}
 				lineHeight={1.5}
 				color={'inherit'}
-				_hover={{ bgColor: 'transparent', color: 'gray' }}
+				_hover={{ bgColor: 'transparent', color: 'lightgray' }}
 				leftIcon={icon}
 			>
 				<Center>
