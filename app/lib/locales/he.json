@@ -159,9 +159,10 @@
 			"Expertise and quality in every project, capturing the authentic feel of oak wood.",
 			"Expertise and quality in every project, capturing the authentic feel of oak wood.",
 			"Expertise and quality in every project, capturing the authentic feel of oak wood."
-		]},
-	"profileMobileMenu" :{
-		"profile":"חשבון אישי",
-		"favorite":"מועדפים"
+		]
+	},
+	"profileMobileMenu": {
+		"profile": "חשבון אישי",
+		"favorite": "מועדפים"
 	}
 }

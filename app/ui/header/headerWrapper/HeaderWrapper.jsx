@@ -14,6 +14,7 @@ import LocaleSwitcher from '../localeSwitcher/LocaleSwitcher';
 import MobileMenu from '../mobileMenu/MobileMenu';
 import ProfileMenu from '../mobileMenu/profileMenu/ProfileMenu';
 import TopBar from '../topBar/TopBar';
+import TopMenu from '../topMenu/TopMenu';
 
 const HeaderWrapper = ({ lang, dictionary, contacts, authToken }) => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
@@ -92,7 +93,13 @@ const HeaderWrapper = ({ lang, dictionary, contacts, authToken }) => {
 						onClose={onClose}
 					/>
 				</Box>
-				<Box display={{ base: 'block', lg: 'none' }}>
+
+				<Box display={{ base: 'flex', lg: 'none' }} gap={{ sm: '40px' }}>
+					<TopMenu
+						displayIcons={['SEARCH_ICON', 'BAG_ICON']}
+						lang={lang}
+						authToken={authToken}
+					/>
 					<Button
 						variant={'ghost'}
 						color={'#a98841'}
