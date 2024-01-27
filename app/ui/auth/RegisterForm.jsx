@@ -3,26 +3,32 @@
 import React, { useEffect, useRef } from 'react';
 import { useFormState } from 'react-dom';
 
-import { Link } from '@chakra-ui/next-js';
 import {
 	Box,
-	Button,
-	Center,
 	FormControl,
 	FormErrorMessage,
 	Input,
 	useToast,
 } from '@chakra-ui/react';
 
-import { loginAction } from '../../lib/actions';
+import { registerAction } from '@/app/lib/actions';
 
 import SubmitButton from '../submitButton/SubmitButton';
 
-const LoginForm = ({ dictionary, lang }) => {
-	const [state, dispatch] = useFormState(loginAction, undefined);
+const RegisterForm = ({ dictionary, lang }) => {
+	const [state, dispatch] = useFormState(registerAction, undefined);
 	const toast = useToast();
 
 	const ref = useRef(null);
+
+	const nameError =
+		state?.errors?.name && state?.errors?.name.length > 0
+			? state.errors.name[0]
+			: null;
+	const lastNameError =
+		state?.errors?.lastName && state?.errors?.lastName.length > 0
+			? state.errors.lastName[0]
+			: null;
 
 	const emailError =
 		state?.errors?.email && state?.errors?.email.length > 0
@@ -36,10 +42,10 @@ const LoginForm = ({ dictionary, lang }) => {
 
 	useEffect(() => {
 		(() => {
-			if (state?.message === 'Invalid identifier or password') {
+			if (state?.message === 'Email or Username are already taken') {
 				toast({
 					status: 'warning',
-					title: dictionary.formContact.toasts.form.loginWarning,
+					title: dictionary.formContact.toasts.form.registerWarning,
 				});
 			}
 			if (state?.message === 'succsess') {
@@ -47,12 +53,46 @@ const LoginForm = ({ dictionary, lang }) => {
 				ref.current?.reset();
 			}
 		})();
-	}, [dictionary.formContact.toasts.form.loginWarning, state, toast]);
+	}, [dictionary.formContact.toasts.form.registerWarning, state, toast]);
 
-	const { email, password } = dictionary.formContact.errors;
+	const { email, password, name, lastName } = dictionary.formContact.errors;
 
 	return (
 		<Box as="form" action={dispatch} ref={ref} width={'100%'} autoComplete="on">
+			<FormControl isInvalid={nameError} pb="25px">
+				<Input
+					name="name"
+					type="text"
+					bgColor="#3b3d46"
+					placeholder={dictionary.formContact.nameLabel}
+					style={
+						lang === 'he' ? { direction: 'ltr', textAlign: 'right' } : null
+					}
+					focusBorderColor="#a28445"
+					border={'1px solid transparent'}
+					borderRadius={'2px'}
+				/>
+				<FormErrorMessage fontSize={'14px'} position="absolute" bottom="4px">
+					{nameError === 'required' ? name.required : name.invalid}
+				</FormErrorMessage>
+			</FormControl>
+			<FormControl isInvalid={nameError} pb="25px">
+				<Input
+					name="lastName"
+					type="text"
+					bgColor="#3b3d46"
+					placeholder={dictionary.formContact.lastNameLabel}
+					style={
+						lang === 'he' ? { direction: 'ltr', textAlign: 'right' } : null
+					}
+					focusBorderColor="#a28445"
+					border={'1px solid transparent'}
+					borderRadius={'2px'}
+				/>
+				<FormErrorMessage fontSize={'14px'} position="absolute" bottom="4px">
+					{lastNameError === 'required' ? lastName.required : lastName.invalid}
+				</FormErrorMessage>
+			</FormControl>
 			<FormControl isInvalid={emailError} pb="25px">
 				<Input
 					name="email"
@@ -87,31 +127,10 @@ const LoginForm = ({ dictionary, lang }) => {
 					{passwordError === 'required' ? password.required : password.invalid}
 				</FormErrorMessage>
 			</FormControl>
-			<Button
-				variant={'unstyled'}
-				fontSize={'14px'}
-				fontWeight={500}
-				lineHeight={1.5}
-				_hover={{ bgColor: 'transparent', color: 'lightgray' }}
-			>
-				{dictionary.buttons.forgotPass}
-			</Button>
+
 			<SubmitButton>{dictionary.buttons.send}</SubmitButton>
-			<Center mt={'20px'}>
-				<Link
-					href={`/${lang}/auth/register`}
-					fontSize={'14px'}
-					fontWeight={500}
-					lineHeight={1.5}
-					borderBottomColor={'rgba(255, 255, 255, 1)'}
-					borderBottomWidth={'1px'}
-					_hover={{ bgColor: 'transparent', color: 'lightgray' }}
-				>
-					{dictionary.buttons.createAcc}
-				</Link>
-			</Center>
 		</Box>
 	);
 };
 
-export default LoginForm;
+export default RegisterForm;
