@@ -225,3 +225,56 @@ export async function registerAction(prevState, formData) {
 	}
 	redirect('/');
 }
+
+export async function submitUserDetails(prevState, formData) {
+	const { firstName, lastName, email, phone } = Object.fromEntries(formData);
+
+	const validatedFields = schema.safeParse({
+		firstName,
+		lastName,
+		email,
+		phone,
+	});
+
+	if (!validatedFields.success) {
+		return {
+			errors: validatedFields.error.flatten().fieldErrors,
+			message: 'Error.',
+		};
+	}
+	//console.log(firstName, lastName, email, phone);
+	// try {
+	// 	const res = await createContact({ name, email, phone });
+
+	// 	if (res) {
+	// 		return { name, email, phone, message: 'succsess' };
+	// 	}
+	// } catch (error) {
+	// 	console.error(error);
+	// }
+}
+
+export async function submitUserAddress(prevState, formData) {
+	const { firstName } = Object.fromEntries(formData);
+
+	const validatedFields = schema.safeParse({
+		firstName,
+	});
+
+	if (!validatedFields.success) {
+		return {
+			errors: validatedFields.error.flatten().fieldErrors,
+			message: 'Error.',
+		};
+	}
+	//console.log(firstName, lastName, email, phone);
+	// try {
+	// 	const res = await createContact({ name, email, phone });
+
+	// 	if (res) {
+	// 		return { name, email, phone, message: 'succsess' };
+	// 	}
+	// } catch (error) {
+	// 	console.error(error);
+	// }
+}

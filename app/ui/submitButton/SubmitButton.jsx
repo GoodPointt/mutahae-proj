@@ -3,6 +3,7 @@ import { useFormStatus } from 'react-dom';
 import { Button } from '@chakra-ui/react';
 
 const SubmitButton = ({
+	w = '100%',
 	children,
 	variant = 'solid',
 	bgColor = '#a28445',
@@ -18,7 +19,7 @@ const SubmitButton = ({
 			variant={variant}
 			bgColor={bgColor}
 			borderRadius={'2px'}
-			w={'100%'}
+			w={w}
 			px={px}
 			color={'white'}
 			transition={'all 0.3s'}
