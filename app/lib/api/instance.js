@@ -50,7 +50,7 @@ const getOneProduct = async (id, lang) => {
 		const {
 			data: { data },
 		} = await instance.get(
-			`/api/products?locale=${lang}&filters[uid][$eq]=${id}`
+			`/api/goods?locale=${lang}&populate=img&filters[uid][$eq]=${id}`
 		);
 
 		if (data.length === 0) {

@@ -4,6 +4,7 @@
 		"contact": "Contact us",
 		"send": "Send",
 		"buy": "BUY",
+		"bag": "Add to bag",
 		"forgotPass": "*Forgot your password?"
 	},
 	"header": {
@@ -31,6 +32,7 @@
 		]
 	},
 	"singleProduct": {
+		"description": "Desciption",
 		"width": "Width: ",
 		"length": "Length: ",
 		"thickness": "Thickness: ",
