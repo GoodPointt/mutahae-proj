@@ -4,6 +4,7 @@
 		"contact": "צור קשר",
 		"send": "שלח",
 		"buy": "לקנייה",
+		"bag": "להוסיף לתיק",
 		"forgotPass": "*שכחת ססמה?",
 		"createAcc": "צור חשבון"
 	},
@@ -32,6 +33,7 @@
 		]
 	},
 	"singleProduct": {
+		"description": "תיאור",
 		"width": "רוחב: ",
 		"length": "אורך: ",
 		"thickness": "עובי: ",

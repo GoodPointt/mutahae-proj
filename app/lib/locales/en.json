@@ -4,8 +4,9 @@
 		"contact": "Contact us",
 		"send": "Send",
 		"buy": "BUY",
+		"bag": "Add to bag",
 		"forgotPass": "*Forgot your password?",
-		"createAcc":"Create account"
+		"createAcc": "Create account"
 	},
 	"header": {
 		"navItems": [
@@ -32,6 +33,7 @@
 		]
 	},
 	"singleProduct": {
+		"description": "Desciption",
 		"width": "Width: ",
 		"length": "Length: ",
 		"thickness": "Thickness: ",

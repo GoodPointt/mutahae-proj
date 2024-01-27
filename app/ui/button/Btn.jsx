@@ -14,13 +14,15 @@ const Btn = ({
 			as={as}
 			href={href}
 			bgColor={bgColor}
+			display={'flex'}
+			justifyContent={'center'}
 			color={'white'}
 			transition={'all 0.3s'}
 			_hover={{ bgColor: '#81672e' }}
 			type="button"
 			onClick={onClick}
 			borderRadius={'2px'}
-			w={{ base: '100%', sm: '250px' }}
+			w={{ base: '100%' }}
 		>
 			{children}
 		</Button>

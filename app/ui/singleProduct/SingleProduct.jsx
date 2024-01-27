@@ -1,61 +1,40 @@
 'use client';
 
-import { TiShoppingCart } from 'react-icons/ti';
-import Image from 'next/image';
+import { useState } from 'react';
 
-import { Box, Flex, Heading, Text, useDisclosure } from '@chakra-ui/react';
+import { Flex, Grid, Heading, List, ListItem, Text } from '@chakra-ui/react';
 
 import Btn from '../button/Btn';
-import ModalContact from '../modalContact/ModalContact';
-import ModalWindow from '../modalWindow/ModalWindow';
 import SectionWrapper from '../sectionWrapper/SectionWrapper';
 
+import Counter from './Counter/Counter';
+import SingleProductSlider from './singleProductSlider/SingleProductSlider';
+
 const SingleProduct = ({
-	contacts,
 	dictionary,
 	product: {
-		imgUrl,
+		img: { data: imgs },
 		title,
 		length,
 		width,
 		descLong,
-		descShort,
 		thickness,
 		wood,
 		type,
 		manufacturer,
-		uid,
-		price,
 	},
 }) => {
-	const { isOpen, onOpen, onClose } = useDisclosure();
+	const productDetails = { length, width, thickness, wood, type, manufacturer };
+	const [count, setCount] = useState(1);
 
 	return (
 		<SectionWrapper>
-			<Flex flexWrap={'wrap'} gap={4}>
-				<Box
-					display={'block'}
-					pos={'relative'}
-					w={'400px'}
-					h={'380px'}
-					overflow={'hidden'}
-					borderRadius={'10px'}
-				>
-					<Image
-						src={imgUrl || '/img/product.png'}
-						alt={title + '' + descShort || 'product image'}
-						fill
-						placeholder="blur"
-						blurDataURL="/img/blur-product.jpg"
-						sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-						style={{
-							display: 'block',
-							height: '100%',
-							maxWidth: '100%',
-							objectFit: 'cover',
-						}}
-					/>
-				</Box>
+			<Grid
+				templateColumns={{ base: '1fr', lg: 'repeat(2, 1fr)' }}
+				gap={'50px'}
+				maxW={'100%'}
+			>
+				<SingleProductSlider imgs={Array.isArray(imgs) ? imgs : []} />
 				<Flex flexDir={'column'} gap={2}>
 					<Heading
 						as="h2"
@@ -64,91 +43,52 @@ const SingleProduct = ({
 					>
 						{title || ''}
 					</Heading>
-					{length && (
-						<Text as="p" fontSize={'sm'} fontWeight={'600'}>
-							{dictionary.singleProduct.length}
-							<Text as="span" fontWeight={'400'}>
-								{length || ''}
-							</Text>
-						</Text>
-					)}
-					{thickness && (
-						<Text as="p" fontSize={'sm'} fontWeight={'600'}>
-							{dictionary.singleProduct.thickness}
-							<Text as="span" fontWeight={'400'}>
-								{thickness || ''}
-							</Text>
-						</Text>
-					)}
-					{width && (
-						<Text as="p" fontSize={'sm'} fontWeight={'600'}>
-							{dictionary.singleProduct.width}
-
-							<Text as="span" fontWeight={'400'}>
-								{width || ''}
-							</Text>
-						</Text>
-					)}
-					{wood && (
-						<Text as="p" fontSize={'sm'} fontWeight={'600'}>
-							{dictionary.singleProduct.wood}
-
-							<Text as="span" fontWeight={'400'}>
-								{wood || ''}
-							</Text>
-						</Text>
-					)}
-					{type && (
-						<Text as="p" fontSize={'sm'} fontWeight={'600'}>
-							{dictionary.singleProduct.type}
-
-							<Text as="span" fontWeight={'400'}>
-								{type || ''}
-							</Text>
-						</Text>
-					)}
-					{manufacturer && (
-						<Text as="p" fontSize={'sm'} fontWeight={'600'}>
-							{dictionary.singleProduct.manufacturer}
-
-							<Text as="span" fontWeight={'400'}>
-								{manufacturer || ''}
-							</Text>
-						</Text>
-					)}
-					<Box mt={'auto'}>
-						{price && (
-							<Text as="p" fontSize={'large'} fontWeight={'600'}>
-								{dictionary.singleProduct.price}
-								<Text as="span" fontWeight={'400'}>
-									{price || ''}
-								</Text>
-							</Text>
+					<List>
+						{Object.entries(productDetails).map(
+							([option, value]) =>
+								value && (
+									<ListItem key={option}>
+										<Text
+											as="p"
+											textTransform="capitalize"
+											fontSize="sm"
+											fontWeight="600"
+										>
+											{option}:
+											<Text as="span" ml="4px" fontWeight="400">
+												{value}
+											</Text>
+										</Text>
+									</ListItem>
+								)
 						)}
-						<Box width={'fit-content'}>
-							<Btn onClick={onOpen}>
-								<Text as={'span'} minW={10}>
-									<TiShoppingCart size={24} />
-								</Text>
-
-								{dictionary.buttons.buy}
-							</Btn>
-						</Box>
-					</Box>
+					</List>
+					<Grid
+						templateColumns={{ base: 'repeat(2, 1fr)', lg: '1fr 2fr' }}
+						gap={'10px'}
+						mt={'auto'}
+						alignItems={'center'}
+					>
+						<Counter count={count} setCount={setCount} />
+						<Btn>{dictionary.buttons.bag}</Btn>
+					</Grid>
 				</Flex>
-			</Flex>
-			<Text my={4} as="p">
-				{descLong || ''}
-			</Text>
-			<ModalWindow onClose={onClose} isOpen={isOpen}>
-				<ModalContact
-					dictionary={dictionary}
-					contacts={contacts}
-					onClose={onClose}
-					title={title}
-					uid={uid}
-				/>
-			</ModalWindow>
+			</Grid>
+			{descLong && (
+				<>
+					<Heading
+						as="h2"
+						mb={{ base: 6, lg: 8 }}
+						mt={'60px'}
+						fontSize={{ base: '2xl', lg: '4xl' }}
+					>
+						{dictionary.singleProduct.description}
+					</Heading>
+					<Text as="p" fontWeight={'400'}>
+						{descLong}
+					</Text>
+				</>
+			)}
 		</SectionWrapper>
 	);
 };
