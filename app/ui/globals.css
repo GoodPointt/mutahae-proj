@@ -200,7 +200,8 @@ a {
 	cursor: pointer;
 }
 
-a:hover {
+a:hover,
+.chakra-link:hover {
 	text-decoration: none;
 }
 
