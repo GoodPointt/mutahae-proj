@@ -113,11 +113,12 @@ export async function loginAction(prevState, formData) {
 			cache: 'no-cache',
 		});
 
-		const data = await response.json();
-		if (!response.ok && data.error)
-			return { ...prevState, message: data.error.message, errors: null };
-		if (response.ok && data.jwt) {
-			cookies().set('jwt', data.jwt);
+		const userData = await response.json();
+		if (!response.ok && userData.error)
+			return { ...prevState, message: userData.error.message, errors: null };
+		if (response.ok && userData.jwt) {
+			cookies().set('jwt', userData.jwt);
+			cookies().set('userId', userData.user.id);
 		}
 	} catch (error) {
 		console.error(error);
@@ -190,33 +191,33 @@ export async function registerAction(prevState, formData) {
 			cache: 'no-cache',
 		});
 
-		const dataUser = await response.json();
+		const userData = await response.json();
 
-		if (!response.ok && dataUser.error)
-			return { ...prevState, message: dataUser.error.message, errors: null };
-		if (response.ok && dataUser.jwt) {
+		if (!response.ok && userData.error)
+			return { ...prevState, message: userData.error.message, errors: null };
+		if (response.ok && userData.jwt) {
 			await fetch(STRAPI_URL + '/api/bags', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
-					Authorization: 'Bearer ' + dataUser.jwt,
+					Authorization: 'Bearer ' + userData.jwt,
 				},
 				cache: 'no-store',
-				body: JSON.stringify({ data: { user: dataUser.user.id } }),
+				body: JSON.stringify({ data: { user: userData.user.id } }),
 			});
 
 			await fetch(STRAPI_URL + '/api/favorites', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
-					Authorization: 'Bearer ' + dataUser.jwt,
+					Authorization: 'Bearer ' + userData.jwt,
 				},
 				cache: 'no-store',
-				body: JSON.stringify({ data: { user: dataUser.user.id } }),
+				body: JSON.stringify({ data: { user: userData.user.id } }),
 			});
 
-			cookies().set('jwt', dataUser.jwt);
-			cookies().set('userId', dataUser.user.id);
+			cookies().set('jwt', userData.jwt);
+			cookies().set('userId', userData.user.id);
 		}
 	} catch (error) {
 		console.error(error);
