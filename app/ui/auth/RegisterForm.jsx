@@ -11,7 +11,7 @@ import {
 	useToast,
 } from '@chakra-ui/react';
 
-import { registerAction } from '@/app/lib/actions';
+import { registerAction } from '@/app/lib/authActions';
 
 import SubmitButton from '../submitButton/SubmitButton';
 

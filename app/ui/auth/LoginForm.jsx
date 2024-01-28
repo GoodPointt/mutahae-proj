@@ -6,7 +6,6 @@ import { useFormState } from 'react-dom';
 import { Link } from '@chakra-ui/next-js';
 import {
 	Box,
-	Button,
 	Center,
 	FormControl,
 	FormErrorMessage,
@@ -14,7 +13,7 @@ import {
 	useToast,
 } from '@chakra-ui/react';
 
-import { loginAction } from '../../lib/actions';
+import { loginAction } from '@/app/lib/authActions';
 
 import SubmitButton from '../submitButton/SubmitButton';
 
@@ -87,15 +86,15 @@ const LoginForm = ({ dictionary, lang }) => {
 					{passwordError === 'required' ? password.required : password.invalid}
 				</FormErrorMessage>
 			</FormControl>
-			<Button
-				variant={'unstyled'}
+			<Link
+				href={`/${lang}/auth/recovery`}
 				fontSize={'14px'}
 				fontWeight={500}
 				lineHeight={1.5}
 				_hover={{ bgColor: 'transparent', color: 'lightgray' }}
 			>
 				{dictionary.buttons.forgotPass}
-			</Button>
+			</Link>
 			<SubmitButton>{dictionary.buttons.send}</SubmitButton>
 			<Center mt={'20px'}>
 				<Link
