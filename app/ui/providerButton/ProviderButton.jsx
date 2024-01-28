@@ -28,7 +28,6 @@ const ProviderButton = ({ style, variant }) => {
 			<Button
 				borderRadius={'2px'}
 				w={'full'}
-				// maxW={'md'}
 				variant={'outline'}
 				border={'1px solid #3B3D46'}
 				bgColor={'transparent'}
