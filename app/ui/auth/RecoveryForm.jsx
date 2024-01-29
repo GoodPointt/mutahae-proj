@@ -46,6 +46,7 @@ const RecoveryForm = ({ dictionary, lang }) => {
 		<Box as="form" action={dispatch} ref={ref} width={'100%'} autoComplete="on">
 			<FormControl isInvalid={emailError} pb="25px">
 				<Input
+					autoComplete="on"
 					name="email"
 					type="email"
 					bgColor="#3b3d46"
