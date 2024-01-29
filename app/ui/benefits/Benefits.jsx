@@ -41,13 +41,11 @@ const Benefits = ({ dictionary }) => {
 			>
 				{dictionary.benefits.benefitsList.map((item, idx) => {
 					return (
-						<GridItem as={'li'} key={idx} display={'flex'}>
+						<GridItem as={'li'} key={idx} display={'flex'} gap={'20px'}>
 							<Box as={'span'} width={'32px'}>
 								{icons[idx]()}
 							</Box>
-							<Text marginLeft={'20px'} fontSize={'16px'}>
-								{item}
-							</Text>
+							<Text fontSize={'16px'}>{item}</Text>
 						</GridItem>
 					);
 				})}
