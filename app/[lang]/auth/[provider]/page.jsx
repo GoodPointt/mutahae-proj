@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { notFound, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 
 import SectionWrapper from '@/app/ui/sectionWrapper/SectionWrapper';
@@ -11,7 +11,10 @@ import { setCookie } from 'cookies-next';
 
 const RedirectPage = ({ params: { provider } }) => {
 	const searchParams = useSearchParams();
-	const access_token = searchParams.get('access_token');
+	const access_token =
+		provider === 'facebook'
+			? searchParams.get('access_token')
+			: searchParams.get('id_token');
 	const router = useRouter();
 
 	const [text, setText] = useState('...טוען');
@@ -43,7 +46,6 @@ const RedirectPage = ({ params: { provider } }) => {
 			})
 			.catch(err => {
 				console.error(err);
-				notFound();
 			});
 	}, [access_token, provider, router]);
 
