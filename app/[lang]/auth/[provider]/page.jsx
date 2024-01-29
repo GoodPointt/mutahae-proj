@@ -11,10 +11,8 @@ import { setCookie } from 'cookies-next';
 
 const RedirectPage = ({ params: { provider } }) => {
 	const searchParams = useSearchParams();
-	const access_token =
-		provider === 'facebook'
-			? searchParams.get('access_token')
-			: searchParams.get('id_token');
+	const access_token = searchParams.get('access_token');
+
 	const router = useRouter();
 
 	const [text, setText] = useState('...טוען');
@@ -42,7 +40,7 @@ const RedirectPage = ({ params: { provider } }) => {
 				setCookie('userId', res.user.id);
 
 				setText('...התחברת בהצלחה. תופנה מחדש תוך מספר שניות');
-				setTimeout(() => router.push('/'), 3000); // Redirect to homepage after 3 sec
+				setTimeout(() => router.push('/'), 2000); // Redirect to homepage after 2 sec
 			})
 			.catch(err => {
 				console.error(err);
