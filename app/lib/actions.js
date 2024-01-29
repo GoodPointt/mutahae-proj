@@ -5,6 +5,7 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 import { createContact } from './api/instance';
+import { fetchAddToBag, fetchBagByUserId } from './api/profileInstance';
 
 import { z } from 'zod';
 
@@ -124,4 +125,32 @@ export async function submitUserAddress(prevState, formData) {
 	// } catch (error) {
 	// 	console.error(error);
 	// }
+}
+
+export async function submitProductToBag(prevState, formData) {
+	const { userId, count, productId } = formData;
+
+	try {
+		const bagResponse = await fetchBagByUserId(userId);
+		const {
+			data: { data },
+		} = bagResponse;
+		const bagId = data[0].id;
+		const productsInBag = data[0].attributes.goods;
+		const response = await fetchAddToBag(bagId, [
+			...productsInBag,
+			{ count, good: productId },
+		]);
+
+		if (response.status === 200) {
+			return {
+				status: response.status,
+				message: 'Product in bag',
+			};
+		} else {
+			throw new Error('Try again please');
+		}
+	} catch (error) {
+		return { message: error.message };
+	}
 }

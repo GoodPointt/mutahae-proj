@@ -32,3 +32,52 @@ const getFavorites = async userId => {
 };
 
 export const fetchFavorites = cache(getFavorites);
+
+const addToBag = async (bagId, goods) => {
+	try {
+		const token = cookies().get('jwt').value;
+
+		return await instance.put(
+			`/api/bags/${bagId}?populate=goods`,
+			{
+				data: {
+					goods: [...goods],
+				},
+			},
+			{
+				headers: {
+					Authorization: 'Bearer ' + token,
+					'Content-Type': 'application/json',
+				},
+				cache: 'no-cache',
+			}
+		);
+	} catch (error) {
+		console.error(error);
+
+		return { error: error.message };
+	}
+};
+
+export const fetchAddToBag = cache(addToBag);
+
+const getBagByUserId = async userId => {
+	try {
+		const token = cookies().get('jwt').value;
+
+		return await instance.get(
+			`/api/bags?populate[0]=goods&populate[1]=goods.good&populate[2]=goods.good.img&filters[user][id][$eq]=${userId}`,
+			{
+				headers: {
+					Authorization: 'Bearer ' + token,
+				},
+			}
+		);
+	} catch (error) {
+		console.error(error);
+
+		return { error: 'Server error please try again later.' };
+	}
+};
+
+export const fetchBagByUserId = cache(getBagByUserId);
