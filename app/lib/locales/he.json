@@ -169,18 +169,37 @@
 		}
 	},
 	"benefits": {
-		"title": "Wood bringing nature to your home – quality and admiration in every board and beam!",
+		"title": "עץ מביא לך את הטבע לביתך - איכות והערכה בכל לוח וקרש!",
 		"benefitsList": [
-			"Expertise and quality in every project, capturing the authentic feel of oak wood.",
-			"Expertise and quality in every project, capturing the authentic feel of oak wood.",
-			"Expertise and quality in every project, capturing the authentic feel of oak wood.",
-			"Expertise and quality in every project, capturing the authentic feel of oak wood.",
-			"Expertise and quality in every project, capturing the authentic feel of oak wood.",
-			"Expertise and quality in every project, capturing the authentic feel of oak wood."
+			"מומחיות ואיכות בכל פרויקט, לתפוס את התחושה האותנטית של עץ אלון.",
+			"מומחיות ואיכות בכל פרויקט, לתפוס את התחושה האותנטית של עץ אלון.",
+			"מומחיות ואיכות בכל פרויקט, לתפוס את התחושה האותנטית של עץ אלון.",
+			"מומחיות ואיכות בכל פרויקט, לתפוס את התחושה האותנטית של עץ אלון.",
+			"מומחיות ואיכות בכל פרויקט, לתפוס את התחושה האותנטית של עץ אלון.",
+			"מומחיות ואיכות בכל פרויקט, לתפוס את התחושה האותנטית של עץ אלון."
 		]
 	},
 	"profileMobileMenu": {
 		"profile": "חשבון אישי",
 		"favorite": "מועדפים"
+	},
+	"order": {
+		"title": "הזמנת מוצר",
+		"subtitle": "פרטי יצירת קשר",
+		"firstName": "שם פרטי",
+		"lastName": "שם משפחה",
+		"mail": "כתובת דואר אלקטרוני",
+		"phone": "טלפון",
+		"accountQuestion": "כבר יש לך חשבון?",
+		"login": "כניסה",
+		"register": "יצירת חשבון",
+		"shippingTitle": "משלוח",
+		"shippingDesc": "* על פי תעריף המוביל",
+		"select": "בחר עיר",
+		"orderTitle": "הזמנתי",
+		"subtotal": "סכום חלקי",
+		"shippingPrice": "משלוח",
+		"total": "סך הכול",
+		"button": "קנה עכשיו"
 	}
 }

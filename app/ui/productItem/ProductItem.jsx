@@ -44,6 +44,16 @@ const ProductItem = ({ product, lang }) => {
 							cursor: 'pointer',
 							transition: 'all 500ms ease-in-out',
 						}}
+						css={{
+							'&::after': {
+								content: "''",
+								width: '100%',
+								height: '100%',
+								position: 'absolute',
+								background:
+									'linear-gradient(180deg, rgba(0, 0, 0, 0.5) 6.5%, rgba(18, 20, 23, 0) 41.07%)',
+							},
+						}}
 					>
 						<Image
 							src={product.imgUrl || '/img/product.png'}
@@ -55,7 +65,6 @@ const ProductItem = ({ product, lang }) => {
 					</Box>
 					<Box
 						borderRadius={'2px'}
-						bg="rgba(0, 0, 0, 0.60)"
 						position={'absolute'}
 						top="0"
 						zIndex={'2'}

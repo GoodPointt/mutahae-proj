@@ -133,3 +133,23 @@ const getMembers = async lang => {
 };
 
 export const fetchMembers = cache(getMembers);
+
+const getCities = async () => {
+	try {
+		const response = await instance.get(
+			`/api/cities?populate=zone&sort[0]=cityName:asc`
+		);
+
+		if (!response) return;
+
+		const arrCities = response.data.data;
+
+		if (arrCities.length === 0) return;
+
+		return arrCities;
+	} catch (e) {
+		console.error(e);
+	}
+};
+
+export const fetchCities = cache(getCities);

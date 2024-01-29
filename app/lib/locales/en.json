@@ -182,5 +182,24 @@
 	"profileMobileMenu": {
 		"profile": "Рersonal account",
 		"favorite": "Favorites"
+	},
+	"order": {
+		"title": "Placing an order",
+		"subtitle": "Contact Information",
+		"firstName": "First name",
+		"lastName": "Last name",
+		"mail": "Mail",
+		"phone": "Phone",
+		"accountQuestion": "Already have an account?",
+		"login": "Login in",
+		"register": "Create account",
+		"shippingTitle": "Shipping",
+		"shippingDesc": "*According to the carrier's rates",
+		"select": "Сhoose A Сity",
+		"orderTitle": "My Order",
+		"subtotal": "Subtotal",
+		"shippingPrice": "Shipping",
+		"total": "Total",
+		"button": "Buy now"
 	}
 }
