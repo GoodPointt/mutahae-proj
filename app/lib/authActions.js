@@ -49,8 +49,18 @@ export async function loginAction(prevState, formData) {
 		if (!response.ok && userData.error)
 			return { ...prevState, message: userData.error.message, errors: null };
 		if (response.ok && userData.jwt) {
-			cookies().set('jwt', userData.jwt);
-			cookies().set('userId', userData.user.id);
+			cookies().set({
+				name: 'jwt',
+				value: userData.jwt,
+				httpOnly: true,
+				secure: true,
+			});
+			cookies().set({
+				name: 'userId',
+				value: userData.user.id,
+				httpOnly: true,
+				secure: true,
+			});
 		}
 	} catch (error) {
 		console.error(error);
@@ -148,8 +158,18 @@ export async function registerAction(prevState, formData) {
 				body: JSON.stringify({ data: { user: userData.user.id } }),
 			});
 
-			cookies().set('jwt', userData.jwt);
-			cookies().set('userId', userData.user.id);
+			cookies().set({
+				name: 'jwt',
+				value: userData.jwt,
+				httpOnly: true,
+				secure: true,
+			});
+			cookies().set({
+				name: 'userId',
+				value: userData.user.id,
+				httpOnly: true,
+				secure: true,
+			});
 		}
 	} catch (error) {
 		console.error(error);
@@ -203,8 +223,18 @@ export async function recoveryAction(prevState, formData) {
 		if (!response.ok && data.error)
 			return { ...prevState, message: data.error.message, errors: null };
 		// if (response.ok && data.jwt) {
-		// 	cookies().set('jwt', data.jwt);
-		// 	cookies().set('userId', data.user.id);
+		// cookies().set({
+		// 	name: 'jwt',
+		// 	value: userData.jwt,
+		// 	httpOnly: true,
+		// 	secure: true,
+		// });
+		// cookies().set({
+		// 	name: 'userId',
+		// 	value: userData.user.id,
+		// 	httpOnly: true,
+		// 	secure: true,
+		// });
 		// }
 	} catch (error) {
 		console.error(error);
