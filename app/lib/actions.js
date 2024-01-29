@@ -5,6 +5,7 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 import { createContact } from './api/instance';
+import { updateUserData } from './api/profileInstance';
 import { fetchAddToBag, fetchBagByUserId } from './api/profileInstance';
 
 import { z } from 'zod';
@@ -75,10 +76,11 @@ export async function submitData(prevState, formData) {
 }
 
 export async function submitUserDetails(prevState, formData) {
-	const { firstName, lastName, email, phone } = Object.fromEntries(formData);
+	const { username, lastName, email, phone } = Object.fromEntries(formData);
+	const userData = { username, lastName, email, phone };
 
 	const validatedFields = schema.safeParse({
-		firstName,
+		username,
 		lastName,
 		email,
 		phone,
@@ -90,16 +92,26 @@ export async function submitUserDetails(prevState, formData) {
 			message: 'Error.',
 		};
 	}
-	//console.log(firstName, lastName, email, phone);
-	// try {
-	// 	const res = await createContact({ name, email, phone });
 
-	// 	if (res) {
-	// 		return { name, email, phone, message: 'succsess' };
-	// 	}
-	// } catch (error) {
-	// 	console.error(error);
-	// }
+	try {
+		const data = await updateUserData(userData);
+
+		if (!data) {
+			throw new Error('Error occured while updating user data');
+		}
+
+		return {
+			data,
+			status: 'succsess',
+		};
+	} catch (error) {
+		console.error(error);
+
+		return {
+			message: error.message,
+			status: 'error',
+		};
+	}
 }
 
 export async function submitUserAddress(prevState, formData) {
@@ -126,6 +138,19 @@ export async function submitUserAddress(prevState, formData) {
 	// 	console.error(error);
 	// }
 }
+
+export const logout = () => {
+	try {
+		cookies().delete('userId');
+		cookies().delete('jwt');
+
+		redirect('/');
+	} catch (error) {
+		console.error(error);
+
+		redirect('/');
+	}
+};
 
 export async function submitProductToBag(prevState, formData) {
 	const { userId, count, productId } = formData;

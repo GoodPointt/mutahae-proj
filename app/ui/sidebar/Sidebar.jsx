@@ -6,6 +6,8 @@ import { usePathname } from 'next/navigation';
 
 import { List, ListItem } from '@chakra-ui/react';
 
+import { Logout } from '../logout/Logout';
+
 export const Sidebar = ({ lang }) => {
 	const pathname = usePathname();
 
@@ -41,7 +43,7 @@ export const Sidebar = ({ lang }) => {
 				<Link href={profileRoutes.historyOfOrders}>History of orders</Link>
 			</ListItem>
 			<ListItem fontSize="20px" color="#808080">
-				<Link href={`/${lang}/`}>logout</Link>
+				<Logout lang={lang} />
 			</ListItem>
 		</List>
 	);

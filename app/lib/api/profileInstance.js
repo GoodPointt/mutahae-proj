@@ -4,10 +4,9 @@ import { notFound } from 'next/navigation';
 
 import axios from 'axios';
 
-export const instance = axios.create({
+export const profileInstance = axios.create({
 	baseURL: process.env.NEXT_PUBLIC_STRAPI_API_URL,
 });
-instance.defaults.headers.authorization = `Bearer ${process.env.NEXT_PUBLIC_STRAPI_TOKEN}`;
 
 const getFavorites = async userId => {
 	try {
@@ -16,7 +15,7 @@ const getFavorites = async userId => {
 
 		const {
 			data: { data },
-		} = await instance.get(
+		} = await profileInstance.get(
 			`/api/favorites?populate[0]=goods&populate[1]=goods.good&populate[2]=goods.img&filters[user][id][$eq]=${userId}`
 		);
 		if (data.length === 0) {
@@ -25,19 +24,59 @@ const getFavorites = async userId => {
 
 		return data;
 	} catch (e) {
-		if (e.data === undefined) {
-			return notFound();
-		}
+		return notFound();
 	}
 };
 
 export const fetchFavorites = cache(getFavorites);
 
+const getUserData = async () => {
+	try {
+		const userId = cookies().get('userId')?.value;
+
+		if (!userId) throw new Error('User id not found!');
+
+		const data = profileInstance.get(`/api/users/${userId}`);
+		if (!data) {
+			return notFound();
+		}
+
+		return data;
+	} catch (e) {
+		console.error(e.message);
+
+		return notFound();
+	}
+};
+
+export const fetchUserData = cache(getUserData);
+
+export const updateUserData = async userData => {
+	//console.log(userData);
+	try {
+		const userId = cookies().get('userId')?.value;
+		//console.log(userId);
+
+		if (!userId) throw new Error('User id not found!');
+
+		const { data } = await profileInstance.put(
+			`/api/users/${userId}`,
+			userData
+		);
+
+		return data;
+	} catch (e) {
+		console.error(e.message);
+
+		return notFound();
+	}
+};
+
 const addToBag = async (bagId, goods) => {
 	try {
 		const token = cookies().get('jwt').value;
 
-		return await instance.put(
+		return await profileInstance.put(
 			`/api/bags/${bagId}?populate=goods`,
 			{
 				data: {
@@ -65,7 +104,7 @@ const getBagByUserId = async userId => {
 	try {
 		const token = cookies().get('jwt').value;
 
-		return await instance.get(
+		return await profileInstance.get(
 			`/api/bags?populate[0]=goods&populate[1]=goods.good&populate[2]=goods.good.img&filters[user][id][$eq]=${userId}`,
 			{
 				headers: {

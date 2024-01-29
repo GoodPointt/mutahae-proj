@@ -1,5 +1,7 @@
 'use client';
+import { useEffect, useRef } from 'react';
 import { useFormState } from 'react-dom';
+import ReactInputMask from 'react-input-mask';
 
 import {
 	Box,
@@ -7,14 +9,35 @@ import {
 	FormControl,
 	FormErrorMessage,
 	Input,
+	useToast,
 } from '@chakra-ui/react';
 
 import { submitUserDetails } from '../../../lib/actions';
 
 import SubmitButton from '../../submitButton/SubmitButton';
 
-export const UserDetailsForm = ({ lang }) => {
-	const [state, dispatch] = useFormState(submitUserDetails, undefined);
+export const UserDetailsForm = ({ lang, userData }) => {
+	const [state, dispatch] = useFormState(submitUserDetails, null);
+
+	const toast = useToast();
+
+	useEffect(() => {
+		if (state && state.status === 'succsess')
+			toast({
+				status: 'success',
+				title: 'success',
+			});
+		else if (state && state.status === 'error') {
+			toast({
+				status: 'error',
+				title: 'error',
+			});
+		}
+	}, [state, toast]);
+
+	const maskedInputRef = useRef(null);
+
+	const { username, lastName, phone, email } = userData;
 
 	const firstNameError =
 		state?.errors?.firstName && state?.errors?.firstName.length > 0
@@ -45,9 +68,10 @@ export const UserDetailsForm = ({ lang }) => {
 				>
 					<FormControl isInvalid={firstNameError} mb="25px">
 						<Input
-							name="firstName"
+							name="username"
 							type="text"
 							bgColor="#3b3d46"
+							defaultValue={username}
 							placeholder="First name"
 							_placeholder={{ color: '#fff' }}
 							style={
@@ -69,6 +93,7 @@ export const UserDetailsForm = ({ lang }) => {
 							name="lastName"
 							type="text"
 							bgColor="#3b3d46"
+							defaultValue={lastName}
 							placeholder="Last name"
 							_placeholder={{ color: '#fff' }}
 							style={
@@ -96,6 +121,7 @@ export const UserDetailsForm = ({ lang }) => {
 							name="email"
 							type="email"
 							bgColor="#3b3d46"
+							defaultValue={email}
 							placeholder="Mail"
 							_placeholder={{ color: '#fff' }}
 							style={
@@ -114,17 +140,23 @@ export const UserDetailsForm = ({ lang }) => {
 					</FormControl>
 					<FormControl isInvalid={phoneError} mb="35px">
 						<Input
+							ref={maskedInputRef}
 							name="phone"
-							type="text"
+							as={ReactInputMask}
+							type="tel"
+							mask={'+\\972-**-***-****'}
 							bgColor="#3b3d46"
+							defaultValue={phone}
 							placeholder="Phone"
 							_placeholder={{ color: '#fff' }}
 							style={
 								lang === 'he' ? { direction: 'ltr', textAlign: 'right' } : null
 							}
+							textAlign={lang === 'he' ? 'right' : 'left'}
 							focusBorderColor="#a28445"
 							border={'1px solid transparent'}
 						/>
+
 						<FormErrorMessage
 							fontSize={'14px'}
 							position="absolute"
