@@ -127,8 +127,9 @@ export async function registerAction(prevState, formData) {
 			body: JSON.stringify({
 				email,
 				password,
-				username: name,
+				firstName: name,
 				lastName,
+				username: email.split('@')[0],
 			}),
 			cache: 'no-cache',
 		});
