@@ -56,9 +56,8 @@ const getOneProduct = async (id, lang) => {
 		if (data.length === 0) {
 			return notFound();
 		}
-		const [{ attributes: product }] = data;
 
-		return product;
+		return data[0];
 	} catch (e) {
 		if (e.data === undefined) {
 			return notFound();
