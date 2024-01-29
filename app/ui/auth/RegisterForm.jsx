@@ -61,6 +61,7 @@ const RegisterForm = ({ dictionary, lang }) => {
 		<Box as="form" action={dispatch} ref={ref} width={'100%'} autoComplete="on">
 			<FormControl isInvalid={nameError} pb="25px">
 				<Input
+					autoComplete="on"
 					name="name"
 					type="text"
 					bgColor="#3b3d46"
@@ -78,6 +79,7 @@ const RegisterForm = ({ dictionary, lang }) => {
 			</FormControl>
 			<FormControl isInvalid={nameError} pb="25px">
 				<Input
+					autoComplete="on"
 					name="lastName"
 					type="text"
 					bgColor="#3b3d46"
@@ -95,6 +97,7 @@ const RegisterForm = ({ dictionary, lang }) => {
 			</FormControl>
 			<FormControl isInvalid={emailError} pb="25px">
 				<Input
+					autoComplete="on"
 					name="email"
 					type="email"
 					bgColor="#3b3d46"
@@ -112,6 +115,7 @@ const RegisterForm = ({ dictionary, lang }) => {
 			</FormControl>
 			<FormControl isInvalid={passwordError} pb="25px">
 				<Input
+					autoComplete="on"
 					name="password"
 					type="password"
 					bgColor="#3b3d46"

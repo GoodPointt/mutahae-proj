@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 import { Button, Center, Text } from '@chakra-ui/react';
 
@@ -7,6 +8,7 @@ import GoogleIcon from '../svg/GoogleIcon';
 import TelegramIcon from '../svg/TelegramIcon';
 
 const ProviderButton = ({ style, variant }) => {
+	const backendUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL;
 	let icon;
 
 	switch (variant) {
@@ -26,6 +28,9 @@ const ProviderButton = ({ style, variant }) => {
 	return (
 		<Center style={style}>
 			<Button
+				as={Link}
+				href={`${backendUrl}/api/connect/${variant}`}
+				rel="noopener noreferrer"
 				borderRadius={'2px'}
 				w={'full'}
 				variant={'outline'}
