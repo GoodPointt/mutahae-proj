@@ -51,7 +51,7 @@ const ProductItem = ({ product, lang }) => {
 								height: '100%',
 								position: 'absolute',
 								background:
-									'linear-gradient(180deg, rgba(0, 0, 0, 0.5) 6.5%, rgba(18, 20, 23, 0) 41.07%)',
+									'linear-gradient(0deg, rgba(0,0,0,0.7) 15%, rgba(252,176,69,0) 50%, rgba(252,176,69,0) 75%, rgba(0,0,0,0.7) 100%)',
 							},
 						}}
 					>
