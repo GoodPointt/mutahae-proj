@@ -6,7 +6,8 @@
 		"buy": "לקנייה",
 		"bag": "להוסיף לתיק",
 		"forgotPass": "*שכחת ססמה?",
-		"createAcc": "צור חשבון"
+		"createAcc": "צור חשבון",
+		"cancel": "לבטל"
 	},
 	"header": {
 		"navItems": [
@@ -100,16 +101,20 @@
 		}
 	},
 	"formContact": {
+		"recovery": "שחזור סיסמה",
 		"login": "התחברות",
 		"register": "צור חשבון",
 		"sectionTitle": "צור קשר",
 		"title": "צור קשר",
 		"text": "מלא את הטופס למטה כדי ליצור קשר",
+		"recoveryText": ".נשלח לך אימייל לאיפוס הסיסמה שלך*",
 		"nameLabel": "שם שלך",
 		"lastNameLabel": "שם משפחה",
 		"mailLabel": "אימייל",
 		"phoneLabel": "טלפון",
 		"passwordLabel": "סיסמה",
+		"password1Label": "סיסמה חדשה",
+		"password2Label": "חזור על סיסמה חדשה",
 		"toasts": {
 			"form": {
 				"success": "הטופס נשלח בהצלחה",
@@ -139,7 +144,8 @@
 			},
 			"password": {
 				"required": "מספר הטלפון הוא שדה חובה",
-				"invalid": "הסיסמה חייבת להיות באורך של לפחות 6 תווים"
+				"invalid": "הסיסמה חייבת להיות באורך של לפחות 6 תווים",
+				"not_equal": "סיסמאות חייבות להיות שוות"
 			}
 		}
 	},
@@ -201,5 +207,10 @@
 		"shippingPrice": "משלוח",
 		"total": "סך הכול",
 		"button": "קנה עכשיו"
+	},
+	"provider":{
+		"loading": "...טוען",
+		"rederecting": "...התחברת בהצלחה. תופנה מחדש תוך מספר שניות",
+	  "error": "משהו השתבש. אנא נסה שוב"
 	}
 }

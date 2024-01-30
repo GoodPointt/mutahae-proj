@@ -6,7 +6,8 @@
 		"buy": "BUY",
 		"bag": "Add to bag",
 		"forgotPass": "*Forgot your password?",
-		"createAcc": "Create account"
+		"createAcc": "Create account",
+		"cancel": "Cancel"
 	},
 	"header": {
 		"navItems": [
@@ -100,16 +101,20 @@
 		}
 	},
 	"formContact": {
+		"recovery": "Recover password",
 		"login": "Login",
 		"register": "Create account",
 		"sectionTitle": "Contact us",
 		"title": "Contact",
 		"text": "Fill up the form below to contact",
+		"recoveryText": "*We will send you an email to reset your password.",
 		"nameLabel": "First name",
 		"lastNameLabel": "Last name",
 		"mailLabel": "Mail",
 		"phoneLabel": "Phone",
 		"passwordLabel": "Password",
+		"password1Label": "New password",
+		"password2Label": "Repeat new password",
 		"toasts": {
 			"form": {
 				"success": "Form submitted successfully",
@@ -139,7 +144,8 @@
 			},
 			"password": {
 				"required": "Password is required",
-				"invalid": "Password must be at least 6 characters long"
+				"invalid": "Password must be at least 6 characters long",
+				"not_equal": "Passwords must be equal"
 			}
 		}
 	},
@@ -201,5 +207,9 @@
 		"shippingPrice": "Shipping",
 		"total": "Total",
 		"button": "Buy now"
-	}
+	},
+ "provider":{
+		"loading": "Loading...",
+		"rederecting": "You've logged in successfully. You will be redirected in a few seconds...",
+	"error": "Something went wrong, please try again"}
 }
