@@ -55,13 +55,11 @@ export async function loginAction(prevState, formData) {
 				name: 'jwt',
 				value: userData.jwt,
 				httpOnly: true,
-				secure: true,
 			});
 			cookies().set({
 				name: 'userId',
 				value: userData.user.id,
 				httpOnly: true,
-				secure: true,
 			});
 			profileInstance.defaults.headers.authorization = `Bearer ${userData.jwt}`;
 		}
@@ -165,14 +163,14 @@ export async function registerAction(prevState, formData) {
 			cookies().set({
 				name: 'jwt',
 				value: userData.jwt,
-				httpOnly: true,
-				secure: true,
+				// httpOnly: true,
+				// secure: true,
 			});
 			cookies().set({
 				name: 'userId',
 				value: userData.user.id,
-				httpOnly: true,
-				secure: true,
+				// httpOnly: true,
+				// secure: true,
 			});
 			profileInstance.defaults.headers.authorization = `Bearer ${userData.jwt}`;
 		}
@@ -224,27 +222,75 @@ export async function recoveryAction(prevState, formData) {
 
 		const data = await response.json();
 
-		// console.log(data);
 		if (!response.ok && data.error)
 			return { ...prevState, message: data.error.message, errors: null };
-		// if (response.ok && data.jwt) {
-		// cookies().set({
-		// 	name: 'jwt',
-		// 	value: userData.jwt,
-		// 	httpOnly: true,
-		// 	secure: true,
-		// });
-		// cookies().set({
-		// 	name: 'userId',
-		// 	value: userData.user.id,
-		// 	httpOnly: true,
-		// 	secure: true,
-		// });
-		// }
+		if (response.ok) {
+			return { ...prevState, message: 'success' };
+		}
 	} catch (error) {
 		console.error(error);
 
 		return { error: 'Server error please try again later.' };
 	}
-	// redirect('/');
+}
+
+const resetPasswordSchema = z
+	.object({
+		code: z.string().trim(),
+		password1: z.string().min(6, { message: 'invalid' }),
+		password2: z.string().min(6, { message: 'invalid' }),
+	})
+	.partial();
+
+export async function resetPasswordAction(prevState, formData) {
+	const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL;
+	if (!STRAPI_URL) throw new Error('Missing STRAPI_URL environment variable.');
+	const url = `${STRAPI_URL}/api/auth/reset-password`;
+
+	const validatedFields = resetPasswordSchema.safeParse({
+		password1: formData.get('password1'),
+		password2: formData.get('password2'),
+		code: formData.get('code'),
+	});
+
+	if (!validatedFields.success) {
+		return {
+			errors: validatedFields.error.flatten().fieldErrors,
+			message: 'Error.',
+		};
+	}
+
+	const { password1, password2, code } = validatedFields.data;
+	if (password1 !== password2) {
+		return {
+			...prevState,
+			message: 'not_equal',
+		};
+	}
+	try {
+		const response = await fetch(url, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				code,
+				password: password1,
+				passwordConfirmation: password2,
+			}),
+			cache: 'no-cache',
+		});
+
+		const data = await response.json();
+
+		if (!response.ok && data.error)
+			return { ...prevState, message: data.error.message, errors: null };
+		if (response.ok) {
+			return { ...prevState, message: 'success' };
+		}
+	} catch (error) {
+		console.error(error);
+
+		return { error: 'Server error please try again later.' };
+	}
 }

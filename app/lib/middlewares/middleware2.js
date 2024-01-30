@@ -22,6 +22,7 @@ export function withI18nMiddleware(middleware) {
 	return async (request, event, response) => {
 		// do i18n stuff
 		const pathname = request.nextUrl.pathname;
+		const search = request.nextUrl.search;
 
 		const pathnameIsMissingLocale = i18n.locales.every(
 			locale => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
@@ -33,7 +34,9 @@ export function withI18nMiddleware(middleware) {
 
 			return NextResponse.redirect(
 				new URL(
-					`/${locale}${pathname.startsWith('/') ? '' : '/'}${pathname}`,
+					`/${locale}${pathname.startsWith('/') ? '' : '/'}${
+						pathname + search
+					}`,
 					request.url
 				)
 			);
