@@ -2,7 +2,11 @@ import { OrderHistory } from '../../../ui/profile/orderHistory/OrderHistory';
 
 import { Heading } from '@chakra-ui/react';
 
-const HistoryOfOrders = ({ params: { lang } }) => {
+import { fetchOrders } from '../../../lib/api/profileInstance';
+
+const HistoryOfOrders = async ({ params: { lang } }) => {
+	const orders = await fetchOrders();
+
 	return (
 		<>
 			<Heading
@@ -12,7 +16,7 @@ const HistoryOfOrders = ({ params: { lang } }) => {
 			>
 				History of orders
 			</Heading>
-			<OrderHistory lang={lang} />
+			<OrderHistory lang={lang} orders={orders} />
 		</>
 	);
 };

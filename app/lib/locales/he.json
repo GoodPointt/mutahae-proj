@@ -208,9 +208,37 @@
 		"total": "סך הכול",
 		"button": "קנה עכשיו"
 	},
-	"provider":{
+	"profile": {
+		"sidebar": {
+			"favorites": "מועדפים",
+			"contactInformation": "פרטי יצירת קשר",
+			"historyOfOrders": "היסטוריה של הזמנות",
+			"logout": "התנתקות"
+		},
+		"favorites": {
+			"title": "מועדפים"
+		},
+		"contactInformation": {
+			"title": "מידע ליצירת קשר",
+			"userDetailsForm": {
+				"firstName": "שם פרטי",
+				"lastName": "שם משפחה",
+				"email": "אימייל",
+				"phone": "טלפון",
+				"btn": "שמור"
+			}
+		},
+		"ressetPasswordForm": {
+			"title": "שינוי סיסמה",
+			"currentPassword": "סיסמה נוכחית",
+			"newPassword": "סיסמה חדשה",
+			"confirmPassword": "אשר סיסמה",
+			"btn": "שמור"
+		}
+	},
+	"provider": {
 		"loading": "...טוען",
 		"rederecting": "...התחברת בהצלחה. תופנה מחדש תוך מספר שניות",
-	  "error": "משהו השתבש. אנא נסה שוב"
+		"error": "משהו השתבש. אנא נסה שוב"
 	}
 }

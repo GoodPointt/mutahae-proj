@@ -3,30 +3,45 @@ import Image from 'next/image';
 
 import { Box, Flex, Heading, ListItem, Text } from '@chakra-ui/react';
 
-import imgurl from '@/public/img/product.png';
+import { format } from 'date-fns';
 
-export const OrderHistoryItem = ({ lang }) => {
+export const OrderHistoryItem = ({
+	lang,
+	title,
+	descShort,
+	imgurl,
+	createdAt,
+}) => {
+	const date = new Date(createdAt);
+	const formattedDate = format(date, 'dd/MM/yyyy', { timeZone: 'UTC' });
+
 	return (
 		<ListItem display="flex">
 			<Box
+				position="relative"
 				w="100px"
 				h="100px"
 				mr={lang === 'en' && '30px'}
 				ml={lang === 'he' && '30px'}
+				width={100}
+				height={100}
 			>
-				<Image src={imgurl} alt="product img" />
+				<Image fill src={imgurl} alt="product img" />
 			</Box>
-			<Flex flexDirection={{ base: 'column', lg: 'row' }} gap="10px">
+			<Flex flexDirection={{ base: 'column', lg: 'row' }} flex={1} gap="10px">
 				<Box maxW="257px">
 					<Heading as="h3" fontSize="24px" fontWeight={700}>
-						Oak Board
+						{title}
 					</Heading>
 					<Text>€160</Text>
 					<Text fontSize="14px" color="#808080">
-						Sizes: 20,26,40x1000x1800-3000mm, A/B/Rustic
+						{descShort}
 					</Text>
 				</Box>
-				<Box ml={{ base: 0, lg: 'auto' }} mr={0}>
+				<Box
+					ml={{ base: 0, lg: lang === 'he' ? 0 : 'auto' }}
+					mr={{ base: 0, lg: lang === 'en' ? 0 : 'auto' }}
+				>
 					<Text
 						fontSize="14px"
 						color="#808080"
@@ -36,7 +51,7 @@ export const OrderHistoryItem = ({ lang }) => {
 						}}
 						mb="14px"
 					>
-						Order №0123456789, 26/01/2024
+						{formattedDate}
 					</Text>
 					<Text
 						fontSize="16px"
