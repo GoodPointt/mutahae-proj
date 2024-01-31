@@ -2,6 +2,8 @@ import { cache } from 'react';
 import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
 
+import { flattenAttributes } from '../utils/flattenAttributes';
+
 import axios from 'axios';
 
 export const profileInstance = axios.create({
@@ -104,7 +106,7 @@ const getBagByUserId = async userId => {
 	try {
 		const token = cookies().get('jwt').value;
 
-		return await profileInstance.get(
+		const res = await profileInstance.get(
 			`/api/bags?populate[0]=goods&populate[1]=goods.good&populate[2]=goods.good.img&filters[user][id][$eq]=${userId}`,
 			{
 				headers: {
@@ -112,6 +114,12 @@ const getBagByUserId = async userId => {
 				},
 			}
 		);
+
+		const {
+			data: { data: responseData },
+		} = res;
+
+		return flattenAttributes(responseData);
 	} catch (error) {
 		console.error(error);
 

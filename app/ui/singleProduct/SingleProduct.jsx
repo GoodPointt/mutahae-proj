@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useFormState } from 'react-dom';
 
 import {
@@ -14,6 +14,8 @@ import {
 } from '@chakra-ui/react';
 
 import { submitProductToBag } from '@/app/lib/actions';
+import useLocalStorage from '@/app/lib/hooks/useLocalStorage';
+import { flattenAttributes } from '@/app/lib/utils/flattenAttributes';
 
 import Btn from '../button/Btn';
 import SectionWrapper from '../sectionWrapper/SectionWrapper';
@@ -39,29 +41,28 @@ const SingleProduct = ({ userId, productId, dictionary, product }) => {
 	const productDetails = { length, width, thickness, wood, type, manufacturer };
 
 	const [count, setCount] = useState(1);
-	const [localBag, setLocalBag] = useState(
-		typeof window !== 'undefined'
-			? JSON.parse(localStorage.getItem('localBag'))
-			: []
-	);
+	const [localBag, setLocalBag] = useLocalStorage('localBag', []);
 
-	const initialState = {
-		message: '',
-	};
+	const [, formAction] = useFormState(submitProductToBag);
 
-	const [, formAction] = useFormState(submitProductToBag, initialState);
+	const addGoodInLocal = (count, goodId) => {
+		const isSame = localBag.find(({ id }) => id === goodId);
 
-	useEffect(() => {
-		if (!userId) {
-			localStorage.setItem(
-				'localBag',
-				JSON.stringify(localBag ? [...localBag] : [])
-			);
+		if (isSame) {
+			const updatedBag = localBag.map(item => {
+				if (item.id === goodId) {
+					return { ...item, count: item.count + 1 };
+				}
+
+				return item;
+			});
+			setLocalBag(updatedBag);
+		} else {
+			setLocalBag([
+				...localBag,
+				{ count, good: flattenAttributes(product), id: goodId },
+			]);
 		}
-	}, [localBag, userId]);
-
-	const addProductToLocal = (count, uid) => {
-		setLocalBag([...localBag, { count, uid }]);
 	};
 
 	return (
@@ -127,7 +128,7 @@ const SingleProduct = ({ userId, productId, dictionary, product }) => {
 							) : (
 								<Btn
 									type="submit"
-									onClick={() => addProductToLocal(count, productId)}
+									onClick={() => addGoodInLocal(count, productId)}
 								>
 									{dictionary.buttons.bag}
 								</Btn>
