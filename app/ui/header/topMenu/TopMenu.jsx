@@ -23,6 +23,7 @@ const TopMenu = ({
 		'BAG_ICON',
 	],
 	display = 'none',
+	bagData,
 }) => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	//убрать потом юзРеф когда будут рефы с поиска и сумки
@@ -113,7 +114,9 @@ const TopMenu = ({
 				})}
 			</Box>
 			<Modal isOpen={isOpen} onClose={onClose}>
-				{variant === 'BAG_ICON' && <Bag />}
+				{variant === 'BAG_ICON' && (
+					<Bag bagData={bagData} authToken={authToken} />
+				)}
 				{variant === 'SEARCH_ICON' && <Text>Search</Text>}
 			</Modal>
 		</>

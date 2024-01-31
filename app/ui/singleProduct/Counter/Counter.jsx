@@ -24,6 +24,7 @@ const Counter = ({ count, setCount }) => {
 			border={'1px #3B3D46 solid'}
 			maxW={'100%'}
 			py={'9px'}
+			px={'40px'}
 		>
 			<Button
 				variant={'link'}

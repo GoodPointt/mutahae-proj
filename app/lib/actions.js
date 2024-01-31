@@ -157,17 +157,38 @@ export async function submitProductToBag(prevState, formData) {
 
 	try {
 		const bagResponse = await fetchBagByUserId(userId);
-		const {
-			data: { data },
-		} = bagResponse;
-		const bagId = data[0].id;
-		const productsInBag = data[0].attributes.goods;
+
+		const bagId = bagResponse[0].id;
+		const productsInBag = bagResponse[0].goods;
 		const response = await fetchAddToBag(bagId, [
 			...productsInBag,
 			{ count, good: productId },
 		]);
 
 		if (response.status === 200) {
+			revalidatePath('/');
+
+			return {
+				status: response.status,
+				message: 'Product in bag',
+			};
+		} else {
+			throw new Error('Try again please');
+		}
+	} catch (error) {
+		return { message: error.message };
+	}
+}
+
+export async function deleteProductFromBag(prevState, formData) {
+	const { goods, goodId, id } = formData;
+
+	try {
+		const newBags = goods.filter(({ id }) => id !== goodId);
+		const response = await fetchAddToBag(id, [...newBags]);
+		if (response.status === 200) {
+			revalidatePath('/');
+
 			return {
 				status: response.status,
 				message: 'Product in bag',
