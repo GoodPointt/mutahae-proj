@@ -16,9 +16,9 @@ import { submitUserDetails } from '../../../lib/actions';
 
 import SubmitButton from '../../submitButton/SubmitButton';
 
-export const UserDetailsForm = ({ lang, userData }) => {
+export const UserDetailsForm = ({ lang, userData, userDetailsDictionary }) => {
 	const [state, dispatch] = useFormState(submitUserDetails, null);
-
+	const { userDetailsForm } = userDetailsDictionary;
 	const toast = useToast();
 
 	useEffect(() => {
@@ -72,7 +72,7 @@ export const UserDetailsForm = ({ lang, userData }) => {
 							type="text"
 							bgColor="#3b3d46"
 							defaultValue={username}
-							placeholder="First name"
+							placeholder={userDetailsForm.firstName}
 							_placeholder={{ color: '#fff' }}
 							style={
 								lang === 'he' ? { direction: 'ltr', textAlign: 'right' } : null
@@ -166,7 +166,9 @@ export const UserDetailsForm = ({ lang, userData }) => {
 						</FormErrorMessage>
 					</FormControl>
 				</Flex>
-				<SubmitButton w="calc((100% - 15px) /2 )">Save</SubmitButton>
+				<SubmitButton w="calc((100% - 15px) /2 )">
+					{userDetailsForm.btn}
+				</SubmitButton>
 			</Box>
 		</Box>
 	);

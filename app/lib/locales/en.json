@@ -208,8 +208,37 @@
 		"total": "Total",
 		"button": "Buy now"
 	},
- "provider":{
+	"profile": {
+		"sidebar": {
+			"favorites": "Favorites",
+			"contactInformation": "Contact Information",
+			"historyOfOrders": "History of orders",
+			"logout": "logout"
+		},
+		"favorites": {
+			"title": "Favorites"
+		},
+		"contactInformation": {
+			"title": "Contact Information",
+			"userDetailsForm": {
+				"firstName": "First name",
+				"lastName": "Last name",
+				"email": "Email",
+				"phone": "Phone",
+				"btn": "Save"
+			}
+		},
+		"ressetPasswordForm": {
+			"title": "Сhange Password",
+			"currentPassword": "Current Password",
+			"newPassword": "New Password",
+			"confirmPassword": "Сonfirm Password",
+			"btn": "Save"
+		}
+	},
+	"provider": {
 		"loading": "Loading...",
 		"rederecting": "You've logged in successfully. You will be redirected in a few seconds...",
-	"error": "Something went wrong, please try again"}
+		"error": "Something went wrong, please try again"
+	}
 }

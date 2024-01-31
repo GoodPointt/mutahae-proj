@@ -10,27 +10,62 @@ export const profileInstance = axios.create({
 	baseURL: process.env.NEXT_PUBLIC_STRAPI_API_URL,
 });
 
-const getFavorites = async userId => {
+const getFavorites = async () => {
 	try {
 		const token = cookies().get('jwt')?.value;
-		if (!token) throw new Error('not authorized');
+		const userId = cookies().get('userId')?.value;
+		if (!token || !userId) {
+			throw new Error('Not authorized');
+		}
+		profileInstance.defaults.headers.authorization = `Bearer ${token}`;
 
-		const {
-			data: { data },
-		} = await profileInstance.get(
+		const response = await profileInstance.get(
 			`/api/favorites?populate[0]=goods&populate[1]=goods.good&populate[2]=goods.img&filters[user][id][$eq]=${userId}`
 		);
-		if (data.length === 0) {
-			return notFound();
+
+		const { data } = response.data;
+
+		if (!data) {
+			return [];
 		}
 
-		return data;
+		return data[0]?.attributes?.goods?.data;
 	} catch (e) {
+		console.error(e.message);
+
 		return notFound();
 	}
 };
 
 export const fetchFavorites = cache(getFavorites);
+
+const getOrders = async () => {
+	try {
+		const token = cookies().get('jwt')?.value;
+		const userId = cookies().get('userId')?.value;
+		if (!token || !userId) {
+			throw new Error('Not authorized');
+		}
+		profileInstance.defaults.headers.authorization = `Bearer ${token}`;
+
+		const response = await profileInstance.get(
+			`/api/orders?populate=deep,4&filters[user][id][$eq]=${userId}`
+		);
+
+		const { data } = response.data;
+
+		if (!data) {
+			return [];
+		}
+
+		return data;
+	} catch (e) {
+		console.error(e.message);
+
+		return notFound();
+	}
+};
+export const fetchOrders = cache(getOrders);
 
 const getUserData = async () => {
 	try {
@@ -71,6 +106,34 @@ export const updateUserData = async userData => {
 		console.error(e.message);
 
 		return notFound();
+	}
+};
+
+export const changePassword = async dataPassword => {
+	try {
+		const token = cookies().get('jwt')?.value;
+
+		if (!token) {
+			throw new Error('Not authorized');
+		}
+		profileInstance.defaults.headers.authorization = `Bearer ${token}`;
+
+		const { data } = await profileInstance.post(
+			'/api/auth/change-password',
+			dataPassword
+		);
+
+		return {
+			data,
+			status: 'succsess',
+		};
+	} catch (error) {
+		console.error(error);
+
+		return {
+			status: 'error',
+			message: error.message,
+		};
 	}
 };
 

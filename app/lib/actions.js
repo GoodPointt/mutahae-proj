@@ -5,7 +5,7 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 import { createContact } from './api/instance';
-import { updateUserData } from './api/profileInstance';
+import { changePassword, updateUserData } from './api/profileInstance';
 import { fetchAddToBag, fetchBagByUserId } from './api/profileInstance';
 
 import { z } from 'zod';
@@ -48,6 +48,17 @@ const schema = z
 			),
 	})
 	.partial();
+
+const changePasswordSchema = z
+	.object({
+		currentPassword: z.string().min(6, { message: 'invalid' }),
+		newPassword: z.string().min(6, { message: 'invalid' }),
+		confirmPassword: z.string(),
+	})
+	.refine(data => data.newPassword === data.confirmPassword, {
+		message: "Passwords don't match or are empty",
+		path: ['confirmPassword'], // path of error
+	});
 
 export async function submitData(prevState, formData) {
 	const { name, email, phone } = Object.fromEntries(formData);
@@ -127,6 +138,7 @@ export async function submitUserAddress(prevState, formData) {
 			message: 'Error.',
 		};
 	}
+
 	//console.log(firstName, lastName, email, phone);
 	// try {
 	// 	const res = await createContact({ name, email, phone });
@@ -149,6 +161,42 @@ export const logout = () => {
 		console.error(error);
 
 		redirect('/');
+	}
+};
+
+export const changePasswordAction = async (prevState, formData) => {
+	const { currentPassword, newPassword, confirmPassword } =
+		Object.fromEntries(formData);
+
+	const validatedFields = changePasswordSchema.safeParse({
+		currentPassword,
+		newPassword,
+		confirmPassword,
+	});
+
+	if (!validatedFields.success) {
+		return {
+			errors: validatedFields.error.flatten().fieldErrors,
+			message: 'Error.',
+		};
+	}
+
+	try {
+		const response = await changePassword({
+			currentPassword,
+			password: newPassword,
+			passwordConfirmation: confirmPassword,
+		});
+
+		return {
+			data: response.data,
+			status: response.status,
+		};
+	} catch (error) {
+		return {
+			status: 'error',
+			message: error.message,
+		};
 	}
 };
 
