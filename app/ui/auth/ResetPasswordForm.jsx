@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import { useFormState } from 'react-dom';
+import { useRouter } from 'next/navigation';
 
 import {
 	Box,
@@ -19,6 +20,7 @@ import SubmitButton from '../submitButton/SubmitButton';
 const ResetPasswordForm = ({ dictionary, lang, code }) => {
 	const [state, dispatch] = useFormState(resetPasswordAction, undefined);
 	const toast = useToast();
+	const router = useRouter();
 
 	const ref = useRef(null);
 
@@ -33,17 +35,18 @@ const ResetPasswordForm = ({ dictionary, lang, code }) => {
 
 	useEffect(() => {
 		(() => {
-			if (state?.message === 'Invalid identifier or password') {
-				// toast({
-				// 	status: 'warning',
-				// 	title: dictionary.formContact.toasts.form.loginWarning,
-				// });
+			if (state?.message === 'Server error please try again later.') {
+				toast({
+					status: 'warning',
+					title: dictionary.formContact.toasts.form.serverError,
+				});
 			}
 			if (state?.message === 'success') {
-				// sendEmail(state);
 				ref.current?.reset();
+				router.push(`/${lang}/auth/login`);
 			}
 		})();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [state, toast]);
 
 	const { password } = dictionary.formContact.errors;

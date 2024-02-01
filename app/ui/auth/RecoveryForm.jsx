@@ -12,6 +12,7 @@ import {
 	FormErrorMessage,
 	Input,
 	Text,
+	Toast,
 } from '@chakra-ui/react';
 
 import { recoveryAction } from '@/app/lib/authActions';
@@ -26,10 +27,17 @@ const RecoveryForm = ({ dictionary, lang }) => {
 
 	useEffect(() => {
 		(() => {
+			if (state?.message === 'Server error please try again later.') {
+				Toast({
+					status: 'warning',
+					title: dictionary.formContact.toasts.form.serverError,
+				});
+			}
 			if (state?.message === 'success') {
 				ref.current?.reset();
 			}
 		})();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [state]);
 
 	const { email } = dictionary.formContact.errors;

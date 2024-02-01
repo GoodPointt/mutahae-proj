@@ -5,6 +5,11 @@ import { useRouter, useSearchParams } from 'next/navigation';
 
 import { Flex, Spinner, Text } from '@chakra-ui/react';
 
+import {
+	createBagByUserIdAndJwt,
+	createFavoritesByUserIdAndJwt,
+} from '@/app/lib/api/createUserStorages';
+
 import { setCookie } from 'cookies-next';
 
 const ClientSideRedirection = ({ dictionary, provider, lang }) => {
@@ -36,14 +41,18 @@ const ClientSideRedirection = ({ dictionary, provider, lang }) => {
 				return res;
 			})
 			.then(res => res.json())
-			.then(res => {
-				setCookie('jwt', res.jwt);
-				setCookie('userId', res.user.id);
+			.then(async res => {
+				if (res.jwt) {
+					await createBagByUserIdAndJwt(res.jwt, res.user.id);
+					await createFavoritesByUserIdAndJwt(res.jwt, res.user.id);
+					setCookie('jwt', res.jwt);
+					setCookie('userId', res.user.id);
 
-				setTimeout(() => {
-					setText(dictionary.provider.rederecting);
-					router.push('/');
-				}, 200);
+					setTimeout(() => {
+						setText(dictionary.provider.rederecting);
+						router.push(`/${lang}/`);
+					}, 200);
+				}
 			})
 			.catch(err => {
 				console.error(err);
