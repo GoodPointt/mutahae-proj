@@ -18,7 +18,7 @@ const RecoveryPage = async ({ params: { lang }, searchParams }) => {
 				gap={{ base: '30px', lg: '20px' }}
 				justify={{ lg: 'space-between' }}
 			>
-				{!code ? (
+				{code ? (
 					<RecoveryForm lang={lang} dictionary={dictionary} />
 				) : (
 					<ResetPasswordForm code={code} lang={lang} dictionary={dictionary} />

@@ -19,6 +19,7 @@ import SubmitButton from '../submitButton/SubmitButton';
 
 const ResetPasswordForm = ({ dictionary, lang, code }) => {
 	const [state, dispatch] = useFormState(resetPasswordAction, undefined);
+
 	const toast = useToast();
 	const router = useRouter();
 
@@ -34,18 +35,17 @@ const ResetPasswordForm = ({ dictionary, lang, code }) => {
 			: null;
 
 	useEffect(() => {
-		(() => {
-			if (state?.message === 'Server error please try again later.') {
-				toast({
-					status: 'warning',
-					title: dictionary.formContact.toasts.form.serverError,
-				});
-			}
-			if (state?.message === 'success') {
-				ref.current?.reset();
-				router.push(`/${lang}/auth/login`);
-			}
-		})();
+		if (state?.message === 'Server error please try again later.') {
+			toast({
+				status: 'warning',
+				title: dictionary.formContact.toasts.form.serverError,
+			});
+		}
+		if (state?.message === 'success') {
+			ref.current?.reset();
+			router.push(`/${lang}/auth/login`);
+		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [state, toast]);
 
@@ -53,7 +53,10 @@ const ResetPasswordForm = ({ dictionary, lang, code }) => {
 
 	return (
 		<Box as="form" action={dispatch} ref={ref} width={'100%'} autoComplete="on">
-			<FormControl isInvalid={password1Error} pb="25px">
+			<FormControl
+				isInvalid={password1Error || state?.message === 'not_equal'}
+				pb="25px"
+			>
 				<Input
 					autoComplete="on"
 					name="password1"
@@ -68,11 +71,14 @@ const ResetPasswordForm = ({ dictionary, lang, code }) => {
 					borderRadius={'2px'}
 				/>
 				<FormErrorMessage fontSize={'14px'} position="absolute" bottom="4px">
-					{password1Error === 'invalid' ? password.invalid : password.required}
+					{password1Error === 'invalid' && password.invalid}
 					{state?.message === 'not_equal' && password.not_equal}
 				</FormErrorMessage>
 			</FormControl>
-			<FormControl isInvalid={password2Error} pb="25px">
+			<FormControl
+				isInvalid={password2Error || state?.message === 'not_equal'}
+				pb="25px"
+			>
 				<Input
 					autoComplete="on"
 					name="password2"
@@ -87,7 +93,7 @@ const ResetPasswordForm = ({ dictionary, lang, code }) => {
 					borderRadius={'2px'}
 				/>
 				<FormErrorMessage fontSize={'14px'} position="absolute" bottom="4px">
-					{password2Error === 'invalid' ? password.invalid : password.required}
+					{password2Error === 'invalid' && password.invalid}
 					{state?.message === 'not_equal' && password.not_equal}
 				</FormErrorMessage>
 			</FormControl>
