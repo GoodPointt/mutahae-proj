@@ -211,7 +211,6 @@ export async function resetPasswordAction(prevState, formData) {
 	const { password1, password2, code } = validatedFields.data;
 	if (password1 !== password2) {
 		return {
-			...prevState,
 			message: 'not_equal',
 		};
 	}
