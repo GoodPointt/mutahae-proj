@@ -48,12 +48,18 @@ const RegisterForm = ({ dictionary, lang }) => {
 					title: dictionary.formContact.toasts.form.registerWarning,
 				});
 			}
+			if (state?.message === 'Server error please try again later.') {
+				toast({
+					status: 'warning',
+					title: dictionary.formContact.toasts.form.serverError,
+				});
+			}
 			if (state?.message === 'succsess') {
-				// sendEmail(state);
 				ref.current?.reset();
 			}
 		})();
-	}, [dictionary.formContact.toasts.form.registerWarning, state, toast]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [state, toast]);
 
 	const { email, password, name, lastName } = dictionary.formContact.errors;
 

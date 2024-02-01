@@ -122,7 +122,8 @@
 				"successMsg2": "We're committed to swift communication—expect us to reach out promptly.  We're here to meet your wood supply needs efficiently.",
 				"successMsg3": "Feel free to contact us via social networks as well. We're here to meet your wood supply needs efficiently.",
 				"loginWarning": "Invalid email or password",
-				"registerWarning": "Email already taken"
+				"registerWarning": "Email already taken",
+				"serverError": "Server error please try again later"			
 			}
 		},
 		"errors": {
@@ -146,7 +147,7 @@
 				"required": "Password is required",
 				"invalid": "Password must be at least 6 characters long",
 				"not_equal": "Passwords must be equal"
-			}
+			}			
 		}
 	},
 	"hero": {
@@ -213,7 +214,7 @@
 			"favorites": "Favorites",
 			"contactInformation": "Contact Information",
 			"historyOfOrders": "History of orders",
-			"logout": "logout"
+			"logout": "Logout"
 		},
 		"favorites": {
 			"title": "Favorites"
