@@ -201,5 +201,10 @@
 		"shippingPrice": "משלוח",
 		"total": "סך הכול",
 		"button": "קנה עכשיו"
+	},
+	"searchField": {
+		"search": "חיפוש...",
+		"noResultText": "מצטערים, לא נמצאו תוצאות",
+		"button": "ראה את כל תוצאות החיפוש"
 	}
 }

@@ -201,5 +201,10 @@
 		"shippingPrice": "Shipping",
 		"total": "Total",
 		"button": "Buy now"
+	},
+	"searchField": {
+		"search": "Search...",
+		"noResultText": "Sorry, no results found",
+		"button": "See All Search Results"
 	}
 }

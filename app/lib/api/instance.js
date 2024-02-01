@@ -152,3 +152,22 @@ const getCities = async () => {
 };
 
 export const fetchCities = cache(getCities);
+
+const getProductsByQuery = async value => {
+	try {
+		const {
+			data: { data },
+		} = await instance.get(
+			`/api/goods?locale=en&filters[title][$containsi]=${value}&populate=img&sort[0]=title:asc`
+		);
+		if (data.length === 0) {
+			return [];
+		}
+
+		return data;
+	} catch (e) {
+		console.error(e);
+	}
+};
+
+export const fetchProductsByQuery = cache(getProductsByQuery);

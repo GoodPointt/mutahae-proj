@@ -26,13 +26,13 @@ const Favorites = async () => {
 				padding={0}
 			>
 				{goods.map(good => {
-					const { uid, locale, img, title } = good.attributes;
+					const { uid, locale, img, title, descShort } = good.attributes;
 					const imgUrl = img.data[0].attributes.formats.small.url;
 
 					return (
 						<ProductItem
 							lang={locale}
-							product={{ uid, title, button: 'Add To Bag', imgUrl }}
+							product={{ uid, title, button: 'Add To Bag', imgUrl, descShort }}
 							key={uid}
 						/>
 					);

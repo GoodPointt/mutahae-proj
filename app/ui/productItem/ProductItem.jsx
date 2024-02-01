@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 import { Box, Button, Heading, Text, useMediaQuery } from '@chakra-ui/react';
 
-import Start from '../svg/Star';
+import Star from '../svg/Star';
 
 const ProductItem = ({ product, lang }) => {
 	const [isModileScreen] = useMediaQuery('(max-width: 1024px)');
@@ -51,7 +51,7 @@ const ProductItem = ({ product, lang }) => {
 								height: '100%',
 								position: 'absolute',
 								background:
-									'linear-gradient(0deg, rgba(0,0,0,0.7) 15%, rgba(252,176,69,0) 50%, rgba(252,176,69,0) 75%, rgba(0,0,0,0.7) 100%)',
+									'linear-gradient(0deg, rgba(0,0,0,0.7) 15%, rgba(252,176,69,0) 50%, rgba(252,176,69,0) 70%, rgba(0,0,0,0.8) 100%)',
 							},
 						}}
 					>
@@ -84,7 +84,7 @@ const ProductItem = ({ product, lang }) => {
 							right={'20px'}
 							zIndex={'4px'}
 						>
-							{Start()}
+							{<Star />}
 						</Box>
 						<Heading color={'#fff'} fontSize={'24'} mx={4}>
 							{product?.title || ''}

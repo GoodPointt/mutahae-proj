@@ -3,10 +3,11 @@
 import { useState } from 'react';
 import Link from 'next/link';
 
-import { Box, Button, Text, useDisclosure } from '@chakra-ui/react';
+import { Box, Button, useDisclosure } from '@chakra-ui/react';
 
 import Bag from '../../bag/Bag';
 import Modal from '../../modal/Modal';
+import SearchField from '../../search/searchField/SearchField';
 import AuthProfileIcon from '../../svg/AuthProfileIcon';
 import BagNavIcon from '../../svg/BagNavIcon';
 import FavoriteNavIcon from '../../svg/FavoriteNavIcon';
@@ -114,7 +115,9 @@ const TopMenu = ({
 			</Box>
 			<Modal isOpen={isOpen} onClose={onClose}>
 				{variant === 'BAG_ICON' && <Bag />}
-				{variant === 'SEARCH_ICON' && <Text>Search</Text>}
+				{variant === 'SEARCH_ICON' && (
+					<SearchField lang={lang} onClose={onClose} />
+				)}
 			</Modal>
 		</>
 	);

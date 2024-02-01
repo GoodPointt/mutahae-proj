@@ -3,6 +3,8 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
+import { profileInstance } from './api/profileInstance';
+
 import { z } from 'zod';
 
 const loginSchema = z
@@ -61,6 +63,7 @@ export async function loginAction(prevState, formData) {
 				httpOnly: true,
 				secure: true,
 			});
+			profileInstance.defaults.headers.authorization = `Bearer ${userData.jwt}`;
 		}
 	} catch (error) {
 		console.error(error);
@@ -127,8 +130,9 @@ export async function registerAction(prevState, formData) {
 			body: JSON.stringify({
 				email,
 				password,
-				username: name,
+				firstName: name,
 				lastName,
+				username: email.split('@')[0],
 			}),
 			cache: 'no-cache',
 		});
@@ -170,6 +174,7 @@ export async function registerAction(prevState, formData) {
 				httpOnly: true,
 				secure: true,
 			});
+			profileInstance.defaults.headers.authorization = `Bearer ${userData.jwt}`;
 		}
 	} catch (error) {
 		console.error(error);

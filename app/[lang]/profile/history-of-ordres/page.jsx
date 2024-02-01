@@ -2,7 +2,7 @@ import { OrderHistory } from '../../../ui/profile/orderHistory/OrderHistory';
 
 import { Heading } from '@chakra-ui/react';
 
-const HistoryOfOrders = () => {
+const HistoryOfOrders = ({ params: { lang } }) => {
 	return (
 		<>
 			<Heading
@@ -12,7 +12,7 @@ const HistoryOfOrders = () => {
 			>
 				History of orders
 			</Heading>
-			<OrderHistory />
+			<OrderHistory lang={lang} />
 		</>
 	);
 };

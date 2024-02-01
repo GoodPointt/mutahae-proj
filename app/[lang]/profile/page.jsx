@@ -6,7 +6,11 @@ import { UserDetailsForm } from '../../ui/profile/forms/UserDetailsForm';
 
 import { Heading } from '@chakra-ui/react';
 
-const Profile = () => {
+import { fetchUserData } from '../../lib/api/profileInstance';
+
+const Profile = async ({ params: { lang } }) => {
+	const { data: userData } = await fetchUserData();
+
 	return (
 		<>
 			<Heading
@@ -16,7 +20,7 @@ const Profile = () => {
 			>
 				Contact Information
 			</Heading>
-			<UserDetailsForm />
+			<UserDetailsForm userData={userData} lang={lang} />
 			<AddressSection />
 			<AddressForm />
 		</>

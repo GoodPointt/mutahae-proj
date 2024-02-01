@@ -5,13 +5,18 @@ import { Box, Flex, Heading, ListItem, Text } from '@chakra-ui/react';
 
 import imgurl from '@/public/img/product.png';
 
-export const OrderHistoryItem = () => {
+export const OrderHistoryItem = ({ lang }) => {
 	return (
 		<ListItem display="flex">
-			<Box w="100px" h="100px" mr="30px">
+			<Box
+				w="100px"
+				h="100px"
+				mr={lang === 'en' && '30px'}
+				ml={lang === 'he' && '30px'}
+			>
 				<Image src={imgurl} alt="product img" />
 			</Box>
-			<Flex flexDirection={{ base: 'column', lg: 'row' }}>
+			<Flex flexDirection={{ base: 'column', lg: 'row' }} gap="10px">
 				<Box maxW="257px">
 					<Heading as="h3" fontSize="24px" fontWeight={700}>
 						Oak Board
@@ -25,12 +30,21 @@ export const OrderHistoryItem = () => {
 					<Text
 						fontSize="14px"
 						color="#808080"
-						textAlign={{ base: 'left', lg: 'right' }}
+						textAlign={{
+							base: lang === 'he' ? 'right' : 'left',
+							lg: lang === 'he' ? 'left' : 'right',
+						}}
 						mb="14px"
 					>
 						Order №0123456789, 26/01/2024
 					</Text>
-					<Text fontSize="16px" textAlign={{ base: 'left', lg: 'right' }}>
+					<Text
+						fontSize="16px"
+						textAlign={{
+							base: lang === 'he' ? 'right' : 'left',
+							lg: lang === 'he' ? 'left' : 'right',
+						}}
+					>
 						Delivered
 					</Text>
 				</Box>
