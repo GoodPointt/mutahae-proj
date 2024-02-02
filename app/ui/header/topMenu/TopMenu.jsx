@@ -14,6 +14,8 @@ import FavoriteNavIcon from '../../svg/FavoriteNavIcon';
 import ProfileNavIcon from '../../svg/ProfileNavIcon';
 import Search from '../../svg/Search';
 
+import { useQueryState } from 'nuqs';
+
 const TopMenu = ({
 	lang,
 	authToken,
@@ -24,10 +26,13 @@ const TopMenu = ({
 		'BAG_ICON',
 	],
 	display = 'none',
+	bagData,
+	dictionary,
 }) => {
-	const { isOpen, onOpen, onClose } = useDisclosure();
+	const { isOpen = false, onOpen, onClose } = useDisclosure();
 	//убрать потом юзРеф когда будут рефы с поиска и сумки
 	const [variant, setVariant] = useState();
+	const [query, setQuery] = useQueryState('query');
 
 	const profilePathname = authToken
 		? `/${lang}/profile`
@@ -73,6 +78,11 @@ const TopMenu = ({
 		setVariant(id);
 	};
 
+	const handleClose = () => {
+		setQuery(null);
+		onClose();
+	};
+
 	return (
 		<>
 			<Box
@@ -113,10 +123,18 @@ const TopMenu = ({
 					}
 				})}
 			</Box>
-			<Modal isOpen={isOpen} onClose={onClose}>
-				{variant === 'BAG_ICON' && <Bag />}
+			<Modal isOpen={isOpen} onClose={handleClose} lang={lang}>
+				{variant === 'BAG_ICON' && (
+					<Bag bagData={bagData} authToken={authToken} />
+				)}
 				{variant === 'SEARCH_ICON' && (
-					<SearchField lang={lang} onClose={onClose} />
+					<SearchField
+						lang={lang}
+						onClose={handleClose}
+						query={query}
+						setQuery={setQuery}
+						dictionary={dictionary}
+					/>
 				)}
 			</Modal>
 		</>

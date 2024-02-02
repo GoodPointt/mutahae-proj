@@ -2,33 +2,70 @@ import { cache } from 'react';
 import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
 
+import { flattenAttributes } from '../utils/flattenAttributes';
+
 import axios from 'axios';
 
 export const profileInstance = axios.create({
 	baseURL: process.env.NEXT_PUBLIC_STRAPI_API_URL,
 });
 
-const getFavorites = async userId => {
+const getFavorites = async () => {
 	try {
 		const token = cookies().get('jwt')?.value;
-		if (!token) throw new Error('not authorized');
+		const userId = cookies().get('userId')?.value;
+		if (!token || !userId) {
+			throw new Error('Not authorized');
+		}
+		profileInstance.defaults.headers.authorization = `Bearer ${token}`;
 
-		const {
-			data: { data },
-		} = await profileInstance.get(
+		const response = await profileInstance.get(
 			`/api/favorites?populate[0]=goods&populate[1]=goods.good&populate[2]=goods.img&filters[user][id][$eq]=${userId}`
 		);
-		if (data.length === 0) {
-			return notFound();
+
+		const { data } = response.data;
+
+		if (!data) {
+			return [];
 		}
 
-		return data;
+		return data[0]?.attributes?.goods?.data;
 	} catch (e) {
+		console.error(e.message);
+
 		return notFound();
 	}
 };
 
 export const fetchFavorites = cache(getFavorites);
+
+const getOrders = async () => {
+	try {
+		const token = cookies().get('jwt')?.value;
+		const userId = cookies().get('userId')?.value;
+		if (!token || !userId) {
+			throw new Error('Not authorized');
+		}
+		profileInstance.defaults.headers.authorization = `Bearer ${token}`;
+
+		const response = await profileInstance.get(
+			`/api/orders?populate=deep,4&filters[user][id][$eq]=${userId}`
+		);
+
+		const { data } = response.data;
+
+		if (!data) {
+			return [];
+		}
+
+		return data;
+	} catch (e) {
+		console.error(e.message);
+
+		return notFound();
+	}
+};
+export const fetchOrders = cache(getOrders);
 
 const getUserData = async () => {
 	try {
@@ -72,6 +109,34 @@ export const updateUserData = async userData => {
 	}
 };
 
+export const changePassword = async dataPassword => {
+	try {
+		const token = cookies().get('jwt')?.value;
+
+		if (!token) {
+			throw new Error('Not authorized');
+		}
+		profileInstance.defaults.headers.authorization = `Bearer ${token}`;
+
+		const { data } = await profileInstance.post(
+			'/api/auth/change-password',
+			dataPassword
+		);
+
+		return {
+			data,
+			status: 'succsess',
+		};
+	} catch (error) {
+		console.error(error);
+
+		return {
+			status: 'error',
+			message: error.message,
+		};
+	}
+};
+
 const addToBag = async (bagId, goods) => {
 	try {
 		const token = cookies().get('jwt').value;
@@ -104,7 +169,7 @@ const getBagByUserId = async userId => {
 	try {
 		const token = cookies().get('jwt').value;
 
-		return await profileInstance.get(
+		const res = await profileInstance.get(
 			`/api/bags?populate[0]=goods&populate[1]=goods.good&populate[2]=goods.good.img&filters[user][id][$eq]=${userId}`,
 			{
 				headers: {
@@ -112,6 +177,12 @@ const getBagByUserId = async userId => {
 				},
 			}
 		);
+
+		const {
+			data: { data: responseData },
+		} = res;
+
+		return flattenAttributes(responseData);
 	} catch (error) {
 		console.error(error);
 

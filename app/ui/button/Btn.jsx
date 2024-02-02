@@ -21,6 +21,7 @@ const Btn = ({
 			_hover={{ bgColor: '#81672e' }}
 			onClick={onClick}
 			borderRadius={'2px'}
+			width={{ base: '100%', sm: '250px' }}
 		>
 			{children}
 		</Button>

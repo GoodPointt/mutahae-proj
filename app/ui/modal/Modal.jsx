@@ -3,24 +3,65 @@
 import React from 'react';
 
 import {
+	Box,
+	Button,
 	Modal as ChakraModal,
 	ModalBody,
-	ModalCloseButton,
 	ModalContent,
-	ModalHeader,
 	ModalOverlay,
 } from '@chakra-ui/react';
 
-const Modal = ({ isOpen, onClose, children }) => {
+import CloseIcon from '../svg/CloseIcon';
+
+const Modal = ({ isOpen, onClose, children, lang }) => {
 	return (
-		<ChakraModal isOpen={isOpen} onClose={onClose}>
+		<ChakraModal
+			isOpen={isOpen}
+			onClose={onClose}
+			size={'2xl'}
+			scrollBehavior={'inside'}
+		>
 			<ModalOverlay />
-			<ModalContent bg={'#000'} border={'1px #fff solid'} maxW={'max-content'}>
-				<ModalHeader p={0}>
-					<ModalCloseButton pos={'absolute'} top={0} right={0} />
-				</ModalHeader>
-				<ModalBody p={'30px'} overflowY={'auto'}>
-					{children}
+			<ModalContent
+				bg={'#000'}
+				boxShadow="inset 0 0 5px rgba(255, 255, 255, 0.5)"
+			>
+				<ModalBody
+					p={'30px'}
+					overflowY={'auto'}
+					pos={'relative'}
+					css={{
+						'&::-webkit-scrollbar': {
+							width: '4px',
+							maxHeight: '100px',
+						},
+						'&::-webkit-scrollbar-thumb': {
+							backgroundColor: '#A28445',
+							borderRadius: '2px',
+							maxHeight: '10px',
+						},
+						'&::-webkit-scrollbar-track': {
+							backgroundColor: '#A28445',
+							borderRadius: '2px',
+						},
+					}}
+				>
+					<Box>
+						<Button
+							variant={'unstyled'}
+							display={'flex'}
+							pos={'absolute'}
+							top={'5px'}
+							zIndex={100}
+							onClick={onClose}
+							style={lang === 'he' ? { left: '5px' } : { right: '5px' }}
+							_hover={{ stroke: 'rgba(100, 100, 100, 0.5)' }}
+							transition={'all'}
+						>
+							<CloseIcon />
+						</Button>
+						{children}
+					</Box>
 				</ModalBody>
 			</ModalContent>
 		</ChakraModal>

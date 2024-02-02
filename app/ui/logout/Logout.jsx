@@ -6,7 +6,7 @@ import { Box, Button } from '@chakra-ui/react';
 
 import { logout } from '../../lib/actions';
 
-export const Logout = () => {
+export const Logout = ({ logoutDictionary }) => {
 	// eslint-disable-next-line no-unused-vars
 	const [state, dispatch] = useFormState(logout, null);
 
@@ -20,7 +20,7 @@ export const Logout = () => {
 				type="submit"
 				p={0}
 			>
-				logout
+				{logoutDictionary}
 			</Button>
 		</Box>
 	);

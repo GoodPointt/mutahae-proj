@@ -6,7 +6,8 @@
 		"buy": "BUY",
 		"bag": "Add to bag",
 		"forgotPass": "*Forgot your password?",
-		"createAcc": "Create account"
+		"createAcc": "Create account",
+		"cancel": "Cancel"
 	},
 	"header": {
 		"navItems": [
@@ -100,16 +101,20 @@
 		}
 	},
 	"formContact": {
+		"recovery": "Recover password",
 		"login": "Login",
 		"register": "Create account",
 		"sectionTitle": "Contact us",
 		"title": "Contact",
 		"text": "Fill up the form below to contact",
+		"recoveryText": "*We will send you an email to reset your password.",
 		"nameLabel": "First name",
 		"lastNameLabel": "Last name",
 		"mailLabel": "Mail",
 		"phoneLabel": "Phone",
 		"passwordLabel": "Password",
+		"password1Label": "New password",
+		"password2Label": "Repeat new password",
 		"toasts": {
 			"form": {
 				"success": "Form submitted successfully",
@@ -117,7 +122,8 @@
 				"successMsg2": "We're committed to swift communication—expect us to reach out promptly.  We're here to meet your wood supply needs efficiently.",
 				"successMsg3": "Feel free to contact us via social networks as well. We're here to meet your wood supply needs efficiently.",
 				"loginWarning": "Invalid email or password",
-				"registerWarning": "Email already taken"
+				"registerWarning": "Email already taken",
+				"serverError": "Server error please try again later"
 			}
 		},
 		"errors": {
@@ -139,7 +145,8 @@
 			},
 			"password": {
 				"required": "Password is required",
-				"invalid": "Password must be at least 6 characters long"
+				"invalid": "Password must be at least 6 characters long",
+				"not_equal": "Passwords must be equal"
 			}
 		}
 	},
@@ -206,5 +213,38 @@
 		"search": "Search...",
 		"noResultText": "Sorry, no results found",
 		"button": "See All Search Results"
+	},
+	"profile": {
+		"sidebar": {
+			"favorites": "Favorites",
+			"contactInformation": "Contact Information",
+			"historyOfOrders": "History of orders",
+			"logout": "Logout"
+		},
+		"favorites": {
+			"title": "Favorites"
+		},
+		"contactInformation": {
+			"title": "Contact Information",
+			"userDetailsForm": {
+				"firstName": "First name",
+				"lastName": "Last name",
+				"email": "Email",
+				"phone": "Phone",
+				"btn": "Save"
+			}
+		},
+		"ressetPasswordForm": {
+			"title": "Сhange Password",
+			"currentPassword": "Current Password",
+			"newPassword": "New Password",
+			"confirmPassword": "Сonfirm Password",
+			"btn": "Save"
+		}
+	},
+	"provider": {
+		"loading": "Loading...",
+		"rederecting": "You've logged in successfully. You will be redirected in a few seconds...",
+		"error": "Something went wrong, please try again"
 	}
 }

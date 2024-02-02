@@ -7,21 +7,23 @@ import {
 	Box,
 	Button,
 	Divider,
+	IconButton,
 	Input,
 	InputGroup,
+	InputRightElement,
 	Text,
 } from '@chakra-ui/react';
 
 import { fetchProductsByQuery } from '../../../lib/api/instance';
 
+import DeleteSearch from '../../svg/DeleteSearch';
 import FilteredProduct from '../filteredProduct/FilteredProduct';
 
-import { useQueryState } from 'nuqs';
 import { useDebouncedCallback } from 'use-debounce';
 
-const SearchField = ({ lang, onClose }) => {
+const SearchField = ({ lang, onClose, setQuery, query, dictionary }) => {
 	const [filter, setFilter] = useState('');
-	const [query, setQuery] = useQueryState('query');
+
 	const [filteredProducts, setFilteredProducts] = useState('');
 
 	const ref = useRef(null);
@@ -49,17 +51,19 @@ const SearchField = ({ lang, onClose }) => {
 		}
 	}, 300);
 
-	// const clearSearch = () => {
-	// 	ref?.current?.reset();
-	// };
+	const clearSearch = () => {
+		ref?.current?.reset();
+		setQuery(null);
+		setFilter('');
+	};
 
 	return (
 		<>
 			<InputGroup
 				as={'form'}
 				ref={ref}
-				size="md"
-				minWidth={{ base: '100%', sm: '362px', md: '460px' }}
+				display={'flex'}
+				alignItems={'center'}
 				onSubmit={e => {
 					e.preventDefault();
 				}}
@@ -73,7 +77,7 @@ const SearchField = ({ lang, onClose }) => {
 					fontWeight={500}
 					lineHeight={1}
 					type="text"
-					placeholder="Search..."
+					placeholder={dictionary.searchField.search}
 					border={'none'}
 					bgColor={'base'}
 					onChange={handleSearch}
@@ -88,16 +92,16 @@ const SearchField = ({ lang, onClose }) => {
 					}}
 				/>
 
-				{/* <InputRightElement>
+				<InputRightElement position={'relative'}>
 					<IconButton
 						isRound={true}
 						colorScheme="ghost"
 						aria-label="clear search"
-						icon={<CloseIcon />}
+						icon={<DeleteSearch />}
 						_hover={{ color: 'accent' }}
 						onClick={clearSearch}
 					/>
-				</InputRightElement> */}
+				</InputRightElement>
 			</InputGroup>
 
 			{filteredProducts.length > 0 && query !== '' && (
@@ -106,7 +110,7 @@ const SearchField = ({ lang, onClose }) => {
 
 			{filteredProducts.length > 0 && query !== '' && (
 				<Box as="ul" display={'flex'} flexDir={'column'} rowGap={'30px'}>
-					{filteredProducts.slice(0, 3).map(product => (
+					{filteredProducts.slice(0, 6).map(product => (
 						<FilteredProduct
 							key={product.id}
 							product={product.attributes}
@@ -117,7 +121,7 @@ const SearchField = ({ lang, onClose }) => {
 			)}
 
 			{filteredProducts.length === 0 && query !== '' && filter !== '' && (
-				<Text>no</Text>
+				<Text>{dictionary.searchField.noResultText}</Text>
 			)}
 
 			{filteredProducts.length > 0 && (
@@ -135,8 +139,7 @@ const SearchField = ({ lang, onClose }) => {
 					mt={'30px'}
 					onClick={onClose}
 				>
-					button
-					{/* {dictionary.searchField.button} */}
+					{dictionary.searchField.button}
 				</Button>
 			)}
 		</>

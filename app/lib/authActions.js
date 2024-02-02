@@ -3,6 +3,16 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
+import {
+	loginUserByEmailAndPassword,
+	recoveryPasswordByEmail,
+	registerNewUser,
+	resetPasswordWithToken,
+} from './api/auth';
+import {
+	createBagByUserIdAndJwt,
+	createFavoritesByUserIdAndJwt,
+} from './api/createUserStorages';
 import { profileInstance } from './api/profileInstance';
 
 import { z } from 'zod';
@@ -19,10 +29,6 @@ const loginSchema = z
 	.partial();
 
 export async function loginAction(prevState, formData) {
-	const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL;
-	if (!STRAPI_URL) throw new Error('Missing STRAPI_URL environment variable.');
-	const url = `${STRAPI_URL}/api/auth/local`;
-
 	const validatedFields = loginSchema.safeParse({
 		email: formData.get('email'),
 		password: formData.get('password'),
@@ -38,16 +44,9 @@ export async function loginAction(prevState, formData) {
 	const { email, password } = validatedFields.data;
 
 	try {
-		const response = await fetch(url, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({ identifier: email, password }),
-			cache: 'no-cache',
-		});
-
+		const response = await loginUserByEmailAndPassword(email, password);
 		const userData = await response.json();
+
 		if (!response.ok && userData.error)
 			return { ...prevState, message: userData.error.message, errors: null };
 		if (response.ok && userData.jwt) {
@@ -55,13 +54,11 @@ export async function loginAction(prevState, formData) {
 				name: 'jwt',
 				value: userData.jwt,
 				httpOnly: true,
-				secure: true,
 			});
 			cookies().set({
 				name: 'userId',
 				value: userData.user.id,
 				httpOnly: true,
-				secure: true,
 			});
 			profileInstance.defaults.headers.authorization = `Bearer ${userData.jwt}`;
 		}
@@ -101,10 +98,6 @@ const registerSchema = z
 	.partial();
 
 export async function registerAction(prevState, formData) {
-	const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL;
-	if (!STRAPI_URL) throw new Error('Missing STRAPI_URL environment variable.');
-	const url = `${STRAPI_URL}/api/auth/local/register`;
-
 	const validatedFields = registerSchema.safeParse({
 		name: formData.get('name'),
 		lastName: formData.get('lastName'),
@@ -122,57 +115,25 @@ export async function registerAction(prevState, formData) {
 	const { email, name, lastName, password } = validatedFields.data;
 
 	try {
-		const response = await fetch(url, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				email,
-				password,
-				firstName: name,
-				lastName,
-				username: email.split('@')[0],
-			}),
-			cache: 'no-cache',
-		});
+		const response = await registerNewUser(email, name, lastName, password);
 
 		const userData = await response.json();
 
 		if (!response.ok && userData.error)
 			return { ...prevState, message: userData.error.message, errors: null };
 		if (response.ok && userData.jwt) {
-			await fetch(STRAPI_URL + '/api/bags', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: 'Bearer ' + userData.jwt,
-				},
-				cache: 'no-store',
-				body: JSON.stringify({ data: { user: userData.user.id } }),
-			});
-
-			await fetch(STRAPI_URL + '/api/favorites', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: 'Bearer ' + userData.jwt,
-				},
-				cache: 'no-store',
-				body: JSON.stringify({ data: { user: userData.user.id } }),
-			});
+			await createBagByUserIdAndJwt(userData.jwt, userData.user.id);
+			await createFavoritesByUserIdAndJwt(userData.jwt, userData.user.id);
 
 			cookies().set({
 				name: 'jwt',
 				value: userData.jwt,
 				httpOnly: true,
-				secure: true,
 			});
 			cookies().set({
 				name: 'userId',
 				value: userData.user.id,
 				httpOnly: true,
-				secure: true,
 			});
 			profileInstance.defaults.headers.authorization = `Bearer ${userData.jwt}`;
 		}
@@ -195,10 +156,6 @@ const recoverySchema = z
 	.partial();
 
 export async function recoveryAction(prevState, formData) {
-	const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL;
-	if (!STRAPI_URL) throw new Error('Missing STRAPI_URL environment variable.');
-	const url = `${STRAPI_URL}/api/auth/forgot-password`;
-
 	const validatedFields = recoverySchema.safeParse({
 		email: formData.get('email'),
 	});
@@ -213,38 +170,65 @@ export async function recoveryAction(prevState, formData) {
 	const { email } = validatedFields.data;
 
 	try {
-		const response = await fetch(url, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({ email }),
-			cache: 'no-cache',
-		});
+		const response = await recoveryPasswordByEmail(email);
 
 		const data = await response.json();
 
-		// console.log(data);
 		if (!response.ok && data.error)
 			return { ...prevState, message: data.error.message, errors: null };
-		// if (response.ok && data.jwt) {
-		// cookies().set({
-		// 	name: 'jwt',
-		// 	value: userData.jwt,
-		// 	httpOnly: true,
-		// 	secure: true,
-		// });
-		// cookies().set({
-		// 	name: 'userId',
-		// 	value: userData.user.id,
-		// 	httpOnly: true,
-		// 	secure: true,
-		// });
-		// }
+		if (response.ok) {
+			return { ...prevState, message: 'success' };
+		}
 	} catch (error) {
 		console.error(error);
 
 		return { error: 'Server error please try again later.' };
 	}
-	// redirect('/');
+}
+
+const resetPasswordSchema = z
+	.object({
+		code: z.string().trim(),
+		password1: z.string().min(6, { message: 'invalid' }),
+		password2: z.string().min(6, { message: 'invalid' }),
+	})
+	.partial();
+
+export async function resetPasswordAction(prevState, formData) {
+	const validatedFields = resetPasswordSchema.safeParse({
+		password1: formData.get('password1'),
+		password2: formData.get('password2'),
+		code: formData.get('code'),
+	});
+
+	if (!validatedFields.success) {
+		return {
+			errors: validatedFields.error.flatten().fieldErrors,
+			message: 'Error.',
+		};
+	}
+
+	const { password1, password2, code } = validatedFields.data;
+	if (password1 !== password2) {
+		return {
+			message: 'not_equal',
+		};
+	}
+
+	try {
+		const response = await resetPasswordWithToken(code, password1, password2);
+
+		const data = await response.json();
+
+		if (!response.ok && data.error)
+			return { ...prevState, message: data.error.message, errors: null };
+
+		if (response.ok) {
+			return { ...prevState, message: 'success' };
+		}
+	} catch (error) {
+		console.error(error);
+
+		return { error: 'Server error please try again later.' };
+	}
 }

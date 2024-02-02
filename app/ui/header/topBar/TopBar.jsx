@@ -4,7 +4,15 @@ import { iconData } from '@/app/lib/data';
 
 import TopMenu from '../topMenu/TopMenu';
 
-const TopBar = ({ flexDir = 'row', gap = '0', contacts, lang, authToken }) => {
+const TopBar = ({
+	flexDir = 'row',
+	gap = '0',
+	contacts,
+	lang,
+	authToken,
+	bagData,
+	dictionary,
+}) => {
 	const renderIconLink = ({ icon, text, href }) => (
 		<Box as="li" key={href}>
 			<Link
@@ -51,7 +59,12 @@ const TopBar = ({ flexDir = 'row', gap = '0', contacts, lang, authToken }) => {
 				{iconData(contacts).map(renderIconLink)}
 			</Box>
 
-			<TopMenu lang={lang} authToken={authToken} />
+			<TopMenu
+				lang={lang}
+				authToken={authToken}
+				bagData={bagData}
+				dictionary={dictionary}
+			/>
 		</Flex>
 	);
 };

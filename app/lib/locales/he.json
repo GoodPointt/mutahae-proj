@@ -6,7 +6,8 @@
 		"buy": "לקנייה",
 		"bag": "להוסיף לתיק",
 		"forgotPass": "*שכחת ססמה?",
-		"createAcc": "צור חשבון"
+		"createAcc": "צור חשבון",
+		"cancel": "לבטל"
 	},
 	"header": {
 		"navItems": [
@@ -100,16 +101,20 @@
 		}
 	},
 	"formContact": {
+		"recovery": "שחזור סיסמה",
 		"login": "התחברות",
 		"register": "צור חשבון",
 		"sectionTitle": "צור קשר",
 		"title": "צור קשר",
 		"text": "מלא את הטופס למטה כדי ליצור קשר",
+		"recoveryText": ".נשלח לך אימייל לאיפוס הסיסמה שלך*",
 		"nameLabel": "שם שלך",
 		"lastNameLabel": "שם משפחה",
 		"mailLabel": "אימייל",
 		"phoneLabel": "טלפון",
 		"passwordLabel": "סיסמה",
+		"password1Label": "סיסמה חדשה",
+		"password2Label": "חזור על סיסמה חדשה",
 		"toasts": {
 			"form": {
 				"success": "הטופס נשלח בהצלחה",
@@ -117,7 +122,8 @@
 				"successMsg2": "אנו מחויבים לתקשורת יעילה וניצור קשר בהקדם.",
 				"successMsg3": "הנכם מוזמנים לבקר ברשתות החברתיות שלנו.",
 				"loginWarning": "מזהה או סיסמה לא חוקיים",
-				"registerWarning": "כתובת האימייל כבר תפוסה"
+				"registerWarning": "כתובת האימייל כבר תפוסה",
+				"serverError": "שגיאת שרת אנא נסה שוב מאוחר יותר"
 			}
 		},
 		"errors": {
@@ -139,7 +145,8 @@
 			},
 			"password": {
 				"required": "מספר הטלפון הוא שדה חובה",
-				"invalid": "הסיסמה חייבת להיות באורך של לפחות 6 תווים"
+				"invalid": "הסיסמה חייבת להיות באורך של לפחות 6 תווים",
+				"not_equal": "סיסמאות חייבות להיות שוות"
 			}
 		}
 	},
@@ -201,6 +208,39 @@
 		"shippingPrice": "משלוח",
 		"total": "סך הכול",
 		"button": "קנה עכשיו"
+	},
+	"profile": {
+		"sidebar": {
+			"favorites": "מועדפים",
+			"contactInformation": "פרטי יצירת קשר",
+			"historyOfOrders": "היסטוריה של הזמנות",
+			"logout": "התנתקות"
+		},
+		"favorites": {
+			"title": "מועדפים"
+		},
+		"contactInformation": {
+			"title": "מידע ליצירת קשר",
+			"userDetailsForm": {
+				"firstName": "שם פרטי",
+				"lastName": "שם משפחה",
+				"email": "אימייל",
+				"phone": "טלפון",
+				"btn": "שמור"
+			}
+		},
+		"ressetPasswordForm": {
+			"title": "שינוי סיסמה",
+			"currentPassword": "סיסמה נוכחית",
+			"newPassword": "סיסמה חדשה",
+			"confirmPassword": "אשר סיסמה",
+			"btn": "שמור"
+		}
+	},
+	"provider": {
+		"loading": "...טוען",
+		"rederecting": "...התחברת בהצלחה. תופנה מחדש תוך מספר שניות",
+		"error": "משהו השתבש. אנא נסה שוב"
 	},
 	"searchField": {
 		"search": "חיפוש...",
