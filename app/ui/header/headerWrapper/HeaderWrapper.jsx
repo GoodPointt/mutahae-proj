@@ -72,6 +72,7 @@ const HeaderWrapper = ({ lang, dictionary, contacts, authToken, bagData }) => {
 					lang={lang}
 					contacts={contacts}
 					authToken={authToken}
+					dictionary={dictionary}
 				/>
 				<LocaleSwitcher />
 			</Box>
@@ -106,6 +107,7 @@ const HeaderWrapper = ({ lang, dictionary, contacts, authToken, bagData }) => {
 					authToken={authToken}
 					display={'flex'}
 					bagData={bagData}
+					dictionary={dictionary}
 				/>
 				<Button
 					variant={'ghost'}

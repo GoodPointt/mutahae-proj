@@ -2,22 +2,31 @@
 
 import { useRef } from 'react';
 import { useFormState } from 'react-dom';
-import { FaAsterisk } from 'react-icons/fa';
 import ReactInputMask from 'react-input-mask';
 
 import {
 	Box,
+	Flex,
 	FormControl,
 	FormErrorMessage,
 	Input,
-	InputGroup,
-	InputLeftElement,
-	InputRightElement,
 } from '@chakra-ui/react';
 
 import { submitData } from '../../../lib/orderActions';
 
-const ContactInfo = ({ dictionary, lang }) => {
+import FinalAmount from '../finalAmount/FinalAmount';
+import IsAccount from '../isAccount/IsAccount';
+import Shipping from '../shipping/Shipping';
+
+const ContactInfo = ({
+	dictionary,
+	lang,
+	authToken,
+	arrayCities,
+	onValueChange,
+	selectedCity,
+	userData,
+}) => {
 	const [state, dispatch] = useFormState(submitData, undefined);
 
 	const ref = useRef(null);
@@ -52,120 +61,149 @@ const ContactInfo = ({ dictionary, lang }) => {
 			? state.errors.phone[0]
 			: null;
 
+	const { email, phone, name, lastName } = dictionary.formContact.errors;
+
 	return (
-		<Box
-			as="form"
-			action={dispatch}
-			ref={ref}
-			autoComplete="off"
-			display={'flex'}
-			flexDir={'column'}
-			rowGap={{ base: '15px', sm: '25px' }}
-			mb={'20px'}
-		>
-			<Box
-				display={'flex'}
-				flexDir={{ base: 'column', sm: 'row' }}
-				gap={'15px'}
+		<Box as="form" action={dispatch} ref={ref} autoComplete="off">
+			<Flex
+				flexDirection={{ base: 'column', lg: 'row' }}
+				gap={'50px'}
+				alignItems={'start'}
 			>
-				<FormControl isInvalid={firstNameError}>
-					<Input
-						name="firstName"
-						type="text"
-						bgColor="#3b3d46"
-						borderRadius={'2px'}
-						position={'relative'}
-						placeholder={dictionary.order.firstName}
-						style={
-							lang === 'he' ? { direction: 'ltr', textAlign: 'right' } : null
-						}
-						focusBorderColor="#a28445"
-						border={'1px solid transparent'}
-					/>
-					<FormErrorMessage
-						fontSize={'14px'}
-						position="absolute"
-						bottom="-20px"
+				<Box w={{ base: '100%', lg: '651px', xl: '751px' }}>
+					<Flex
+						flexDir={'column'}
+						rowGap={{ base: '15px', sm: '25px' }}
+						mb={'20px'}
 					>
-						{firstNameError === 'required' ? 'required' : 'invalid'}
-					</FormErrorMessage>
-				</FormControl>
+						<Box
+							display={'flex'}
+							flexDir={{ base: 'column', sm: 'row' }}
+							gap={'15px'}
+						>
+							<FormControl isInvalid={firstNameError}>
+								<Input
+									name="firstName"
+									type="text"
+									bgColor="#3b3d46"
+									borderRadius={'2px'}
+									position={'relative'}
+									defaultValue={userData?.name || ''}
+									placeholder={dictionary.order.firstName}
+									style={
+										lang === 'he'
+											? { direction: 'ltr', textAlign: 'right' }
+											: null
+									}
+									focusBorderColor="#a28445"
+									border={'1px solid transparent'}
+								/>
+								<FormErrorMessage
+									fontSize={'14px'}
+									position="absolute"
+									bottom="-20px"
+								>
+									{firstNameError === 'required' ? name.required : name.invalid}
+								</FormErrorMessage>
+							</FormControl>
 
-				<FormControl>
-					<Input
-						name="lastName"
-						type="text"
-						bgColor="#3b3d46"
-						borderRadius={'2px'}
-						placeholder={dictionary.order.lastName}
-						style={
-							lang === 'he' ? { direction: 'ltr', textAlign: 'right' } : null
-						}
-						focusBorderColor="#a28445"
-						border={'1px solid transparent'}
+							<FormControl isInvalid={lastNameError}>
+								<Input
+									name="lastName"
+									type="text"
+									bgColor="#3b3d46"
+									borderRadius={'2px'}
+									defaultValue={userData?.lastName || ''}
+									placeholder={dictionary.order.lastName}
+									style={
+										lang === 'he'
+											? { direction: 'ltr', textAlign: 'right' }
+											: null
+									}
+									focusBorderColor="#a28445"
+									border={'1px solid transparent'}
+								/>
+								<FormErrorMessage
+									fontSize={'14px'}
+									position="absolute"
+									bottom="-20px"
+								>
+									{lastNameError === 'required'
+										? lastName.required
+										: lastName.invalid}
+								</FormErrorMessage>
+							</FormControl>
+						</Box>
+
+						<Box
+							display={'flex'}
+							flexDir={{ base: 'column', sm: 'row' }}
+							gap={'15px'}
+						>
+							<FormControl isInvalid={emailError}>
+								<Input
+									name="email"
+									type="email"
+									bgColor="#3b3d46"
+									borderRadius={'2px'}
+									defaultValue={userData?.email || ''}
+									placeholder={dictionary.order.mail}
+									style={
+										lang === 'he'
+											? { direction: 'ltr', textAlign: 'right' }
+											: null
+									}
+									focusBorderColor="#a28445"
+									border={'1px solid transparent'}
+								/>
+								<FormErrorMessage
+									fontSize={'14px'}
+									position="absolute"
+									bottom="-20px"
+								>
+									{emailError === 'required' ? email.required : email.invalid}
+								</FormErrorMessage>
+							</FormControl>
+							<FormControl isInvalid={phoneError}>
+								<Input
+									ref={maskedInputRef}
+									pl={lang === 'en' ? 4 : null}
+									pr={lang === 'he' ? 4 : null}
+									name="phone"
+									as={ReactInputMask}
+									type="tel"
+									focusBorderColor="#a28445"
+									border={'1px solid transparent'}
+									bgColor="#3b3d46"
+									borderRadius={'2px'}
+									defaultValue={userData?.phone || ''}
+									placeholder={dictionary.order.phone}
+									mask={'+\\972-**-***-****'}
+								/>
+
+								<FormErrorMessage
+									fontSize={'14px'}
+									position="absolute"
+									bottom="-20px"
+								>
+									{phoneError === 'required' ? phone.required : phone.invalid}
+								</FormErrorMessage>
+							</FormControl>
+						</Box>
+					</Flex>
+					{!authToken && <IsAccount dictionary={dictionary} lang={lang} />}
+					<Shipping
+						arrayCities={arrayCities}
+						dictionary={dictionary}
+						onValueChange={onValueChange}
 					/>
-					<FormErrorMessage fontSize={'14px'} position="absolute" bottom="4px">
-						{lastNameError === 'required' ? 'required' : 'invalid'}
-					</FormErrorMessage>
-				</FormControl>
-			</Box>
-
-			<Box
-				display={'flex'}
-				flexDir={{ base: 'column', sm: 'row' }}
-				gap={'15px'}
-			>
-				<FormControl>
-					<Input
-						name="email"
-						type="email"
-						bgColor="#3b3d46"
-						borderRadius={'2px'}
-						placeholder={dictionary.order.mail}
-						style={
-							lang === 'he' ? { direction: 'ltr', textAlign: 'right' } : null
-						}
-						focusBorderColor="#a28445"
-						border={'1px solid transparent'}
-					/>
-					<FormErrorMessage fontSize={'14px'} position="absolute" bottom="4px">
-						{emailError === 'required' ? 'required' : 'invalid'}
-					</FormErrorMessage>
-				</FormControl>
-				<FormControl>
-					<InputGroup>
-						{lang === 'he' ? (
-							<InputRightElement pointerEvents="none" right={-2.5}>
-								<FaAsterisk size={6} color="crimson" />
-							</InputRightElement>
-						) : (
-							<InputLeftElement pointerEvents="none" left={-2.5}>
-								<FaAsterisk size={6} color="crimson" />
-							</InputLeftElement>
-						)}
-						<Input
-							ref={maskedInputRef}
-							pl={lang === 'en' ? 4 : null}
-							pr={lang === 'he' ? 4 : null}
-							name="phone"
-							as={ReactInputMask}
-							type="tel"
-							focusBorderColor="#a28445"
-							border={'1px solid transparent'}
-							bgColor="#3b3d46"
-							borderRadius={'2px'}
-							placeholder={dictionary.order.phone}
-							mask={'+\\972-**-***-****'}
-							errorBorderColor="crimson"
-							textAlign={lang === 'he' ? 'right' : 'left'}
-						/>
-					</InputGroup>
-
-					<FormErrorMessage fontSize={'14px'} position="absolute" bottom="4px">
-						{phoneError === 'required' ? 'required' : 'invalid'}
-					</FormErrorMessage>
-				</FormControl>
-			</Box>
+				</Box>
+				<FinalAmount
+					dictionary={dictionary}
+					selectedCity={selectedCity}
+					arrayCities={arrayCities}
+				/>
+			</Flex>
 		</Box>
 	);
 };

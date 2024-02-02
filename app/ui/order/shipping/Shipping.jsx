@@ -80,20 +80,18 @@ const Shipping = ({ dictionary, arrayCities, onValueChange }) => {
 						</MenuItem>
 
 						{arrayCities.map((item, index) => (
-							<>
-								<MenuItem
-									bg={'#181617'}
-									borderRadius={0}
-									key={index}
-									_hover={{ backgroundColor: '#3b3d46' }}
-									onClick={e => {
-										onValueChange(e.target.textContent);
-										setSelectedCity(e.target.textContent);
-									}}
-								>
-									{item.cityName}
-								</MenuItem>
-							</>
+							<MenuItem
+								bg={'#181617'}
+								borderRadius={0}
+								key={index}
+								_hover={{ backgroundColor: '#3b3d46' }}
+								onClick={e => {
+									onValueChange(e.target.textContent);
+									setSelectedCity(e.target.textContent);
+								}}
+							>
+								{item.cityName}
+							</MenuItem>
 						))}
 					</MenuList>
 				</Menu>

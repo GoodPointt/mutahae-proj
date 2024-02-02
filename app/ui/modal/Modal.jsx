@@ -13,19 +13,48 @@ import {
 
 import CloseIcon from '../svg/CloseIcon';
 
-const Modal = ({ isOpen, onClose, children }) => {
+const Modal = ({ isOpen, onClose, children, lang }) => {
 	return (
-		<ChakraModal isOpen={isOpen} onClose={onClose}>
+		<ChakraModal
+			isOpen={isOpen}
+			onClose={onClose}
+			size={'2xl'}
+			scrollBehavior={'inside'}
+		>
 			<ModalOverlay />
-			<ModalContent bg={'#000'} maxW={'max-content'}>
-				<ModalBody p={{ base: '10px', md: '30px' }} overflowY={'auto'}>
-					<Box pos={'relative'}>
+			<ModalContent
+				bg={'#000'}
+				boxShadow="inset 0 0 5px rgba(255, 255, 255, 0.5)"
+			>
+				<ModalBody
+					p={'30px'}
+					overflowY={'auto'}
+					pos={'relative'}
+					css={{
+						'&::-webkit-scrollbar': {
+							width: '4px',
+							maxHeight: '100px',
+						},
+						'&::-webkit-scrollbar-thumb': {
+							backgroundColor: '#A28445',
+							borderRadius: '2px',
+							maxHeight: '10px',
+						},
+						'&::-webkit-scrollbar-track': {
+							backgroundColor: '#A28445',
+							borderRadius: '2px',
+						},
+					}}
+				>
+					<Box>
 						<Button
 							variant={'unstyled'}
+							display={'flex'}
 							pos={'absolute'}
-							top={2}
-							right={0}
+							top={'5px'}
+							zIndex={100}
 							onClick={onClose}
+							style={lang === 'he' ? { left: '5px' } : { right: '5px' }}
 							_hover={{ stroke: 'rgba(100, 100, 100, 0.5)' }}
 							transition={'all'}
 						>

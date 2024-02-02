@@ -191,3 +191,22 @@ const getBagByUserId = async userId => {
 };
 
 export const fetchBagByUserId = cache(getBagByUserId);
+
+const getUserDataForOrder = async () => {
+	try {
+		const userId = cookies().get('userId')?.value;
+
+		if (!userId) return {};
+
+		const data = profileInstance.get(`/api/users/${userId}`);
+		if (!data) {
+			return {};
+		}
+
+		return data;
+	} catch (e) {
+		console.error(e.message);
+	}
+};
+
+export const fetchUserDataForOrder = cache(getUserDataForOrder);

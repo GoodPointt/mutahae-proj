@@ -11,6 +11,7 @@ const TopBar = ({
 	lang,
 	authToken,
 	bagData,
+	dictionary,
 }) => {
 	const renderIconLink = ({ icon, text, href }) => (
 		<Box as="li" key={href}>
@@ -58,7 +59,12 @@ const TopBar = ({
 				{iconData(contacts).map(renderIconLink)}
 			</Box>
 
-			<TopMenu lang={lang} authToken={authToken} bagData={bagData} />
+			<TopMenu
+				lang={lang}
+				authToken={authToken}
+				bagData={bagData}
+				dictionary={dictionary}
+			/>
 		</Flex>
 	);
 };

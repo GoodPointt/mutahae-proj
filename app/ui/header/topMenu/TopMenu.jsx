@@ -3,15 +3,18 @@
 import { useState } from 'react';
 import Link from 'next/link';
 
-import { Box, Button, Text, useDisclosure } from '@chakra-ui/react';
+import { Box, Button, useDisclosure } from '@chakra-ui/react';
 
 import Bag from '../../bag/Bag';
 import Modal from '../../modal/Modal';
+import SearchField from '../../search/searchField/SearchField';
 import AuthProfileIcon from '../../svg/AuthProfileIcon';
 import BagNavIcon from '../../svg/BagNavIcon';
 import FavoriteNavIcon from '../../svg/FavoriteNavIcon';
 import ProfileNavIcon from '../../svg/ProfileNavIcon';
 import Search from '../../svg/Search';
+
+import { useQueryState } from 'nuqs';
 
 const TopMenu = ({
 	lang,
@@ -24,10 +27,12 @@ const TopMenu = ({
 	],
 	display = 'none',
 	bagData,
+	dictionary,
 }) => {
-	const { isOpen, onOpen, onClose } = useDisclosure();
+	const { isOpen = false, onOpen, onClose } = useDisclosure();
 	//убрать потом юзРеф когда будут рефы с поиска и сумки
 	const [variant, setVariant] = useState();
+	const [query, setQuery] = useQueryState('query');
 
 	const profilePathname = authToken
 		? `/${lang}/profile`
@@ -73,6 +78,11 @@ const TopMenu = ({
 		setVariant(id);
 	};
 
+	const handleClose = () => {
+		setQuery(null);
+		onClose();
+	};
+
 	return (
 		<>
 			<Box
@@ -113,11 +123,19 @@ const TopMenu = ({
 					}
 				})}
 			</Box>
-			<Modal isOpen={isOpen} onClose={onClose}>
+			<Modal isOpen={isOpen} onClose={handleClose} lang={lang}>
 				{variant === 'BAG_ICON' && (
 					<Bag bagData={bagData} authToken={authToken} />
 				)}
-				{variant === 'SEARCH_ICON' && <Text>Search</Text>}
+				{variant === 'SEARCH_ICON' && (
+					<SearchField
+						lang={lang}
+						onClose={handleClose}
+						query={query}
+						setQuery={setQuery}
+						dictionary={dictionary}
+					/>
+				)}
 			</Modal>
 		</>
 	);
