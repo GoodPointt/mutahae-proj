@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ArrowDown = () => {
+const ArrowUp = () => {
 	return (
 		<svg
 			width="20"
@@ -10,7 +10,7 @@ const ArrowDown = () => {
 			xmlns="http://www.w3.org/2000/svg"
 		>
 			<path
-				d="M4 7.5L9 12.5L14 7.5"
+				d="M4 12.5L9 7.5L14 12.5"
 				// stroke="white"
 				strokeWidth="1.5"
 				strokeLinecap="round"
@@ -20,4 +20,4 @@ const ArrowDown = () => {
 	);
 };
 
-export default ArrowDown;
+export default ArrowUp;

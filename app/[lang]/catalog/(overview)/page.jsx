@@ -4,7 +4,10 @@ import Contact from '@/app/ui/contact/Contact';
 import ProductsGrid from '@/app/ui/productsGrid/ProductsGrid';
 import SkeletonProductsGrid from '@/app/ui/skeletons/SkeletonProducts';
 
-import { fetchContacts, fetchProducts } from '@/app/lib/api/instance';
+import {
+	fetchContacts,
+	fetchListCategoriesAndSubCategories,
+} from '@/app/lib/api/instance';
 import { getDictionary } from '@/app/lib/locales/dictionary';
 
 export const metadata = {
@@ -20,24 +23,18 @@ export const metadata = {
 
 const CatalogPage = async ({ params: { lang } }) => {
 	const dictionary = await getDictionary(lang);
+	const data = await fetchListCategoriesAndSubCategories(lang);
+
 	const {
 		header: { navItems },
 	} = dictionary;
 
-	// eslint-disable-next-line no-undef
-	const [products, contacts] = await Promise.all([
-		fetchProducts(lang),
-		fetchContacts(lang),
-	]);
+	const contacts = await fetchContacts(lang);
 
 	return (
 		<>
 			<Suspense fallback={<SkeletonProductsGrid />}>
-				<ProductsGrid
-					products={products}
-					lang={lang}
-					heading={navItems[1].title}
-				/>
+				<ProductsGrid lang={lang} heading={navItems[1].title} data={data} />
 			</Suspense>
 			<Contact lang={lang} dictionary={dictionary} contacts={contacts} />
 		</>

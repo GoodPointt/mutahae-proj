@@ -1,10 +1,5 @@
 import { Box, Grid, Skeleton, SkeletonText } from '@chakra-ui/react';
 
-import { getDictionary } from '@/app/lib/locales/dictionary';
-import getLang from '@/app/lib/utils/getLang';
-
-import SectionWrapper from '../sectionWrapper/SectionWrapper';
-
 export const SkeletonProductItem = () => {
 	return (
 		<Box
@@ -50,34 +45,21 @@ export const SkeletonProductItem = () => {
 	);
 };
 
-const SkeletonProductsGrid = async () => {
-	const lang = getLang();
-	const {
-		header: { navItems },
-	} = await getDictionary(lang);
-
+const SkeletotonClientProductGrid = () => {
 	return (
-		<SectionWrapper heading={navItems[1].title}>
-			<Skeleton
-				width={'100%'}
-				h={{ base: '30px', md: '40px' }}
-				borderRadius={'10px'}
-				mb={'17px'}
-			/>
-			<Grid
-				as={'ul'}
-				maxW={'100%'}
-				gridTemplateColumns={'repeat(auto-fill, minmax(300px, 1fr))'}
-				gridGap={10}
-				m={'0 auto'}
-				px={'17px'}
-			>
-				{Array.from({ length: 6 }, (v, i) => (
-					<SkeletonProductItem key={i} />
-				))}
-			</Grid>
-		</SectionWrapper>
+		<Grid
+			as={'ul'}
+			maxW={'100%'}
+			gridTemplateColumns={'repeat(auto-fill, minmax(300px, 1fr))'}
+			gridGap={10}
+			m={'0 auto'}
+			padding={0}
+		>
+			{Array.from({ length: 6 }, (v, i) => (
+				<SkeletonProductItem key={i} />
+			))}
+		</Grid>
 	);
 };
 
-export default SkeletonProductsGrid;
+export default SkeletotonClientProductGrid;

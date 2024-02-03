@@ -65,7 +65,7 @@ const FooterWrapper = ({ lang, dictionary, contacts, products }) => {
 				mb={{ base: '52px', lg: '42px' }}
 				fontSize={'15px'}
 			>
-				{products.map((el, idx) => (
+				{products.data.map((el, idx) => (
 					<Flex
 						as="li"
 						key={idx}

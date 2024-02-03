@@ -35,7 +35,7 @@ const HeaderWrapper = ({ lang, dictionary, contacts, authToken, bagData }) => {
 			setPrevScrollPosition(currentScrollPosition);
 
 			const headerStyleAfterScroll = {
-				transition: 'transform 1s ease-in-out',
+				transition: 'transform 1.5s ease-in-out',
 				transform: scrollingDown ? 'translateY(-100%)' : 'translateY(0)',
 			};
 
@@ -57,10 +57,11 @@ const HeaderWrapper = ({ lang, dictionary, contacts, authToken, bagData }) => {
 			position={'fixed'}
 			w="100%"
 			bg="linear-gradient(180deg, rgba(0,0,0,1) 16%, rgba(66,72,80,0) 98%)"
-			py={{ base: '12px', lg: '16px', xl: '18px' }}
+			py={{ base: '12px', xl: '14px' }}
 			pt="0"
 			zIndex="99"
 			style={headerStyle}
+			pb={'0'}
 		>
 			<Box
 				display={{ base: 'none', lg: 'flex' }}

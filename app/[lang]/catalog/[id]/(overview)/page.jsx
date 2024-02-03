@@ -5,24 +5,10 @@ import Contact from '@/app/ui/contact/Contact';
 import DeliveryInfo from '@/app/ui/deliveryInfo/DeliveryInfo';
 import SingleProduct from '@/app/ui/singleProduct/SingleProduct';
 
-import {
-	fetchContacts,
-	fetchOneProduct,
-	// fetchProducts,
-} from '@/app/lib/api/instance';
+import { fetchContacts, fetchOneProduct } from '@/app/lib/api/instance';
 import { getDictionary } from '@/app/lib/locales/dictionary';
 
 import LoadingProduct from './loading';
-
-//Prefetching first six items of collection to generate pages on server before visiting:
-
-// export const generateStaticParams = async ({ params: { lang } }) => {
-//   const products = await fetchProducts(lang);
-//   if (products.length > 0) {
-//     const productsIds = products.map(product => product.attributes.uid);
-//     return productsIds.slice(0, 6);
-//   }
-// };
 
 export const generateMetadata = async ({ params: { id, lang } }) => {
 	const { attributes: product } = await fetchOneProduct(id, lang);

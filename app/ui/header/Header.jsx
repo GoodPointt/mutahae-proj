@@ -22,7 +22,7 @@ const Header = async ({ lang, dictionary, contacts }) => {
 			dictionary={dictionary}
 			lang={lang}
 			contacts={contacts}
-			authToken={authToken}
+			authToken={!authToken}
 		/>
 	);
 };

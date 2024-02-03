@@ -1,4 +1,5 @@
 import { cache } from 'react';
+import { revalidatePath } from 'next/cache';
 import { notFound } from 'next/navigation';
 
 import axios from 'axios';
@@ -8,34 +9,18 @@ export const instance = axios.create({
 });
 instance.defaults.headers.authorization = `Bearer ${process.env.NEXT_PUBLIC_STRAPI_TOKEN}`;
 
-const getHero = async lang => {
+const getProducts = async (lang, page = 1) => {
 	try {
 		const {
-			data: {
-				data: { attributes },
-			},
-		} = await instance.get(`/api/hero?locale=${lang}`);
-
-		return attributes;
-	} catch (e) {
-		if (!e.data || e.data === undefined) {
-			return notFound();
-		}
-	}
-};
-
-export const fetchHero = cache(getHero);
-
-const getProducts = async lang => {
-	try {
-		const {
-			data: { data },
-		} = await instance.get(`/api/products?locale=${lang}`);
+			data: { data, meta },
+		} = await instance.get(
+			`api/goods?locale=${lang}&populate=img&sort[0]=publishedAt:asc&pagination[page]=${page}&pagination[pageSize]=6`
+		);
 		if (data.length === 0) {
 			return notFound();
 		}
 
-		return data;
+		return { data, total: meta.pagination.total };
 	} catch (e) {
 		if (e.data === undefined) {
 			return notFound();
@@ -44,6 +29,50 @@ const getProducts = async lang => {
 };
 
 export const fetchProducts = cache(getProducts);
+
+const getProductsByCategorie = async (lang, page = 1, uid) => {
+	try {
+		const {
+			data: { data, meta },
+		} = await instance.get(
+			`api/goods?locale=${lang}&populate=deep&filters[categories][uid][$eq]=${uid}&sort[0]=publishedAt:asc&pagination[page]=${page}&pagination[pageSize]=6`
+		);
+		if (data.length === 0) {
+			return notFound();
+		}
+
+		return { data, total: meta.pagination.total };
+	} catch (e) {
+		if (e.data === undefined) {
+			return console.error('not category');
+		}
+	}
+};
+
+export const fetchgetProductsByCategorie = cache(getProductsByCategorie);
+
+const getProductBySubCategorie = async (lang, page, category, sub_category) => {
+	try {
+		const {
+			data: { data, meta },
+		} = await instance.get(
+			`api/goods?locale=${lang}&populate=deep&filters[0][categories][uid][$eq]=${category}&filters[1][sub_categories][uid][$eq]=${sub_category}&sort[0]=publishedAt:asc&pagination[page]=${page}&pagination[pageSize]=6`
+		);
+
+		if (data.length === 0) {
+			return notFound();
+		}
+
+		return { data, total: meta.pagination.total };
+	} catch (e) {
+		if (e.data === undefined) {
+			return console.error('not sub_category');
+		}
+	}
+	revalidatePath(`/${lang}/catalog`);
+};
+
+export const fetchProductBySubCategorie = cache(getProductBySubCategorie);
 
 const getOneProduct = async (id, lang) => {
 	try {
@@ -66,6 +95,31 @@ const getOneProduct = async (id, lang) => {
 };
 
 export const fetchOneProduct = cache(getOneProduct);
+
+const getListCategoriesAndSubCategories = async lang => {
+	try {
+		const {
+			data: { data },
+		} = await instance.get(`/api/categories?populate=deep,3&locale=${lang}`);
+
+		if (data.length === 0) {
+			return;
+		}
+
+		return data;
+	} catch (error) {
+		if (axios.isAxiosError(error)) {
+			console.error(error.status);
+			console.error(error.response);
+		} else {
+			console.error(error);
+		}
+	}
+};
+
+export const fetchListCategoriesAndSubCategories = cache(
+	getListCategoriesAndSubCategories
+);
 
 export const getContacts = async lang => {
 	try {
