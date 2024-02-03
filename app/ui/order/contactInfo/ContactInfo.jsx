@@ -16,6 +16,7 @@ import { submitData } from '../../../lib/orderActions';
 
 import FinalAmount from '../finalAmount/FinalAmount';
 import IsAccount from '../isAccount/IsAccount';
+import ListProductToBuy from '../listProductToBuy/ListProductToBuy';
 import Shipping from '../shipping/Shipping';
 
 const ContactInfo = ({
@@ -96,7 +97,7 @@ const ContactInfo = ({
 											: null
 									}
 									focusBorderColor="#a28445"
-									border={'1px solid transparent'}
+									border="1px solid transparent"
 								/>
 								<FormErrorMessage
 									fontSize={'14px'}
@@ -121,7 +122,7 @@ const ContactInfo = ({
 											: null
 									}
 									focusBorderColor="#a28445"
-									border={'1px solid transparent'}
+									border="1px solid transparent"
 								/>
 								<FormErrorMessage
 									fontSize={'14px'}
@@ -173,7 +174,7 @@ const ContactInfo = ({
 									as={ReactInputMask}
 									type="tel"
 									focusBorderColor="#a28445"
-									border={'1px solid transparent'}
+									border="1px solid transparent"
 									bgColor="#3b3d46"
 									borderRadius={'2px'}
 									defaultValue={userData?.phone || ''}
@@ -192,6 +193,7 @@ const ContactInfo = ({
 						</Box>
 					</Flex>
 					{!authToken && <IsAccount dictionary={dictionary} lang={lang} />}
+					<ListProductToBuy />
 					<Shipping
 						arrayCities={arrayCities}
 						dictionary={dictionary}
