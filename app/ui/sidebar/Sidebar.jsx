@@ -6,8 +6,13 @@ import { usePathname } from 'next/navigation';
 
 import { List, ListItem } from '@chakra-ui/react';
 
-export const Sidebar = ({ lang }) => {
+import { Logout } from '../logout/Logout';
+
+export const Sidebar = ({ lang, sidebarDictionary }) => {
 	const pathname = usePathname();
+
+	const { favorites, contactInformation, historyOfOrders, logout } =
+		sidebarDictionary;
 
 	const profileRoutes = {
 		favorites: `/${lang}/profile/favorites`,
@@ -22,14 +27,14 @@ export const Sidebar = ({ lang }) => {
 				fontSize="20px"
 				color={pathname === profileRoutes.favorites ? '#a98841' : 'inherit'}
 			>
-				<Link href={profileRoutes.favorites}>Favorites</Link>
+				<Link href={profileRoutes.favorites}>{favorites}</Link>
 			</ListItem>
 			<ListItem
 				mb="12px"
 				fontSize="20px"
 				color={pathname === profileRoutes.contactInfo ? '#a98841' : 'inherit'}
 			>
-				<Link href={profileRoutes.contactInfo}>Contact Information</Link>
+				<Link href={profileRoutes.contactInfo}>{contactInformation}</Link>
 			</ListItem>
 			<ListItem
 				mb="40px"
@@ -38,10 +43,10 @@ export const Sidebar = ({ lang }) => {
 					pathname === profileRoutes.historyOfOrders ? '#a98841' : 'inherit'
 				}
 			>
-				<Link href={profileRoutes.historyOfOrders}>History of orders</Link>
+				<Link href={profileRoutes.historyOfOrders}>{historyOfOrders}</Link>
 			</ListItem>
 			<ListItem fontSize="20px" color="#808080">
-				<Link href={`/${lang}/`}>logout</Link>
+				<Logout lang={lang} logoutDictionary={logout} />
 			</ListItem>
 		</List>
 	);

@@ -18,12 +18,7 @@ const SingleProductSlider = ({ imgs }) => {
 			flexDir={'row-reverse'}
 			maxW={'100%'}
 		>
-			<Box
-				w={'450px'}
-				h={'450px'}
-				pos={'relative'}
-				mb={{ base: '10px', lg: 0 }}
-			>
+			<Box w={'100%'} h={'450px'} pos={'relative'} mb={{ base: '10px', lg: 0 }}>
 				<Image
 					src={currentImg || '/img/product.png'}
 					alt="img"
@@ -32,7 +27,7 @@ const SingleProductSlider = ({ imgs }) => {
 				/>
 			</Box>
 
-			{Array.isArray(imgs) && imgs.length !== 0 && (
+			{Array.isArray(imgs) && imgs.length > 1 && (
 				<List
 					display={'flex'}
 					maxHeight={'450px'}

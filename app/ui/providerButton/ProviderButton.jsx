@@ -30,7 +30,6 @@ const ProviderButton = ({ style, variant }) => {
 			<Button
 				as={Link}
 				href={`${backendUrl}/api/connect/${variant}`}
-				target="_blank"
 				rel="noopener noreferrer"
 				borderRadius={'2px'}
 				w={'full'}

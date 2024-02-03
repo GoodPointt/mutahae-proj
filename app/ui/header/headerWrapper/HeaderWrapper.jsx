@@ -16,7 +16,7 @@ import ProfileMenu from '../mobileMenu/profileMenu/ProfileMenu';
 import TopBar from '../topBar/TopBar';
 import TopMenu from '../topMenu/TopMenu';
 
-const HeaderWrapper = ({ lang, dictionary, contacts, authToken }) => {
+const HeaderWrapper = ({ lang, dictionary, contacts, authToken, bagData }) => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const btnRef = useRef();
 
@@ -68,7 +68,13 @@ const HeaderWrapper = ({ lang, dictionary, contacts, authToken }) => {
 				alignItems={'center'}
 				justifyContent={'space-between'}
 			>
-				<TopBar lang={lang} contacts={contacts} authToken={authToken} />
+				<TopBar
+					bagData={bagData}
+					lang={lang}
+					contacts={contacts}
+					authToken={authToken}
+					dictionary={dictionary}
+				/>
 				<LocaleSwitcher />
 			</Box>
 			<Flex justify={'space-between'} alignItems={'center'} py={'16px'}>
@@ -94,26 +100,27 @@ const HeaderWrapper = ({ lang, dictionary, contacts, authToken }) => {
 						onClose={onClose}
 					/>
 				</Box>
-
-				<Box display={{ base: 'flex', lg: 'none' }} gap={{ sm: '40px' }}>
-					<TopMenu
-						displayIcons={['SEARCH_ICON', 'BAG_ICON']}
-						lang={lang}
-						authToken={authToken}
-						display={'flex'}
-					/>
-					<Button
-						variant={'ghost'}
-						color={'#a98841'}
-						_hover={{ color: '#81672e' }}
-						transition={'all 0.3s'}
-						onClick={onOpen}
-						ref={btnRef}
-					>
-						<Burger />
-					</Button>
-				</Box>
 			</Flex>
+			<Box display={{ base: 'flex', lg: 'none' }} gap={{ sm: '40px' }}>
+				<TopMenu
+					displayIcons={['SEARCH_ICON', 'BAG_ICON']}
+					lang={lang}
+					authToken={authToken}
+					display={'flex'}
+					bagData={bagData}
+					dictionary={dictionary}
+				/>
+				<Button
+					variant={'ghost'}
+					color={'#a98841'}
+					_hover={{ color: '#81672e' }}
+					transition={'all 0.3s'}
+					onClick={onOpen}
+					ref={btnRef}
+				>
+					<Burger />
+				</Button>
+			</Box>
 
 			<MobileMenu isOpen={isOpen} onClose={onClose}>
 				<NavBar

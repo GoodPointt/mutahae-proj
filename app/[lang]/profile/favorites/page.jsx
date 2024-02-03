@@ -3,10 +3,11 @@ import ProductItem from '../../../ui/productItem/ProductItem';
 import { Grid, Heading } from '@chakra-ui/react';
 
 import { fetchFavorites } from '../../../lib/api/profileInstance';
+import { getDictionary } from '../../../lib/locales/dictionary';
 
-const Favorites = async () => {
-	const favorites = await fetchFavorites(6);
-	const goods = favorites[0]?.attributes?.goods?.data;
+const Favorites = async ({ params: { lang } }) => {
+	const favorites = await fetchFavorites();
+	const dictionary = await getDictionary(lang);
 
 	return (
 		<>
@@ -15,7 +16,7 @@ const Favorites = async () => {
 				mb={{ base: 6, lg: 8 }}
 				fontSize={{ base: '2xl', lg: '4xl' }}
 			>
-				Favorites
+				{dictionary.profile.favorites.title}
 			</Heading>
 			<Grid
 				as={'ul'}
@@ -25,18 +26,25 @@ const Favorites = async () => {
 				m={'0 auto'}
 				padding={0}
 			>
-				{goods.map(good => {
-					const { uid, locale, img, title } = good.attributes;
-					const imgUrl = img.data[0].attributes.formats.small.url;
+				{favorites &&
+					favorites.map(good => {
+						const { uid, locale, img, title, descShort } = good.attributes;
+						const imgUrl = img.data[0].attributes.formats.small.url;
 
-					return (
-						<ProductItem
-							lang={locale}
-							product={{ uid, title, button: 'Add To Bag', imgUrl }}
-							key={uid}
-						/>
-					);
-				})}
+						return (
+							<ProductItem
+								lang={locale}
+								product={{
+									uid,
+									title,
+									button: 'Add To Bag',
+									imgUrl,
+									descShort,
+								}}
+								key={uid}
+							/>
+						);
+					})}
 			</Grid>
 		</>
 	);

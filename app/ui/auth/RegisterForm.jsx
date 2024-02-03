@@ -25,6 +25,7 @@ const RegisterForm = ({ dictionary, lang }) => {
 		state?.errors?.name && state?.errors?.name.length > 0
 			? state.errors.name[0]
 			: null;
+
 	const lastNameError =
 		state?.errors?.lastName && state?.errors?.lastName.length > 0
 			? state.errors.lastName[0]
@@ -48,12 +49,18 @@ const RegisterForm = ({ dictionary, lang }) => {
 					title: dictionary.formContact.toasts.form.registerWarning,
 				});
 			}
+			if (state?.message === 'Server error please try again later.') {
+				toast({
+					status: 'warning',
+					title: dictionary.formContact.toasts.form.serverError,
+				});
+			}
 			if (state?.message === 'succsess') {
-				// sendEmail(state);
 				ref.current?.reset();
 			}
 		})();
-	}, [dictionary.formContact.toasts.form.registerWarning, state, toast]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [state, toast]);
 
 	const { email, password, name, lastName } = dictionary.formContact.errors;
 
@@ -74,10 +81,11 @@ const RegisterForm = ({ dictionary, lang }) => {
 					borderRadius={'2px'}
 				/>
 				<FormErrorMessage fontSize={'14px'} position="absolute" bottom="4px">
-					{nameError === 'required' ? name.required : name.invalid}
+					{nameError === 'required' && name.required}
+					{nameError === 'invalid' && name.invalid}
 				</FormErrorMessage>
 			</FormControl>
-			<FormControl isInvalid={nameError} pb="25px">
+			<FormControl isInvalid={lastNameError} pb="25px">
 				<Input
 					autoComplete="on"
 					name="lastName"
@@ -92,7 +100,8 @@ const RegisterForm = ({ dictionary, lang }) => {
 					borderRadius={'2px'}
 				/>
 				<FormErrorMessage fontSize={'14px'} position="absolute" bottom="4px">
-					{lastNameError === 'required' ? lastName.required : lastName.invalid}
+					{lastNameError === 'required' && lastName.required}
+					{lastNameError === 'invalid' && lastName.invalid}
 				</FormErrorMessage>
 			</FormControl>
 			<FormControl isInvalid={emailError} pb="25px">

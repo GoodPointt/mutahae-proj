@@ -85,9 +85,8 @@ const getOneProduct = async (id, lang) => {
 		if (data.length === 0) {
 			return notFound();
 		}
-		const [{ attributes: product }] = data;
 
-		return product;
+		return data[0];
 	} catch (e) {
 		if (e.data === undefined) {
 			return notFound();
@@ -187,3 +186,42 @@ const getMembers = async lang => {
 };
 
 export const fetchMembers = cache(getMembers);
+
+const getCities = async () => {
+	try {
+		const response = await instance.get(
+			`/api/cities?populate=zone&sort[0]=cityName:asc`
+		);
+
+		if (!response) return;
+
+		const arrCities = response.data.data;
+
+		if (arrCities.length === 0) return;
+
+		return arrCities;
+	} catch (e) {
+		console.error(e);
+	}
+};
+
+export const fetchCities = cache(getCities);
+
+const getProductsByQuery = async value => {
+	try {
+		const {
+			data: { data },
+		} = await instance.get(
+			`/api/goods?locale=en&filters[title][$containsi]=${value}&populate=img&sort[0]=title:asc`
+		);
+		if (data.length === 0) {
+			return [];
+		}
+
+		return data;
+	} catch (e) {
+		console.error(e);
+	}
+};
+
+export const fetchProductsByQuery = cache(getProductsByQuery);
