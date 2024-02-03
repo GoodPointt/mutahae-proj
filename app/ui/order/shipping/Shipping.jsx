@@ -21,7 +21,12 @@ const Shipping = ({ dictionary, arrayCities, onValueChange }) => {
 
 	return (
 		<>
-			<Box borderRadius={'2px'} border={'1px solid #3B3D46'} padding={'30px'}>
+			<Box
+				borderRadius={'2px'}
+				border={'1px solid #3B3D46'}
+				padding={'30px'}
+				mt={'60px'}
+			>
 				<Flex
 					flexDir={{ base: 'column', sm: 'row' }}
 					justifyContent={'space-between'}

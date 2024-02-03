@@ -16,6 +16,7 @@ import { submitData } from '../../../lib/orderActions';
 
 import FinalAmount from '../finalAmount/FinalAmount';
 import IsAccount from '../isAccount/IsAccount';
+import ListProductToBuy from '../listProductToBuy/ListProductToBuy';
 import Shipping from '../shipping/Shipping';
 
 const ContactInfo = ({
@@ -26,6 +27,7 @@ const ContactInfo = ({
 	onValueChange,
 	selectedCity,
 	userData,
+	orderData,
 }) => {
 	const [state, dispatch] = useFormState(submitData, undefined);
 
@@ -88,7 +90,7 @@ const ContactInfo = ({
 									bgColor="#3b3d46"
 									borderRadius={'2px'}
 									position={'relative'}
-									defaultValue={userData?.name || ''}
+									defaultValue={userData?.firstName || ''}
 									placeholder={dictionary.order.firstName}
 									style={
 										lang === 'he'
@@ -96,7 +98,7 @@ const ContactInfo = ({
 											: null
 									}
 									focusBorderColor="#a28445"
-									border={'1px solid transparent'}
+									border="1px solid transparent"
 								/>
 								<FormErrorMessage
 									fontSize={'14px'}
@@ -121,7 +123,7 @@ const ContactInfo = ({
 											: null
 									}
 									focusBorderColor="#a28445"
-									border={'1px solid transparent'}
+									border="1px solid transparent"
 								/>
 								<FormErrorMessage
 									fontSize={'14px'}
@@ -173,7 +175,7 @@ const ContactInfo = ({
 									as={ReactInputMask}
 									type="tel"
 									focusBorderColor="#a28445"
-									border={'1px solid transparent'}
+									border="1px solid transparent"
 									bgColor="#3b3d46"
 									borderRadius={'2px'}
 									defaultValue={userData?.phone || ''}
@@ -192,6 +194,7 @@ const ContactInfo = ({
 						</Box>
 					</Flex>
 					{!authToken && <IsAccount dictionary={dictionary} lang={lang} />}
+					<ListProductToBuy orderData={orderData} authToken={authToken} />
 					<Shipping
 						arrayCities={arrayCities}
 						dictionary={dictionary}

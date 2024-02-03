@@ -31,7 +31,7 @@ const IsAccount = ({ dictionary, lang }) => {
 					{dictionary.order.register}
 				</Link>
 			</Text>
-			<Flex width={'100%'} flexDir={'column'} gap={'10px'} mb={'60px'}>
+			<Flex width={'100%'} flexDir={'column'} gap={'10px'}>
 				<ProviderButton style={{ mb: '25px' }} variant={'google'} />
 				<ProviderButton style={{ mb: '25px' }} variant={'facebook'} />
 				<ProviderButton style={{ mb: '25px' }} variant={'telegram'} />

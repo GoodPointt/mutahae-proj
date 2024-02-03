@@ -6,13 +6,23 @@ import SectionWrapper from '../../ui/sectionWrapper/SectionWrapper';
 import { Heading } from '@chakra-ui/react';
 
 import { fetchCities } from '@/app/lib/api/instance';
-import { fetchUserDataForOrder } from '@/app/lib/api/profileInstance';
+import {
+	fetchBagByUserId,
+	fetchUserDataForOrder,
+} from '@/app/lib/api/profileInstance';
 import { getDictionary } from '@/app/lib/locales/dictionary';
 
 const Order = async ({ params: { lang } }) => {
 	const dictionary = await getDictionary(lang);
 	const arrCities = await fetchCities();
 	const { data } = await fetchUserDataForOrder();
+	const userId = cookies().get('userId')?.value;
+
+	let orderData = [];
+
+	if (userId) {
+		orderData = await fetchBagByUserId(userId);
+	}
 
 	const arrayCities = arrCities.map(({ attributes }) => ({
 		cityName: attributes.cityName,
@@ -47,6 +57,7 @@ const Order = async ({ params: { lang } }) => {
 				dictionary={dictionary}
 				lang={lang}
 				userData={data}
+				orderData={orderData[0]}
 			/>
 		</SectionWrapper>
 	);
