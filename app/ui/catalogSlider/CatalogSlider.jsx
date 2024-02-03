@@ -47,7 +47,7 @@ const CatalogSlider = ({ products, lang, heading }) => {
 				modules={[Navigation]}
 			>
 				{products.length > 0 &&
-					products.map(product => (
+					products.data.map(product => (
 						<SwiperSlide key={product.attributes.uid}>
 							<ProductItem product={product.attributes} lang={lang} />
 						</SwiperSlide>

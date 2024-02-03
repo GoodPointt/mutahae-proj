@@ -10,6 +10,10 @@ import Start from '../svg/Star';
 const ProductItem = ({ product, lang }) => {
 	const [isModileScreen] = useMediaQuery('(max-width: 1024px)');
 
+	const [firstImageUrl] = (product?.img?.data || [])
+		.map(({ attributes }) => attributes?.url)
+		.filter(url => url);
+
 	return (
 		<Box
 			as={'li'}
@@ -46,7 +50,7 @@ const ProductItem = ({ product, lang }) => {
 						}}
 					>
 						<Image
-							src={product.imgUrl || '/img/product.png'}
+							src={firstImageUrl || '/img/product.png'}
 							alt={product.title + '' + product.descShort || 'product image'}
 							fill
 							sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

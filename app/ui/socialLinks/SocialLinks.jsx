@@ -31,7 +31,7 @@ const SocialLinks = async ({ lang, pos = 'fixed', contacts }) => {
 		</Box>
 	);
 
-	const renderedLinks = socialLinks(insta, fb, watsapp, tg, viber).map(
+	const renderedLinks = socialLinks(watsapp, viber, tg, fb, insta).map(
 		({ link, icon, label }) => createLink(link, icon, label)
 	);
 
@@ -41,7 +41,7 @@ const SocialLinks = async ({ lang, pos = 'fixed', contacts }) => {
 		<Box
 			as="ul"
 			position={pos}
-			top={{ base: '65%', lg: '20%' }}
+			bottom={'20%'}
 			style={{ [position]: 0 }}
 			display={'flex'}
 			flexDirection={'column'}

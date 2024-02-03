@@ -2,14 +2,14 @@
 
 export default async function sitemap() {
 	// const productsEn = await fetchProducts('en');
-	// const postEntriesEn = productsEn.map(({ attributes }) => ({
+	// const postEntriesEn = productsEn.data.map(({ attributes }) => ({
 	// 	url: `${process.env.NEXT_PUBLIC_URL}/en/catalog/${attributes.uid}`,
 	// 	lastModified: new Date(attributes.updatedAt),
 	// 	changeFrequency: 'monthly',
 	// 	priority: 1,
 	// }));
 	// const productsHe = await fetchProducts('he');
-	// const productEntriesHe = productsHe.map(({ attributes }) => ({
+	// const productEntriesHe = productsHe.data.map(({ attributes }) => ({
 	// 	url: `${process.env.NEXT_PUBLIC_URL}/he/catalog/${attributes.uid}`,
 	// 	lastModified: new Date(attributes.updatedAt),
 	// 	changeFrequency: 'monthly',
