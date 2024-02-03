@@ -4,7 +4,14 @@ import { useState } from 'react';
 
 import ContactInfo from '../contactInfo/ContactInfo';
 
-const Wrapper = ({ authToken, dictionary, lang, arrayCities, userData }) => {
+const Wrapper = ({
+	authToken,
+	dictionary,
+	lang,
+	arrayCities,
+	userData,
+	orderData,
+}) => {
 	const [selectedCity, setSelectedCity] = useState('');
 
 	const handleValueChange = city => {
@@ -20,6 +27,7 @@ const Wrapper = ({ authToken, dictionary, lang, arrayCities, userData }) => {
 			authToken={authToken}
 			selectedCity={selectedCity}
 			userData={userData}
+			orderData={orderData}
 		/>
 	);
 };

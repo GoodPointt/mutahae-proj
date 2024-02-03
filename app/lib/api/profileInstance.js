@@ -210,3 +210,30 @@ const getUserDataForOrder = async () => {
 };
 
 export const fetchUserDataForOrder = cache(getUserDataForOrder);
+
+const getOrderByUserId = async userId => {
+	try {
+		const token = cookies().get('jwt').value;
+
+		const res = await profileInstance.get(
+			`/api/orders?populate=deep,4&filters[user][id][$eq]=${userId}`,
+			{
+				headers: {
+					Authorization: 'Bearer ' + token,
+				},
+			}
+		);
+
+		const {
+			data: { data: responseData },
+		} = res;
+
+		return flattenAttributes(responseData);
+	} catch (error) {
+		console.error(error);
+
+		return { error: 'Server error please try again later.' };
+	}
+};
+
+export const fetchOrderByUserId = cache(getOrderByUserId);

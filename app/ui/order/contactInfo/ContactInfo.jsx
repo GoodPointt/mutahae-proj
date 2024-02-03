@@ -27,6 +27,7 @@ const ContactInfo = ({
 	onValueChange,
 	selectedCity,
 	userData,
+	orderData,
 }) => {
 	const [state, dispatch] = useFormState(submitData, undefined);
 
@@ -89,7 +90,7 @@ const ContactInfo = ({
 									bgColor="#3b3d46"
 									borderRadius={'2px'}
 									position={'relative'}
-									defaultValue={userData?.name || ''}
+									defaultValue={userData?.firstName || ''}
 									placeholder={dictionary.order.firstName}
 									style={
 										lang === 'he'
@@ -193,7 +194,7 @@ const ContactInfo = ({
 						</Box>
 					</Flex>
 					{!authToken && <IsAccount dictionary={dictionary} lang={lang} />}
-					<ListProductToBuy />
+					<ListProductToBuy orderData={orderData} authToken={authToken} />
 					<Shipping
 						arrayCities={arrayCities}
 						dictionary={dictionary}
