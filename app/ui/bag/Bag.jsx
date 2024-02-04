@@ -9,20 +9,20 @@ import { flattenAttributes } from '@/app/lib/utils/flattenAttributes';
 
 import ProductCard from '../productCard/ProductCard';
 
-const Bag = ({ bagData, authToken }) => {
+const Bag = ({ bagData, hasToken }) => {
 	const [goodsToMap, setGoodsToMap] = useState([]);
 	const [localGoods, setLocalGoods] = useLocalStorage('localBag', []);
 	const [bagId, setBagId] = useState(null);
 
 	useEffect(() => {
-		if (!authToken) {
+		if (!hasToken) {
 			setGoodsToMap(localGoods || []);
 		} else {
 			const { goods, id } = bagData || {};
 			setBagId(id);
 			setGoodsToMap(goods || []);
 		}
-	}, [authToken, bagData, localGoods]);
+	}, [hasToken, bagData, localGoods]);
 
 	return (
 		<div>
@@ -38,7 +38,7 @@ const Bag = ({ bagData, authToken }) => {
 								borderBottom={'1px #A28445 solid'}
 							>
 								<ProductCard
-									authToken={authToken}
+									hasToken={hasToken}
 									productCount={count}
 									id={bagId}
 									good={flattenAttributes(good)}

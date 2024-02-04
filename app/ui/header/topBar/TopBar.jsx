@@ -9,7 +9,7 @@ const TopBar = ({
 	gap = '0',
 	contacts,
 	lang,
-	authToken,
+	hasToken,
 	bagData,
 	dictionary,
 }) => {
@@ -61,7 +61,7 @@ const TopBar = ({
 
 			<TopMenu
 				lang={lang}
-				authToken={authToken}
+				hasToken={hasToken}
 				bagData={bagData}
 				dictionary={dictionary}
 			/>
