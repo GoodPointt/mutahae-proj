@@ -5,9 +5,8 @@ import { fetchBagByUserId } from '@/app/lib/api/profileInstance';
 import HeaderWrapper from './headerWrapper/HeaderWrapper';
 
 const Header = async ({ lang, dictionary, contacts }) => {
-	const getToken = cookies().get('jwt')?.value;
+	const getToken = cookies().get('jwt')?.value ?? '';
 
-	const authToken = getToken === undefined ? false : true;
 	const userId = cookies().get('userId')?.value;
 
 	let data = [];
@@ -20,9 +19,10 @@ const Header = async ({ lang, dictionary, contacts }) => {
 		<HeaderWrapper
 			bagData={data[0]}
 			dictionary={dictionary}
+			isAuth={!!getToken}
 			lang={lang}
 			contacts={contacts}
-			authToken={!authToken}
+			// authToken={!authToken}
 		/>
 	);
 };

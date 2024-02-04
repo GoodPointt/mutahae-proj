@@ -9,12 +9,10 @@ import ProfileNavIcon from '@/app/ui/svg/ProfileNavIcon';
 
 import { Box, Flex } from '@chakra-ui/react';
 
-const ProfileMenu = ({ authToken, lang, onClose, dictionary }) => {
+const ProfileMenu = ({ hasToken, lang, onClose, dictionary }) => {
 	// const pathname = usePathname();
 
-	const profilePathname = authToken
-		? `/${lang}/profile`
-		: `/${lang}/auth/login`;
+	const profilePathname = hasToken ? `/${lang}/profile` : `/${lang}/auth/login`;
 	const favoritePathname = `/${lang}/profile`;
 
 	// const isActive =
@@ -49,7 +47,7 @@ const ProfileMenu = ({ authToken, lang, onClose, dictionary }) => {
 					</Box>
 				</Flex>
 			</Box>
-			{authToken && (
+			{hasToken && (
 				<Box
 					as={'li'}
 					fontSize={'18px'}

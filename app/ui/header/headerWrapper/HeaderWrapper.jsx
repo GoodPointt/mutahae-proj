@@ -16,13 +16,18 @@ import ProfileMenu from '../mobileMenu/profileMenu/ProfileMenu';
 import TopBar from '../topBar/TopBar';
 import TopMenu from '../topMenu/TopMenu';
 
-const HeaderWrapper = ({ lang, dictionary, contacts, authToken, bagData }) => {
+const HeaderWrapper = ({ lang, dictionary, contacts, bagData, isAuth }) => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const btnRef = useRef();
 
 	const [scrolling, setScrolling] = useState(false);
 	const [prevScrollPosition, setPrevScrollPosition] = useState(0);
 	const [headerStyle, setHeaderStyle] = useState({});
+	const [hasToken, setHasToken] = useState(false);
+
+	useEffect(() => {
+		setHasToken(isAuth);
+	}, [isAuth]);
 
 	useEffect(() => {
 		const handleScroll = () => {
@@ -72,7 +77,7 @@ const HeaderWrapper = ({ lang, dictionary, contacts, authToken, bagData }) => {
 					bagData={bagData}
 					lang={lang}
 					contacts={contacts}
-					authToken={authToken}
+					hasToken={hasToken}
 					dictionary={dictionary}
 				/>
 				<LocaleSwitcher />
@@ -105,7 +110,7 @@ const HeaderWrapper = ({ lang, dictionary, contacts, authToken, bagData }) => {
 				<TopMenu
 					displayIcons={['SEARCH_ICON', 'BAG_ICON']}
 					lang={lang}
-					authToken={authToken}
+					hasToken={hasToken}
 					display={'flex'}
 					bagData={bagData}
 					dictionary={dictionary}
@@ -131,7 +136,7 @@ const HeaderWrapper = ({ lang, dictionary, contacts, authToken, bagData }) => {
 					visibleIcon={true}
 				/>
 				<ProfileMenu
-					authToken={authToken}
+					hasToken={hasToken}
 					lang={lang}
 					onClose={onClose}
 					dictionary={dictionary}

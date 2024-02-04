@@ -18,11 +18,11 @@ import { useQueryState } from 'nuqs';
 
 const TopMenu = ({
 	lang,
-	authToken,
+	hasToken,
 	displayIcons = [
 		'SEARCH_ICON',
 		'PROFILE_ICON',
-		authToken && 'FAVORITE_ICON',
+		hasToken && 'FAVORITE_ICON',
 		'BAG_ICON',
 	],
 	display = 'none',
@@ -33,26 +33,20 @@ const TopMenu = ({
 	//убрать потом юзРеф когда будут рефы с поиска и сумки
 	const [variant, setVariant] = useState();
 	const [query, setQuery] = useQueryState('query');
-
-	const profilePathname = authToken
-		? `/${lang}/profile`
-		: `/${lang}/auth/login`;
-
-	// поменять на страницу фаворитов
 	const favoritePathname = `/${lang}`;
 
 	const mapIcon = {
 		SEARCH_ICON: <Search />,
-		PROFILE_ICON: authToken ? (
-			<Link href={profilePathname}>
+		PROFILE_ICON: hasToken ? (
+			<Link href={`/${lang}/profile`}>
 				<AuthProfileIcon />
 			</Link>
 		) : (
-			<Link href={profilePathname}>
+			<Link href={`/${lang}/profile`}>
 				<ProfileNavIcon />
 			</Link>
 		),
-		FAVORITE_ICON: authToken && (
+		FAVORITE_ICON: hasToken && (
 			<Link href={favoritePathname}>
 				<FavoriteNavIcon />
 			</Link>
@@ -125,7 +119,7 @@ const TopMenu = ({
 			</Box>
 			<Modal isOpen={isOpen} onClose={handleClose} lang={lang}>
 				{variant === 'BAG_ICON' && (
-					<Bag bagData={bagData} authToken={authToken} />
+					<Bag bagData={bagData} hasToken={hasToken} />
 				)}
 				{variant === 'SEARCH_ICON' && (
 					<SearchField

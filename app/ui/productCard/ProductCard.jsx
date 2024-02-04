@@ -16,7 +16,7 @@ const ProductCard = ({
 	goods,
 	goodId,
 	id,
-	authToken,
+	hasToken,
 	setGoods,
 	productCount,
 }) => {
@@ -65,7 +65,7 @@ const ProductCard = ({
 			<Flex mt={'30px'} w={'100%'} justifyContent={'space-between'}>
 				<Counter count={count} setCount={setCount} />
 				<Flex w={'100%'} justifyContent={'center'}>
-					{authToken ? (
+					{hasToken ? (
 						<form action={() => formAction({ goods, goodId, id })}>
 							<SubmitButton
 								variant="unstyled"

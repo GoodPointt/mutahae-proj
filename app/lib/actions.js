@@ -156,10 +156,12 @@ export const logout = () => {
 		cookies().delete('userId');
 		cookies().delete('jwt');
 
+		revalidatePath('/');
 		redirect('/');
 	} catch (error) {
 		console.error(error);
 
+		revalidatePath('/');
 		redirect('/');
 	}
 };
