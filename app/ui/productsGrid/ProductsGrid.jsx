@@ -150,7 +150,6 @@ const ProductsGrid = ({ products, lang, heading, data: categoriesList }) => {
 						_hover={{
 							bg: 'none',
 							color: '#a98841',
-							transform: 'translateY(-2px)',
 						}}
 						onClick={() => {
 							setPage(1);
@@ -167,13 +166,12 @@ const ProductsGrid = ({ products, lang, heading, data: categoriesList }) => {
 								key={id}
 								mx={'12px'}
 								stroke={id === category ? '#a28445' : 'white'}
-								transition={'all 0.1s'}
+								transition={'all 0.3s'}
 								_hover={{
 									bg: 'none',
 									fill: '#a98841',
 									stroke: '#a98841',
 									color: '#a98841',
-									transform: 'translateY(-2px)',
 								}}
 							>
 								<Tab
@@ -199,12 +197,12 @@ const ProductsGrid = ({ products, lang, heading, data: categoriesList }) => {
 							</Flex>
 						))}
 				</TabList>
-				<TabPanels>
-					<TabPanel key={'All'}>
+				<TabPanels px={'0'}>
+					<TabPanel key={'All'} px={'0'}>
 						<ProductList list={renderList} lang={lang} isLoading={isLoading} />
 					</TabPanel>
 					{categories.map(({ id }) => (
-						<TabPanel key={id}>
+						<TabPanel key={id} px={'0'}>
 							<ProductList
 								list={renderList}
 								lang={lang}

@@ -4,7 +4,6 @@ import { Montserrat } from 'next/font/google';
 import Footer from '@/app/ui/footer/Footer';
 import Header from '@/app/ui/header/Header.jsx';
 import AnimatedMain from '../ui/AnimatedMain';
-import SocialLinks from '../ui/socialLinks/SocialLinks';
 
 // import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Box } from '@chakra-ui/react';
@@ -92,7 +91,6 @@ export default async function RootLayout({ children, params: { lang } }) {
 				<Providers>
 					<Header lang={lang} dictionary={dictionary} contacts={contacts} />
 					<AnimatedMain>{children}</AnimatedMain>
-					<SocialLinks lang={lang} contacts={contacts} />
 					<Footer lang={lang} dictionary={dictionary} contacts={contacts} />
 				</Providers>
 			</Box>

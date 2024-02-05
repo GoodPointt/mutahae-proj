@@ -4,12 +4,14 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { Box, Flex, Text, useDisclosure } from '@chakra-ui/react';
+import { Flex, Text, useDisclosure } from '@chakra-ui/react';
 
+import ContactsList from '../../contactsList/ContactsList';
 import NavBar from '../../navbar/NavBar';
 import SectionWrapper from '../../sectionWrapper/SectionWrapper';
+import SocialLinks from '../../socialLinks/SocialLinks';
 import BottomBar from '../bottomBar/BottomBar';
-import ContactsFooter from '../contactsFooter/ContactsFooter';
+import FooterProductsList from '../footerProductsList/ProductsList';
 
 const FooterWrapper = ({ lang, dictionary, contacts, products }) => {
 	const isRTL = lang === 'he';
@@ -24,25 +26,28 @@ const FooterWrapper = ({ lang, dictionary, contacts, products }) => {
 				gap={{ base: '46px' }}
 				mb={{ base: '46px', lg: '0' }}
 			>
-				<Link href={'/' + lang}>
-					<Image
-						src={'/img/logo.png'}
-						alt="logo"
-						width="300"
-						height="100"
-						style={{
-							objectFit: 'cover',
-							width: 300,
-							height: 100,
-							display: 'block',
-						}}
-					/>
-				</Link>
-				<ContactsFooter
-					contacts={contacts}
-					lang={lang}
-					dictionary={dictionary}
-				/>
+				<Flex flexDirection="column" gap={'38px'}>
+					<Link href={'/' + lang}>
+						<Image
+							src={'/img/logo.png'}
+							alt="logo"
+							width="300"
+							height="100"
+							style={{
+								objectFit: 'cover',
+								width: 300,
+								height: 100,
+								display: 'block',
+							}}
+						/>
+					</Link>
+					<SocialLinks lang={lang} contacts={contacts} />
+				</Flex>
+				<Flex flexDirection={'column'} gap={'32px'}>
+					<Text>{dictionary.footer.contacts}</Text>
+					<ContactsList contacts={contacts} lang={lang} inFooter={true} />
+				</Flex>
+
 				<NavBar
 					lang={lang}
 					flexDir="column"
@@ -53,63 +58,13 @@ const FooterWrapper = ({ lang, dictionary, contacts, products }) => {
 
 			<Text
 				mb={{ base: '32px', lg: '28px' }}
+				color={'#a28445'}
+				fontSize={'22px'}
 				textAlign={{ base: 'center', md: 'unset' }}
 			>
 				{dictionary.footer.products}:
 			</Text>
-			<Flex
-				as="ul"
-				gap={'20px'}
-				flexDir={{ base: 'column', lg: 'row' }}
-				align={{ base: 'center', md: 'flex-start' }}
-				mb={{ base: '52px', lg: '42px' }}
-				fontSize={'15px'}
-			>
-				{products.data.map((el, idx) => (
-					<Flex
-						as="li"
-						key={idx}
-						wrap={'wrap'}
-						align={'center'}
-						gap={'5px'}
-						transition={'all 0.3s'}
-						_hover={{
-							transform: 'translateX(5px)',
-							cursor: 'pointer',
-							color: '#a98841',
-						}}
-					>
-						<Box
-							borderRadius={'50%'}
-							overflow={'hidden'}
-							position="relative"
-							height={'25px'}
-							width={'25px'}
-							transition="all 500ms cubic-bezier(0.4, 0, 0.2, 1)"
-							bgRepeat={'no-repeat'}
-							bgPos={'center'}
-							bgSize={'cover'}
-							_hover={{
-								cursor: 'pointer',
-								transition: 'all 500ms ease-in-out',
-							}}
-						>
-							<Image
-								src={el.attributes.imgUrl || '/img/product.png'}
-								alt={el.attributes.title + '' + el.descShort || 'product image'}
-								fill
-								placeholder="blur"
-								blurDataURL="/img/blur-product.jpg"
-								sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-								style={{ objectFit: 'cover' }}
-							/>
-						</Box>
-						<Link href={`/${lang}/catalog/${el.attributes.uid}`}>
-							{el.attributes.title}
-						</Link>
-					</Flex>
-				))}
-			</Flex>
+			<FooterProductsList products={products} lang={lang} />
 			{}
 			<Text fontSize={'14px'} textAlign={{ base: 'center', md: 'unset' }}>
 				{!isRTL && <Text as={'span'}>©</Text>}

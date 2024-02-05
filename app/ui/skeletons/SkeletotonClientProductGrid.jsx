@@ -2,15 +2,8 @@ import { Box, Grid, Skeleton, SkeletonText } from '@chakra-ui/react';
 
 export const SkeletonProductItem = () => {
 	return (
-		<Box
-			as={'li'}
-			shadow={'dark-lg'}
-			position={'relative'}
-			borderRadius={'10px'}
-			overflow="hidden"
-		>
+		<Box as={'li'} shadow={'dark-lg'} position={'relative'} overflow="hidden">
 			<Skeleton
-				borderRadius={'10px'}
 				className="product_card"
 				position="relative"
 				z-index="2"
@@ -23,7 +16,6 @@ export const SkeletonProductItem = () => {
 				bgSize={'cover'}
 			/>
 			<Box
-				borderRadius={'10px'}
 				as="div"
 				bg="linear-gradient(0deg,rgba(0, 0, 0, 0.7) 15%, rgba(252, 176, 69, 0) 50%)"
 				position={'absolute'}

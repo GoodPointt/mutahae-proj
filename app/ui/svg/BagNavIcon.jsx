@@ -18,7 +18,7 @@ const BlogPageNavIcon = () => {
 			/>
 			<path
 				d="M14.0786 4.88889C14.0786 3.84568 13.2329 3 12.1897 3C11.1464 3 10.3008 3.84568 10.3008 4.88889"
-				stroke="#A28445"
+				// stroke="#A28445"
 				strokeWidth="1.5"
 				strokeLinecap="round"
 				strokeLinejoin="round"

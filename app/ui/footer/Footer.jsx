@@ -1,16 +1,16 @@
-import { fetchProducts } from '@/app/lib/api/instance';
+import { fetchListCategoriesAndSubCategories } from '@/app/lib/api/instance';
 
 import FooterWrapper from './footerWrapper/FooterWrapper';
 
 const Footer = async ({ lang, dictionary, contacts }) => {
-	const products = await fetchProducts(lang);
+	const productsList = await fetchListCategoriesAndSubCategories(lang);
 
 	return (
 		<FooterWrapper
 			dictionary={dictionary}
 			lang={lang}
 			contacts={contacts}
-			products={products}
+			products={productsList}
 		/>
 	);
 };

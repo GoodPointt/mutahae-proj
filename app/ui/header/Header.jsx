@@ -22,7 +22,6 @@ const Header = async ({ lang, dictionary, contacts }) => {
 			isAuth={!!getToken}
 			lang={lang}
 			contacts={contacts}
-			// authToken={!authToken}
 		/>
 	);
 };

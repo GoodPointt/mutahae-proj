@@ -61,11 +61,11 @@ const PaginationDisplay = ({ total, setTotal, page, setPage, renderList }) => {
 					<Button
 						key={pageNumber}
 						variant={'ghost'}
+						fontSize={'14px'}
 						color={'white'}
 						borderRadius={'0'}
 						transition={'all 0.3s'}
 						_hover={{
-							transform: 'translateY(-5px)',
 							color: '#a98841',
 							bg: 'none',
 						}}
@@ -82,7 +82,6 @@ const PaginationDisplay = ({ total, setTotal, page, setPage, renderList }) => {
 					fill={'white'}
 					stroke={'white'}
 					_hover={{
-						transform: 'translateX(5px)',
 						bg: 'none',
 						fill: '#a98841',
 						stroke: '#a98841',
