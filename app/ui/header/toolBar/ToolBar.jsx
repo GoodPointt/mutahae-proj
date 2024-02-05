@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 
-import { Box, Button, useDisclosure } from '@chakra-ui/react';
+import { Box, Button, Flex, useDisclosure } from '@chakra-ui/react';
 
 import Bag from '../../bag/Bag';
 import Modal from '../../modal/Modal';
@@ -16,24 +16,21 @@ import Search from '../../svg/Search';
 
 import { useQueryState } from 'nuqs';
 
-const TopMenu = ({
+const ToolBar = ({
 	lang,
 	hasToken,
+	bagData,
+	dictionary,
 	displayIcons = [
 		'SEARCH_ICON',
 		'PROFILE_ICON',
 		hasToken && 'FAVORITE_ICON',
 		'BAG_ICON',
 	],
-	display = 'none',
-	bagData,
-	dictionary,
 }) => {
 	const { isOpen = false, onOpen, onClose } = useDisclosure();
-	//убрать потом юзРеф когда будут рефы с поиска и сумки
 	const [variant, setVariant] = useState();
 	const [query, setQuery] = useQueryState('query');
-	const favoritePathname = `/${lang}`;
 
 	const mapIcon = {
 		SEARCH_ICON: <Search />,
@@ -47,7 +44,7 @@ const TopMenu = ({
 			</Link>
 		),
 		FAVORITE_ICON: hasToken && (
-			<Link href={favoritePathname}>
+			<Link href={`/${lang}/profile/favorites`}>
 				<FavoriteNavIcon />
 			</Link>
 		),
@@ -79,12 +76,7 @@ const TopMenu = ({
 
 	return (
 		<>
-			<Box
-				as={'ul'}
-				display={{ base: display, lg: 'flex' }}
-				gap={'4px'}
-				alignItems={'center'}
-			>
+			<Flex as={'ul'} gap={'4px'} alignItems={'center'}>
 				{Object.entries(mapIcon).map(([id, item], idx) => {
 					if (displayIcons.includes(id)) {
 						return (
@@ -116,7 +108,7 @@ const TopMenu = ({
 						return null;
 					}
 				})}
-			</Box>
+			</Flex>
 			<Modal isOpen={isOpen} onClose={handleClose} lang={lang}>
 				{variant === 'BAG_ICON' && (
 					<Bag bagData={bagData} hasToken={hasToken} />
@@ -135,4 +127,4 @@ const TopMenu = ({
 	);
 };
 
-export default TopMenu;
+export default ToolBar;

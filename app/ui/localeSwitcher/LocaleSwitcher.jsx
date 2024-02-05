@@ -4,9 +4,6 @@ import { Link, List, ListItem } from '@chakra-ui/react';
 
 import { i18n } from '@/app/lib/locales/i18n.config';
 
-import EngFlag from '../../svg/EngFlag';
-import HeFlag from '../../svg/HeFlag';
-
 export const LocaleSwitcher = () => {
 	const pathName = usePathname();
 	const searchParams = useSearchParams();
@@ -20,13 +17,27 @@ export const LocaleSwitcher = () => {
 	};
 
 	const getLocaleDisplayName = locale => {
-		return locale === 'he' ? <HeFlag /> : <EngFlag />;
+		return locale === 'he' ? 'HE' : 'EN';
 	};
 
 	const currentLocale = pathName.split('/')[1];
 
+	const linksStyle = locale => {
+		const isActive = pathName.includes(locale);
+		if (isActive) {
+			return {
+				border: '2px #a28477 solid',
+				borderRadius: '8px',
+			};
+		} else {
+			return {
+				color: '#A28445',
+			};
+		}
+	};
+
 	return (
-		<List display="flex" gap={'20px'}>
+		<List display="flex">
 			{i18n.locales.map(locale => (
 				<ListItem position="relative" key={locale}>
 					<Link
@@ -35,11 +46,15 @@ export const LocaleSwitcher = () => {
 								? `${redirectedPathName(locale)}?${searchParams}`
 								: `${redirectedPathName(locale)}`
 						}
-						h={'10px'}
-						w={'40px'}
+						{...linksStyle(locale)}
+						fontSize={'14px'}
+						fontWeight={'500'}
+						p={'6px 12px'}
 						pointerEvents={locale === currentLocale ? 'none' : 'auto'}
 						opacity={locale === currentLocale ? '0.5' : '1'}
 						cursor={locale === currentLocale ? 'not-allowed' : 'pointer'}
+						color={'#A28445'}
+						_hover={{ color: '#7f7535' }}
 					>
 						{getLocaleDisplayName(locale)}
 					</Link>

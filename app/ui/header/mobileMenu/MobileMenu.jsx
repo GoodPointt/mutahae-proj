@@ -2,11 +2,23 @@
 
 import { useSwipeable } from 'react-swipeable';
 
-import { Button, Drawer, DrawerBody, DrawerContent } from '@chakra-ui/react';
+import {
+	Box,
+	Button,
+	Drawer,
+	DrawerBody,
+	DrawerContent,
+	Flex,
+} from '@chakra-ui/react';
 
+import LocaleSwitcher from '../../localeSwitcher/LocaleSwitcher';
+import { Logout } from '../../logout/Logout';
+import NavBar from '../../navbar/NavBar';
 import CloseIcon from '../../svg/CloseIcon';
 
-const MobileMenu = ({ children, isOpen, onClose }) => {
+import ProfileMenu from './profileMenu/ProfileMenu';
+
+const MobileMenu = ({ isOpen, onClose, dictionary, hasToken, lang }) => {
 	const swipeHandlers = useSwipeable({ onSwipedUp: onClose });
 
 	return (
@@ -15,7 +27,7 @@ const MobileMenu = ({ children, isOpen, onClose }) => {
 				<DrawerContent
 					bg={'#181617'}
 					h={'100dvh'}
-					p={'20px'}
+					p={'16px'}
 					{...swipeHandlers}
 				>
 					<Button
@@ -33,7 +45,31 @@ const MobileMenu = ({ children, isOpen, onClose }) => {
 						flexDirection={'column'}
 						justifyContent={'space-between'}
 					>
-						{children}
+						<NavBar
+							flexDir="column"
+							lang={lang}
+							dictionary={dictionary}
+							onClose={onClose}
+							visibleIcon={true}
+						/>
+						<ProfileMenu
+							hasToken={hasToken}
+							lang={lang}
+							onClose={onClose}
+							dictionary={dictionary}
+						/>
+						<Flex alignItems={'center'} justifyContent={'space-between'}>
+							{' '}
+							{hasToken && (
+								<Box onClick={onClose}>
+									<Logout
+										lang={lang}
+										logoutDictionary={dictionary.profile.sidebar.logout}
+									/>
+								</Box>
+							)}
+							<LocaleSwitcher />
+						</Flex>
 					</DrawerBody>
 				</DrawerContent>
 			</Drawer>

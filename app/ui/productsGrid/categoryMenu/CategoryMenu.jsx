@@ -59,6 +59,7 @@ const CategoryMenu = ({
 												color={
 													sub_category !== subCategory.uid ? 'white' : '#a28445'
 												}
+												onMouseDown={() => onClose()}
 												onClick={() => {
 													setCategory(id),
 														setSub_category(subCategory.uid),

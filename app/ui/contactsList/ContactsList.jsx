@@ -2,17 +2,7 @@ import { Box, Flex, Link, Text } from '@chakra-ui/react';
 
 import { iconData } from '@/app/lib/data';
 
-import TopMenu from '../topMenu/TopMenu';
-
-const TopBar = ({
-	flexDir = 'row',
-	gap = '0',
-	contacts,
-	lang,
-	hasToken,
-	bagData,
-	dictionary,
-}) => {
+const ContactsList = ({ contacts, lang, inFooter = false }) => {
 	const renderIconLink = ({ icon, text, href }) => (
 		<Box as="li" key={href}>
 			<Link
@@ -30,7 +20,7 @@ const TopBar = ({
 				{icon}
 				<Box as="div" mx={2}>
 					<Text
-						fontSize={{ base: '12px' }}
+						fontSize={!inFooter ? '12px' : '16px'}
 						dir={text === contacts.address && lang === 'he' ? 'rtl' : 'ltr'}
 					>
 						{text || ''}
@@ -41,32 +31,18 @@ const TopBar = ({
 	);
 
 	return (
-		<Flex
-			justifyContent="space-between"
-			gap={gap}
-			alignItems={{ base: 'none', lg: 'center' }}
-			flexDirection={flexDir}
-			w={'87%'}
-		>
+		<Flex alignItems={{ base: 'none', lg: 'center' }} pb={'6px'}>
 			<Box
 				as="ul"
 				display="flex"
-				flexDirection={{ base: 'column', lg: 'row', xl: 'row' }}
+				flexDir={inFooter && 'column'}
 				alignItems="flex-start"
-				py={{ base: '12px', md: '0' }}
-				gap={{ base: '18px', lg: '14px', xl: '16px' }}
+				gap={{ lg: '14px', xl: '16px' }}
 			>
 				{iconData(contacts).map(renderIconLink)}
 			</Box>
-
-			<TopMenu
-				lang={lang}
-				hasToken={hasToken}
-				bagData={bagData}
-				dictionary={dictionary}
-			/>
 		</Flex>
 	);
 };
 
-export default TopBar;
+export default ContactsList;

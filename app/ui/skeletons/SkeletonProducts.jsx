@@ -7,15 +7,8 @@ import SectionWrapper from '../sectionWrapper/SectionWrapper';
 
 export const SkeletonProductItem = () => {
 	return (
-		<Box
-			as={'li'}
-			shadow={'dark-lg'}
-			position={'relative'}
-			borderRadius={'10px'}
-			overflow="hidden"
-		>
+		<Box as={'li'} shadow={'dark-lg'} position={'relative'} overflow="hidden">
 			<Skeleton
-				borderRadius={'10px'}
 				className="product_card"
 				position="relative"
 				z-index="2"
@@ -28,7 +21,6 @@ export const SkeletonProductItem = () => {
 				bgSize={'cover'}
 			/>
 			<Box
-				borderRadius={'10px'}
 				as="div"
 				bg="linear-gradient(0deg,rgba(0, 0, 0, 0.7) 15%, rgba(252, 176, 69, 0) 50%)"
 				position={'absolute'}
@@ -58,19 +50,13 @@ const SkeletonProductsGrid = async () => {
 
 	return (
 		<SectionWrapper heading={navItems[1].title}>
-			<Skeleton
-				width={'100%'}
-				h={{ base: '30px', md: '40px' }}
-				borderRadius={'10px'}
-				mb={'17px'}
-			/>
+			<Skeleton width={'100%'} h={{ base: '30px', md: '40px' }} mb={'17px'} />
 			<Grid
 				as={'ul'}
 				maxW={'100%'}
 				gridTemplateColumns={'repeat(auto-fill, minmax(300px, 1fr))'}
 				gridGap={10}
 				m={'0 auto'}
-				px={'17px'}
 			>
 				{Array.from({ length: 6 }, (v, i) => (
 					<SkeletonProductItem key={i} />

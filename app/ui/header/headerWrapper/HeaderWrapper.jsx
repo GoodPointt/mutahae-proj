@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
@@ -9,21 +10,20 @@ import SectionWrapper from '@/app/ui/sectionWrapper/SectionWrapper';
 
 import { Box, Button, Flex, useDisclosure } from '@chakra-ui/react';
 
+import ContactsList from '../../contactsList/ContactsList';
+import LocaleSwitcher from '../../localeSwitcher/LocaleSwitcher';
 import Burger from '../../svg/Burger';
-import LocaleSwitcher from '../localeSwitcher/LocaleSwitcher';
 import MobileMenu from '../mobileMenu/MobileMenu';
-import ProfileMenu from '../mobileMenu/profileMenu/ProfileMenu';
-import TopBar from '../topBar/TopBar';
-import TopMenu from '../topMenu/TopMenu';
+import ToolBar from '../toolBar/ToolBar';
 
 const HeaderWrapper = ({ lang, dictionary, contacts, bagData, isAuth }) => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const btnRef = useRef();
 
+	const [hasToken, setHasToken] = useState(false);
 	const [scrolling, setScrolling] = useState(false);
 	const [prevScrollPosition, setPrevScrollPosition] = useState(0);
 	const [headerStyle, setHeaderStyle] = useState({});
-	const [hasToken, setHasToken] = useState(false);
 
 	useEffect(() => {
 		setHasToken(isAuth);
@@ -62,27 +62,31 @@ const HeaderWrapper = ({ lang, dictionary, contacts, bagData, isAuth }) => {
 			position={'fixed'}
 			w="100%"
 			bg="linear-gradient(180deg, rgba(0,0,0,1) 16%, rgba(66,72,80,0) 98%)"
-			py={{ base: '12px', xl: '14px' }}
-			pt="0"
 			zIndex="99"
+			pb={{ base: '12px', lg: '16px' }}
+			pt={'12px'}
+			py={'0'}
 			style={headerStyle}
-			pb={'0'}
 		>
-			<Box
-				display={{ base: 'none', lg: 'flex' }}
+			{/* бывший топбар */}
+			<Flex
 				alignItems={'center'}
 				justifyContent={'space-between'}
+				display={{ base: 'none', lg: 'flex' }}
 			>
-				<TopBar
-					bagData={bagData}
+				<ContactsList lang={lang} contacts={contacts} />
+				{/* ToolBar = TopMenu - в десктоп версии над хедером  */}
+				<ToolBar
 					lang={lang}
-					contacts={contacts}
 					hasToken={hasToken}
+					bagData={bagData}
 					dictionary={dictionary}
 				/>
 				<LocaleSwitcher />
-			</Box>
-			<Flex justify={'space-between'} alignItems={'center'} py={'16px'}>
+			</Flex>
+
+			{/* header main */}
+			<Flex justify={'space-between'} alignItems={'center'}>
 				<Link href={'/' + lang}>
 					<Image
 						src={'/img/logo.png'}
@@ -105,45 +109,44 @@ const HeaderWrapper = ({ lang, dictionary, contacts, bagData, isAuth }) => {
 						onClose={onClose}
 					/>
 				</Box>
-			</Flex>
-			<Box display={{ base: 'flex', lg: 'none' }} gap={{ sm: '40px' }}>
-				<TopMenu
-					displayIcons={['SEARCH_ICON', 'BAG_ICON']}
-					lang={lang}
-					hasToken={hasToken}
-					display={'flex'}
-					bagData={bagData}
-					dictionary={dictionary}
-				/>
-				<Button
-					variant={'ghost'}
-					color={'#a98841'}
-					_hover={{ color: '#81672e' }}
-					transition={'all 0.3s'}
-					onClick={onOpen}
-					ref={btnRef}
-				>
-					<Burger />
-				</Button>
-			</Box>
 
-			<MobileMenu isOpen={isOpen} onClose={onClose}>
-				<NavBar
-					flexDir="column"
-					lang={lang}
-					dictionary={dictionary}
-					onClose={onClose}
-					visibleIcon={true}
-				/>
-				<ProfileMenu
-					hasToken={hasToken}
-					lang={lang}
-					onClose={onClose}
-					dictionary={dictionary}
-				/>
-				<TopBar lang={lang} flexDir="column" gap="32px" contacts={contacts} />
-				<LocaleSwitcher />
-			</MobileMenu>
+				{/* бургер+иконки тулбара в мобильном режиме */}
+				<Flex
+					alignItems={'center'}
+					justifyContent={'space-between'}
+					display={{ base: 'flex', lg: 'none' }}
+				>
+					{/*ТулБар(ТопМеню) В мобильной версии, находится на уровне с лого и бургером в хедере */}
+					<ToolBar
+						lang={lang}
+						hasToken={hasToken}
+						bagData={bagData}
+						dictionary={dictionary}
+						displayIcons={['SEARCH_ICON', 'BAG_ICON']}
+					/>
+
+					<Button
+						display={{ base: 'block', lg: 'none' }}
+						variant={'ghost'}
+						color={'#a98841'}
+						_hover={{ color: '#81672e' }}
+						transition={'all 0.3s'}
+						onClick={onOpen}
+						ref={btnRef}
+					>
+						<Burger />
+					</Button>
+				</Flex>
+			</Flex>
+
+			{/* мобильное меню */}
+			<MobileMenu
+				isOpen={isOpen}
+				onClose={onClose}
+				hasToken={hasToken}
+				lang={lang}
+				dictionary={dictionary}
+			/>
 		</SectionWrapper>
 	);
 };

@@ -3,21 +3,12 @@
 import React from 'react';
 import Link from 'next/link';
 
-// import { usePathname } from 'next/navigation';
 import FavoriteNavIcon from '@/app/ui/svg/FavoriteNavIcon';
 import ProfileNavIcon from '@/app/ui/svg/ProfileNavIcon';
 
 import { Box, Flex } from '@chakra-ui/react';
 
 const ProfileMenu = ({ hasToken, lang, onClose, dictionary }) => {
-	// const pathname = usePathname();
-
-	const profilePathname = hasToken ? `/${lang}/profile` : `/${lang}/auth/login`;
-	const favoritePathname = `/${lang}/profile`;
-
-	// const isActive =
-	// pathname.includes(profilePathname) || pathname.includes(favoritePathname);
-
 	return (
 		<Flex as={'ul'} flexDir={'column'} gap={'20px'}>
 			<Box
@@ -27,17 +18,15 @@ const ProfileMenu = ({ hasToken, lang, onClose, dictionary }) => {
 				fontWeight={'400'}
 				transition={'all 0.3s'}
 				_hover={{
-					transform: 'translateX(5px)',
 					cursor: 'pointer',
 					color: '#a98841',
 				}}
 			>
 				<Flex
 					as={Link}
-					href={profilePathname}
+					href={`/${lang}/profile`}
 					stroke={'#FFFFFF'}
 					flexDir={'row'}
-					// color={isActive ? '#a98841' : 'inherit'}
 					transition={'stroke 0.3s'}
 					_hover={{ stroke: '#a98841' }}
 				>
@@ -54,7 +43,6 @@ const ProfileMenu = ({ hasToken, lang, onClose, dictionary }) => {
 					fontWeight={'400'}
 					transition={'all 0.3s'}
 					_hover={{
-						transform: 'translateX(5px)',
 						cursor: 'pointer',
 						color: '#a98841',
 					}}
@@ -62,12 +50,10 @@ const ProfileMenu = ({ hasToken, lang, onClose, dictionary }) => {
 				>
 					<Flex
 						as={Link}
-						href={favoritePathname}
+						href={`/${lang}/profile/favorites`}
 						fill={'#FFFFFF'}
 						stroke={'#FFFFFF'}
 						flexDir={'row'}
-						// color={isActive ? '#a98841' : 'inherit'}
-
 						transition={'stroke 0.3s'}
 						_hover={{ stroke: '#a98841' }}
 					>

@@ -1,8 +1,10 @@
+'use client';
+
 import { Box, Link } from '@chakra-ui/react';
 
 import { socialLinks } from '@/app/lib/data';
 
-const SocialLinks = async ({ lang, pos = 'fixed', contacts }) => {
+const SocialLinks = ({ lang, contacts }) => {
 	const { insta, fb, watsapp, tg, viber } = contacts;
 
 	const createLink = (href, icon, aria) => (
@@ -35,17 +37,19 @@ const SocialLinks = async ({ lang, pos = 'fixed', contacts }) => {
 		({ link, icon, label }) => createLink(link, icon, label)
 	);
 
-	const position = lang === 'en' ? 'right' : 'left';
+	const position = lang === 'en' ? 'left' : 'right';
 
 	return (
 		<Box
 			as="ul"
-			position={pos}
-			bottom={'20%'}
+			width={{ base: '100%', xl: '40px' }}
+			position={{ base: 'relative', xl: 'fixed' }}
+			bottom={{ lg: '20%' }}
 			style={{ [position]: 0 }}
 			display={'flex'}
-			flexDirection={'column'}
-			gap={'3px'}
+			flexDirection={{ base: 'row', xl: 'column' }}
+			justifyContent={{ base: 'space-evenly', xl: 'flex-start' }}
+			gap={{ lg: '4px' }}
 			zIndex="98"
 		>
 			{renderedLinks}

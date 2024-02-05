@@ -36,18 +36,6 @@ const Filter = ({
 		}
 	}, [categories, category]);
 
-	useEffect(() => {
-		if (isOpen) {
-			document.body.style.overflow = 'hidden';
-		} else {
-			document.body.style.overflow = 'auto';
-		}
-
-		return () => {
-			document.body.style.overflow = 'auto';
-		};
-	}, [isOpen]);
-
 	return (
 		<Box width={'100%'} display={{ base: 'block', md: 'none' }}>
 			<Flex
