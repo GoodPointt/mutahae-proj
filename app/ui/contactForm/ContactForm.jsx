@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useFormState } from 'react-dom';
 import { FaAsterisk } from 'react-icons/fa';
 import ReactInputMask from 'react-input-mask';
@@ -17,6 +17,7 @@ import {
 	useToast,
 } from '@chakra-ui/react';
 
+import { sendTgNotification } from '@/app/lib/api/notifyInstance';
 import { submitData } from '../../lib/actions';
 import useLang from '../../lib/hooks/useLang';
 import sendEmail from '../../lib/utils/sendEmail';
@@ -27,6 +28,7 @@ import SuccessSubmitMsg from '../successSubmitMsg/SuccessSubmitMsg';
 
 const ContactForm = ({ dictionary }) => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
+	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	const [state, dispatch] = useFormState(submitData, undefined);
 	const toast = useToast();
@@ -52,17 +54,25 @@ const ContactForm = ({ dictionary }) => {
 			: null;
 
 	useEffect(() => {
-		(() => {
+		(async () => {
 			if (state?.message === 'succsess') {
-				sendEmail(state);
-				ref.current?.reset();
-				maskedInputRef.current.value = '';
+				try {
+					setIsSubmitting(true);
+					await sendTgNotification(state);
+					await sendEmail(state);
+					ref.current?.reset();
+					maskedInputRef.current.value = '';
 
-				toast({
-					status: 'success',
-					title: dictionary.formContact.toasts.form.success,
-				});
-				onOpen();
+					toast({
+						status: 'success',
+						title: dictionary.formContact.toasts.form.success,
+					});
+					onOpen();
+				} catch (error) {
+					console.error(error);
+				} finally {
+					setIsSubmitting(false);
+				}
 			}
 		})();
 	}, [state, toast, dictionary, onOpen]);
@@ -138,7 +148,9 @@ const ContactForm = ({ dictionary }) => {
 					{phoneError === 'required' ? phone.required : phone.invalid}
 				</FormErrorMessage>
 			</FormControl>
-			<SubmitButton>{dictionary.buttons.send}</SubmitButton>
+			<SubmitButton isSubmitting={isSubmitting}>
+				{dictionary.buttons.send}
+			</SubmitButton>
 			<ModalWindow onClose={onClose} isOpen={isOpen}>
 				<SuccessSubmitMsg onClick={onClose} dictionary={dictionary} />
 			</ModalWindow>
