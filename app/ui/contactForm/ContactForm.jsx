@@ -17,6 +17,7 @@ import {
 	useToast,
 } from '@chakra-ui/react';
 
+import { sendTgNotification } from '@/app/lib/api/notifyInstance';
 import { submitData } from '../../lib/actions';
 import useLang from '../../lib/hooks/useLang';
 import sendEmail from '../../lib/utils/sendEmail';
@@ -52,9 +53,10 @@ const ContactForm = ({ dictionary }) => {
 			: null;
 
 	useEffect(() => {
-		(() => {
+		(async () => {
 			if (state?.message === 'succsess') {
-				sendEmail(state);
+				await sendTgNotification(state);
+				await sendEmail(state);
 				ref.current?.reset();
 				maskedInputRef.current.value = '';
 
