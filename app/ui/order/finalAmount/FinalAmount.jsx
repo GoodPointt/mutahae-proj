@@ -14,7 +14,7 @@ const FinalAmount = ({ dictionary, arrayCities, selectedCity }) => {
 			border={'1px solid #3B3D46'}
 			padding={'30px'}
 			alignItems={'start'}
-			flex={{ lg: 1 }}
+			flex={1}
 			w={{ base: '100%', sm: '340px' }}
 		>
 			<Heading as={'h2'} fontSize={'20px'} fontFamily={600} mb={'30px'}>

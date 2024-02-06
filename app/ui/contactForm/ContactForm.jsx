@@ -82,7 +82,7 @@ const ContactForm = ({ dictionary }) => {
 						lang === 'he' ? { direction: 'ltr', textAlign: 'right' } : null
 					}
 					focusBorderColor="#a28445"
-					border={'1px solid transparent'}
+					border="1px solid transparent"
 				/>
 				<FormErrorMessage fontSize={'14px'} position="absolute" bottom="4px">
 					{nameError === 'required' ? name.required : name.invalid}
@@ -100,7 +100,7 @@ const ContactForm = ({ dictionary }) => {
 						lang === 'he' ? { direction: 'ltr', textAlign: 'right' } : null
 					}
 					focusBorderColor="#a28445"
-					border={'1px solid transparent'}
+					border="1px solid transparent"
 				/>
 				<FormErrorMessage fontSize={'14px'} position="absolute" bottom="4px">
 					{emailError === 'required' ? email.required : email.invalid}
@@ -125,7 +125,7 @@ const ContactForm = ({ dictionary }) => {
 						as={ReactInputMask}
 						type="tel"
 						focusBorderColor="#a28445"
-						border={'1px solid transparent'}
+						border="1px solid transparent"
 						bgColor="#3b3d46"
 						borderRadius={'2px'}
 						placeholder={dictionary.formContact.phoneLabel}

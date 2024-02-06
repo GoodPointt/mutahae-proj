@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useFormState } from 'react-dom';
 import ReactInputMask from 'react-input-mask';
 
@@ -24,12 +24,13 @@ const ContactInfo = ({
 	lang,
 	authToken,
 	arrayCities,
-	onValueChange,
+	setSelectedCity,
 	selectedCity,
 	userData,
 	orderData,
 }) => {
 	const [state, dispatch] = useFormState(submitData, undefined);
+	const [enteredAddress, setEnteredAddress] = useState('');
 
 	const ref = useRef(null);
 
@@ -66,11 +67,15 @@ const ContactInfo = ({
 	const { email, phone, name, lastName } = dictionary.formContact.errors;
 
 	return (
-		<Box as="form" action={dispatch} ref={ref} autoComplete="off">
+		<>
 			<Flex
 				flexDirection={{ base: 'column', lg: 'row' }}
 				gap={'50px'}
 				alignItems={'start'}
+				as="form"
+				action={dispatch}
+				ref={ref}
+				autoComplete="off"
 			>
 				<Box w={{ base: '100%', lg: '651px', xl: '751px' }}>
 					<Flex
@@ -198,7 +203,10 @@ const ContactInfo = ({
 					<Shipping
 						arrayCities={arrayCities}
 						dictionary={dictionary}
-						onValueChange={onValueChange}
+						setSelectedCity={setSelectedCity}
+						selectedCity={selectedCity}
+						enteredAddress={enteredAddress}
+						setEnteredAddress={setEnteredAddress}
 					/>
 				</Box>
 				<FinalAmount
@@ -207,7 +215,16 @@ const ContactInfo = ({
 					arrayCities={arrayCities}
 				/>
 			</Flex>
-		</Box>
+			{/* <Box w={{ base: '100%', lg: '651px', xl: '751px' }}>
+				<ListProductToBuy orderData={orderData} authToken={authToken} />
+				<Shipping
+					arrayCities={arrayCities}
+					dictionary={dictionary}
+					setSelectedCity={setSelectedCity}
+					selectedCity={selectedCity}
+				/>
+			</Box> */}
+		</>
 	);
 };
 

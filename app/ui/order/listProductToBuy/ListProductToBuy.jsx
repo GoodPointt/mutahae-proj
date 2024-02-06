@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Box, Divider, Flex } from '@chakra-ui/react';
 
@@ -27,9 +27,8 @@ const ListProductToBuy = ({ orderData, authToken }) => {
 	return (
 		<Box as="ul" mt={'60px'} border={'1px solid #3B3D46'} padding={'30px'}>
 			{goodsToMap.map(({ id, good, count }, index) => (
-				<>
+				<React.Fragment key={id}>
 					<Flex
-						key={id}
 						as="li"
 						justifyContent={'space-between'}
 						rowGap={{ base: '30px', md: '0px' }}
@@ -37,7 +36,7 @@ const ListProductToBuy = ({ orderData, authToken }) => {
 						flexDir={{ base: 'column', md: 'row' }}
 					>
 						<ProductCard
-							authToken={authToken}
+							hasToken={authToken}
 							productCount={count}
 							id={bagId}
 							good={flattenAttributes(good)}
@@ -54,7 +53,7 @@ const ListProductToBuy = ({ orderData, authToken }) => {
 							opacity={1}
 						/>
 					)}
-				</>
+				</React.Fragment>
 			))}
 		</Box>
 	);
