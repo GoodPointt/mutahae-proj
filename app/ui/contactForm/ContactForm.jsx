@@ -58,8 +58,17 @@ const ContactForm = ({ dictionary }) => {
 			if (state?.message === 'succsess') {
 				try {
 					setIsSubmitting(true);
-					await sendTgNotification(state);
-					await sendEmail(state);
+					try {
+						await sendEmail(state);
+					} catch (e) {
+						console.error('email_not_send', e);
+					}
+					try {
+						await sendTgNotification(state);
+					} catch (error) {
+						console.error('tg_notify_not_send', error);
+					}
+
 					ref.current?.reset();
 					maskedInputRef.current.value = '';
 

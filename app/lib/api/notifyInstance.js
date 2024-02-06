@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const notifyInstance = axios.create({
-	baseURL: process.env.NEXT_PUBLIC_BOT_URL || 'http://localhost:5000',
+	baseURL: process.env.NEXT_PUBLIC_BOT_URL,
 });
 
 export const sendTgNotification = async message => {
