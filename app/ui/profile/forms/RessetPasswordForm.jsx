@@ -17,24 +17,32 @@ import SubmitButton from '../../submitButton/SubmitButton';
 
 export const RessetPasswordForm = ({ lang, ressetPassDictionary }) => {
 	const [state, dispatch] = useFormState(changePasswordAction, null);
-	const { title, currentPassword, newPassword, confirmPassword, btn } =
-		ressetPassDictionary;
+	const {
+		title,
+		currentPassword,
+		newPassword,
+		confirmPassword,
+		btn,
+		success,
+		error,
+	} = ressetPassDictionary;
 
 	const toast = useToast();
 
 	useEffect(() => {
-		if (state && state.status === 'succsess')
+		if (state && state.status === 'success')
 			toast({
 				status: 'success',
-				title: 'success',
+				title: success,
 			});
 		else if (state && state.status === 'error') {
 			toast({
 				status: 'error',
-				title: 'error',
+				title: error,
 			});
 		}
-	}, [state, toast, dispatch]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [state]);
 
 	const passwordError =
 		state?.errors?.currentPassword && state?.errors?.currentPassword.length > 0

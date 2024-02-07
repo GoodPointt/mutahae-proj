@@ -1,4 +1,5 @@
 'use client';
+import { useEffect, useRef } from 'react';
 import { useFormState } from 'react-dom';
 
 import {
@@ -8,23 +9,40 @@ import {
 	FormErrorMessage,
 	Heading,
 	Input,
+	useToast,
 } from '@chakra-ui/react';
 
-import { submitUserAddress } from '../../../lib/actions';
+import { addUserAddressAction } from '../../../lib/actions';
 
 import SubmitButton from '../../submitButton/SubmitButton';
 
-export const AddressForm = ({ lang }) => {
-	const [state, dispatch] = useFormState(submitUserAddress, undefined);
+export const AddressForm = ({ lang, dictionary }) => {
+	const [state, dispatch] = useFormState(addUserAddressAction, null);
+	const toast = useToast();
+	const ref = useRef(null);
 
-	const firstNameError =
-		state?.errors?.firstName && state?.errors?.firstName.length > 0
-			? state.errors.firstName[0]
-			: null;
+	const { title, region, city, street, app, index, btn, success, error } =
+		dictionary;
+
+	useEffect(() => {
+		if (state && state.status === 'success') {
+			toast({
+				status: 'success',
+				title: success,
+			});
+			ref.current?.reset();
+		} else if (state && state.status === 'error') {
+			toast({
+				status: 'error',
+				title: error,
+			});
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [state]);
 
 	const countryError =
-		state?.errors?.country && state?.errors?.country.length > 0
-			? state.errors.country[0]
+		state?.errors?.region && state?.errors?.region.length > 0
+			? state.errors.region[0]
 			: null;
 
 	const cityError =
@@ -48,42 +66,21 @@ export const AddressForm = ({ lang }) => {
 			: null;
 
 	return (
-		<Box>
+		<Box mt="70px">
 			<Heading as="h4" fontSize="20px" fontWeight="600" mb="30px">
-				Add new address
+				{title}
 			</Heading>
-			<Box as="form" action={dispatch}>
+			<Box as="form" action={dispatch} ref={ref}>
 				<Flex
 					gap={{ lg: '15px' }}
 					flexDirection={{ base: 'column', lg: 'row' }}
 				>
-					<FormControl isInvalid={firstNameError} mb="25px">
-						<Input
-							name="firstName"
-							type="text"
-							bgColor="#3b3d46"
-							placeholder="First name"
-							_placeholder={{ color: '#fff' }}
-							style={
-								lang === 'he' ? { direction: 'ltr', textAlign: 'right' } : null
-							}
-							focusBorderColor="#a28445"
-							border={'1px solid transparent'}
-						/>
-						<FormErrorMessage
-							fontSize={'14px'}
-							position="absolute"
-							bottom="4px"
-						>
-							{firstNameError === 'required' ? 'required' : 'invalid'}
-						</FormErrorMessage>
-					</FormControl>
 					<FormControl isInvalid={countryError} mb="25px">
 						<Input
-							name="country"
+							name="region"
 							type="text"
 							bgColor="#3b3d46"
-							placeholder="Сountry / Region"
+							placeholder={region}
 							_placeholder={{ color: '#fff' }}
 							style={
 								lang === 'he' ? { direction: 'ltr', textAlign: 'right' } : null
@@ -99,17 +96,12 @@ export const AddressForm = ({ lang }) => {
 							{countryError === 'required' ? 'required' : 'invalid'}
 						</FormErrorMessage>
 					</FormControl>
-				</Flex>
-				<Flex
-					gap={{ lg: '15px' }}
-					flexDirection={{ base: 'column', lg: 'row' }}
-				>
 					<FormControl isInvalid={cityError} mb="25px">
 						<Input
 							name="city"
 							type="text"
 							bgColor="#3b3d46"
-							placeholder="Сity"
+							placeholder={city}
 							_placeholder={{ color: '#fff' }}
 							style={
 								lang === 'he' ? { direction: 'ltr', textAlign: 'right' } : null
@@ -125,12 +117,18 @@ export const AddressForm = ({ lang }) => {
 							{cityError === 'required' ? 'required' : 'invalid'}
 						</FormErrorMessage>
 					</FormControl>
+				</Flex>
+				<Flex
+					gap={{ lg: '15px' }}
+					mb="35px"
+					flexDirection={{ base: 'column', lg: 'row' }}
+				>
 					<FormControl isInvalid={streetError} mb="25px">
 						<Input
 							name="street"
 							type="text"
 							bgColor="#3b3d46"
-							placeholder="Street"
+							placeholder={street}
 							_placeholder={{ color: '#fff' }}
 							style={
 								lang === 'he' ? { direction: 'ltr', textAlign: 'right' } : null
@@ -146,39 +144,12 @@ export const AddressForm = ({ lang }) => {
 							{streetError === 'required' ? 'required' : 'invalid'}
 						</FormErrorMessage>
 					</FormControl>
-				</Flex>
-				<Flex
-					gap={{ lg: '15px' }}
-					mb="35px"
-					flexDirection={{ base: 'column', lg: 'row' }}
-				>
-					<FormControl isInvalid={indexError} mb="25px">
-						<Input
-							name="index"
-							type="number"
-							bgColor="#3b3d46"
-							placeholder="Index"
-							_placeholder={{ color: '#fff' }}
-							style={
-								lang === 'he' ? { direction: 'ltr', textAlign: 'right' } : null
-							}
-							focusBorderColor="#a28445"
-							border={'1px solid transparent'}
-						/>
-						<FormErrorMessage
-							fontSize={'14px'}
-							position="absolute"
-							bottom="4px"
-						>
-							{indexError === 'required' ? 'required' : 'invalid'}
-						</FormErrorMessage>
-					</FormControl>
 					<FormControl isInvalid={appError}>
 						<Input
 							name="app"
 							type="text"
 							bgColor="#3b3d46"
-							placeholder="App"
+							placeholder={app}
 							_placeholder={{ color: '#fff' }}
 							style={
 								lang === 'he' ? { direction: 'ltr', textAlign: 'right' } : null
@@ -194,8 +165,29 @@ export const AddressForm = ({ lang }) => {
 							{appError === 'required' ? 'required' : 'invalid'}
 						</FormErrorMessage>
 					</FormControl>
+					<FormControl isInvalid={indexError} mb="25px">
+						<Input
+							name="index"
+							type="number"
+							bgColor="#3b3d46"
+							placeholder={index}
+							_placeholder={{ color: '#fff' }}
+							style={
+								lang === 'he' ? { direction: 'ltr', textAlign: 'right' } : null
+							}
+							focusBorderColor="#a28445"
+							border={'1px solid transparent'}
+						/>
+						<FormErrorMessage
+							fontSize={'14px'}
+							position="absolute"
+							bottom="4px"
+						>
+							{indexError === 'required' ? 'required' : 'invalid'}
+						</FormErrorMessage>
+					</FormControl>
 				</Flex>
-				<SubmitButton w="calc((100% - 15px) /2 )">Save</SubmitButton>
+				<SubmitButton w="calc((100% - 15px) /2 )">{btn}</SubmitButton>
 			</Box>
 		</Box>
 	);

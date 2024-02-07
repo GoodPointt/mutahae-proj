@@ -6,7 +6,9 @@ import { redirect } from 'next/navigation';
 
 import { createContact } from './api/instance';
 import {
+	addUserAddress,
 	changePassword,
+	deleteUserAddress,
 	fetchDeleteProductFromBag,
 	fetchHandleFavorites,
 	fetchUpdateAllGoodsInBag,
@@ -52,6 +54,16 @@ const schema = z
 				new RegExp(/^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/),
 				'invalid'
 			),
+	})
+	.partial();
+
+const addressSchema = z
+	.object({
+		region: z.string().trim(),
+		city: z.string().trim(),
+		street: z.string().trim(),
+		app: z.string().trim(),
+		index: z.string().trim(),
 	})
 	.partial();
 
@@ -119,7 +131,7 @@ export async function submitUserDetails(prevState, formData) {
 
 		return {
 			data,
-			status: 'succsess',
+			status: 'success',
 		};
 	} catch (error) {
 		console.error(error);
@@ -129,32 +141,6 @@ export async function submitUserDetails(prevState, formData) {
 			status: 'error',
 		};
 	}
-}
-
-export async function submitUserAddress(prevState, formData) {
-	const { firstName } = Object.fromEntries(formData);
-
-	const validatedFields = schema.safeParse({
-		firstName,
-	});
-
-	if (!validatedFields.success) {
-		return {
-			errors: validatedFields.error.flatten().fieldErrors,
-			message: 'Error.',
-		};
-	}
-
-	//console.log(firstName, lastName, email, phone);
-	// try {
-	// 	const res = await createContact({ name, email, phone });
-
-	// 	if (res) {
-	// 		return { name, email, phone, message: 'succsess' };
-	// 	}
-	// } catch (error) {
-	// 	console.error(error);
-	// }
 }
 
 export const logout = () => {
@@ -196,11 +182,71 @@ export const changePasswordAction = async (prevState, formData) => {
 			passwordConfirmation: confirmPassword,
 		});
 
+		revalidatePath('/profile');
+
 		return {
 			data: response.data,
-			status: response.status,
+			status: 'success',
 		};
 	} catch (error) {
+		return {
+			status: 'error',
+			message: error.message,
+		};
+	}
+};
+
+export const addUserAddressAction = async (prevState, formData) => {
+	const { region, city, street, app, index } = Object.fromEntries(formData);
+
+	const validatedFields = addressSchema.safeParse({
+		region,
+		city,
+		street,
+		app,
+		index,
+	});
+
+	if (!validatedFields.success) {
+		return {
+			errors: validatedFields.error.flatten().fieldErrors,
+			message: 'Error.',
+		};
+	}
+
+	try {
+		const response = await addUserAddress({ region, city, street, app, index });
+
+		revalidatePath('/profile');
+
+		return {
+			data: response.data,
+			status: 'success',
+		};
+	} catch (error) {
+		return {
+			status: 'error',
+			message: error.message,
+		};
+	}
+};
+
+export const delAddressAction = async (prevState, formData) => {
+	try {
+		const { addressId } = Object.fromEntries(formData);
+
+		if (!addressId) {
+			throw new Error('No address id provided.');
+		}
+
+		await deleteUserAddress(addressId);
+
+		return {
+			status: 'success',
+		};
+	} catch (error) {
+		console.error(error);
+
 		return {
 			status: 'error',
 			message: error.message,

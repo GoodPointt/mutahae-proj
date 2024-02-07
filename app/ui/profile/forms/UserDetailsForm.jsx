@@ -22,18 +22,19 @@ export const UserDetailsForm = ({ lang, userData, userDetailsDictionary }) => {
 	const toast = useToast();
 
 	useEffect(() => {
-		if (state && state.status === 'succsess')
+		if (state && state.status === 'success')
 			toast({
 				status: 'success',
-				title: 'success',
+				title: userDetailsForm.success,
 			});
 		else if (state && state.status === 'error') {
 			toast({
 				status: 'error',
-				title: 'error',
+				title: userDetailsForm.error,
 			});
 		}
-	}, [state, toast]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [state]);
 
 	const maskedInputRef = useRef(null);
 

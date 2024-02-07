@@ -148,10 +148,8 @@ const getUserData = async () => {
 export const fetchUserData = cache(getUserData);
 
 export const updateUserData = async userData => {
-	//console.log(userData);
 	try {
 		const userId = cookies().get('userId')?.value;
-		//console.log(userId);
 
 		if (!userId) throw new Error('User id not found!');
 
@@ -160,11 +158,17 @@ export const updateUserData = async userData => {
 			userData
 		);
 
-		return data;
-	} catch (e) {
-		console.error(e.message);
+		return {
+			data,
+			status: 'success',
+		};
+	} catch (error) {
+		console.error(error.message);
 
-		return notFound();
+		return {
+			status: 'error',
+			message: error.message,
+		};
 	}
 };
 
@@ -184,7 +188,7 @@ export const changePassword = async dataPassword => {
 
 		return {
 			data,
-			status: 'succsess',
+			status: 'success',
 		};
 	} catch (error) {
 		console.error(error);
@@ -195,6 +199,88 @@ export const changePassword = async dataPassword => {
 		};
 	}
 };
+
+export const addUserAddress = async dataAddress => {
+	try {
+		const token = cookies().get('jwt')?.value;
+		const userId = cookies().get('userId')?.value;
+
+		if (!token || !userId) {
+			throw new Error('Not authorized');
+		}
+		profileInstance.defaults.headers.authorization = `Bearer ${token}`;
+
+		const { data } = await profileInstance.post('/api/user-addresses', {
+			data: {
+				user: userId,
+				...dataAddress,
+			},
+		});
+		if (!data) throw new Error('Failed to add user address.');
+
+		return {
+			data,
+			status: 'success',
+		};
+	} catch (error) {
+		console.error(error);
+
+		return {
+			status: 'error',
+			message: error.message,
+		};
+	}
+};
+
+export const deleteUserAddress = async addressId => {
+	try {
+		const token = cookies().get('jwt')?.value;
+
+		if (!token) {
+			throw new Error('Not authorized');
+		}
+		profileInstance.defaults.headers.authorization = `Bearer ${token}`;
+
+		await profileInstance.delete(`/api/user-addresses/${addressId}`);
+
+		return {
+			status: 'success',
+		};
+	} catch (error) {
+		return {
+			status: 'error',
+			message: error.message,
+		};
+	}
+};
+
+export const getUserAddress = async () => {
+	try {
+		const token = cookies().get('jwt')?.value;
+		const userId = cookies().get('userId')?.value;
+
+		if (!token || !userId) {
+			throw new Error('Not authorized');
+		}
+		profileInstance.defaults.headers.authorization = `Bearer ${token}`;
+
+		const data = profileInstance.get(
+			`/api/user-addresses?filters[user][id][$eq]=${userId}`
+		);
+
+		if (!data) {
+			throw new Error(
+				'Failed to fetch user address. An error occurred while retrieving the address data.'
+			);
+		}
+
+		return data;
+	} catch (e) {
+		console.error(e.message);
+	}
+};
+
+export const fetchUserAddress = cache(getUserAddress);
 
 const getBagByUserId = async () => {
 	try {

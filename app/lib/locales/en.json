@@ -231,15 +231,39 @@
 				"lastName": "Last name",
 				"email": "Email",
 				"phone": "Phone",
-				"btn": "Save"
+				"btn": "Save",
+				"success": "Personal information updated successfully",
+				"error": "Oops! Unable to update personal information"
 			}
+		},
+		"historyOfOrders": {
+			"title": "History of orders"
 		},
 		"ressetPasswordForm": {
 			"title": "Сhange Password",
 			"currentPassword": "Current Password",
 			"newPassword": "New Password",
 			"confirmPassword": "Сonfirm Password",
-			"btn": "Save"
+			"btn": "Save",
+			"success": "Password updated successfully",
+			"error": "Password update failed. Try again."
+		},
+		"addAddressForm": {
+			"title": "Add new address",
+			"region": "Сountry / Region",
+			"city": "Сity",
+			"street": "Street",
+			"app": "Apartment",
+			"index": "Index",
+			"btn": "Save",
+			"success": "Address added successfully",
+			"error": "Oops! Unable to add address. Please try again"
+		},
+		"addressSection": {
+			"title": "My Аddress",
+			"btn": "Delete",
+			"success": "Address successfully removed",
+			"error": "Address deletion error"
 		}
 	},
 	"provider": {
