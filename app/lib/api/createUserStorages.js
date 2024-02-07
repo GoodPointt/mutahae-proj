@@ -11,9 +11,11 @@ export const createBagByUserIdAndJwt = async (jwt, userId) => {
 			},
 			cache: 'no-store',
 		}
-	);
+	)
+		.then(res => res.json())
+		.then(res => res.data);
 
-	if (!isBagAlreadyExist) {
+	if (!isBagAlreadyExist || isBagAlreadyExist.length === 0) {
 		return await fetch(STRAPI_URL + '/api/bags', {
 			method: 'POST',
 			headers: {
@@ -37,9 +39,11 @@ export const createFavoritesByUserIdAndJwt = async (jwt, userId) => {
 			},
 			cache: 'no-store',
 		}
-	);
+	)
+		.then(res => res.json())
+		.then(res => res.data);
 
-	if (!isFavoritesAlreadyExist) {
+	if (!isFavoritesAlreadyExist || isFavoritesAlreadyExist.length === 0) {
 		return await fetch(STRAPI_URL + '/api/favorites', {
 			method: 'POST',
 			headers: {
