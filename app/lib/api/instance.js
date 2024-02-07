@@ -17,13 +17,13 @@ const getProducts = async (lang, page = 1) => {
 			`api/goods?locale=${lang}&populate=img&sort[0]=publishedAt:asc&pagination[page]=${page}&pagination[pageSize]=6`
 		);
 		if (data.length === 0) {
-			return notFound();
+			return [];
 		}
 
 		return { data, total: meta.pagination.total };
 	} catch (e) {
 		if (e.data === undefined) {
-			return notFound();
+			return [];
 		}
 	}
 };

@@ -39,7 +39,7 @@ const PaginationDisplay = ({ total, setTotal, page, setPage, renderList }) => {
 
 	if (countPages > 1)
 		return (
-			<Flex>
+			<Flex dir={'ltr'}>
 				<Button
 					key={'next'}
 					variant={'ghost'}

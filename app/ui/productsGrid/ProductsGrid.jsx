@@ -19,7 +19,6 @@ import {
 } from '@/app/lib/api/instance';
 
 import PaginationDisplay from '../paginationDisplay/PaginationDisplay';
-import ScrollToTop from '../scrollToTop/ScrollToTop';
 import SectionWrapper from '../sectionWrapper/SectionWrapper';
 
 import CategoryMenu from './categoryMenu/CategoryMenu';
@@ -28,7 +27,13 @@ import ProductList from './productList/ProductList';
 
 import { parseAsInteger, useQueryState } from 'nuqs';
 
-const ProductsGrid = ({ products, lang, heading, data: categoriesList }) => {
+const ProductsGrid = ({
+	products,
+	lang,
+	heading,
+	data: categoriesList,
+	dictionary,
+}) => {
 	const [renderList, setRenderList] = useState([]);
 	const [categories, setCategories] = useState([]);
 	const [activeTab, setActiveTab] = useState(0);
@@ -106,17 +111,32 @@ const ProductsGrid = ({ products, lang, heading, data: categoriesList }) => {
 
 		const categoriesArr = fitredData.reduce((acc, item) => {
 			const { title, id } = item;
-			const subCategories = item.goods.flatMap(good =>
-				good.attributes.sub_categories.data.map(subCat => ({
-					uid: subCat.attributes.uid,
-					title: subCat.attributes.title,
-				}))
+			const subCategoriesSet = new Set();
+			item.goods.forEach(good => {
+				good.attributes.sub_categories.data.forEach(subCat => {
+					subCategoriesSet.add(
+						JSON.stringify({
+							uid: subCat.attributes.uid,
+							title: subCat.attributes.title,
+						})
+					);
+				});
+			});
+
+			const subCategories = Array.from(subCategoriesSet).map(subCat =>
+				JSON.parse(subCat)
 			);
+
 			acc.push({ title, id, subCategories });
 
 			return acc;
 		}, []);
-		setCategories(categoriesArr);
+
+		const sortedCategoriesArr = categoriesArr.sort(
+			(a, b) => parseInt(a.id) - parseInt(b.id)
+		);
+
+		setCategories(sortedCategoriesArr);
 	}, [categoriesList]);
 
 	return (
@@ -131,6 +151,7 @@ const ProductsGrid = ({ products, lang, heading, data: categoriesList }) => {
 				setSub_category={setSub_category}
 				setPage={setPage}
 				sub_category={sub_category}
+				dictionary={dictionary}
 			/>
 			<Tabs
 				lazyBehavior
@@ -157,7 +178,7 @@ const ProductsGrid = ({ products, lang, heading, data: categoriesList }) => {
 							setSub_category(null);
 						}}
 					>
-						All
+						{dictionary.catalogPage.menu.all}
 					</Tab>
 
 					{categories &&
@@ -219,9 +240,9 @@ const ProductsGrid = ({ products, lang, heading, data: categoriesList }) => {
 					renderList={!!renderList}
 					setTotal={setTotal}
 					setPage={setPage}
+					lang={lang}
 				/>
 			</Center>
-			<ScrollToTop />
 		</SectionWrapper>
 	);
 };
