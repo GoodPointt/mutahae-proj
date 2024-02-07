@@ -50,7 +50,7 @@ const ClientSideRedirection = ({ dictionary, provider, lang }) => {
 
 					setTimeout(() => {
 						setText(dictionary.provider.rederecting);
-						router.push(`/${lang}/`);
+						router.refresh();
 					}, 200);
 				}
 			})
