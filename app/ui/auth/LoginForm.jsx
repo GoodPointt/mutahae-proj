@@ -11,15 +11,18 @@ import {
 	FormErrorMessage,
 	Input,
 	useToast,
+	VisuallyHiddenInput,
 } from '@chakra-ui/react';
 
 import { loginAction } from '@/app/lib/authActions';
+import useLocalStorage from '@/app/lib/hooks/useLocalStorage';
 
 import SubmitButton from '../submitButton/SubmitButton';
 
 const LoginForm = ({ dictionary, lang }) => {
 	const [state, dispatch] = useFormState(loginAction, undefined);
 	const toast = useToast();
+	const [localGoods, setLocalGoods] = useLocalStorage('localBag', []);
 
 	const ref = useRef(null);
 
@@ -60,6 +63,11 @@ const LoginForm = ({ dictionary, lang }) => {
 	return (
 		<Box as="form" action={dispatch} ref={ref} width={'100%'} autoComplete="on">
 			<FormControl isInvalid={emailError} pb="25px">
+				<VisuallyHiddenInput
+					name="localGoods"
+					value={JSON.stringify(localGoods)}
+					onChange={() => setLocalGoods()}
+				/>
 				<Input
 					autoComplete="on"
 					name="email"

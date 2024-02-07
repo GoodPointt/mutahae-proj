@@ -13,7 +13,7 @@ import {
 	createBagByUserIdAndJwt,
 	createFavoritesByUserIdAndJwt,
 } from './api/createUserStorages';
-import { profileInstance } from './api/profileInstance';
+import { handleLocalBagOnServer, profileInstance } from './api/profileInstance';
 
 import { z } from 'zod';
 
@@ -43,6 +43,8 @@ export async function loginAction(prevState, formData) {
 
 	const { email, password } = validatedFields.data;
 
+	const goods = JSON.parse(formData.get('localGoods'));
+
 	try {
 		const response = await loginUserByEmailAndPassword(email, password);
 		const userData = await response.json();
@@ -61,6 +63,10 @@ export async function loginAction(prevState, formData) {
 				httpOnly: true,
 			});
 			profileInstance.defaults.headers.authorization = `Bearer ${userData.jwt}`;
+		}
+
+		if (response.ok && goods.length !== 0) {
+			await handleLocalBagOnServer(goods);
 		}
 	} catch (error) {
 		console.error(error);
@@ -114,6 +120,8 @@ export async function registerAction(prevState, formData) {
 
 	const { email, name, lastName, password } = validatedFields.data;
 
+	const goods = JSON.parse(formData.get('localGoods'));
+
 	try {
 		const response = await registerNewUser(email, name, lastName, password);
 
@@ -122,7 +130,16 @@ export async function registerAction(prevState, formData) {
 		if (!response.ok && userData.error)
 			return { ...prevState, message: userData.error.message, errors: null };
 		if (response.ok && userData.jwt) {
-			await createBagByUserIdAndJwt(userData.jwt, userData.user.id);
+			const bagResponse = await createBagByUserIdAndJwt(
+				userData.jwt,
+				userData.user.id,
+				goods
+			);
+
+			if (bagResponse.ok && goods.length !== 0) {
+				await handleLocalBagOnServer(goods);
+			}
+
 			await createFavoritesByUserIdAndJwt(userData.jwt, userData.user.id);
 
 			cookies().set({

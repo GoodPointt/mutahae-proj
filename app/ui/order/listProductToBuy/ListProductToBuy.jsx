@@ -4,14 +4,14 @@ import { useEffect, useState } from 'react';
 
 import { Box, Divider, Flex } from '@chakra-ui/react';
 
-import useLocalStorage from '@/app/lib/hooks/useLocalStorage';
+import { useLocalBag } from '@/app/lib/hooks/useLocalBag';
 import { flattenAttributes } from '@/app/lib/utils/flattenAttributes';
 
 import ProductCard from '../../productCard/ProductCard';
 
 const ListProductToBuy = ({ orderData, authToken }) => {
 	const [goodsToMap, setGoodsToMap] = useState([]);
-	const [localGoods, setLocalGoods] = useLocalStorage('localBag', []);
+	const [localGoods, setLocalGoods] = useLocalBag('localBag', []);
 	const [bagId, setBagId] = useState(null);
 
 	useEffect(() => {

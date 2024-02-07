@@ -16,17 +16,12 @@ const BreadcrumbBar = ({ productTitle }) => {
 	return (
 		<>
 			{pathSegments.length > 0 && (
-				<Flex
-					alignItems={'start'}
-					mb={'20px'}
-					fontSize={'14px'}
-					textColor={'#A28445'}
-				>
-					<span>
+				<Flex alignItems={'start'} fontSize={'14px'} textColor={'#A28445'}>
+					<Text>
 						<Link href={`/${lang}`}>
 							<HomeIcon />
 						</Link>
-					</span>
+					</Text>
 					{pathSegments.map((segment, index) => (
 						<Box
 							as="li"

@@ -111,7 +111,7 @@ const ToolBar = ({
 			</Flex>
 			<Modal isOpen={isOpen} onClose={handleClose} lang={lang}>
 				{variant === 'BAG_ICON' && (
-					<Bag bagData={bagData} hasToken={hasToken} />
+					<Bag bagData={bagData} hasToken={hasToken} onClose={onClose} />
 				)}
 				{variant === 'SEARCH_ICON' && (
 					<SearchField

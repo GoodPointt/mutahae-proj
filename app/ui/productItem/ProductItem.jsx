@@ -10,9 +10,9 @@ import Star from '../svg/Star';
 const ProductItem = ({ product, lang }) => {
 	const [isModileScreen] = useMediaQuery('(max-width: 1024px)');
 
-	const [firstImageUrl] = (product?.img?.data || [])
-		.map(({ attributes }) => attributes?.url)
-		.filter(url => url);
+	// const [firstImageUrl] = (product?.img?.data || [])
+	// 	.map(({ attributes }) => attributes?.url)
+	// 	.filter(url => url);
 
 	return (
 		<Box
@@ -60,7 +60,7 @@ const ProductItem = ({ product, lang }) => {
 						}}
 					>
 						<Image
-							src={firstImageUrl || '/img/product.png'}
+							src={product.imgUrl || '/img/product.png'}
 							alt={product.title + '' + product.descShort || 'product image'}
 							fill
 							sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -87,6 +87,7 @@ const ProductItem = ({ product, lang }) => {
 							top={'20px'}
 							right={'20px'}
 							zIndex={'4px'}
+							fill={product.isFavorite ? '#A28445' : 'transparent'}
 						>
 							{<Star />}
 						</Box>
