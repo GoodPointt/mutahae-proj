@@ -1,15 +1,13 @@
 import { RiDoubleQuotesR } from 'react-icons/ri';
 
-import { Box, Skeleton, SkeletonText, Text } from '@chakra-ui/react';
+import { Box, Divider, Skeleton, SkeletonText, Text } from '@chakra-ui/react';
 
 import { getDictionary } from '@/app/lib/locales/dictionary';
-import getLang from '@/app/lib/utils/getLang';
 
 import SectionWrapper from '../sectionWrapper/SectionWrapper';
 import TextLink from '../textLink/TextLink';
 
-const SkeletonBlog = async () => {
-	const lang = getLang();
+const SkeletonBlog = async ({ lang }) => {
 	const dictionary = await getDictionary(lang);
 
 	return (
@@ -17,37 +15,34 @@ const SkeletonBlog = async () => {
 			<Box
 				display="flex"
 				gap="40px"
-				borderBottom="2px solid #a28445"
 				w="100%"
 				flexDirection={{ base: 'column', md: 'row' }}
 				alignItems="center"
 			>
 				<Skeleton
-					position="relative"
-					w={200}
+					w={{ base: '100%', md: '400px', xl: '600px' }}
 					height={200}
+					mt={'40px'}
 					startColor="#a28445;"
 					endColor="gray.400"
 				/>
 
-				<Box
-					position="relative"
-					maxW={{ base: '380px', md: '400px', lg: '700px' }}
-					width={'100%'}
-					display="flex"
-					flexDirection="column"
-					justifyContent="center"
-					pt="60px"
-					pb="30px"
-				>
+				<Box position="relative" width={'100%'} pt="60px">
 					<SkeletonText mb={7} skeletonHeight="6" noOfLines={1} w={'40%'} />
 
 					<Box position="absolute" top={0}>
 						<RiDoubleQuotesR size="40px" color="#a28445" />
 					</Box>
-					<SkeletonText mb="10px" skeletonHeight="3" noOfLines={5} w={'90%'} />
+					<SkeletonText mb="10px" skeletonHeight="2" noOfLines={5} w={'90%'} />
 				</Box>
 			</Box>
+			<SkeletonText my="10px" skeletonHeight="2" noOfLines={5} w={'100%'} />
+			<Divider
+				mt={'32px'}
+				borderBottom="2px solid #a28445"
+				h={'2px'}
+				width={'100%'}
+			></Divider>
 			<Text mt={'32px'}>
 				{dictionary.pageLinksText.catalog.fromBlog}
 				<TextLink href={`/${lang}/${dictionary.pageLinksText.catalog.link}`}>
