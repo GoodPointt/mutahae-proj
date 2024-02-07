@@ -9,7 +9,7 @@ const Providers = ({ children }) => {
 	return (
 		<CacheProvider>
 			<ChakraProvider
-				heme={theme}
+				theme={theme}
 				toastOptions={{
 					defaultOptions: {
 						position: 'top-right',
