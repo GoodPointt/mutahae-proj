@@ -226,15 +226,39 @@
 				"lastName": "שם משפחה",
 				"email": "אימייל",
 				"phone": "טלפון",
-				"btn": "שמור"
+				"btn": "שמור",
+				"success": "מידע אישי עודכן בהצלחה",
+				"error": "אופס! לא ניתן לעדכן מידע אישי"
 			}
+		},
+		"historyOfOrders": {
+			"title": "היסטוריה של הזמנות"
 		},
 		"ressetPasswordForm": {
 			"title": "שינוי סיסמה",
 			"currentPassword": "סיסמה נוכחית",
 			"newPassword": "סיסמה חדשה",
 			"confirmPassword": "אשר סיסמה",
-			"btn": "שמור"
+			"btn": "שמור",
+			"success": "סיסמה עודכנה בהצלחה",
+			"error": "עדכון סיסמה נכשל. נסה שוב"
+		},
+		"addAddressForm": {
+			"title": "הוסף כתובת חדשה",
+			"region": "מדינה / אזור",
+			"city": "עיר",
+			"street": "רחוב",
+			"app": "דירה",
+			"index": "מיקוד",
+			"btn": "שמור",
+			"success": "כתובת נוספה בהצלחה",
+			"error": "אופס! לא ניתן להוסיף כתובת. יש לנסות שוב."
+		},
+		"addressSection": {
+			"title": "הכתובת שלי",
+			"btn": "מחק",
+			"success": "כתובת הוסרה בהצלחה",
+			"error": "שגיאת מחיקת כתובת"
 		}
 	},
 	"provider": {
