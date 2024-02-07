@@ -14,11 +14,16 @@ const SingleProductSlider = ({ imgs }) => {
 	return (
 		<Flex
 			gap={'10px'}
-			display={{ base: 'block', lg: 'flex' }}
+			display={{ base: 'block', md: 'flex' }}
 			flexDir={'row-reverse'}
 			maxW={'100%'}
 		>
-			<Box w={'100%'} h={'450px'} pos={'relative'} mb={{ base: '10px', lg: 0 }}>
+			<Box
+				w={'100%'}
+				h={{ base: '320px', sm: '450px' }}
+				pos={'relative'}
+				mb={{ base: '10px', lg: 0 }}
+			>
 				<Image
 					src={currentImg || '/img/product.png'}
 					alt="img"
@@ -32,7 +37,7 @@ const SingleProductSlider = ({ imgs }) => {
 					display={'flex'}
 					maxHeight={'450px'}
 					maxW={'100%'}
-					flexDir={{ base: 'row', lg: 'column' }}
+					flexDir={{ base: 'row', md: 'column' }}
 					gap={'10px'}
 					overflow={'auto'}
 					className="list"

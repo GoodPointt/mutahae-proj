@@ -2,44 +2,75 @@
 import React, { useState } from 'react';
 import { useFormState } from 'react-dom';
 import Image from 'next/image';
+import { useParams } from 'next/navigation';
 
-import { Box, Button, Flex, Heading, List, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, Grid, Heading, List, Text } from '@chakra-ui/react';
 
 import { deleteProductFromBag } from '@/app/lib/actions';
+import { flattenAttributes } from '@/app/lib/utils/flattenAttributes';
 
 import Counter from '../singleProduct/Counter/Counter';
 import SubmitButton from '../submitButton/SubmitButton';
 import DeleteIcon from '../svg/DeleteIcon';
 
-const ProductCard = ({
-	good,
-	goods,
-	goodId,
-	id,
-	hasToken,
-	setGoods,
-	productCount,
-}) => {
+const ProductCard = ({ good, hasToken, setGoods, productCount }) => {
 	const [count, setCount] = useState(productCount);
 	const [, formAction] = useFormState(deleteProductFromBag);
-	const { img, descShort, title, thickness, length, width, type } = good;
+	const {
+		id,
+		uid,
+		img,
+		descShort,
+		title,
+		thickness,
+		length,
+		width,
+		type,
+		price = '€160',
+		localizations,
+	} = good;
 
-	const sizesArray = [thickness, length, width];
+	const { lang } = useParams();
 
-	const sizes = sizesArray.filter(value => value !== '').join('x');
+	const sizesArray =
+		lang === 'he'
+			? [
+					localizations[0]?.thickness,
+					localizations[0]?.length,
+					localizations[0]?.width,
+			  ]
+			: [thickness, length, width];
+
+	const sizes = sizesArray.filter(value => value && value !== '').join('x');
 
 	const removeItemFromLocal = goodId => {
-		setGoods(prev => prev.filter(({ id }) => id !== goodId));
+		setGoods(() => {
+			const localGoods = JSON.parse(localStorage.getItem('localBag'));
+
+			return localGoods.filter(({ good }) => good.attributes.uid !== goodId);
+		});
+		window.dispatchEvent(new Event('storage'));
+	};
+
+	const handleCounterChange = newCount => {
+		setCount(newCount);
+
+		setGoods(prevGoods => {
+			return prevGoods.map(item => {
+				const flattenGood = flattenAttributes(item.good);
+
+				return flattenGood.uid === uid ? { ...item, count: newCount } : item;
+			});
+		});
 	};
 
 	return (
-		<Flex
-			justifyContent={'space-between'}
-			gap={{ md: '60px', lg: '120px' }}
+		<Grid
+			templateColumns={{ base: '1fr', md: '1.2fr 1fr' }}
 			alignItems={'center'}
 			flexDir={{ base: 'column', md: 'row' }}
 		>
-			<Flex alignItems={'center'}>
+			<Flex alignItems={'center'} gap={{ base: '10px', lg: '30px' }}>
 				<Box w={'115px'} h={'100px'} pos={'relative'}>
 					<Image
 						src={
@@ -47,26 +78,31 @@ const ProductCard = ({
 							img[0].url ||
 							'/img/product.png'
 						}
-						alt={descShort}
+						alt={descShort || ''}
 						fill
 					/>
 				</Box>
-				<List ml={{ base: '10px', lg: '30px' }}>
+				<List>
 					<Heading as={'h4'} fontSize={'24px'}>
-						{title}
+						{lang === 'he' ? localizations[0]?.title : title}
 					</Heading>
-					<Text>€160</Text>
+					<Text>{price}€</Text>
 					<Text textColor={'#808080'}>Sizes: {sizes}</Text>
 					<Text textTransform={'capitalize'} textColor={'#808080'}>
-						{type}
+						{lang === 'he' ? localizations[0]?.type : type}
 					</Text>
 				</List>
 			</Flex>
-			<Flex mt={'30px'} w={'100%'} justifyContent={'space-between'}>
-				<Counter count={count} setCount={setCount} />
-				<Flex w={'100%'} justifyContent={'center'}>
+			<Grid
+				mt={'30px'}
+				templateColumns={{ base: 'repeat(2, 1fr)' }}
+				w={'100%'}
+				justifyContent={'center'}
+			>
+				<Counter count={count} setCount={handleCounterChange} />
+				<Flex justifyContent={'center'}>
 					{hasToken ? (
-						<form action={() => formAction({ goods, goodId, id })}>
+						<form action={() => formAction({ goodId: id })}>
 							<SubmitButton
 								variant="unstyled"
 								bgColor="transparent"
@@ -75,6 +111,7 @@ const ProductCard = ({
 								display={'flex'}
 								justifyContent={'center'}
 								stroke={'#fff'}
+								maxW="360px"
 							>
 								<DeleteIcon />
 							</SubmitButton>
@@ -84,18 +121,17 @@ const ProductCard = ({
 							variant="unstyled"
 							bgColor="transparent"
 							hover="transparent"
-							// strokeHover={'#EE4B2B'}
 							display={'flex'}
 							justifyContent={'center'}
 							stroke={'#fff'}
-							onClick={() => removeItemFromLocal(goodId)}
+							onClick={() => removeItemFromLocal(uid)}
 						>
 							<DeleteIcon />
 						</Button>
 					)}
 				</Flex>
-			</Flex>
-		</Flex>
+			</Grid>
+		</Grid>
 	);
 };
 

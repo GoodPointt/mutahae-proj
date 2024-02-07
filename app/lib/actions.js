@@ -5,8 +5,14 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 import { createContact } from './api/instance';
-import { changePassword, updateUserData } from './api/profileInstance';
-import { fetchAddToBag, fetchBagByUserId } from './api/profileInstance';
+import {
+	changePassword,
+	fetchDeleteProductFromBag,
+	fetchHandleFavorites,
+	fetchUpdateAllGoodsInBag,
+	updateUserData,
+} from './api/profileInstance';
+import { fetchAddToBag } from './api/profileInstance';
 
 import { z } from 'zod';
 
@@ -203,27 +209,28 @@ export const changePasswordAction = async (prevState, formData) => {
 };
 
 export async function submitProductToBag(prevState, formData) {
-	const { userId, count, productId } = formData;
+	const { count, goodId, bagPrice } = formData;
 
 	try {
-		const bagResponse = await fetchBagByUserId(userId);
+		const res = await fetchAddToBag(count, goodId, bagPrice);
+		if (res.status === 200) {
+			revalidatePath('/');
+		}
+	} catch (error) {
+		return { message: error.message };
+	}
+}
 
-		const bagId = bagResponse[0].id;
-		const productsInBag = bagResponse[0].goods;
-		const response = await fetchAddToBag(bagId, [
-			...productsInBag,
-			{ count, good: productId },
-		]);
+export async function updateAllGoodsInBag(prevState, formData) {
+	const { bagPrice, goods } = formData;
 
-		if (response.status === 200) {
+	try {
+		const res = await fetchUpdateAllGoodsInBag(goods, bagPrice);
+
+		if (res.status === 200) {
 			revalidatePath('/');
 
-			return {
-				status: response.status,
-				message: 'Product in bag',
-			};
-		} else {
-			throw new Error('Try again please');
+			return { status: res.status };
 		}
 	} catch (error) {
 		return { message: error.message };
@@ -231,20 +238,30 @@ export async function submitProductToBag(prevState, formData) {
 }
 
 export async function deleteProductFromBag(prevState, formData) {
-	const { goods, goodId, id } = formData;
+	const { goodId } = formData;
 
 	try {
-		const newBags = goods.filter(({ id }) => id !== goodId);
-		const response = await fetchAddToBag(id, [...newBags]);
+		const response = await fetchDeleteProductFromBag(goodId);
+		if (response.status === 200) {
+			revalidatePath('/');
+		}
+	} catch (error) {
+		return { message: error.message };
+	}
+}
+
+export async function submitGoodToFavorite(prevState, formData) {
+	const { goodId } = formData;
+
+	try {
+		const response = await fetchHandleFavorites(goodId);
+
 		if (response.status === 200) {
 			revalidatePath('/');
 
 			return {
 				status: response.status,
-				message: 'Product in bag',
 			};
-		} else {
-			throw new Error('Try again please');
 		}
 	} catch (error) {
 		return { message: error.message };

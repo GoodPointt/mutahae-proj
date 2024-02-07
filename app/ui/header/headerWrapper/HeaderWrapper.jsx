@@ -53,8 +53,12 @@ const HeaderWrapper = ({ lang, dictionary, contacts, bagData, isAuth }) => {
 
 		window.addEventListener('scroll', handleScroll);
 
+		if (hasToken) {
+			localStorage.removeItem('localBag');
+		}
+
 		return cleanupScroll;
-	}, [prevScrollPosition, scrolling]);
+	}, [hasToken, prevScrollPosition, scrolling]);
 
 	return (
 		<SectionWrapper

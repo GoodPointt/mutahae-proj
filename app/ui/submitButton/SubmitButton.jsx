@@ -5,6 +5,7 @@ import { Button } from '@chakra-ui/react';
 const SubmitButton = ({
 	w = '100%',
 	children,
+	maxW = '100%',
 	variant = 'solid',
 	bgColor = '#a28445',
 	px = '18px',
@@ -22,6 +23,7 @@ const SubmitButton = ({
 			bgColor={bgColor}
 			borderRadius={'2px'}
 			w={w}
+			maxW={maxW}
 			px={px}
 			stroke={stroke}
 			color={'white'}

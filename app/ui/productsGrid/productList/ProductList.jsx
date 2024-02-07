@@ -1,5 +1,6 @@
 import { Grid } from '@chakra-ui/react';
 
+// import { fetchIsFavorite } from '@/app/lib/api/profileInstance';
 import ProductItem from '../../productItem/ProductItem';
 import SkeletotonClientProductGrid from '../../skeletons/SkeletotonClientProductGrid';
 
@@ -17,13 +18,17 @@ const ProductList = ({ list, lang, isLoading }) => {
 				padding={0}
 			>
 				{list &&
-					list.map(({ attributes }) => (
-						<ProductItem
-							key={attributes.uid}
-							product={attributes}
-							lang={lang}
-						/>
-					))}
+					list.map(async ({ attributes }) => {
+						// const isFavorite = await fetchIsFavorite();
+
+						return (
+							<ProductItem
+								key={attributes.uid}
+								product={attributes}
+								lang={lang}
+							/>
+						);
+					})}
 			</Grid>
 		);
 };

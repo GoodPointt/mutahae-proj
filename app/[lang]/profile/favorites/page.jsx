@@ -27,19 +27,24 @@ const Favorites = async ({ params: { lang } }) => {
 				padding={0}
 			>
 				{favorites &&
-					favorites.map(good => {
-						const { uid, locale, img, title, descShort } = good.attributes;
-						const imgUrl = img.data[0].attributes.formats.small.url;
+					favorites[0].goods.map(good => {
+						const { uid, locale, title, descShort } = good;
+						const { title: title_he, descShort: descShort_he } =
+							good.localizations[0];
+						const { img } = good;
+
+						const imgUrl = img[0].formats.small.url;
 
 						return (
 							<ProductItem
 								lang={locale}
 								product={{
+									isFavorite: true,
 									uid,
-									title,
+									title: lang === 'he' ? title_he : title,
 									button: 'Add To Bag',
 									imgUrl,
-									descShort,
+									descShort: lang === 'he' ? descShort_he : descShort,
 								}}
 								key={uid}
 							/>
