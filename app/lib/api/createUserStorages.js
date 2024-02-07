@@ -1,7 +1,7 @@
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL;
 
 export const createBagByUserIdAndJwt = async (jwt, userId) => {
-	await fetch(STRAPI_URL + '/api/bags', {
+	return await fetch(STRAPI_URL + '/api/bags', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
