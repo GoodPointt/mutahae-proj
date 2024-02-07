@@ -25,6 +25,7 @@ const Filter = ({
 	setSub_category,
 	setPage,
 	sub_category,
+	dictionary,
 }) => {
 	const [displayCategoryTitle, setDisplayCategoryTitle] = useState('');
 	const [isOpen, setIsOpen] = useState(false);
@@ -56,12 +57,16 @@ const Filter = ({
 					transition={'all 0.3s'}
 					_hover={{ bg: 'none', color: '#a98841', stroke: '#a98841' }}
 				>
-					Filter
+					{dictionary.catalogPage.menu.filter}
 					<Box as="span" mx={'8px'}>
 						{!isOpen ? <ArrowDown /> : <ArrowUp />}
 					</Box>
 				</Button>
-				<Text mx={'16px'}>{category ? displayCategoryTitle : 'All'}</Text>
+				<Text mx={'16px'}>
+					{category
+						? displayCategoryTitle
+						: `${dictionary.catalogPage.menu.all}`}
+				</Text>
 			</Flex>
 
 			{isOpen && (
@@ -121,7 +126,7 @@ const Filter = ({
 										setIsOpen(false);
 									}}
 								>
-									All
+									{dictionary.catalogPage.menu.all}
 								</Button>
 							</Box>
 							{categories.map(({ id, title, subCategories }) => (
@@ -164,13 +169,7 @@ const Filter = ({
 													{title}
 												</Button>
 												{subCategories.length > 0 && (
-													<AccordionButton
-														display={'inline-flex'}
-														justifyContent={'center'}
-														alignItems={'center'}
-														width={'50px'}
-														p={0}
-													>
+													<AccordionButton>
 														<AccordionIcon />
 													</AccordionButton>
 												)}

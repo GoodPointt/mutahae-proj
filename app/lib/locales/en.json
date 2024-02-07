@@ -246,5 +246,7 @@
 		"loading": "Loading...",
 		"rederecting": "You've logged in successfully. You will be redirected in a few seconds...",
 		"error": "Something went wrong, please try again"
-	}
+	},
+	"catalogPage" : { "menu" :{ "filter":"Filter", "all": "All"} },
+	"notFoundMessage" : "Looks like something went wrong look at other product categories or"
 }

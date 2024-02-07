@@ -37,7 +37,7 @@ const ContactsList = ({ contacts, lang, inFooter = false }) => {
 				display="flex"
 				flexDir={inFooter && 'column'}
 				alignItems="flex-start"
-				gap={{ lg: '14px', xl: '16px' }}
+				gap={{ base: '14px', xl: '16px' }}
 			>
 				{iconData(contacts).map(renderIconLink)}
 			</Box>

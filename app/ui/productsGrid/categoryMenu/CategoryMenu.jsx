@@ -41,7 +41,11 @@ const CategoryMenu = ({
 						</PopoverTrigger>
 					)}
 					<Portal>
-						<PopoverContent bg={'#191617'} border={'none'}>
+						<PopoverContent
+							bg={'#191617'}
+							border={'none'}
+							alignItems={'center'}
+						>
 							<PopoverBody display={'flex'} flexDir={'column'}>
 								<Flex as="ul" flexDir={'column'} gap={'4px'}>
 									{subCategories.map(subCategory => (

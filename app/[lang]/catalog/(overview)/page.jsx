@@ -34,7 +34,12 @@ const CatalogPage = async ({ params: { lang } }) => {
 	return (
 		<>
 			<Suspense fallback={<SkeletonProductsGrid />}>
-				<ProductsGrid lang={lang} heading={navItems[1].title} data={data} />
+				<ProductsGrid
+					lang={lang}
+					heading={navItems[1].title}
+					data={data}
+					dictionary={dictionary}
+				/>
 			</Suspense>
 			<Contact lang={lang} dictionary={dictionary} contacts={contacts} />
 		</>
