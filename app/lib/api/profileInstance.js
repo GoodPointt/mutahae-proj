@@ -310,6 +310,41 @@ const getBagByUserId = async () => {
 
 export const fetchBagByUserId = cache(getBagByUserId);
 
+const createOrder = async (totalPrice, goods, cityId) => {
+	try {
+		const token = cookies().get('jwt')?.value;
+		const userId = cookies().get('userId')?.value;
+		profileInstance.defaults.headers.authorization = `Bearer ${token}`;
+
+		const goodsList = goods.map(good => {
+			const imgUrl = good.good.data.attributes.img.data[0].attributes.url;
+
+			return {
+				count: good.count,
+				good: good.good.data.id,
+				title: good.good.data.attributes.title,
+				descShort: good.good.data.attributes.descShort || '',
+				imgUrl: imgUrl,
+			};
+		});
+
+		return await profileInstance.post('/api/orders', {
+			data: {
+				user: userId,
+				goods: goodsList,
+				orderPrice: totalPrice,
+				city: cityId,
+			},
+		});
+	} catch (error) {
+		console.error(error);
+
+		return { error: error.message };
+	}
+};
+
+export const fetchCreateOrder = cache(createOrder);
+
 const addToBag = async (count, goodId, bagPrice) => {
 	try {
 		const token = cookies().get('jwt')?.value;

@@ -7,6 +7,7 @@ import {
 	Button,
 	Flex,
 	Heading,
+	Input,
 	Menu,
 	MenuButton,
 	MenuItem,
@@ -14,10 +15,32 @@ import {
 	Text,
 } from '@chakra-ui/react';
 
-import IconArrowDown from '../../svg/ArrowDown';
+import IconOrderArrow from '../../svg/OrderArrowDown';
+import IconOrderArrowUp from '../../svg/OrderArrowUp';
 
-const Shipping = ({ dictionary, arrayCities, onValueChange }) => {
-	const [selectedCity, setSelectedCity] = useState('');
+const Shipping = ({
+	dictionary,
+	arrayCities,
+	setSelectedCity,
+	selectedCity,
+	setEnteredAddress,
+	enteredAddress,
+	setCityId,
+}) => {
+	const [isOpenSelect, setIsOpenSelect] = useState(false);
+
+	const handleMenuOpen = () => {
+		setIsOpenSelect(true);
+	};
+
+	const handleMenuClose = () => {
+		setIsOpenSelect(false);
+	};
+
+	const handleCustomCityChange = e => {
+		setEnteredAddress(e.target.value);
+		setSelectedCity('');
+	};
 
 	return (
 		<>
@@ -46,7 +69,7 @@ const Shipping = ({ dictionary, arrayCities, onValueChange }) => {
 					</Text>
 				</Flex>
 
-				<Menu>
+				<Menu onOpen={handleMenuOpen} onClose={handleMenuClose}>
 					<MenuButton
 						as={Button}
 						borderRadius={'2px'}
@@ -54,7 +77,7 @@ const Shipping = ({ dictionary, arrayCities, onValueChange }) => {
 						borderColor={'transparent'}
 						focusBorderColor="#a28445"
 						width={'100%'}
-						rightIcon={<IconArrowDown />}
+						rightIcon={isOpenSelect ? <IconOrderArrowUp /> : <IconOrderArrow />}
 						fontSize={'18px'}
 						color={'#ffffff'}
 						textAlign={'start'}
@@ -62,27 +85,35 @@ const Shipping = ({ dictionary, arrayCities, onValueChange }) => {
 						_hover={{ border: '1px solid white' }}
 						_expanded={{ borderColor: '#a28445', background: '#3B3D46' }}
 					>
-						{selectedCity ? selectedCity : dictionary.order.select}
+						{selectedCity
+							? selectedCity
+							: enteredAddress
+							? enteredAddress
+							: dictionary.order.select}
 					</MenuButton>
 					<MenuList
-						maxHeight="250px"
+						maxHeight="270px"
 						overflowY="auto"
 						bg={'#181617'}
 						borderRadius={'2px'}
 						borderColor={'#a28445'}
+						padding={0}
 					>
-						<MenuItem
+						<Input
+							type="text"
+							value={enteredAddress}
+							onChange={handleCustomCityChange}
+							placeholder="Enter your address"
 							bg={'#181617'}
+							color={'#ffffff'}
 							borderRadius={0}
-							key={-1}
-							_hover={{ backgroundColor: '#3b3d46' }}
-							onClick={() => {
-								onValueChange('');
-								setSelectedCity('');
+							borderTop={'transparent'}
+							borderLeft={'transparent'}
+							borderRight={'transparent'}
+							_hover={{
+								backgroundColor: '#3b3d46',
 							}}
-						>
-							{dictionary.order.select}
-						</MenuItem>
+						/>
 
 						{arrayCities.map((item, index) => (
 							<MenuItem
@@ -91,8 +122,8 @@ const Shipping = ({ dictionary, arrayCities, onValueChange }) => {
 								key={index}
 								_hover={{ backgroundColor: '#3b3d46' }}
 								onClick={e => {
-									onValueChange(e.target.textContent);
 									setSelectedCity(e.target.textContent);
+									setCityId(item.id);
 								}}
 							>
 								{item.cityName}

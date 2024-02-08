@@ -1,5 +1,9 @@
 'use server';
 
+import { cookies } from 'next/headers';
+
+import { fetchCreateOrder } from './api/profileInstance';
+
 import { z } from 'zod';
 
 const schema = z
@@ -37,7 +41,9 @@ const schema = z
 	.partial();
 
 export async function submitData(prevState, formData) {
-	const { firstName, lastName, email, phone } = Object.fromEntries(formData);
+	const { firstName, lastName, email, phone } = formData.payload.formValues;
+	const { totalPrice, goods, deliveryAddress, cityId } = formData.payload;
+	const token = cookies().get('jwt')?.value;
 
 	const validatedFields = schema.safeParse({
 		firstName,
@@ -53,7 +59,20 @@ export async function submitData(prevState, formData) {
 		};
 	}
 	try {
-		return { firstName, email, phone, message: 'succsess' };
+		if (token) {
+			await fetchCreateOrder(totalPrice, goods, cityId);
+		}
+
+		return {
+			firstName,
+			lastName,
+			email,
+			phone,
+			totalPrice,
+			goods,
+			deliveryAddress,
+			message: 'success',
+		};
 	} catch (error) {
 		console.error(error);
 	}

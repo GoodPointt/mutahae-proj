@@ -7,7 +7,6 @@ import {
 	Box,
 	Button,
 	Divider,
-	IconButton,
 	Input,
 	InputGroup,
 	InputRightElement,
@@ -16,7 +15,6 @@ import {
 
 import { fetchProductsByQuery } from '../../../lib/api/instance';
 
-import DeleteSearch from '../../svg/DeleteSearch';
 import FilteredProduct from '../filteredProduct/FilteredProduct';
 
 import { useDebouncedCallback } from 'use-debounce';
@@ -63,6 +61,7 @@ const SearchField = ({ lang, onClose, setQuery, query, dictionary }) => {
 				as={'form'}
 				ref={ref}
 				display={'flex'}
+				justifyContent={'space-between'}
 				alignItems={'center'}
 				onSubmit={e => {
 					e.preventDefault();
@@ -79,7 +78,6 @@ const SearchField = ({ lang, onClose, setQuery, query, dictionary }) => {
 					type="text"
 					placeholder={dictionary.searchField.search}
 					border={'none'}
-					bgColor={'base'}
 					onChange={handleSearch}
 					_placeholder={{ color: '#808080' }}
 					_active={{ outlineColor: 'transparent' }}
@@ -92,15 +90,26 @@ const SearchField = ({ lang, onClose, setQuery, query, dictionary }) => {
 					}}
 				/>
 
-				<InputRightElement position={'relative'}>
-					<IconButton
+				<InputRightElement
+					position={'relative'}
+					style={
+						lang === 'he' ? { marginLeft: '30px' } : { marginRight: '30px' }
+					}
+				>
+					<Button
 						isRound={true}
 						colorScheme="ghost"
 						aria-label="clear search"
-						icon={<DeleteSearch />}
+						// icon={<DeleteSearch />}
 						_hover={{ color: 'accent' }}
 						onClick={clearSearch}
-					/>
+						color={'grey'}
+						fontSize={'16px'}
+						fontWeight={500}
+						lineHeight={1}
+					>
+						Clear
+					</Button>
 				</InputRightElement>
 			</InputGroup>
 

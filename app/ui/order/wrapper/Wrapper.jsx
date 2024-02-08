@@ -11,23 +11,21 @@ const Wrapper = ({
 	arrayCities,
 	userData,
 	orderData,
+	userId,
 }) => {
 	const [selectedCity, setSelectedCity] = useState('');
-
-	const handleValueChange = city => {
-		setSelectedCity(city);
-	};
 
 	return (
 		<ContactInfo
 			arrayCities={arrayCities}
 			dictionary={dictionary}
-			onValueChange={handleValueChange}
+			setSelectedCity={setSelectedCity}
 			lang={lang}
 			authToken={authToken}
 			selectedCity={selectedCity}
 			userData={userData}
 			orderData={orderData}
+			userId={userId}
 		/>
 	);
 };
