@@ -28,7 +28,7 @@ const BlogPage = async ({ params: { lang } }) => {
 
 	return (
 		<>
-			<Suspense fallback={<SkeletonBlog />}>
+			<Suspense fallback={<SkeletonBlog lang={lang} />}>
 				<Blog lang={lang} dictionary={dictionary} posts={posts} />
 			</Suspense>
 			<Contact lang={lang} dictionary={dictionary} contacts={contacts} />

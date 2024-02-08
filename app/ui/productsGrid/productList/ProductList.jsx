@@ -17,13 +17,15 @@ const ProductList = ({ list, lang, isLoading }) => {
 				padding={0}
 			>
 				{list &&
-					list.map(({ attributes }) => (
-						<ProductItem
-							key={attributes.uid}
-							product={attributes}
-							lang={lang}
-						/>
-					))}
+					list.map(({ attributes }) => {
+						return (
+							<ProductItem
+								key={attributes.uid}
+								product={attributes}
+								lang={lang}
+							/>
+						);
+					})}
 			</Grid>
 		);
 };

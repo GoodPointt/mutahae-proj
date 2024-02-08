@@ -5,8 +5,16 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 import { createContact } from './api/instance';
-import { changePassword, updateUserData } from './api/profileInstance';
-import { fetchAddToBag, fetchBagByUserId } from './api/profileInstance';
+import {
+	addUserAddress,
+	changePassword,
+	deleteUserAddress,
+	fetchDeleteProductFromBag,
+	fetchHandleFavorites,
+	fetchUpdateAllGoodsInBag,
+	updateUserData,
+} from './api/profileInstance';
+import { fetchAddToBag } from './api/profileInstance';
 
 import { z } from 'zod';
 
@@ -46,6 +54,16 @@ const schema = z
 				new RegExp(/^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/),
 				'invalid'
 			),
+	})
+	.partial();
+
+const addressSchema = z
+	.object({
+		region: z.string().trim(),
+		city: z.string().trim(),
+		street: z.string().trim(),
+		app: z.string().trim(),
+		index: z.string().trim(),
 	})
 	.partial();
 
@@ -113,7 +131,7 @@ export async function submitUserDetails(prevState, formData) {
 
 		return {
 			data,
-			status: 'succsess',
+			status: 'success',
 		};
 	} catch (error) {
 		console.error(error);
@@ -123,32 +141,6 @@ export async function submitUserDetails(prevState, formData) {
 			status: 'error',
 		};
 	}
-}
-
-export async function submitUserAddress(prevState, formData) {
-	const { firstName } = Object.fromEntries(formData);
-
-	const validatedFields = schema.safeParse({
-		firstName,
-	});
-
-	if (!validatedFields.success) {
-		return {
-			errors: validatedFields.error.flatten().fieldErrors,
-			message: 'Error.',
-		};
-	}
-
-	//console.log(firstName, lastName, email, phone);
-	// try {
-	// 	const res = await createContact({ name, email, phone });
-
-	// 	if (res) {
-	// 		return { name, email, phone, message: 'succsess' };
-	// 	}
-	// } catch (error) {
-	// 	console.error(error);
-	// }
 }
 
 export const logout = () => {
@@ -190,9 +182,11 @@ export const changePasswordAction = async (prevState, formData) => {
 			passwordConfirmation: confirmPassword,
 		});
 
+		revalidatePath('/profile');
+
 		return {
 			data: response.data,
-			status: response.status,
+			status: 'success',
 		};
 	} catch (error) {
 		return {
@@ -202,28 +196,87 @@ export const changePasswordAction = async (prevState, formData) => {
 	}
 };
 
-export async function submitProductToBag(prevState, formData) {
-	const { userId, count, productId } = formData;
+export const addUserAddressAction = async (prevState, formData) => {
+	const { region, city, street, app, index } = Object.fromEntries(formData);
+
+	const validatedFields = addressSchema.safeParse({
+		region,
+		city,
+		street,
+		app,
+		index,
+	});
+
+	if (!validatedFields.success) {
+		return {
+			errors: validatedFields.error.flatten().fieldErrors,
+			message: 'Error.',
+		};
+	}
 
 	try {
-		const bagResponse = await fetchBagByUserId(userId);
+		const response = await addUserAddress({ region, city, street, app, index });
 
-		const bagId = bagResponse[0].id;
-		const productsInBag = bagResponse[0].goods;
-		const response = await fetchAddToBag(bagId, [
-			...productsInBag,
-			{ count, good: productId },
-		]);
+		revalidatePath('/profile');
 
-		if (response.status === 200) {
+		return {
+			data: response.data,
+			status: 'success',
+		};
+	} catch (error) {
+		return {
+			status: 'error',
+			message: error.message,
+		};
+	}
+};
+
+export const delAddressAction = async (prevState, formData) => {
+	try {
+		const { addressId } = Object.fromEntries(formData);
+
+		if (!addressId) {
+			throw new Error('No address id provided.');
+		}
+
+		await deleteUserAddress(addressId);
+
+		return {
+			status: 'success',
+		};
+	} catch (error) {
+		console.error(error);
+
+		return {
+			status: 'error',
+			message: error.message,
+		};
+	}
+};
+
+export async function submitProductToBag(prevState, formData) {
+	const { count, goodId, bagPrice } = formData;
+
+	try {
+		const res = await fetchAddToBag(count, goodId, bagPrice);
+		if (res.status === 200) {
+			revalidatePath('/');
+		}
+	} catch (error) {
+		return { message: error.message };
+	}
+}
+
+export async function updateAllGoodsInBag(prevState, formData) {
+	const { bagPrice, goods } = formData;
+
+	try {
+		const res = await fetchUpdateAllGoodsInBag(goods, bagPrice);
+
+		if (res.status === 200) {
 			revalidatePath('/');
 
-			return {
-				status: response.status,
-				message: 'Product in bag',
-			};
-		} else {
-			throw new Error('Try again please');
+			return { status: res.status };
 		}
 	} catch (error) {
 		return { message: error.message };
@@ -231,20 +284,30 @@ export async function submitProductToBag(prevState, formData) {
 }
 
 export async function deleteProductFromBag(prevState, formData) {
-	const { goods, goodId, id } = formData;
+	const { goodId } = formData;
 
 	try {
-		const newBags = goods.filter(({ id }) => id !== goodId);
-		const response = await fetchAddToBag(id, [...newBags]);
+		const response = await fetchDeleteProductFromBag(goodId);
+		if (response.status === 200) {
+			revalidatePath('/');
+		}
+	} catch (error) {
+		return { message: error.message };
+	}
+}
+
+export async function submitGoodToFavorite(prevState, formData) {
+	const { goodId } = formData;
+
+	try {
+		const response = await fetchHandleFavorites(goodId);
+
 		if (response.status === 200) {
 			revalidatePath('/');
 
 			return {
 				status: response.status,
-				message: 'Product in bag',
 			};
-		} else {
-			throw new Error('Try again please');
 		}
 	} catch (error) {
 		return { message: error.message };

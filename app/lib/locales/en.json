@@ -151,7 +151,7 @@
 		}
 	},
 	"hero": {
-		"title": "Wood bringing nature to your home – quality and admiration in every board and beam!",
+		"title": "Expertly Imported Wood Products, for Healthier and Happier Living",
 		"desc": "High-quality wood products: Oak stairs, finger joint , and vario boards. Crafted with care, bringing the warmth and beauty of wood to Israel. Expertise and quality in every project, capturing the authentic feel of oak wood.",
 		"btnCatalog": "Catalog",
 		"btnContactUs": "Contact Us"
@@ -231,20 +231,46 @@
 				"lastName": "Last name",
 				"email": "Email",
 				"phone": "Phone",
-				"btn": "Save"
+				"btn": "Save",
+				"success": "Personal information updated successfully",
+				"error": "Oops! Unable to update personal information"
 			}
+		},
+		"historyOfOrders": {
+			"title": "History of orders"
 		},
 		"ressetPasswordForm": {
 			"title": "Сhange Password",
 			"currentPassword": "Current Password",
 			"newPassword": "New Password",
 			"confirmPassword": "Сonfirm Password",
-			"btn": "Save"
+			"btn": "Save",
+			"success": "Password updated successfully",
+			"error": "Password update failed. Try again."
+		},
+		"addAddressForm": {
+			"title": "Add new address",
+			"region": "Сountry / Region",
+			"city": "Сity",
+			"street": "Street",
+			"app": "Apartment",
+			"index": "Index",
+			"btn": "Save",
+			"success": "Address added successfully",
+			"error": "Oops! Unable to add address. Please try again"
+		},
+		"addressSection": {
+			"title": "My Аddress",
+			"btn": "Delete",
+			"success": "Address successfully removed",
+			"error": "Address deletion error"
 		}
 	},
 	"provider": {
 		"loading": "Loading...",
 		"rederecting": "You've logged in successfully. You will be redirected in a few seconds...",
 		"error": "Something went wrong, please try again"
-	}
+	},
+	"catalogPage": { "menu": { "filter": "Filter", "all": "All" } },
+	"notFoundMessage": "Looks like something went wrong look at other product categories or"
 }

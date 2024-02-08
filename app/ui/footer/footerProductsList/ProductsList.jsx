@@ -33,17 +33,32 @@ const FooterProductsList = ({ products, lang }) => {
 
 		const categoriesArr = fitredData.reduce((acc, item) => {
 			const { title, id } = item;
-			const subCategories = item.goods.flatMap(good =>
-				good.attributes.sub_categories.data.map(subCat => ({
-					uid: subCat.attributes.uid,
-					title: subCat.attributes.title,
-				}))
+			const subCategoriesSet = new Set();
+			item.goods.forEach(good => {
+				good.attributes.sub_categories.data.forEach(subCat => {
+					subCategoriesSet.add(
+						JSON.stringify({
+							uid: subCat.attributes.uid,
+							title: subCat.attributes.title,
+						})
+					);
+				});
+			});
+
+			const subCategories = Array.from(subCategoriesSet).map(subCat =>
+				JSON.parse(subCat)
 			);
+
 			acc.push({ title, id, subCategories });
 
 			return acc;
 		}, []);
-		setCategories(categoriesArr);
+
+		const sortedCategoriesArr = categoriesArr.sort(
+			(a, b) => parseInt(a.id) - parseInt(b.id)
+		);
+
+		setCategories(sortedCategoriesArr);
 	}, [products]);
 
 	return (
@@ -82,6 +97,7 @@ const FooterProductsList = ({ products, lang }) => {
 									placement="bottom"
 									initialFocusRef={initRef}
 									width={'50%'}
+									flip={false}
 								>
 									{({ isOpen, onClose }) => (
 										<>

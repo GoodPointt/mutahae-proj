@@ -58,6 +58,7 @@ const Order = async ({ params: { lang } }) => {
 				lang={lang}
 				userData={data}
 				orderData={orderData[0]}
+				userId={userId}
 			/>
 		</SectionWrapper>
 	);

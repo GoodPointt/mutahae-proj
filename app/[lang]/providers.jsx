@@ -3,11 +3,13 @@
 import { CacheProvider } from '@chakra-ui/next-js';
 import { ChakraProvider, theme } from '@chakra-ui/react';
 
+import { LocalBagProvider } from '../lib/hooks/useLocalBag';
+
 const Providers = ({ children }) => {
 	return (
 		<CacheProvider>
 			<ChakraProvider
-				heme={theme}
+				theme={theme}
 				toastOptions={{
 					defaultOptions: {
 						position: 'top-right',
@@ -16,7 +18,7 @@ const Providers = ({ children }) => {
 					},
 				}}
 			>
-				{children}
+				<LocalBagProvider>{children}</LocalBagProvider>
 			</ChakraProvider>
 		</CacheProvider>
 	);

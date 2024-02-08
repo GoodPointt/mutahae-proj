@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useFormState } from 'react-dom';
 import ReactInputMask from 'react-input-mask';
 
@@ -12,6 +12,9 @@ import {
 	Input,
 } from '@chakra-ui/react';
 
+// import { sendTgNotification } from '@/app/lib/api/notifyInstance';
+import { useLocalBag } from '@/app/lib/hooks/useLocalBag';
+import { flattenAttributes } from '@/app/lib/utils/flattenAttributes';
 import { submitData } from '../../../lib/orderActions';
 
 import FinalAmount from '../finalAmount/FinalAmount';
@@ -30,19 +33,88 @@ const ContactInfo = ({
 	orderData,
 }) => {
 	const [state, dispatch] = useFormState(submitData, undefined);
+	const [goodsToMap, setGoodsToMap] = useState([]);
+	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [enteredAddress, setEnteredAddress] = useState('');
+	const [localGoods, setLocalGoods] = useLocalBag('localBag', []);
 
 	const ref = useRef(null);
 
 	const maskedInputRef = useRef(null);
 
-	// useEffect(() => {
-	// 	(async () => {
-	// 		if (state?.message === 'success') {
+	const cityDetails = arrayCities.find(item => item.cityName === selectedCity);
+	const deliveryPrice = cityDetails?.zone.data.attributes.price;
 
-	// 		}
-	// 	})();
-	// }, [state]);
+	const bagPrice = goodsToMap.reduce((acc, { count, good }) => {
+		const flattenGood = flattenAttributes(good);
+
+		return acc + flattenGood.price * count;
+	}, 0);
+
+	let totalPrice = 0;
+
+	if (deliveryPrice) {
+		totalPrice = bagPrice + deliveryPrice;
+	} else {
+		totalPrice = bagPrice;
+	}
+
+	let dis = false;
+
+	if (goodsToMap.length === 0) {
+		dis = true;
+	} else {
+		dis = false;
+	}
+
+	useEffect(() => {
+		if (!authToken) {
+			setGoodsToMap(localGoods || []);
+		} else {
+			const { goods } = orderData || {};
+
+			setGoodsToMap(goods || []);
+		}
+	}, [authToken, orderData, localGoods]);
+
+	useEffect(() => {
+		(async () => {
+			if (state?.message === 'success') {
+				try {
+					setIsSubmitting(true);
+					// console.log(state);
+					// await sendTgNotification({
+					// 	firstName: state.firstName,
+					// 	lastName: state.lastName,
+					// 	email: state.email,
+					// 	phone: state.phone,
+					// 	delivery: state.deliveryAddress,
+					// 	orderPrice: state.totalPrice,
+					// 	goods: state.goods,
+					// });
+				} catch (error) {
+					console.error(error);
+				} finally {
+					setIsSubmitting(false);
+				}
+			}
+		})();
+	}, [state]);
+
+	const handleFormSubmit = event => {
+		event.preventDefault();
+		const formData = new FormData(event.target);
+		const formValues = Object.fromEntries(formData.entries());
+		dispatch({
+			type: 'SUBMIT_FORM',
+			payload: {
+				formValues,
+				totalPrice,
+				goods: goodsToMap,
+				deliveryAddress: selectedCity || enteredAddress,
+			},
+		});
+	};
 
 	const firstNameError =
 		state?.errors?.firstName && state?.errors?.firstName.length > 0
@@ -73,7 +145,7 @@ const ContactInfo = ({
 				gap={'50px'}
 				alignItems={'start'}
 				as="form"
-				action={dispatch}
+				onSubmit={handleFormSubmit}
 				ref={ref}
 				autoComplete="off"
 			>
@@ -199,7 +271,15 @@ const ContactInfo = ({
 						</Box>
 					</Flex>
 					{!authToken && <IsAccount dictionary={dictionary} lang={lang} />}
-					<ListProductToBuy orderData={orderData} authToken={authToken} />
+					{goodsToMap.length !== 0 && (
+						<ListProductToBuy
+							goodsToMap={goodsToMap}
+							setGoodsToMap={setGoodsToMap}
+							setLocalGoods={setLocalGoods}
+							authToken={authToken}
+						/>
+					)}
+
 					<Shipping
 						arrayCities={arrayCities}
 						dictionary={dictionary}
@@ -209,21 +289,18 @@ const ContactInfo = ({
 						setEnteredAddress={setEnteredAddress}
 					/>
 				</Box>
+
 				<FinalAmount
 					dictionary={dictionary}
 					selectedCity={selectedCity}
 					arrayCities={arrayCities}
+					isSubmitting={isSubmitting}
+					deliveryPrice={deliveryPrice}
+					totalPrice={totalPrice}
+					bagPrice={bagPrice}
+					dis={dis}
 				/>
 			</Flex>
-			{/* <Box w={{ base: '100%', lg: '651px', xl: '751px' }}>
-				<ListProductToBuy orderData={orderData} authToken={authToken} />
-				<Shipping
-					arrayCities={arrayCities}
-					dictionary={dictionary}
-					setSelectedCity={setSelectedCity}
-					selectedCity={selectedCity}
-				/>
-			</Box> */}
 		</>
 	);
 };

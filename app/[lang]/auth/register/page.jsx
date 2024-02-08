@@ -24,7 +24,6 @@ const RegisterPage = async ({ params: { lang } }) => {
 				<Flex width={'100%'} flexDir={'column'} gap={'25px'}>
 					<ProviderButton style={{ mb: '25px' }} variant={'google'} />
 					<ProviderButton style={{ mb: '25px' }} variant={'facebook'} />
-					<ProviderButton style={{ mb: '25px' }} variant={'telegram'} />
 				</Flex>
 			</Flex>
 		</SectionWrapper>

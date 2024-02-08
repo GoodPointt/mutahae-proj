@@ -27,19 +27,47 @@ const Favorites = async ({ params: { lang } }) => {
 				padding={0}
 			>
 				{favorites &&
-					favorites.map(good => {
-						const { uid, locale, img, title, descShort } = good.attributes;
-						const imgUrl = img.data[0].attributes.formats.small.url;
+					lang === 'en' &&
+					favorites[0].goods.map(good => {
+						const { uid, locale, title, descShort } = good;
+						const { img } = good;
+						const imgUrl = img ? img[0].formats.small.url : '/img/product.png';
 
 						return (
 							<ProductItem
 								lang={locale}
 								product={{
+									isFavorite: true,
 									uid,
-									title,
+									title: title,
 									button: 'Add To Bag',
 									imgUrl,
-									descShort,
+									descShort: descShort,
+								}}
+								key={uid}
+							/>
+						);
+					})}
+				{favorites &&
+					lang === 'he' &&
+					favorites[0].goods.map(good => {
+						const { uid, locale } = good;
+						const { title: title_he, descShort: descShort_he } =
+							good.localizations[0];
+						const { img } = good;
+
+						const imgUrl = img ? img[0].formats.small.url : '/img/product.png';
+
+						return (
+							<ProductItem
+								lang={locale}
+								product={{
+									isFavorite: true,
+									uid,
+									title: title_he,
+									button: 'Add To Bag',
+									imgUrl,
+									descShort: descShort_he,
 								}}
 								key={uid}
 							/>

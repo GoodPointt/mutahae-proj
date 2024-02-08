@@ -18,7 +18,7 @@ const RecoveryPage = async ({ params: { lang }, searchParams }) => {
 				gap={{ base: '30px', lg: '20px' }}
 				justify={{ lg: 'space-between' }}
 			>
-				{code ? (
+				{!code ? (
 					<RecoveryForm lang={lang} dictionary={dictionary} />
 				) : (
 					<ResetPasswordForm code={code} lang={lang} dictionary={dictionary} />
@@ -27,7 +27,6 @@ const RecoveryPage = async ({ params: { lang }, searchParams }) => {
 				<Flex width={'100%'} flexDir={'column'} gap={'25px'}>
 					<ProviderButton style={{ mb: '25px' }} variant={'google'} />
 					<ProviderButton style={{ mb: '25px' }} variant={'facebook'} />
-					<ProviderButton style={{ mb: '25px' }} variant={'telegram'} />
 				</Flex>
 			</Flex>
 		</SectionWrapper>

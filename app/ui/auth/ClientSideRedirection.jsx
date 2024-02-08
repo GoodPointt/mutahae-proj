@@ -9,6 +9,7 @@ import {
 	createBagByUserIdAndJwt,
 	createFavoritesByUserIdAndJwt,
 } from '@/app/lib/api/createUserStorages';
+import { useLocalBag } from '@/app/lib/hooks/useLocalBag';
 
 import { setCookie } from 'cookies-next';
 
@@ -16,6 +17,7 @@ const ClientSideRedirection = ({ dictionary, provider, lang }) => {
 	const searchParams = useSearchParams();
 	const access_token = searchParams.get('access_token');
 	const router = useRouter();
+	const [localBag] = useLocalBag('localBag', []);
 
 	const [text, setText] = useState(dictionary.provider.loading);
 
@@ -43,14 +45,31 @@ const ClientSideRedirection = ({ dictionary, provider, lang }) => {
 			.then(res => res.json())
 			.then(async res => {
 				if (res.jwt) {
-					await createBagByUserIdAndJwt(res.jwt, res.user.id);
+					const bagRes = await createBagByUserIdAndJwt(res.jwt, res.user.id);
+					if (localBag.length !== 0) {
+						await fetch(
+							`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/bags/${bagRes.data.id}?populate=goods`,
+							{
+								method: 'POST',
+								headers: {
+									Authorization: 'Bearer ' + res.jwt,
+									'Content-Type': 'application/json',
+								},
+								body: {
+									data: {
+										goods: localBag,
+									},
+								},
+							}
+						);
+					}
 					await createFavoritesByUserIdAndJwt(res.jwt, res.user.id);
 					setCookie('jwt', res.jwt);
 					setCookie('userId', res.user.id);
 
 					setTimeout(() => {
 						setText(dictionary.provider.rederecting);
-						router.push(`/${lang}/`);
+						router.refresh();
 					}, 200);
 				}
 			})

@@ -7,13 +7,19 @@ import { UserDetailsForm } from '../../ui/profile/forms/UserDetailsForm';
 
 import { Heading } from '@chakra-ui/react';
 
-import { fetchUserData } from '../../lib/api/profileInstance';
+import { fetchUserAddress, fetchUserData } from '../../lib/api/profileInstance';
 import { getDictionary } from '../../lib/locales/dictionary';
 
 const Profile = async ({ params: { lang } }) => {
 	const { data: userData } = await fetchUserData();
+	const { data: userAddress } = await fetchUserAddress();
 	const dictionary = await getDictionary(lang);
-	const { contactInformation, ressetPasswordForm } = dictionary.profile;
+	const {
+		contactInformation,
+		ressetPasswordForm,
+		addAddressForm,
+		addressSection,
+	} = dictionary.profile;
 
 	return (
 		<>
@@ -29,8 +35,8 @@ const Profile = async ({ params: { lang } }) => {
 				lang={lang}
 				userDetailsDictionary={contactInformation}
 			/>
-			<AddressSection />
-			<AddressForm />
+			<AddressSection userAddress={userAddress} dictionary={addressSection} />
+			<AddressForm dictionary={addAddressForm} />
 			<RessetPasswordForm ressetPassDictionary={ressetPasswordForm} />
 		</>
 	);
