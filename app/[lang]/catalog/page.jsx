@@ -1,8 +1,5 @@
-import { Suspense } from 'react';
-
 import Contact from '@/app/ui/contact/Contact';
 import ProductsGrid from '@/app/ui/productsGrid/ProductsGrid';
-import SkeletonProductsGrid from '@/app/ui/skeletons/SkeletonProducts';
 
 import {
 	fetchContacts,
@@ -33,14 +30,12 @@ const CatalogPage = async ({ params: { lang } }) => {
 
 	return (
 		<>
-			<Suspense fallback={<SkeletonProductsGrid />}>
-				<ProductsGrid
-					lang={lang}
-					heading={navItems[1].title}
-					data={data}
-					dictionary={dictionary}
-				/>
-			</Suspense>
+			<ProductsGrid
+				lang={lang}
+				heading={navItems[1].title}
+				data={data}
+				dictionary={dictionary}
+			/>
 			<Contact lang={lang} dictionary={dictionary} contacts={contacts} />
 		</>
 	);
