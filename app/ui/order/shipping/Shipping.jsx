@@ -25,6 +25,7 @@ const Shipping = ({
 	selectedCity,
 	setEnteredAddress,
 	enteredAddress,
+	setCityId,
 }) => {
 	const [isOpenSelect, setIsOpenSelect] = useState(false);
 
@@ -113,18 +114,6 @@ const Shipping = ({
 								backgroundColor: '#3b3d46',
 							}}
 						/>
-						<MenuItem
-							bg={'#181617'}
-							borderRadius={0}
-							key={-1}
-							_hover={{ backgroundColor: '#3b3d46' }}
-							onClick={() => {
-								setSelectedCity('');
-								setEnteredAddress('');
-							}}
-						>
-							{dictionary.order.select}
-						</MenuItem>
 
 						{arrayCities.map((item, index) => (
 							<MenuItem
@@ -134,6 +123,7 @@ const Shipping = ({
 								_hover={{ backgroundColor: '#3b3d46' }}
 								onClick={e => {
 									setSelectedCity(e.target.textContent);
+									setCityId(item.id);
 								}}
 							>
 								{item.cityName}

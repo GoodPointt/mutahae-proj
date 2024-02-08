@@ -23,11 +23,21 @@ const Order = async ({ params: { lang } }) => {
 	if (userId) {
 		orderData = await fetchBagByUserId(userId);
 	}
-
-	const arrayCities = arrCities.map(({ attributes }) => ({
-		cityName: attributes.cityName,
-		zone: attributes.zone,
-	}));
+	const arrayCities = arrCities.map(({ attributes, id }) => {
+		if (lang === 'he') {
+			return {
+				cityName: attributes.localizations.data[0].attributes.cityName,
+				zone: attributes.zone,
+				id,
+			};
+		} else {
+			return {
+				cityName: attributes.cityName,
+				zone: attributes.zone,
+				id,
+			};
+		}
+	});
 
 	const getToken = cookies().get('jwt')?.value;
 	const authToken = getToken === undefined ? false : true;

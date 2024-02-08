@@ -12,7 +12,7 @@ import {
 	Input,
 } from '@chakra-ui/react';
 
-// import { sendTgNotification } from '@/app/lib/api/notifyInstance';
+import { sendTgNotification } from '@/app/lib/api/notifyInstance';
 import { useLocalBag } from '@/app/lib/hooks/useLocalBag';
 import { flattenAttributes } from '@/app/lib/utils/flattenAttributes';
 import { submitData } from '../../../lib/orderActions';
@@ -37,6 +37,7 @@ const ContactInfo = ({
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [enteredAddress, setEnteredAddress] = useState('');
 	const [localGoods, setLocalGoods] = useLocalBag('localBag', []);
+	const [cityId, setCityId] = useState();
 
 	const ref = useRef(null);
 
@@ -82,16 +83,30 @@ const ContactInfo = ({
 			if (state?.message === 'success') {
 				try {
 					setIsSubmitting(true);
-					// console.log(state);
-					// await sendTgNotification({
-					// 	firstName: state.firstName,
-					// 	lastName: state.lastName,
-					// 	email: state.email,
-					// 	phone: state.phone,
-					// 	delivery: state.deliveryAddress,
-					// 	orderPrice: state.totalPrice,
-					// 	goods: state.goods,
-					// });
+
+					const listGoods = state.goods.map(good => {
+						if (authToken) {
+							return {
+								title: good?.good?.data?.attributes.title,
+								count: good.count,
+							};
+						} else {
+							return {
+								title: good.good.attributes.title,
+								count: good.count,
+							};
+						}
+					});
+
+					await sendTgNotification({
+						firstName: state.firstName,
+						lastName: state.lastName,
+						email: state.email,
+						phone: state.phone,
+						delivery: state.deliveryAddress,
+						orderPrice: state.totalPrice,
+						goods: listGoods,
+					});
 				} catch (error) {
 					console.error(error);
 				} finally {
@@ -99,7 +114,7 @@ const ContactInfo = ({
 				}
 			}
 		})();
-	}, [state]);
+	}, [state, authToken]);
 
 	const handleFormSubmit = event => {
 		event.preventDefault();
@@ -112,6 +127,7 @@ const ContactInfo = ({
 				totalPrice,
 				goods: goodsToMap,
 				deliveryAddress: selectedCity || enteredAddress,
+				cityId,
 			},
 		});
 	};
@@ -258,6 +274,11 @@ const ContactInfo = ({
 									defaultValue={userData?.phone || ''}
 									placeholder={dictionary.order.phone}
 									mask={'+\\972-**-***-****'}
+									style={
+										lang === 'he'
+											? { direction: 'ltr', textAlign: 'right' }
+											: null
+									}
 								/>
 
 								<FormErrorMessage
@@ -282,6 +303,7 @@ const ContactInfo = ({
 
 					<Shipping
 						arrayCities={arrayCities}
+						setCityId={setCityId}
 						dictionary={dictionary}
 						setSelectedCity={setSelectedCity}
 						selectedCity={selectedCity}

@@ -190,7 +190,7 @@ export const fetchMembers = cache(getMembers);
 const getCities = async () => {
 	try {
 		const response = await instance.get(
-			`/api/cities?populate=zone&sort[0]=cityName:asc`
+			`/api/cities?populate[0]=zone&populate[1]=localizations&sort[0]=cityName:asc`
 		);
 
 		if (!response) return;

@@ -42,7 +42,7 @@ const schema = z
 
 export async function submitData(prevState, formData) {
 	const { firstName, lastName, email, phone } = formData.payload.formValues;
-	const { totalPrice, goods, deliveryAddress } = formData.payload;
+	const { totalPrice, goods, deliveryAddress, cityId } = formData.payload;
 	const token = cookies().get('jwt')?.value;
 
 	const validatedFields = schema.safeParse({
@@ -60,7 +60,7 @@ export async function submitData(prevState, formData) {
 	}
 	try {
 		if (token) {
-			await fetchCreateOrder(totalPrice, goods, deliveryAddress);
+			await fetchCreateOrder(totalPrice, goods, cityId);
 		}
 
 		return {

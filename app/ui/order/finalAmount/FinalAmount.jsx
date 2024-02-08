@@ -27,7 +27,7 @@ const FinalAmount = ({
 			<Flex color={'#808080'} fontSize={'14px'} flexDir={'column'} gap={'10px'}>
 				<Flex justifyContent="space-between">
 					<Box as="span">{dictionary.order.subtotal}</Box>
-					<Box as="span">{`€${bagPrice ? bagPrice : 0}`}</Box>
+					<Box as="span">{`₪${bagPrice ? bagPrice : 0}`}</Box>
 				</Flex>
 				<Flex
 					justifyContent="space-between"
@@ -35,7 +35,7 @@ const FinalAmount = ({
 					borderBottom={'1px solid #3B3D46'}
 				>
 					<Box as="span">{dictionary.order.shippingPrice}</Box>
-					<Box as="span">{`€${deliveryPrice ? deliveryPrice : 0}`}</Box>
+					<Box as="span">{`₪${deliveryPrice ? deliveryPrice : 0}`}</Box>
 				</Flex>
 				<Flex
 					justifyContent="space-between"
@@ -43,7 +43,7 @@ const FinalAmount = ({
 					paddingBottom={'10px'}
 				>
 					<Box as="span">{dictionary.order.total}</Box>
-					<Box as="span">{`€${totalPrice ? totalPrice : 0}`}</Box>
+					<Box as="span">{`₪${totalPrice ? totalPrice : 0}`}</Box>
 				</Flex>
 				<SubmitButton isSubmitting={isSubmitting} dis={dis}>
 					{dictionary.order.button}
