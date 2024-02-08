@@ -1,9 +1,8 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import {
-	Center,
 	Flex,
 	Tab,
 	TabList,
@@ -18,8 +17,8 @@ import {
 	fetchProducts,
 } from '@/app/lib/api/instance';
 
-import PaginationDisplay from '../paginationDisplay/PaginationDisplay';
 import SectionWrapper from '../sectionWrapper/SectionWrapper';
+import SkeletotonClientProductGrid from '../skeletons/SkeletotonClientProductGrid';
 
 import CategoryMenu from './categoryMenu/CategoryMenu';
 import Filter from './filter/Filter';
@@ -44,6 +43,28 @@ const ProductsGrid = ({
 	const [sub_category, setSub_category] = useQueryState('sub_category');
 	const [total, setTotal] = useQueryState('total', parseAsInteger);
 
+	const loader = useRef(null);
+	const hasNext = parseInt(9) * (parseInt(page) - 1) + parseInt(9) < total;
+
+	useEffect(() => {
+		const handleObserver = entities => {
+			const target = entities[0];
+			if (target.isIntersecting) {
+				setPage(prev => prev + 1);
+			}
+		};
+		if (hasNext) {
+			const observer = new IntersectionObserver(handleObserver, {
+				root: null,
+				rootMargin: '80px',
+				threshold: 1,
+			});
+			if (loader.current) {
+				observer.observe(loader.current);
+			}
+		}
+	}, [hasNext, setPage]);
+
 	useEffect(() => {
 		(async () => {
 			try {
@@ -61,7 +82,7 @@ const ProductsGrid = ({
 						sub_category
 					);
 
-					setRenderList(data);
+					setRenderList(prev => [...prev, ...data]);
 					setTotal(total);
 
 					return;
@@ -79,7 +100,7 @@ const ProductsGrid = ({
 						category
 					);
 
-					setRenderList(data);
+					setRenderList(prev => [...prev, ...data]);
 					setTotal(total);
 
 					return;
@@ -87,7 +108,7 @@ const ProductsGrid = ({
 
 				const { data, total } = await fetchProducts(lang, page);
 
-				setRenderList(data);
+				setRenderList(prev => [...prev, ...data]);
 				setTotal(total);
 			} catch (error) {
 				console.error(error);
@@ -160,7 +181,7 @@ const ProductsGrid = ({
 				onChange={index => setActiveTab(index)}
 				isManual={true}
 			>
-				<TabList display={{ base: 'none', md: 'flex' }}>
+				<TabList display={{ base: 'none', md: 'flex' }} mb={'2.5rem'}>
 					<Tab
 						key={'All'}
 						mx={'12px'}
@@ -173,6 +194,7 @@ const ProductsGrid = ({
 							color: '#a98841',
 						}}
 						onClick={() => {
+							setRenderList([]);
 							setPage(1);
 							setCategory(null);
 							setSub_category(null);
@@ -201,6 +223,7 @@ const ProductsGrid = ({
 									fontSize={'18px'}
 									fontWeight={'500'}
 									onClick={() => {
+										setRenderList([]);
 										setCategory(id), setSub_category(null), setPage(1);
 									}}
 								>
@@ -219,30 +242,34 @@ const ProductsGrid = ({
 						))}
 				</TabList>
 				<TabPanels px={'0'}>
-					<TabPanel key={'All'} px={'0'}>
-						<ProductList list={renderList} lang={lang} isLoading={isLoading} />
-					</TabPanel>
-					{categories.map(({ id }) => (
-						<TabPanel key={id} px={'0'}>
+					<TabPanel key={'All'} px={'0'} py={'0'}>
+						{isLoading && page < 2 ? (
+							<SkeletotonClientProductGrid />
+						) : (
 							<ProductList
 								list={renderList}
 								lang={lang}
 								isLoading={isLoading}
 							/>
+						)}
+					</TabPanel>
+					{categories.map(({ id }) => (
+						<TabPanel key={id} px={'0'} py={'0'}>
+							{isLoading && page < 2 ? (
+								<SkeletotonClientProductGrid />
+							) : (
+								<ProductList
+									list={renderList}
+									lang={lang}
+									isLoading={isLoading}
+								/>
+							)}
 						</TabPanel>
 					))}
 				</TabPanels>
+				{hasNext && <div ref={loader} />}
 			</Tabs>
-			<Center>
-				<PaginationDisplay
-					total={total}
-					page={page}
-					renderList={!!renderList}
-					setTotal={setTotal}
-					setPage={setPage}
-					lang={lang}
-				/>
-			</Center>
+			{isLoading && <SkeletotonClientProductGrid />}
 		</SectionWrapper>
 	);
 };

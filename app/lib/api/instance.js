@@ -14,7 +14,7 @@ const getProducts = async (lang, page = 1) => {
 		const {
 			data: { data, meta },
 		} = await instance.get(
-			`api/goods?locale=${lang}&populate=img&sort[0]=publishedAt:asc&pagination[page]=${page}&pagination[pageSize]=6`
+			`api/goods?locale=${lang}&populate=img&sort[0]=publishedAt:asc&pagination[page]=${page}&pagination[pageSize]=9`
 		);
 		if (data.length === 0) {
 			return { data: [], total: 0 };
@@ -35,7 +35,7 @@ const getProductsByCategorie = async (lang, page = 1, uid) => {
 		const {
 			data: { data, meta },
 		} = await instance.get(
-			`api/goods?locale=${lang}&populate=deep&filters[categories][uid][$eq]=${uid}&sort[0]=publishedAt:asc&pagination[page]=${page}&pagination[pageSize]=6`
+			`api/goods?locale=${lang}&populate=deep&filters[categories][uid][$eq]=${uid}&sort[0]=publishedAt:asc&pagination[page]=${page}&pagination[pageSize]=9`
 		);
 		if (data.length === 0) {
 			return notFound();
@@ -56,7 +56,7 @@ const getProductBySubCategorie = async (lang, page, category, sub_category) => {
 		const {
 			data: { data, meta },
 		} = await instance.get(
-			`api/goods?locale=${lang}&populate=deep&filters[0][categories][uid][$eq]=${category}&filters[1][sub_categories][uid][$eq]=${sub_category}&sort[0]=publishedAt:asc&pagination[page]=${page}&pagination[pageSize]=6`
+			`api/goods?locale=${lang}&populate=deep&filters[0][categories][uid][$eq]=${category}&filters[1][sub_categories][uid][$eq]=${sub_category}&sort[0]=publishedAt:asc&pagination[page]=${page}&pagination[pageSize]=9`
 		);
 
 		if (data.length === 0) {
