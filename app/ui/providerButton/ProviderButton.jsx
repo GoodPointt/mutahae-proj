@@ -7,7 +7,7 @@ import FbIcon from '../svg/FbIcon';
 import GoogleIcon from '../svg/GoogleIcon';
 import TelegramIcon from '../svg/TelegramIcon';
 
-const ProviderButton = ({ style, variant }) => {
+const ProviderButton = ({ style, variant, dictionary }) => {
 	const backendUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL;
 	let icon;
 
@@ -45,7 +45,7 @@ const ProviderButton = ({ style, variant }) => {
 			>
 				<Center>
 					<Text>
-						Sign in with
+						{dictionary}
 						<Text as={'span'} textTransform={'capitalize'}>
 							{' ' + variant.charAt(0).toUpperCase() + variant.slice(1)}
 						</Text>
