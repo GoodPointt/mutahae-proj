@@ -101,6 +101,7 @@
 		}
 	},
 	"formContact": {
+		"signInProvider": "Sign in with",
 		"recovery": "Recover password",
 		"login": "Login",
 		"register": "Create account",

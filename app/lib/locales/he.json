@@ -5,7 +5,7 @@
 		"send": "שלח",
 		"buy": "לקנייה",
 		"bag": "להוסיף לתיק",
-		"forgotPass": "*שכחת ססמה?",
+		"forgotPass": "*סיסמה?",
 		"createAcc": "צור חשבון",
 		"cancel": "לבטל"
 	},
@@ -101,6 +101,7 @@
 		}
 	},
 	"formContact": {
+		"signInProvider": "התחברות באמצעות",
 		"recovery": "שחזור סיסמה",
 		"login": "התחברות",
 		"register": "צור חשבון",

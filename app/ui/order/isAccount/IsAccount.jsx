@@ -32,9 +32,16 @@ const IsAccount = ({ dictionary, lang }) => {
 				</Link>
 			</Text>
 			<Flex width={'100%'} flexDir={'column'} gap={'10px'}>
-				<ProviderButton style={{ mb: '25px' }} variant={'google'} />
-				<ProviderButton style={{ mb: '25px' }} variant={'facebook'} />
-				<ProviderButton style={{ mb: '25px' }} variant={'telegram'} />
+				<ProviderButton
+					style={{ mb: '25px' }}
+					variant={'google'}
+					dictionary={dictionary.formContact.signInProvider}
+				/>
+				<ProviderButton
+					style={{ mb: '25px' }}
+					variant={'facebook'}
+					dictionary={dictionary.formContact.signInProvider}
+				/>
 			</Flex>
 		</>
 	);

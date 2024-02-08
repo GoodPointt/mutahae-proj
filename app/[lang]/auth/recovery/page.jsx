@@ -25,8 +25,16 @@ const RecoveryPage = async ({ params: { lang }, searchParams }) => {
 				)}
 				<Box bgColor={'#3B3D46'} w={'1px'}></Box>
 				<Flex width={'100%'} flexDir={'column'} gap={'25px'}>
-					<ProviderButton style={{ mb: '25px' }} variant={'google'} />
-					<ProviderButton style={{ mb: '25px' }} variant={'facebook'} />
+					<ProviderButton
+						style={{ mb: '25px' }}
+						variant={'google'}
+						dictionary={dictionary.formContact.signInProvider}
+					/>
+					<ProviderButton
+						style={{ mb: '25px' }}
+						variant={'facebook'}
+						dictionary={dictionary.formContact.signInProvider}
+					/>
 				</Flex>
 			</Flex>
 		</SectionWrapper>
