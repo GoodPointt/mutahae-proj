@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 import {
 	Box,
@@ -21,35 +21,68 @@ const CategoryMenu = ({
 	setSub_category,
 	setPage,
 	sub_category,
+	title,
+	category,
+	dictionary,
 }) => {
 	const initRef = useRef();
+	const popoverCloseRef = useRef();
+
+	useEffect(() => {
+		let lastScrollTop = window.scrollY || document.documentElement.scrollTop;
+
+		const handleScroll = () => {
+			let scrollTop = window.scrollY || document.documentElement.scrollTop;
+
+			if (Math.abs(scrollTop - lastScrollTop) > 30 && popoverCloseRef.current) {
+				popoverCloseRef.current();
+			}
+
+			lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+		};
+
+		window.addEventListener('scroll', handleScroll);
+
+		return () => {
+			window.removeEventListener('scroll', handleScroll);
+		};
+	}, []);
 
 	return (
 		<Popover closeOnBlur={true} placement="bottom" initialFocusRef={initRef}>
-			{({ isOpen, onClose }) => (
-				<>
-					{subCategories.length > 0 && (
-						<PopoverTrigger>
-							<Button
-								variant={'ghost'}
-								_hover={{
-									bg: 'none',
-								}}
+			{({ isOpen, onClose }) => {
+				popoverCloseRef.current = onClose;
+
+				return (
+					<>
+						{subCategories.length > 0 && (
+							<PopoverTrigger _hover={{ bg: 'none' }}>
+								<Flex
+									color={'inherit'}
+									fontWeight={'inherit'}
+									stroke={id === category ? '#a28445' : 'white'}
+									transition={'all 0.3s'}
+									_hover={{
+										fill: '#a98841',
+										stroke: '#a98841',
+										color: '#a98841',
+									}}
+								>
+									{title}
+									{isOpen ? <ArrowUp /> : <ArrowDown />}
+								</Flex>
+							</PopoverTrigger>
+						)}
+
+						<Portal>
+							<PopoverContent
+								bg={'#191617'}
+								border={'none'}
+								alignItems={'center'}
 							>
-								{isOpen ? <ArrowUp /> : <ArrowDown />}
-							</Button>
-						</PopoverTrigger>
-					)}
-					<Portal>
-						<PopoverContent
-							bg={'#191617'}
-							border={'none'}
-							alignItems={'center'}
-						>
-							<PopoverBody display={'flex'} flexDir={'column'}>
-								<Flex as="ul" flexDir={'column'} gap={'4px'}>
-									{subCategories.map(subCategory => (
-										<Box as="li" key={subCategory.uid} width={'100%'}>
+								<PopoverBody display={'flex'} flexDir={'column'}>
+									<Flex as="ul" flexDir={'column'} gap={'4px'}>
+										<Box as="li" key={'All'} width={'100%'}>
 											<Button
 												variant={'ghost'}
 												fontSize={'16px'}
@@ -60,27 +93,52 @@ const CategoryMenu = ({
 													transform: 'translateX(5px)',
 													color: '#a98841',
 												}}
-												color={
-													sub_category !== subCategory.uid ? 'white' : '#a28445'
-												}
+												color={category ? 'white' : '#a28445'}
 												onMouseDown={() => onClose()}
 												onClick={() => {
-													setCategory(id),
-														setSub_category(subCategory.uid),
-														setPage(1),
-														onClose();
+													setSub_category(null);
+													onClose();
 												}}
 											>
-												{subCategory.title}
+												{dictionary.catalogPage.menu.all}
 											</Button>
 										</Box>
-									))}
-								</Flex>
-							</PopoverBody>
-						</PopoverContent>
-					</Portal>
-				</>
-			)}
+										{subCategories.map(subCategory => (
+											<Box as="li" key={subCategory.uid} width={'100%'}>
+												<Button
+													variant={'ghost'}
+													fontSize={'16px'}
+													fontWeight={'500'}
+													transition={'all 0.3s'}
+													_hover={{
+														bg: 'none',
+														transform: 'translateX(5px)',
+														color: '#a98841',
+													}}
+													color={
+														sub_category !== subCategory.uid
+															? 'white'
+															: '#a28445'
+													}
+													onMouseDown={() => onClose()}
+													onClick={() => {
+														setCategory(id),
+															setSub_category(subCategory.uid),
+															setPage(1),
+															onClose();
+													}}
+												>
+													{subCategory.title}
+												</Button>
+											</Box>
+										))}
+									</Flex>
+								</PopoverBody>
+							</PopoverContent>
+						</Portal>
+					</>
+				);
+			}}
 		</Popover>
 	);
 };

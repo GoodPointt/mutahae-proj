@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import {
 	Flex,
@@ -17,26 +17,21 @@ import {
 	fetchProducts,
 } from '@/app/lib/api/instance';
 
+import ScrollToTopButton from '../scrollToTopButton/ScrollToTopButton';
 import SectionWrapper from '../sectionWrapper/SectionWrapper';
 import SkeletotonClientProductGrid from '../skeletons/SkeletotonClientProductGrid';
 
 import CategoryMenu from './categoryMenu/CategoryMenu';
-import Filter from './filter/Filter';
+import MobileFilterMenu from './mobileFilterMenu/MobileFilterMenu';
 import ProductList from './productList/ProductList';
 
 import { parseAsInteger, useQueryState } from 'nuqs';
 
-const ProductsGrid = ({
-	products,
-	lang,
-	heading,
-	data: categoriesList,
-	dictionary,
-}) => {
+const ProductsGrid = ({ lang, heading, data: categoriesList, dictionary }) => {
 	const [renderList, setRenderList] = useState([]);
 	const [categories, setCategories] = useState([]);
-	const [activeTab, setActiveTab] = useState(0);
 	const [isLoading, setIsLoading] = useState(false);
+	const [activeTab, setActiveTab] = useState(0);
 
 	const [category, setCategory] = useQueryState('category');
 	const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1));
@@ -44,79 +39,77 @@ const ProductsGrid = ({
 	const [total, setTotal] = useQueryState('total', parseAsInteger);
 
 	const loader = useRef(null);
+
 	const hasNext = parseInt(9) * (parseInt(page) - 1) + parseInt(9) < total;
 
-	useEffect(() => {
-		const handleObserver = entities => {
+	const observerCallback = useCallback(
+		entities => {
 			const target = entities[0];
 			if (target.isIntersecting) {
 				setPage(prev => prev + 1);
 			}
-		};
-		if (hasNext) {
-			const observer = new IntersectionObserver(handleObserver, {
-				root: null,
-				rootMargin: '80px',
-				threshold: 1,
-			});
-			if (loader.current) {
-				observer.observe(loader.current);
-			}
-		}
-	}, [hasNext, setPage]);
+		},
+		[setPage]
+	);
 
 	useEffect(() => {
-		(async () => {
-			try {
-				setIsLoading(true);
+		const observer = new IntersectionObserver(observerCallback, {
+			root: null,
+			rootMargin: '80px',
+			threshold: 1,
+		});
+		if (loader.current && hasNext) {
+			observer.observe(loader.current);
+		}
+
+		return () => observer.disconnect();
+	}, [observerCallback, hasNext]);
+
+	const fetchData = useCallback(async () => {
+		setIsLoading(true);
+		try {
+			let dataToSet = [];
+			let totalToSet = 0;
+
+			for (let i = 1; i <= page; i++) {
+				let response;
 				if (category && sub_category) {
-					const activeTabIndex =
-						categories.findIndex(el => el.id === category) + 1;
-
-					setActiveTab(activeTabIndex);
-
-					const { data, total } = await fetchProductBySubCategorie(
+					response = await fetchProductBySubCategorie(
 						lang,
-						page,
+						i,
 						category,
 						sub_category
 					);
-
-					setRenderList(prev => [...prev, ...data]);
-					setTotal(total);
-
-					return;
+				} else if (category) {
+					response = await fetchgetProductsByCategorie(lang, i, category);
+				} else {
+					response = await fetchProducts(lang, i);
 				}
 
-				if (category && !sub_category) {
-					const activeTabIndex =
-						categories.findIndex(el => el.id === category) + 1;
-
-					setActiveTab(activeTabIndex);
-
-					const { data, total } = await fetchgetProductsByCategorie(
-						lang,
-						page,
-						category
-					);
-
-					setRenderList(prev => [...prev, ...data]);
-					setTotal(total);
-
-					return;
-				}
-
-				const { data, total } = await fetchProducts(lang, page);
-
-				setRenderList(prev => [...prev, ...data]);
-				setTotal(total);
-			} catch (error) {
-				console.error(error);
-			} finally {
-				setIsLoading(false);
+				dataToSet = [...dataToSet, ...response.data];
+				totalToSet = response.total;
 			}
-		})();
-	}, [categories, category, lang, page, products, setTotal, sub_category]);
+
+			if (category) {
+				const activeTabIndex =
+					categories.findIndex(el => el.id === category) + 1;
+
+				setActiveTab(activeTabIndex);
+			}
+
+			setRenderList(dataToSet);
+			setTotal(totalToSet);
+		} catch (error) {
+			console.error(error);
+		} finally {
+			setIsLoading(false);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [categories, category, page, sub_category]);
+
+	useEffect(() => {
+		fetchData();
+	}, [fetchData]);
 
 	useEffect(() => {
 		if (!categoriesList) return;
@@ -128,9 +121,9 @@ const ProductsGrid = ({
 			goods: item.attributes.goods.data,
 		}));
 
-		const fitredData = dataCategory.filter(item => item.goods.length > 0);
+		const filteredData = dataCategory.filter(item => item.goods.length > 0);
 
-		const categoriesArr = fitredData.reduce((acc, item) => {
+		const categoriesArr = filteredData.reduce((acc, item) => {
 			const { title, id } = item;
 			const subCategoriesSet = new Set();
 			item.goods.forEach(good => {
@@ -164,8 +157,9 @@ const ProductsGrid = ({
 		<SectionWrapper
 			heading={heading}
 			bg={'linear-gradient(to right, #434343 0%, black 100%)'}
+			position={'relative'}
 		>
-			<Filter
+			<MobileFilterMenu
 				category={category}
 				categories={categories}
 				setCategory={setCategory}
@@ -173,6 +167,8 @@ const ProductsGrid = ({
 				setPage={setPage}
 				sub_category={sub_category}
 				dictionary={dictionary}
+				lang={lang}
+				refMobFilter
 			/>
 			<Tabs
 				lazyBehavior
@@ -194,7 +190,6 @@ const ProductsGrid = ({
 							color: '#a98841',
 						}}
 						onClick={() => {
-							setRenderList([]);
 							setPage(1);
 							setCategory(null);
 							setSub_category(null);
@@ -205,39 +200,31 @@ const ProductsGrid = ({
 
 					{categories &&
 						categories.map(({ id, title, subCategories }) => (
-							<Flex
-								key={id}
-								mx={'12px'}
-								stroke={id === category ? '#a28445' : 'white'}
-								transition={'all 0.3s'}
-								_hover={{
-									bg: 'none',
-									fill: '#a98841',
-									stroke: '#a98841',
-									color: '#a98841',
-								}}
-							>
+							<Flex key={id} mx={'12px'}>
 								<Tab
 									px={0}
 									_selected={{ color: '#a28445' }}
+									color={'white'}
 									fontSize={'18px'}
 									fontWeight={'500'}
 									onClick={() => {
-										setRenderList([]);
-										setCategory(id), setSub_category(null), setPage(1);
+										setCategory(id),
+											category !== id && setSub_category(null),
+											setPage(1);
 									}}
 								>
-									{title}
+									<CategoryMenu
+										id={id}
+										title={title}
+										subCategories={subCategories}
+										setCategory={setCategory}
+										setSub_category={setSub_category}
+										setPage={setPage}
+										sub_category={sub_category}
+										category={category}
+										dictionary={dictionary}
+									/>
 								</Tab>
-								<CategoryMenu
-									id={id}
-									title={title}
-									subCategories={subCategories}
-									setCategory={setCategory}
-									setSub_category={setSub_category}
-									setPage={setPage}
-									sub_category={sub_category}
-								/>
 							</Flex>
 						))}
 				</TabList>
@@ -270,6 +257,7 @@ const ProductsGrid = ({
 				{hasNext && <div ref={loader} />}
 			</Tabs>
 			{isLoading && <SkeletotonClientProductGrid />}
+			<ScrollToTopButton />
 		</SectionWrapper>
 	);
 };
