@@ -35,7 +35,7 @@ const ProductToBuy = ({ good, goodId, authToken, setGoods, productCount }) => {
 				>
 					<Image
 						src={
-							(img.data && img.data[0].attributes.url) ||
+							(img?.data && img?.data[0].attributes.url) ||
 							img[0].url ||
 							'/img/product.png'
 						}

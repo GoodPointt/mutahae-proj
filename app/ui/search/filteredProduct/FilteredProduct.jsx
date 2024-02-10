@@ -23,16 +23,19 @@ const FilteredProduct = ({ product, lang }) => {
 						bgPos={'center'}
 						bgSize={'cover'}
 					>
-						{product?.img.data.map((img, index) => (
-							<Image
-								key={index}
-								src={img.attributes.url || '/img/product.png'}
-								alt={product.title + '' + product.descShort || 'product image'}
-								fill
-								sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-								style={{ objectFit: 'cover' }}
-							/>
-						))}
+						{product.img.data !== null &&
+							product?.img?.data.map((img, index) => (
+								<Image
+									key={index}
+									src={img.attributes.url || '/img/product.png'}
+									alt={
+										product.title + '' + product.descShort || 'product image'
+									}
+									fill
+									sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+									style={{ objectFit: 'cover' }}
+								/>
+							))}
 					</Box>
 					<Flex flexDir={'column'} gap={'5px'}>
 						<Heading as={'h3'} fontSize={'24px'} fontWeight={700}>

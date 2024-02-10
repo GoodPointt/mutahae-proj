@@ -23,11 +23,10 @@ const Shipping = ({
 	arrayCities,
 	setSelectedCity,
 	selectedCity,
-	setEnteredAddress,
-	enteredAddress,
 	setCityId,
 }) => {
 	const [isOpenSelect, setIsOpenSelect] = useState(false);
+	const [enteredAddress, setEnteredAddress] = useState('');
 
 	const handleMenuOpen = () => {
 		setIsOpenSelect(true);
@@ -39,8 +38,13 @@ const Shipping = ({
 
 	const handleCustomCityChange = e => {
 		setEnteredAddress(e.target.value);
-		setSelectedCity('');
 	};
+
+	const filteredAddresses = arrayCities.filter(({ cityName }) => {
+		const formatedAddress = enteredAddress.toLowerCase();
+
+		return cityName.toLowerCase().includes(formatedAddress);
+	});
 
 	return (
 		<>
@@ -103,9 +107,10 @@ const Shipping = ({
 							type="text"
 							value={enteredAddress}
 							onChange={handleCustomCityChange}
-							placeholder="Enter your address"
+							placeholder={dictionary.order.ownCity}
 							bg={'#181617'}
 							color={'#ffffff'}
+							focusBorderColor="#a28445"
 							borderRadius={0}
 							borderTop={'transparent'}
 							borderLeft={'transparent'}
@@ -115,14 +120,14 @@ const Shipping = ({
 							}}
 						/>
 
-						{arrayCities.map((item, index) => (
+						{filteredAddresses.map((item, index) => (
 							<MenuItem
 								bg={'#181617'}
 								borderRadius={0}
 								key={index}
 								_hover={{ backgroundColor: '#3b3d46' }}
-								onClick={e => {
-									setSelectedCity(e.target.textContent);
+								onClick={() => {
+									setSelectedCity(item.cityName);
 									setCityId(item.id);
 								}}
 							>

@@ -31,14 +31,28 @@ const IsAccount = ({ dictionary, lang }) => {
 					{dictionary.order.register}
 				</Link>
 			</Text>
-			<Flex width={'100%'} flexDir={'column'} gap={'10px'}>
+			<Flex width={'100%'} flexDir={{ base: 'column', sm: 'row' }} gap={'15px'}>
 				<ProviderButton
-					style={{ mb: '25px' }}
+					style={{
+						mb: '25px',
+						width: '100%',
+
+						'@media (min-width: 481px)': {
+							width: '50%',
+						},
+					}}
 					variant={'google'}
 					dictionary={dictionary.formContact.signInProvider}
 				/>
 				<ProviderButton
-					style={{ mb: '25px' }}
+					style={{
+						mb: '25px',
+						width: '100%',
+
+						'@media (min-width: 481px)': {
+							width: '50%',
+						},
+					}}
 					variant={'facebook'}
 					dictionary={dictionary.formContact.signInProvider}
 				/>

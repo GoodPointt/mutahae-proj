@@ -23,6 +23,7 @@ const Order = async ({ params: { lang } }) => {
 	if (userId) {
 		orderData = await fetchBagByUserId(userId);
 	}
+
 	const arrayCities = arrCities.map(({ attributes, id }) => {
 		if (lang === 'he') {
 			return {
