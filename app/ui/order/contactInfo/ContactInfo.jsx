@@ -35,12 +35,10 @@ const ContactInfo = ({
 	const [state, dispatch] = useFormState(submitData, undefined);
 	const [goodsToMap, setGoodsToMap] = useState([]);
 	const [isSubmitting, setIsSubmitting] = useState(false);
-	const [enteredAddress, setEnteredAddress] = useState('');
 	const [localGoods, setLocalGoods] = useLocalBag('localBag', []);
 	const [cityId, setCityId] = useState();
 
 	const ref = useRef(null);
-
 	const maskedInputRef = useRef(null);
 
 	const cityDetails = arrayCities.find(item => item.cityName === selectedCity);
@@ -52,21 +50,8 @@ const ContactInfo = ({
 		return acc + flattenGood.price * count;
 	}, 0);
 
-	let totalPrice = 0;
-
-	if (deliveryPrice) {
-		totalPrice = bagPrice + deliveryPrice;
-	} else {
-		totalPrice = bagPrice;
-	}
-
-	let dis = false;
-
-	if (goodsToMap.length === 0) {
-		dis = true;
-	} else {
-		dis = false;
-	}
+	const totalPrice = deliveryPrice ? bagPrice + deliveryPrice : bagPrice;
+	const dis = goodsToMap.length === 0;
 
 	useEffect(() => {
 		if (!authToken) {
@@ -126,7 +111,7 @@ const ContactInfo = ({
 				formValues,
 				totalPrice,
 				goods: goodsToMap,
-				deliveryAddress: selectedCity || enteredAddress,
+				deliveryAddress: selectedCity,
 				cityId,
 			},
 		});
@@ -166,15 +151,11 @@ const ContactInfo = ({
 				autoComplete="off"
 			>
 				<Box w={{ base: '100%', lg: '651px', xl: '751px' }}>
-					<Flex
-						flexDir={'column'}
-						rowGap={{ base: '15px', sm: '25px' }}
-						mb={'20px'}
-					>
+					<Flex flexDir={'column'} rowGap={'25px'} mb={'20px'}>
 						<Box
 							display={'flex'}
 							flexDir={{ base: 'column', sm: 'row' }}
-							gap={'15px'}
+							gap={{ base: '25px', sm: '15px' }}
 						>
 							<FormControl isInvalid={firstNameError}>
 								<Input
@@ -194,7 +175,7 @@ const ContactInfo = ({
 									border="1px solid transparent"
 								/>
 								<FormErrorMessage
-									fontSize={'14px'}
+									fontSize={{ base: '12px', sm: '14px' }}
 									position="absolute"
 									bottom="-20px"
 								>
@@ -219,7 +200,7 @@ const ContactInfo = ({
 									border="1px solid transparent"
 								/>
 								<FormErrorMessage
-									fontSize={'14px'}
+									fontSize={{ base: '12px', sm: '14px' }}
 									position="absolute"
 									bottom="-20px"
 								>
@@ -233,7 +214,7 @@ const ContactInfo = ({
 						<Box
 							display={'flex'}
 							flexDir={{ base: 'column', sm: 'row' }}
-							gap={'15px'}
+							gap={{ base: '25px', sm: '15px' }}
 						>
 							<FormControl isInvalid={emailError}>
 								<Input
@@ -252,7 +233,7 @@ const ContactInfo = ({
 									border={'1px solid transparent'}
 								/>
 								<FormErrorMessage
-									fontSize={'14px'}
+									fontSize={{ base: '12px', sm: '14px' }}
 									position="absolute"
 									bottom="-20px"
 								>
@@ -282,7 +263,7 @@ const ContactInfo = ({
 								/>
 
 								<FormErrorMessage
-									fontSize={'14px'}
+									fontSize={{ base: '12px', sm: '14px' }}
 									position="absolute"
 									bottom="-20px"
 								>
@@ -307,8 +288,6 @@ const ContactInfo = ({
 						dictionary={dictionary}
 						setSelectedCity={setSelectedCity}
 						selectedCity={selectedCity}
-						enteredAddress={enteredAddress}
-						setEnteredAddress={setEnteredAddress}
 					/>
 				</Box>
 

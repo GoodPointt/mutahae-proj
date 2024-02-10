@@ -116,7 +116,7 @@ const ToolBar = ({
 				{variant === 'SEARCH_ICON' && (
 					<SearchField
 						lang={lang}
-						onClose={handleClose}
+						onClose={onClose}
 						query={query}
 						setQuery={setQuery}
 						dictionary={dictionary}

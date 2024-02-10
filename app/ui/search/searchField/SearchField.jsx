@@ -108,7 +108,7 @@ const SearchField = ({ lang, onClose, setQuery, query, dictionary }) => {
 						fontWeight={500}
 						lineHeight={1}
 					>
-						Clear
+						{dictionary.searchField.clear}
 					</Button>
 				</InputRightElement>
 			</InputGroup>

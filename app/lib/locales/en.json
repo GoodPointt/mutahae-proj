@@ -204,6 +204,7 @@
 		"shippingTitle": "Shipping",
 		"shippingDesc": "*According to the carrier's rates",
 		"select": "Сhoose A Сity",
+		"ownCity": "Enter your city",
 		"orderTitle": "My Order",
 		"subtotal": "Subtotal",
 		"shippingPrice": "Shipping",
@@ -212,6 +213,7 @@
 	},
 	"searchField": {
 		"search": "Search...",
+		"clear": "Clear",
 		"noResultText": "Sorry, no results found",
 		"button": "See All Search Results"
 	},

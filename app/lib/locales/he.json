@@ -204,6 +204,7 @@
 		"shippingTitle": "משלוח",
 		"shippingDesc": "* על פי תעריף המוביל",
 		"select": "בחר עיר",
+		"ownCity": "הזן את העיר שלך",
 		"orderTitle": "הזמנתי",
 		"subtotal": "סכום חלקי",
 		"shippingPrice": "משלוח",
@@ -269,6 +270,7 @@
 	},
 	"searchField": {
 		"search": "חיפוש...",
+		"clear": "ברור",
 		"noResultText": "מצטערים, לא נמצאו תוצאות",
 		"button": "ראה את כל תוצאות החיפוש"
 	},
