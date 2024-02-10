@@ -11,7 +11,7 @@ import NavBar from '../../navbar/NavBar';
 import SectionWrapper from '../../sectionWrapper/SectionWrapper';
 import SocialLinks from '../../socialLinks/SocialLinks';
 import BottomBar from '../bottomBar/BottomBar';
-import FooterProductsList from '../footerProductsList/ProductsList';
+import FooterProductsList from '../footerProductsList/FooterProductList';
 
 const FooterWrapper = ({ lang, dictionary, contacts, products }) => {
 	const isRTL = lang === 'he';
