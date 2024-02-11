@@ -22,14 +22,14 @@ import { useDebouncedCallback } from 'use-debounce';
 const SearchField = ({ lang, onClose, setQuery, query, dictionary }) => {
 	const [filter, setFilter] = useState('');
 
-	const [filteredProducts, setFilteredProducts] = useState('');
+	const [filteredProducts, setFilteredProducts] = useState([]);
 
 	const ref = useRef(null);
 
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const filteredProducts = await fetchProductsByQuery(query);
+				const filteredProducts = await fetchProductsByQuery(query, lang);
 				setFilteredProducts(filteredProducts);
 			} catch (error) {
 				console.error('Error fetching products:', error);
@@ -37,7 +37,7 @@ const SearchField = ({ lang, onClose, setQuery, query, dictionary }) => {
 		};
 
 		fetchData();
-	}, [query]);
+	}, [query, lang]);
 
 	const handleSearch = useDebouncedCallback(e => {
 		if (e.target.value) {

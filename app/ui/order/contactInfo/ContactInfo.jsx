@@ -10,6 +10,7 @@ import {
 	FormControl,
 	FormErrorMessage,
 	Input,
+	useDisclosure,
 } from '@chakra-ui/react';
 
 import { sendTgNotification } from '@/app/lib/api/notifyInstance';
@@ -17,9 +18,11 @@ import { useLocalBag } from '@/app/lib/hooks/useLocalBag';
 import { flattenAttributes } from '@/app/lib/utils/flattenAttributes';
 import { submitData } from '../../../lib/orderActions';
 
+import Modal from '../../modal/Modal';
 import FinalAmount from '../finalAmount/FinalAmount';
 import IsAccount from '../isAccount/IsAccount';
 import ListProductToBuy from '../listProductToBuy/ListProductToBuy';
+import OrderThankYou from '../orderThankYou/OrderThankYou';
 import Shipping from '../shipping/Shipping';
 
 const ContactInfo = ({
@@ -37,6 +40,7 @@ const ContactInfo = ({
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [localGoods, setLocalGoods] = useLocalBag('localBag', []);
 	const [cityId, setCityId] = useState();
+	const { isOpen = false, onOpen, onClose } = useDisclosure();
 
 	const ref = useRef(null);
 	const maskedInputRef = useRef(null);
@@ -64,47 +68,49 @@ const ContactInfo = ({
 	}, [authToken, orderData, localGoods]);
 
 	useEffect(() => {
-		(async () => {
-			if (state?.message === 'success') {
-				try {
-					setIsSubmitting(true);
+		const handleNotification = async () => {
+			try {
+				setIsSubmitting(true);
 
-					const listGoods = state.goods.map(good => {
-						if (authToken) {
-							return {
-								title: good?.good?.data?.attributes.title,
-								count: good.count,
-							};
-						} else {
-							return {
-								title: good.good.attributes.title,
-								count: good.count,
-							};
-						}
-					});
+				const listGoods = state.goods.map(good => ({
+					title: authToken
+						? good?.good?.data?.attributes.title
+						: good.good.attributes.title,
+					count: good.count,
+				}));
 
-					await sendTgNotification({
-						firstName: state.firstName,
-						lastName: state.lastName,
-						email: state.email,
-						phone: state.phone,
-						delivery: state.deliveryAddress,
-						orderPrice: state.totalPrice,
-						goods: listGoods,
-					});
-				} catch (error) {
-					console.error(error);
-				} finally {
-					setIsSubmitting(false);
+				const res = await sendTgNotification({
+					firstName: state.firstName,
+					lastName: state.lastName,
+					email: state.email,
+					phone: state.phone,
+					delivery: state.deliveryAddress,
+					orderPrice: state.totalPrice,
+					goods: listGoods,
+				});
+
+				if (res.status === 201) {
+					onOpen();
+					if (!authToken) setLocalGoods([]);
+					setSelectedCity('');
 				}
+			} catch (error) {
+				console.error(error);
+			} finally {
+				setIsSubmitting(false);
 			}
-		})();
-	}, [state, authToken]);
+		};
+
+		if (state?.message === 'success') {
+			handleNotification();
+		}
+	}, [state, authToken, onOpen, setLocalGoods, setSelectedCity]);
 
 	const handleFormSubmit = event => {
 		event.preventDefault();
 		const formData = new FormData(event.target);
 		const formValues = Object.fromEntries(formData.entries());
+
 		dispatch({
 			type: 'SUBMIT_FORM',
 			payload: {
@@ -113,6 +119,7 @@ const ContactInfo = ({
 				goods: goodsToMap,
 				deliveryAddress: selectedCity,
 				cityId,
+				lang,
 			},
 		});
 	};
@@ -141,6 +148,14 @@ const ContactInfo = ({
 
 	return (
 		<>
+			{goodsToMap.length !== 0 && (
+				<ListProductToBuy
+					goodsToMap={goodsToMap}
+					setGoodsToMap={setGoodsToMap}
+					setLocalGoods={setLocalGoods}
+					authToken={authToken}
+				/>
+			)}
 			<Flex
 				flexDirection={{ base: 'column', lg: 'row' }}
 				gap={'50px'}
@@ -273,14 +288,6 @@ const ContactInfo = ({
 						</Box>
 					</Flex>
 					{!authToken && <IsAccount dictionary={dictionary} lang={lang} />}
-					{goodsToMap.length !== 0 && (
-						<ListProductToBuy
-							goodsToMap={goodsToMap}
-							setGoodsToMap={setGoodsToMap}
-							setLocalGoods={setLocalGoods}
-							authToken={authToken}
-						/>
-					)}
 
 					<Shipping
 						arrayCities={arrayCities}
@@ -302,6 +309,9 @@ const ContactInfo = ({
 					dis={dis}
 				/>
 			</Flex>
+			<Modal isOpen={isOpen} onClose={onClose} lang={lang}>
+				<OrderThankYou dictionary={dictionary} lang={lang} />
+			</Modal>
 		</>
 	);
 };
