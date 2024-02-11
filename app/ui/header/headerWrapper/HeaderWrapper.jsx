@@ -94,8 +94,8 @@ const HeaderWrapper = ({
 					hasToken={hasToken}
 					bagData={bagData}
 					dictionary={dictionary}
-					bagLength={hasToken ? bagData.goods.length : localBag.length}
-					favoritesLength={hasToken && favorites[0].goods.length}
+					bagLength={hasToken ? bagData?.goods.length : localBag.length}
+					favoritesLength={hasToken && favorites[0]?.goods.length}
 				/>
 				<LocaleSwitcher />
 			</Flex>
