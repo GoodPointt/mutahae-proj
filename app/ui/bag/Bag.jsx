@@ -3,7 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import { useFormState } from 'react-dom';
 import Link from 'next/link';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 import { Box, Button, Flex, Heading, List, Text } from '@chakra-ui/react';
 
@@ -17,8 +18,13 @@ import SubmitButton from '../submitButton/SubmitButton';
 const Bag = ({ bagData, hasToken, onClose }) => {
 	const [goodsToMap, setGoodsToMap] = useState([]);
 	const [localGoods, setLocalGoods] = useLocalBag('localBag', []);
-	const [state, formAction] = useFormState(updateAllGoodsInBag);
 
+	const initialState = {
+		message: '',
+	};
+
+	const [state, formAction] = useFormState(updateAllGoodsInBag, initialState);
+	const router = useRouter();
 	const totalPrice = goodsToMap.reduce((acc, { count, good }) => {
 		const flattenGood = flattenAttributes(good);
 
@@ -28,14 +34,12 @@ const Bag = ({ bagData, hasToken, onClose }) => {
 	const totalPriceString = totalPrice + '€';
 
 	const { lang } = useParams();
-	const { replace } = useRouter();
 
 	useEffect(() => {
-		if (state?.status && state?.status === 200) {
-			onClose();
-			replace(`/${lang}/order`);
+		if (state?.message) {
+			router.push(`/${lang}/not-found`);
 		}
-	}, [lang, onClose, replace, state?.status]);
+	}, [lang, onClose, router, state?.message]);
 
 	useEffect(() => {
 		if (!hasToken) {
@@ -44,7 +48,7 @@ const Bag = ({ bagData, hasToken, onClose }) => {
 			const { goods } = bagData || {};
 			setGoodsToMap(goods || []);
 		}
-	}, [hasToken, bagData, localGoods]);
+	}, [hasToken, bagData, localGoods, setLocalGoods]);
 
 	return (
 		<Flex flexDir={'column'}>
@@ -64,6 +68,7 @@ const Bag = ({ bagData, hasToken, onClose }) => {
 									productCount={count}
 									good={flattenAttributes(good)}
 									setGoods={hasToken ? setGoodsToMap : setLocalGoods}
+									bagPrice={totalPrice}
 								/>
 							</Box>
 						))}
@@ -76,9 +81,10 @@ const Bag = ({ bagData, hasToken, onClose }) => {
 						</Flex>
 						{hasToken ? (
 							<form
-								action={() =>
-									formAction({ goods: goodsToMap, bagPrice: totalPrice, lang })
-								}
+								action={() => {
+									formAction({ goods: goodsToMap, bagPrice: totalPrice, lang });
+									onClose();
+								}}
 							>
 								<SubmitButton
 									maxW={{ base: '100%', md: '360px' }}
@@ -86,6 +92,7 @@ const Bag = ({ bagData, hasToken, onClose }) => {
 									textColor={'#fff'}
 									borderRadius={'0px'}
 									_hover={{ bgColor: '#81672e' }}
+									message={'Creating an order'}
 								>
 									Order {totalPriceString}
 								</SubmitButton>
