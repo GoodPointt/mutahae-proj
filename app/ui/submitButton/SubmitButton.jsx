@@ -14,27 +14,34 @@ const SubmitButton = ({
 	dis = false,
 	stroke,
 	strokeHover,
+	message,
 }) => {
 	const { pending } = useFormStatus();
 
 	return (
-		<Button
-			variant={variant}
-			bgColor={bgColor}
-			borderRadius={'2px'}
-			w={w}
-			maxW={maxW}
-			px={px}
-			stroke={stroke}
-			color={'white'}
-			transition={'all 0.3s'}
-			_hover={{ bgColor: hover, stroke: strokeHover }}
-			type="submit"
-			isLoading={pending || isSubmitting}
-			isDisabled={pending || isSubmitting || dis}
-		>
-			{children}
-		</Button>
+		<>
+			<Button
+				pos={'relative'}
+				variant={variant}
+				bgColor={bgColor}
+				borderRadius={'2px'}
+				w={w}
+				maxW={maxW}
+				px={px}
+				stroke={stroke}
+				fontSize={pending ? '14px' : '16px'}
+				transitionProperty={'none'}
+				color={'white'}
+				transition={'all 0.3s'}
+				_hover={{ bgColor: hover, stroke: strokeHover }}
+				type="submit"
+				isLoading={pending || isSubmitting}
+				loadingText={message}
+				isDisabled={pending || isSubmitting || dis}
+			>
+				{children}
+			</Button>
+		</>
 	);
 };
 export default SubmitButton;

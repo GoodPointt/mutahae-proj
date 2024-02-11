@@ -48,7 +48,7 @@ const ClientSideRedirection = ({ dictionary, provider, lang }) => {
 					const bagRes = await createBagByUserIdAndJwt(res.jwt, res.user.id);
 					if (localBag.length !== 0) {
 						await fetch(
-							`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/bags/${bagRes.data.id}?populate=goods`,
+							`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/bags/${bagRes[0].data.id}?populate=goods`,
 							{
 								method: 'POST',
 								headers: {

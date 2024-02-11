@@ -19,7 +19,7 @@ const useLocalBagEffect = (key, defaultValue) => {
 
 	useEffect(() => {
 		localStorage.setItem(key, JSON.stringify(value));
-	}, [value, key]);
+	}, [value, key, defaultValue]);
 
 	return [value, setValue];
 };

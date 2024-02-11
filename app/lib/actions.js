@@ -255,12 +255,12 @@ export const delAddressAction = async (prevState, formData) => {
 };
 
 export async function submitProductToBag(prevState, formData) {
-	const { count, goodId, bagPrice } = formData;
+	const { count, goodId, goodPrice } = formData;
 
 	try {
-		const res = await fetchAddToBag(count, goodId, bagPrice);
+		const res = await fetchAddToBag(count, goodId, goodPrice);
 		if (res.status === 200) {
-			revalidatePath('/');
+			revalidatePath(`/`);
 		}
 	} catch (error) {
 		return { message: error.message };
@@ -268,26 +268,26 @@ export async function submitProductToBag(prevState, formData) {
 }
 
 export async function updateAllGoodsInBag(prevState, formData) {
-	const { bagPrice, goods } = formData;
+	const { bagPrice, goods, lang } = formData;
 
 	try {
 		const res = await fetchUpdateAllGoodsInBag(goods, bagPrice);
 
-		if (res.status === 200) {
-			revalidatePath('/');
-
-			return { status: res.status };
+		if (res.error) {
+			throw new Error(res.error);
 		}
 	} catch (error) {
-		return { message: error.message };
+		return { isError: true, message: 'Someting goes wrong. Try again please' };
 	}
+	revalidatePath(`/${lang}/order`);
+	redirect(`/${lang}/order`);
 }
 
 export async function deleteProductFromBag(prevState, formData) {
-	const { goodId } = formData;
+	const { goodId, bagPrice } = formData;
 
 	try {
-		const response = await fetchDeleteProductFromBag(goodId);
+		const response = await fetchDeleteProductFromBag(goodId, bagPrice);
 		if (response.status === 200) {
 			revalidatePath('/');
 		}

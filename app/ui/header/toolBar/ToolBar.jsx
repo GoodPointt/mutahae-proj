@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 
-import { Box, Button, Flex, useDisclosure } from '@chakra-ui/react';
+import { Box, Button, Flex, Text, useDisclosure } from '@chakra-ui/react';
 
 import Bag from '../../bag/Bag';
 import Modal from '../../modal/Modal';
@@ -21,6 +21,8 @@ const ToolBar = ({
 	hasToken,
 	bagData,
 	dictionary,
+	bagLength,
+	favoritesLength,
 	displayIcons = [
 		'SEARCH_ICON',
 		'PROFILE_ICON',
@@ -44,11 +46,54 @@ const ToolBar = ({
 			</Link>
 		),
 		FAVORITE_ICON: hasToken && (
-			<Link href={`/${lang}/profile/favorites`}>
+			<Link
+				href={`/${lang}/profile/favorites`}
+				style={{ position: 'relative' }}
+			>
 				<FavoriteNavIcon />
+				{favoritesLength !== 0 && (
+					<Box
+						pos={'absolute'}
+						borderRadius={'50%'}
+						display={'flex'}
+						alignItems={'center'}
+						justifyContent={'center'}
+						bgColor={'red'}
+						top={'-4px'}
+						w={'12px'}
+						h={'12px'}
+						right={'-4px'}
+						fontSize={'10px'}
+						color={'#fff'}
+					>
+						{favoritesLength}
+					</Box>
+				)}
 			</Link>
 		),
-		BAG_ICON: <BagNavIcon />,
+		BAG_ICON: (
+			<Text as={'span'} pos={'relative'}>
+				<BagNavIcon />
+				{bagLength !== 0 && (
+					<Box
+						pos={'absolute'}
+						borderRadius={'50%'}
+						display={'flex'}
+						alignItems={'center'}
+						justifyContent={'center'}
+						bgColor={'red'}
+						top={'-4px'}
+						w={'12px'}
+						h={'12px'}
+						right={'-4px'}
+						fontSize={'10px'}
+						color={'#fff'}
+					>
+						{bagLength}
+					</Box>
+				)}
+			</Text>
+		),
 	};
 
 	const handleClick = id => {
