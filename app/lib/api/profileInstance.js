@@ -345,7 +345,7 @@ const createOrder = async (totalPrice, goods, cityId) => {
 
 export const fetchCreateOrder = cache(createOrder);
 
-const addToBag = async (count, goodId, bagPrice) => {
+const addToBag = async (count, goodId, goodPrice) => {
 	try {
 		const token = cookies().get('jwt')?.value;
 
@@ -355,20 +355,30 @@ const addToBag = async (count, goodId, bagPrice) => {
 
 		const goodsInBag = flattenAttributes(response[0].goods);
 
-		let body = [];
-
 		const isSame = goodsInBag.some(({ good }) => good.data.id === goodId);
+
+		let bagPrice = 0;
+		let body = [];
 
 		if (isSame) {
 			body = goodsInBag.map(item => {
 				if (item.good.data.id === goodId) {
-					return { ...item, count };
+					bagPrice += goodPrice;
+
+					return { ...item, count: item.count + count };
 				}
+				bagPrice += item.good.data.attributes.price * item.count;
 
 				return item;
 			});
 		} else {
 			body = [...goodsInBag, { count, good: goodId }];
+			bagPrice =
+				goodsInBag.reduce(
+					(acc, { count: itemCount, good }) =>
+						acc + good.data.attributes.price * itemCount,
+					0
+				) + goodPrice;
 		}
 
 		return await profileInstance.put(
@@ -419,15 +429,13 @@ const updateAllGoodsInBag = async (goods, bagPrice) => {
 			}
 		);
 	} catch (error) {
-		console.error(error);
-
 		return { error: error.message };
 	}
 };
 
 export const fetchUpdateAllGoodsInBag = cache(updateAllGoodsInBag);
 
-const deleteProductFromBag = async goodId => {
+const deleteProductFromBag = async (goodId, bagPrice) => {
 	try {
 		const token = cookies().get('jwt')?.value;
 
@@ -445,6 +453,7 @@ const deleteProductFromBag = async goodId => {
 			`/api/bags/${response[0].id}?populate=goods`,
 			{
 				data: {
+					bagPrice,
 					goods: [...goodsWithoutDeleted],
 				},
 			},
@@ -472,24 +481,7 @@ const setLocalBagOnServer = async localGoods => {
 
 		const bag = await fetchBagByUserId();
 
-		const goodsInBag = flattenAttributes(bag[0].goods);
-
-		const localGoodsIds = localGoods.map(({ good }) => good.id);
-
-		const updateGoodsInBag = goodsInBag.map(item => {
-			const { count, good } = item;
-			if (localGoodsIds.includes(good.data.id)) {
-				return { ...item, count };
-			}
-
-			return item;
-		});
-
-		const newGoods = localGoods.filter(
-			({ good }) => !localGoodsIds.includes(good.id)
-		);
-
-		const body = [...updateGoodsInBag, ...newGoods];
+		const body = localGoods;
 
 		return await profileInstance.put(
 			`/api/bags/${bag[0].id}?populate=goods`,
@@ -563,6 +555,30 @@ const getUserDataForOrder = async () => {
 };
 
 export const fetchUserDataForOrder = cache(getUserDataForOrder);
+
+export const getUserAddressForOrder = async () => {
+	try {
+		const token = cookies().get('jwt')?.value;
+		const userId = cookies().get('userId')?.value;
+
+		if (!token || !userId) return null;
+		profileInstance.defaults.headers.authorization = `Bearer ${token}`;
+
+		const data = profileInstance.get(
+			`/api/user-addresses?filters[user][id][$eq]=${userId}`
+		);
+
+		if (!data) {
+			return null;
+		}
+
+		return data;
+	} catch (e) {
+		console.error(e.message);
+	}
+};
+
+export const fetchUserAddressForOrder = cache(getUserAddressForOrder);
 
 const getOrderByUserId = async userId => {
 	try {

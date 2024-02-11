@@ -10,13 +10,22 @@ import SectionWrapper from '@/app/ui/sectionWrapper/SectionWrapper';
 
 import { Box, Button, Flex, useDisclosure } from '@chakra-ui/react';
 
+import { useLocalBag } from '@/app/lib/hooks/useLocalBag';
+
 import ContactsList from '../../contactsList/ContactsList';
 import LocaleSwitcher from '../../localeSwitcher/LocaleSwitcher';
 import Burger from '../../svg/Burger';
 import MobileMenu from '../mobileMenu/MobileMenu';
 import ToolBar from '../toolBar/ToolBar';
 
-const HeaderWrapper = ({ lang, dictionary, contacts, bagData, isAuth }) => {
+const HeaderWrapper = ({
+	lang,
+	dictionary,
+	contacts,
+	bagData,
+	favorites,
+	isAuth,
+}) => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const btnRef = useRef();
 
@@ -24,10 +33,15 @@ const HeaderWrapper = ({ lang, dictionary, contacts, bagData, isAuth }) => {
 	const [scrolling, setScrolling] = useState(false);
 	const [prevScrollPosition, setPrevScrollPosition] = useState(0);
 	const [headerStyle, setHeaderStyle] = useState({});
+	const [localBag, setLocalBag] = useLocalBag('localBag', []);
 
 	useEffect(() => {
 		setHasToken(isAuth);
-	}, [isAuth]);
+
+		if (hasToken) {
+			setLocalBag([]);
+		}
+	}, [hasToken, isAuth, setLocalBag]);
 
 	useEffect(() => {
 		const handleScroll = () => {
@@ -53,12 +67,8 @@ const HeaderWrapper = ({ lang, dictionary, contacts, bagData, isAuth }) => {
 
 		window.addEventListener('scroll', handleScroll);
 
-		if (hasToken) {
-			localStorage.removeItem('localBag');
-		}
-
 		return cleanupScroll;
-	}, [hasToken, prevScrollPosition, scrolling]);
+	}, [prevScrollPosition, scrolling]);
 
 	return (
 		<SectionWrapper
@@ -72,24 +82,24 @@ const HeaderWrapper = ({ lang, dictionary, contacts, bagData, isAuth }) => {
 			py={'0'}
 			style={headerStyle}
 		>
-			{/* бывший топбар */}
 			<Flex
 				alignItems={'center'}
 				justifyContent={'space-between'}
 				display={{ base: 'none', lg: 'flex' }}
 			>
 				<ContactsList lang={lang} contacts={contacts} />
-				{/* ToolBar = TopMenu - в десктоп версии над хедером  */}
+
 				<ToolBar
 					lang={lang}
 					hasToken={hasToken}
 					bagData={bagData}
 					dictionary={dictionary}
+					bagLength={hasToken ? bagData?.goods.length : localBag.length}
+					favoritesLength={hasToken && favorites[0]?.goods.length}
 				/>
 				<LocaleSwitcher />
 			</Flex>
 
-			{/* header main */}
 			<Flex justify={'space-between'} alignItems={'center'}>
 				<Link href={'/' + lang}>
 					<Image
@@ -114,13 +124,11 @@ const HeaderWrapper = ({ lang, dictionary, contacts, bagData, isAuth }) => {
 					/>
 				</Box>
 
-				{/* бургер+иконки тулбара в мобильном режиме */}
 				<Flex
 					alignItems={'center'}
 					justifyContent={'space-between'}
 					display={{ base: 'flex', lg: 'none' }}
 				>
-					{/*ТулБар(ТопМеню) В мобильной версии, находится на уровне с лого и бургером в хедере */}
 					<ToolBar
 						lang={lang}
 						hasToken={hasToken}
@@ -143,7 +151,6 @@ const HeaderWrapper = ({ lang, dictionary, contacts, bagData, isAuth }) => {
 				</Flex>
 			</Flex>
 
-			{/* мобильное меню */}
 			<MobileMenu
 				isOpen={isOpen}
 				onClose={onClose}

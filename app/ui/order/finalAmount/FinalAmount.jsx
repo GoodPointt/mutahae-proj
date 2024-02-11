@@ -19,6 +19,9 @@ const FinalAmount = ({
 			padding={'30px'}
 			alignItems={'start'}
 			flex={1}
+			position={{ base: 'static', xl: 'absolute' }}
+			top={0}
+			right={0}
 			w={{ base: '100%', sm: '340px' }}
 		>
 			<Heading as={'h2'} fontSize={'20px'} fontFamily={600} mb={'30px'}>

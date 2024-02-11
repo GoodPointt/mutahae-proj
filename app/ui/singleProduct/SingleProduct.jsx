@@ -1,37 +1,42 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useFormState } from 'react-dom';
 
 import {
 	Box,
+	Button,
 	Flex,
 	Grid,
 	Heading,
 	List,
 	ListItem,
 	Text,
+	useDisclosure,
 } from '@chakra-ui/react';
 
 import { submitGoodToFavorite, submitProductToBag } from '@/app/lib/actions';
 import { useLocalBag } from '@/app/lib/hooks/useLocalBag';
 import { flattenAttributes } from '@/app/lib/utils/flattenAttributes';
 
-import Btn from '../button/Btn';
+import Bag from '../bag/Bag';
+import Modal from '../modal/Modal';
 import SectionWrapper from '../sectionWrapper/SectionWrapper';
 import SubmitButton from '../submitButton/SubmitButton';
 
 import BreadcrumbBar from './Breadcrumb/Breadcrumb';
 import Counter from './Counter/Counter';
 import FavBtn from './FavBtn/FavBtn';
+import IsInBag from './isInBag/IsInBag';
 import SingleProductSlider from './singleProductSlider/SingleProductSlider';
+import TotalBagPrice from './TotalBagPrice/TotalBagPrice';
 
 const SingleProduct = ({
 	userId,
 	dictionary,
 	product,
 	isFavorite,
-	bagPrice,
+	bagData,
 }) => {
 	const {
 		id: goodId,
@@ -51,13 +56,28 @@ const SingleProduct = ({
 	} = product;
 
 	const productDetails = { length, width, thickness, wood, type, manufacturer };
-
+	const { isOpen, onClose, onOpen } = useDisclosure();
 	const [count, setCount] = useState(1);
 	const [localBag, setLocalBag] = useLocalBag('localBag', []);
 
 	const [, formAction] = useFormState(submitProductToBag);
 	const [, favoriteAction] = useFormState(submitGoodToFavorite);
-	const [totalPrice, setTotalPrice] = useState(0);
+	const [totalPrice, setTotalPrice] = useState(null);
+	const [isInBag, setIsInBag] = useState(false);
+
+	const isDifferentCount = useCallback(() => {
+		if (!userId) {
+			const currentGood = localBag.find(({ good }) => good.id === goodId);
+
+			return currentGood && currentGood.count !== count;
+		}
+
+		const currentGood = bagData[0].goods.find(
+			({ good }) => good.data.id === goodId
+		);
+
+		return currentGood && currentGood.count !== count;
+	}, [bagData, count, goodId, localBag, userId]);
 
 	useEffect(() => {
 		if (!userId) {
@@ -68,9 +88,21 @@ const SingleProduct = ({
 			}, 0);
 			setTotalPrice(totalLocalPrice);
 		} else {
-			setTotalPrice(bagPrice);
+			setTotalPrice(bagData[0].bagPrice);
 		}
-	}, [bagPrice, localBag, price, userId]);
+	}, [localBag, bagData, userId, totalPrice]);
+
+	useEffect(() => {
+		if (!userId) {
+			const isInLocalBag = localBag.some(({ good }) => good.id === goodId);
+			setIsInBag(isInLocalBag);
+		} else {
+			const isInBag = bagData[0].goods.some(
+				({ good }) => good.data.id === goodId
+			);
+			setIsInBag(isInBag);
+		}
+	}, [bagData, goodId, localBag, userId]);
 
 	const addGoodInLocal = (count, goodId) => {
 		const isSame = localBag.find(({ good }) => good.id === goodId);
@@ -78,7 +110,7 @@ const SingleProduct = ({
 		if (isSame) {
 			const updatedBag = localBag.map(item => {
 				if (item.good.id === goodId) {
-					return { ...item, count };
+					return { ...item, count: item.count + count };
 				}
 
 				return item;
@@ -124,15 +156,11 @@ const SingleProduct = ({
 					pos={'relative'}
 				>
 					<SingleProductSlider imgs={Array.isArray(imgs) ? imgs : []} />
-					<Flex flexDir={'column'} gap={2}>
-						<Heading
-							as="h2"
-							mb={{ base: '15px', lg: '15px' }}
-							fontSize={{ base: '2xl', lg: '4xl' }}
-						>
+					<Flex flexDir={'column'} gap={'30px'}>
+						<Heading as="h2" fontSize={{ base: '2xl', lg: '4xl' }}>
 							{title || ''}
 						</Heading>
-						<Text fontSize={'24px'}>
+						<Text fontSize={'28px'}>
 							{price}₪ {`/ ${unit}`}
 						</Text>
 						<List>
@@ -155,6 +183,7 @@ const SingleProduct = ({
 									)
 							)}
 						</List>
+
 						<Grid
 							templateColumns={{ base: '1fr ', sm: '1fr 2fr' }}
 							gap={'10px'}
@@ -168,28 +197,46 @@ const SingleProduct = ({
 										formAction({
 											count,
 											goodId,
-											bagPrice: totalPrice + count * price,
+											goodPrice: count * price,
 										})
 									}
 								>
 									<Box pos={'relative'}>
-										<SubmitButton type="submit">
-											{dictionary.buttons.bag}
+										<SubmitButton type="submit" message={'loading'}>
+											<Text as={'span'}>{dictionary.buttons.bag}</Text>
 										</SubmitButton>
+										<TotalBagPrice
+											count={count}
+											totalPrice={price * count}
+											isDifferentCount={isDifferentCount()}
+											isInBag={isInBag}
+										/>
+										<IsInBag isInBag={isInBag} onOpen={onOpen} />
 									</Box>
-									{totalPrice && <Text>Total: {totalPrice}</Text>}
 								</form>
 							) : (
-								<>
-									<Btn
+								<Box pos={'relative'}>
+									<Button
+										w={'100%'}
+										color={'#fff'}
+										_hover={{ bgColor: '#81672e' }}
+										borderRadius={0}
+										bgColor={'#a28445'}
+										pos={'relative'}
 										onClick={() => {
 											addGoodInLocal(count, goodId);
 										}}
 									>
 										{dictionary.buttons.bag}
-									</Btn>
-									{totalPrice && <Text>Total: {totalPrice}</Text>}
-								</>
+									</Button>
+									<TotalBagPrice
+										count={count}
+										totalPrice={price * count}
+										isDifferentCount={isDifferentCount()}
+										isInBag={isInBag}
+									/>
+									<IsInBag isInBag={isInBag} onOpen={onOpen} />
+								</Box>
 							)}
 						</Grid>
 					</Flex>
@@ -210,6 +257,14 @@ const SingleProduct = ({
 					</>
 				)}
 			</SectionWrapper>
+
+			<Modal isOpen={isOpen} onClose={onClose}>
+				<Bag
+					bagData={bagData ? bagData[0] : {}}
+					hasToken={!!userId}
+					onClose={onClose}
+				/>
+			</Modal>
 		</>
 	);
 };

@@ -24,9 +24,13 @@ const Shipping = ({
 	setSelectedCity,
 	selectedCity,
 	setCityId,
+	userAddress,
+	setOwnCity,
 }) => {
 	const [isOpenSelect, setIsOpenSelect] = useState(false);
 	const [enteredAddress, setEnteredAddress] = useState('');
+
+	const addressList = userAddress?.data;
 
 	const handleMenuOpen = () => {
 		setIsOpenSelect(true);
@@ -45,6 +49,44 @@ const Shipping = ({
 
 		return cityName.toLowerCase().includes(formatedAddress);
 	});
+
+	const formatAddress = address => {
+		const { attributes } = address;
+		const { region, city, street, app, index } = attributes;
+		let fullAddress = '';
+
+		if (region) {
+			fullAddress += region;
+			if (city || street || app || index) {
+				fullAddress += ', ';
+			}
+		}
+		if (street) {
+			fullAddress += street;
+			if (city || app || index) {
+				fullAddress += ' ';
+			}
+		}
+		if (app) {
+			fullAddress += app;
+			if (city || index) {
+				fullAddress += ', ';
+			}
+		}
+		if (city && index) {
+			fullAddress += city + ', ';
+		} else if (city) {
+			fullAddress += city;
+			if (index) {
+				fullAddress += ', ';
+			}
+		}
+		if (index) {
+			fullAddress += index;
+		}
+
+		return fullAddress;
+	};
 
 	return (
 		<>
@@ -119,7 +161,26 @@ const Shipping = ({
 								backgroundColor: '#3b3d46',
 							}}
 						/>
+						{addressList &&
+							addressList.map((address, i) => {
+								const fullAddress = formatAddress(address);
 
+								return (
+									<MenuItem
+										bg={'#181617'}
+										borderRadius={0}
+										key={address + i}
+										_hover={{ backgroundColor: '#3b3d46' }}
+										onClick={() => {
+											setSelectedCity(fullAddress);
+											setCityId(fullAddress);
+											setOwnCity(address.attributes.city);
+										}}
+									>
+										{fullAddress}
+									</MenuItem>
+								);
+							})}
 						{filteredAddresses.map((item, index) => (
 							<MenuItem
 								bg={'#181617'}

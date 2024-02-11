@@ -97,10 +97,8 @@ const SearchField = ({ lang, onClose, setQuery, query, dictionary }) => {
 					}
 				>
 					<Button
-						isRound={true}
 						colorScheme="ghost"
 						aria-label="clear search"
-						// icon={<DeleteSearch />}
 						_hover={{ color: 'accent' }}
 						onClick={clearSearch}
 						color={'grey'}

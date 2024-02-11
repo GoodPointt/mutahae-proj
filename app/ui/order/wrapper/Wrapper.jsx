@@ -12,6 +12,7 @@ const Wrapper = ({
 	userData,
 	orderData,
 	userId,
+	userAddress,
 }) => {
 	const [selectedCity, setSelectedCity] = useState('');
 
@@ -26,6 +27,7 @@ const Wrapper = ({
 			userData={userData}
 			orderData={orderData}
 			userId={userId}
+			userAddress={userAddress}
 		/>
 	);
 };

@@ -1,6 +1,9 @@
 import { cookies } from 'next/headers';
 
-import { fetchBagByUserId } from '@/app/lib/api/profileInstance';
+import {
+	fetchBagByUserId,
+	fetchFavorites,
+} from '@/app/lib/api/profileInstance';
 
 import HeaderWrapper from './headerWrapper/HeaderWrapper';
 
@@ -9,15 +12,18 @@ const Header = async ({ lang, dictionary, contacts }) => {
 
 	const userId = cookies().get('userId')?.value;
 
-	let data = [];
+	let bagData = [];
+	let favorites = [];
 
 	if (userId) {
-		data = await fetchBagByUserId(userId);
+		bagData = await fetchBagByUserId(userId);
+		favorites = await fetchFavorites(userId);
 	}
 
 	return (
 		<HeaderWrapper
-			bagData={data[0]}
+			bagData={bagData[0]}
+			favorites={favorites}
 			dictionary={dictionary}
 			isAuth={!!getToken}
 			lang={lang}

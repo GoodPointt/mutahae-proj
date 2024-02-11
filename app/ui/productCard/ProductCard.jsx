@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useFormState } from 'react-dom';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
@@ -13,7 +13,7 @@ import Counter from '../singleProduct/Counter/Counter';
 import SubmitButton from '../submitButton/SubmitButton';
 import DeleteIcon from '../svg/DeleteIcon';
 
-const ProductCard = ({ good, hasToken, setGoods, productCount }) => {
+const ProductCard = ({ good, hasToken, setGoods, productCount, bagPrice }) => {
 	const [count, setCount] = useState(productCount);
 	const [, formAction] = useFormState(deleteProductFromBag);
 	const {
@@ -26,22 +26,25 @@ const ProductCard = ({ good, hasToken, setGoods, productCount }) => {
 		length,
 		width,
 		type,
-		price = '€160',
+		price,
 		localizations,
+		locale,
 	} = good;
 
 	const { lang } = useParams();
 
-	const sizesArray =
-		lang === 'he'
-			? [
-					localizations[0]?.thickness,
-					localizations[0]?.length,
-					localizations[0]?.width,
-			  ]
-			: [thickness, length, width];
+	const sizes = useCallback(() => {
+		const sizesArray =
+			(locale === 'he' && lang === 'he') || (locale === 'en' && lang === 'en')
+				? [
+						localizations[0]?.thickness,
+						localizations[0]?.length,
+						localizations[0]?.width,
+				  ]
+				: [thickness, length, width];
 
-	const sizes = sizesArray.filter(value => value && value !== '').join('x');
+		return sizesArray.filter(value => value && value !== '').join('x');
+	}, [lang, length, locale, localizations, thickness, width]);
 
 	const removeItemFromLocal = goodId => {
 		setGoods(() => {
@@ -74,8 +77,8 @@ const ProductCard = ({ good, hasToken, setGoods, productCount }) => {
 				<Box w={'115px'} h={'100px'} pos={'relative'}>
 					<Image
 						src={
-							(img.data && img.data[0].attributes.url) ||
-							img[0].url ||
+							(img && img.data && img.data[0].attributes.url) ||
+							(img && img[0].url) ||
 							'/img/product.png'
 						}
 						alt={descShort || ''}
@@ -84,12 +87,18 @@ const ProductCard = ({ good, hasToken, setGoods, productCount }) => {
 				</Box>
 				<List>
 					<Heading as={'h4'} fontSize={'24px'}>
-						{lang === 'he' ? localizations[0]?.title : title}
+						{(locale === 'he' && lang === 'he') ||
+						(locale === 'en' && lang === 'en')
+							? title
+							: localizations[0]?.title}
 					</Heading>
 					<Text>{price}€</Text>
-					<Text textColor={'#808080'}>Sizes: {sizes}</Text>
+					{sizes() && <Text textColor={'#808080'}>Sizes: {sizes()}</Text>}
 					<Text textTransform={'capitalize'} textColor={'#808080'}>
-						{lang === 'he' ? localizations[0]?.type : type}
+						{(locale === 'he' && lang === 'he') ||
+						(locale === 'en' && lang === 'en')
+							? type
+							: localizations[0]?.type}
 					</Text>
 				</List>
 			</Flex>
@@ -102,7 +111,11 @@ const ProductCard = ({ good, hasToken, setGoods, productCount }) => {
 				<Counter count={count} setCount={handleCounterChange} />
 				<Flex justifyContent={'center'}>
 					{hasToken ? (
-						<form action={() => formAction({ goodId: id })}>
+						<form
+							action={() =>
+								formAction({ goodId: id, bagPrice: bagPrice - price * count })
+							}
+						>
 							<SubmitButton
 								variant="unstyled"
 								bgColor="transparent"
