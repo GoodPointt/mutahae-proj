@@ -1,6 +1,4 @@
-import ProductItem from '../../../ui/productItem/ProductItem';
-
-import { Grid, Heading } from '@chakra-ui/react';
+import { FavoritesContent } from '../../../ui/profile/favoritesContent/FavoritesContent';
 
 import { fetchFavorites } from '../../../lib/api/profileInstance';
 import { getDictionary } from '../../../lib/locales/dictionary';
@@ -9,73 +7,16 @@ const Favorites = async ({ params: { lang } }) => {
 	const favorites = await fetchFavorites();
 	const dictionary = await getDictionary(lang);
 
+	const favoritesData = favorites[0].goods.filter(
+		({ locale }) => locale === lang
+	);
+
 	return (
-		<>
-			<Heading
-				as="h2"
-				mb={{ base: 6, lg: 8 }}
-				fontSize={{ base: '2xl', lg: '4xl' }}
-			>
-				{dictionary.profile.favorites.title}
-			</Heading>
-			<Grid
-				as={'ul'}
-				maxW={'100%'}
-				gridTemplateColumns={'repeat(auto-fill, minmax(300px, 1fr))'}
-				gridGap={10}
-				m={'0 auto'}
-				padding={0}
-			>
-				{favorites &&
-					lang === 'en' &&
-					favorites[0].goods.map(good => {
-						const { uid, locale, title, descShort } = good;
-						const { img } = good;
-						const imgUrl = img && img[0].url;
-
-						return (
-							<ProductItem
-								lang={locale}
-								favorites={favorites[0].goods}
-								productId={good.id}
-								product={{
-									uid,
-									title: title,
-									button: 'Add To Bag',
-									imgUrl,
-									descShort: descShort,
-								}}
-								key={uid}
-							/>
-						);
-					})}
-				{favorites &&
-					lang === 'he' &&
-					favorites[0].goods.map(good => {
-						const { uid, locale } = good;
-						const { title: title_he, descShort: descShort_he } =
-							good.localizations[0] || {};
-						const { img } = good;
-
-						const imgUrl = img && img[0].url;
-
-						return (
-							<ProductItem
-								lang={locale}
-								favorites={favorites[0].goods}
-								product={{
-									uid,
-									title: title_he,
-									button: 'Add To Bag',
-									imgUrl,
-									descShort: descShort_he,
-								}}
-								key={uid}
-							/>
-						);
-					})}
-			</Grid>
-		</>
+		<FavoritesContent
+			favorites={favoritesData}
+			dictionary={dictionary}
+			lang={lang}
+		/>
 	);
 };
 

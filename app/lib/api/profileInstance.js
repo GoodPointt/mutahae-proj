@@ -14,6 +14,7 @@ const getFavorites = async () => {
 	try {
 		const token = cookies().get('jwt')?.value;
 		const userId = cookies().get('userId')?.value;
+
 		if (!token || !userId) {
 			throw new Error('Not authorized');
 		}
@@ -281,6 +282,7 @@ export const fetchUserAddress = async () => {
 		if (!token || !userId) {
 			throw new Error('Not authorized');
 		}
+
 		profileInstance.defaults.headers.authorization = `Bearer ${token}`;
 
 		const data = profileInstance.get(
