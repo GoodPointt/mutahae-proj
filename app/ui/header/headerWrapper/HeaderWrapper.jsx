@@ -34,6 +34,7 @@ const HeaderWrapper = ({
 	const [prevScrollPosition, setPrevScrollPosition] = useState(0);
 	const [headerStyle, setHeaderStyle] = useState({});
 	const [localBag, setLocalBag] = useLocalBag('localBag', []);
+	const [bagLength, setBagLength] = useState(0);
 
 	useEffect(() => {
 		setHasToken(isAuth);
@@ -42,6 +43,14 @@ const HeaderWrapper = ({
 			setLocalBag([]);
 		}
 	}, [hasToken, isAuth, setLocalBag]);
+
+	useEffect(() => {
+		if (hasToken) {
+			bagData && bagData.goods && setBagLength(bagData.goods.length);
+		} else {
+			setBagLength(localBag.length);
+		}
+	}, [bagData, hasToken, localBag.length, setLocalBag]);
 
 	useEffect(() => {
 		const handleScroll = () => {
@@ -94,8 +103,12 @@ const HeaderWrapper = ({
 					hasToken={hasToken}
 					bagData={bagData}
 					dictionary={dictionary}
-					bagLength={hasToken ? bagData?.goods.length : localBag.length}
-					favoritesLength={hasToken && favorites[0]?.goods.length}
+					bagLength={bagLength}
+					favoritesLength={
+						hasToken && favorites && favorites[0] && favorites[0].goods
+							? favorites[0].goods.length
+							: 0
+					}
 				/>
 				<LocaleSwitcher />
 			</Flex>
@@ -133,6 +146,12 @@ const HeaderWrapper = ({
 						lang={lang}
 						hasToken={hasToken}
 						bagData={bagData}
+						bagLength={bagLength}
+						favoritesLength={
+							isAuth && favorites && favorites[0] && favorites[0].goods
+								? favorites[0].goods.length
+								: 0
+						}
 						dictionary={dictionary}
 						displayIcons={['SEARCH_ICON', 'BAG_ICON']}
 					/>

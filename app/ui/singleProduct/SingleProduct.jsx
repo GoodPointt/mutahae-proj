@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useFormState } from 'react-dom';
 
 import {
@@ -21,7 +21,6 @@ import { flattenAttributes } from '@/app/lib/utils/flattenAttributes';
 
 import Bag from '../bag/Bag';
 import Modal from '../modal/Modal';
-import SectionWrapper from '../sectionWrapper/SectionWrapper';
 import SubmitButton from '../submitButton/SubmitButton';
 
 import BreadcrumbBar from './Breadcrumb/Breadcrumb';
@@ -64,20 +63,6 @@ const SingleProduct = ({
 	const [, favoriteAction] = useFormState(submitGoodToFavorite);
 	const [totalPrice, setTotalPrice] = useState(null);
 	const [isInBag, setIsInBag] = useState(false);
-
-	const isDifferentCount = useCallback(() => {
-		if (!userId) {
-			const currentGood = localBag.find(({ good }) => good.id === goodId);
-
-			return currentGood && currentGood.count !== count;
-		}
-
-		const currentGood = bagData[0].goods.find(
-			({ good }) => good.data.id === goodId
-		);
-
-		return currentGood && currentGood.count !== count;
-	}, [bagData, count, goodId, localBag, userId]);
 
 	useEffect(() => {
 		if (!userId) {
@@ -123,140 +108,139 @@ const SingleProduct = ({
 
 	return (
 		<>
-			<SectionWrapper>
-				<Box
-					key={count}
-					display={'flex'}
-					justifyContent={'space-between'}
-					alignItems={'center'}
-					mb={'30px'}
-				>
-					<BreadcrumbBar productTitle={title} />
-					{userId && (
-						<form
-							action={() => favoriteAction({ goodId })}
-							style={{ display: 'flex', alignItems: 'center' }}
-						>
-							<FavBtn
-								type="submit"
-								variant={'unstyled'}
-								display={'flex'}
-								justifyContent={'center'}
-								fill={isFavorite ? '#A28445' : 'transparent'}
-								minW={0}
-								maxH={'24px'}
-							/>
-						</form>
-					)}
-				</Box>
-				<Grid
-					templateColumns={{ base: '1fr', lg: 'repeat(2, 1fr)' }}
-					gap={'50px'}
-					maxW={'100%'}
-					pos={'relative'}
-				>
-					<SingleProductSlider imgs={Array.isArray(imgs) ? imgs : []} />
-					<Flex flexDir={'column'} gap={'30px'}>
-						<Heading as="h2" fontSize={{ base: '2xl', lg: '4xl' }}>
-							{title || ''}
-						</Heading>
+			<Box
+				key={count}
+				display={'flex'}
+				justifyContent={'space-between'}
+				alignItems={'center'}
+				mb={'30px'}
+			>
+				<BreadcrumbBar productTitle={title} />
+				{userId && (
+					<form
+						action={() => favoriteAction({ goodId })}
+						style={{ display: 'flex', alignItems: 'center' }}
+					>
+						<FavBtn
+							type="submit"
+							variant={'unstyled'}
+							display={'flex'}
+							justifyContent={'center'}
+							isFavorite={isFavorite}
+							minW={0}
+							p={0}
+							maxH={'24px'}
+						/>
+					</form>
+				)}
+			</Box>
+			<Grid
+				templateColumns={{ base: '1fr', lg: 'repeat(2, 1fr)' }}
+				gap={'50px'}
+				maxW={'100%'}
+				pos={'relative'}
+			>
+				<SingleProductSlider imgs={Array.isArray(imgs) ? imgs : []} />
+				<Flex flexDir={'column'} gap={'30px'}>
+					<Heading as="h2" fontSize={{ base: '2xl', lg: '4xl' }}>
+						{title || ''}
+					</Heading>
+					{price && (
 						<Text fontSize={'28px'}>
-							{price}₪ {`/ ${unit}`}
+							{price !== 0 && `${price} ₪`} {unit && `/ ${unit}`}
 						</Text>
-						<List>
-							{Object.entries(productDetails).map(
-								([option, value]) =>
-									value && (
-										<ListItem key={option}>
-											<Text
-												as="p"
-												textTransform="capitalize"
-												fontSize="sm"
-												fontWeight="600"
-											>
-												{option}:
-												<Text as="span" ml="4px" fontWeight="400">
-													{value}
-												</Text>
+					)}
+					<List>
+						{Object.entries(productDetails).map(
+							([option, value]) =>
+								value && (
+									<ListItem key={option}>
+										<Text
+											as="p"
+											textTransform="capitalize"
+											fontSize="sm"
+											fontWeight="600"
+										>
+											{option}:
+											<Text as="span" ml="4px" fontWeight="400">
+												{value}
 											</Text>
-										</ListItem>
-									)
-							)}
-						</List>
+										</Text>
+									</ListItem>
+								)
+						)}
+					</List>
 
-						<Grid
-							templateColumns={{ base: '1fr ', sm: '1fr 2fr' }}
-							gap={'10px'}
-							mt={{ base: '30px', lg: 'auto' }}
-							alignItems={'center'}
-						>
-							<Counter count={count} setCount={setCount} />
-							{userId ? (
-								<form
-									action={() =>
-										formAction({
-											count,
-											goodId,
-											goodPrice: count * price,
-										})
-									}
-								>
-									<Box pos={'relative'}>
-										<SubmitButton type="submit" message={'loading'}>
-											<Text as={'span'}>{dictionary.buttons.bag}</Text>
-										</SubmitButton>
-										<TotalBagPrice
-											count={count}
-											totalPrice={price * count}
-											isDifferentCount={isDifferentCount()}
-											isInBag={isInBag}
-										/>
-										<IsInBag isInBag={isInBag} onOpen={onOpen} />
-									</Box>
-								</form>
-							) : (
+					<Grid
+						templateColumns={{ base: '1fr ', sm: '1fr 2fr' }}
+						gap={'10px'}
+						mt={{ base: '30px', lg: 'auto' }}
+						alignItems={'center'}
+					>
+						<Counter count={count} setCount={setCount} />
+						{userId ? (
+							<form
+								action={() =>
+									formAction({
+										count,
+										goodId,
+										goodPrice: count * price,
+									})
+								}
+							>
 								<Box pos={'relative'}>
-									<Button
-										w={'100%'}
-										color={'#fff'}
-										_hover={{ bgColor: '#81672e' }}
-										borderRadius={0}
-										bgColor={'#a28445'}
-										pos={'relative'}
-										onClick={() => {
-											addGoodInLocal(count, goodId);
-										}}
-									>
-										{dictionary.buttons.bag}
-									</Button>
+									<SubmitButton type="submit" message={'loading'}>
+										<Text as={'span'}>{dictionary.buttons.bag}</Text>
+									</SubmitButton>
 									<TotalBagPrice
 										count={count}
 										totalPrice={price * count}
-										isDifferentCount={isDifferentCount()}
 										isInBag={isInBag}
 									/>
 									<IsInBag isInBag={isInBag} onOpen={onOpen} />
 								</Box>
-							)}
-						</Grid>
-					</Flex>
-				</Grid>
-				{descLong && (
-					<>
-						<Heading
-							as="h2"
-							mb={{ base: 6, lg: 8 }}
-							mt={'60px'}
-							fontSize={{ base: '2xl', lg: '4xl' }}
-						>
-							{dictionary.singleProduct.description}
-						</Heading>
-						<Text as="p" fontWeight={'400'}>
-							{descLong}
-						</Text>
-					</>
-				)}
-			</SectionWrapper>
+							</form>
+						) : (
+							<Box pos={'relative'}>
+								<Button
+									w={'100%'}
+									color={'#fff'}
+									_hover={{ bgColor: '#81672e' }}
+									borderRadius={0}
+									bgColor={'#a28445'}
+									pos={'relative'}
+									onClick={() => {
+										addGoodInLocal(count, goodId);
+									}}
+								>
+									{dictionary.buttons.bag}
+								</Button>
+								<TotalBagPrice
+									count={count}
+									totalPrice={price * count}
+									isInBag={isInBag}
+								/>
+								<IsInBag isInBag={isInBag} onOpen={onOpen} />
+							</Box>
+						)}
+					</Grid>
+				</Flex>
+			</Grid>
+			{descLong && (
+				<>
+					<Heading
+						as="h2"
+						mb={{ base: 6, lg: 8 }}
+						mt={'60px'}
+						fontSize={{ base: '2xl', lg: '4xl' }}
+					>
+						{dictionary.singleProduct.description}
+					</Heading>
+					<Text as="p" fontWeight={'400'}>
+						{descLong}
+					</Text>
+				</>
+			)}
 
 			<Modal isOpen={isOpen} onClose={onClose}>
 				<Bag

@@ -10,6 +10,7 @@ import { deleteProductFromBag } from '@/app/lib/actions';
 import { flattenAttributes } from '@/app/lib/utils/flattenAttributes';
 
 import Counter from '../singleProduct/Counter/Counter';
+import TotalBagPrice from '../singleProduct/TotalBagPrice/TotalBagPrice';
 import SubmitButton from '../submitButton/SubmitButton';
 import DeleteIcon from '../svg/DeleteIcon';
 
@@ -92,7 +93,7 @@ const ProductCard = ({ good, hasToken, setGoods, productCount, bagPrice }) => {
 							? title
 							: localizations[0]?.title}
 					</Heading>
-					<Text>{price}€</Text>
+					{price && <Text>{price}₪</Text>}
 					{sizes() && <Text textColor={'#808080'}>Sizes: {sizes()}</Text>}
 					<Text textTransform={'capitalize'} textColor={'#808080'}>
 						{(locale === 'he' && lang === 'he') ||
@@ -103,12 +104,19 @@ const ProductCard = ({ good, hasToken, setGoods, productCount, bagPrice }) => {
 				</List>
 			</Flex>
 			<Grid
-				mt={'30px'}
+				mt={{ base: '30px', md: '0px' }}
 				templateColumns={{ base: 'repeat(2, 1fr)' }}
 				w={'100%'}
 				justifyContent={'center'}
 			>
-				<Counter count={count} setCount={handleCounterChange} />
+				<Box pos={'relative'}>
+					<Counter count={count} setCount={handleCounterChange} />
+					<TotalBagPrice
+						count={count}
+						totalPrice={price * count}
+						isCentered={true}
+					/>
+				</Box>
 				<Flex justifyContent={'center'}>
 					{hasToken ? (
 						<form

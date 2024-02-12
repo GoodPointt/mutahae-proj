@@ -31,8 +31,6 @@ const Bag = ({ bagData, hasToken, onClose }) => {
 		return acc + flattenGood.price * count;
 	}, 0);
 
-	const totalPriceString = totalPrice + '€';
-
 	const { lang } = useParams();
 
 	useEffect(() => {
@@ -77,7 +75,7 @@ const Bag = ({ bagData, hasToken, onClose }) => {
 						<Text>*Shipping calculated at checkout</Text>
 						<Flex justifyContent={'space-between'}>
 							<Text>Subtotal:</Text>
-							<Text as={'span'}>{totalPriceString}</Text>
+							<Text as={'span'}>{totalPrice + '₪'}</Text>
 						</Flex>
 						{hasToken ? (
 							<form
@@ -94,7 +92,7 @@ const Bag = ({ bagData, hasToken, onClose }) => {
 									_hover={{ bgColor: '#81672e' }}
 									message={'Creating an order'}
 								>
-									Order {totalPriceString}
+									Order {totalPrice + '₪'}
 								</SubmitButton>
 							</form>
 						) : (
@@ -117,7 +115,7 @@ const Bag = ({ bagData, hasToken, onClose }) => {
 										justifyContent: 'center',
 									}}
 								>
-									Order {totalPriceString}
+									Order {totalPrice + '₪'}
 								</Link>
 							</Button>
 						)}

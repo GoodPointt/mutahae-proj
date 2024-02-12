@@ -73,7 +73,8 @@ export async function loginAction(prevState, formData) {
 
 		return { error: 'Server error please try again later.' };
 	}
-	redirect('/');
+
+	return { message: 'success' };
 }
 
 const registerSchema = z

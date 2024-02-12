@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import { useFormState } from 'react-dom';
+import { useRouter } from 'next/navigation';
 
 import { Link } from '@chakra-ui/next-js';
 import {
@@ -25,6 +26,7 @@ const LoginForm = ({ dictionary, lang }) => {
 	const [localGoods, setLocalGoods] = useLocalStorage('localBag', []);
 
 	const ref = useRef(null);
+	const router = useRouter();
 
 	const emailError =
 		state?.errors?.email && state?.errors?.email.length > 0
@@ -50,9 +52,9 @@ const LoginForm = ({ dictionary, lang }) => {
 					title: dictionary.formContact.toasts.form.serverError,
 				});
 			}
-			if (state?.message === 'succsess') {
-				// sendEmail(state);
+			if (state?.message === 'success') {
 				ref.current?.reset();
+				router.refresh();
 			}
 		})();
 		// eslint-disable-next-line react-hooks/exhaustive-deps

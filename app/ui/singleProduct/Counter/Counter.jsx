@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import { Button, Flex, Text } from '@chakra-ui/react';
+import { Button, Flex, Input } from '@chakra-ui/react';
 
 const Counter = ({ count, setCount }) => {
 	const decrement = () => {
@@ -23,26 +23,50 @@ const Counter = ({ count, setCount }) => {
 			gap={'40px'}
 			border={'1px #3B3D46 solid'}
 			maxW={'100%'}
-			py={'9px'}
-			px={'40px'}
+			px={'32px'}
 		>
 			<Button
 				variant={'link'}
-				w={'16px'}
+				w={'24px'}
 				minW={0}
 				textColor={'#fff'}
 				onClick={decrement}
-				isDisabled={count === 1}
+				isDisabled={count === 1 || count === '' || count === 0}
 			>
 				-
 			</Button>
 
-			<Text w={'25px'} textAlign={'center'}>
-				{count}
-			</Text>
+			<Input
+				type="number"
+				h={'max-content'}
+				variant={'unstyled'}
+				minH={0}
+				p={'9px'}
+				border={'1px transparent solid'}
+				_focus={{
+					border: '#fff 1px solid',
+					_hover: { border: '#fff 1px solid' },
+				}}
+				_hover={{ border: '1px rgba(255, 255, 255, 0.5) solid' }}
+				textAlign={'center'}
+				ringColor={'transparent'}
+				value={count}
+				onBlur={evt =>
+					(evt.currentTarget.value === '' || evt.currentTarget.value === '0') &&
+					setCount(1)
+				}
+				onChange={evt =>
+					setCount(
+						evt.currentTarget.value !== ''
+							? parseInt(evt.currentTarget.value)
+							: ''
+					)
+				}
+			/>
+
 			<Button
 				variant={'link'}
-				w={'16px'}
+				w={'32px'}
 				minW={0}
 				textColor={'#fff'}
 				onClick={increment}
