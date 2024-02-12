@@ -57,9 +57,6 @@ const RegisterForm = ({ dictionary, lang }) => {
 					title: dictionary.formContact.toasts.form.serverError,
 				});
 			}
-			if (state?.message === 'succsess') {
-				ref.current?.reset();
-			}
 		})();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [state, toast]);
@@ -74,6 +71,7 @@ const RegisterForm = ({ dictionary, lang }) => {
 					value={JSON.stringify(localGoods)}
 					onChange={() => setLocalGoods()}
 				/>
+				<VisuallyHiddenInput name="lang" defaultValue={lang} />
 				<Input
 					autoComplete="on"
 					name="name"

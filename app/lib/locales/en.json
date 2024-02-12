@@ -282,5 +282,10 @@
 	},
 	"catalogPage": { "menu": { "filter": "Filter", "all": "All" } },
 	"notFoundMessage": "Looks like something went wrong look at other product categories or",
-	"sort" : [{"price":"Sort by price"}, {"thickness":"Sort by thickness"}, {"width":"Sort by width"}, {"length":"Sort by length"}]
+	"sort": [
+		{ "price": "Sort by price" },
+		{ "thickness": "Sort by thickness" },
+		{ "width": "Sort by width" },
+		{ "length": "Sort by length" }
+	]
 }
