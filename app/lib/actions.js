@@ -260,7 +260,7 @@ export async function submitProductToBag(prevState, formData) {
 
 	try {
 		const res = await fetchAddToBag(count, goodId, goodPrice);
-		if (res.status === 200) {
+		if (res?.status === 200) {
 			revalidatePath(`/`);
 		}
 	} catch (error) {
@@ -289,7 +289,7 @@ export async function deleteProductFromBag(prevState, formData) {
 
 	try {
 		const response = await fetchDeleteProductFromBag(goodId, bagPrice);
-		if (response.status === 200) {
+		if (response?.status === 200) {
 			revalidatePath('/');
 		}
 	} catch (error) {
@@ -303,11 +303,11 @@ export async function submitGoodToFavorite(prevState, formData) {
 	try {
 		const response = await fetchHandleFavorites(goodId);
 
-		if (response.status === 200) {
+		if (response?.status === 200) {
 			revalidatePath('/');
 
 			return {
-				status: response.status,
+				status: response?.status,
 			};
 		}
 	} catch (error) {

@@ -1,15 +1,12 @@
 export function flattenAttributes(data) {
-	// Base case for recursion
 	if (!data) return null;
 
-	// Handling array data
 	if (Array.isArray(data)) {
 		return data.map(flattenAttributes);
 	}
 
 	let flattened = {};
 
-	// Handling attributes
 	if (data.attributes) {
 		for (let key in data.attributes) {
 			if (
@@ -24,14 +21,12 @@ export function flattenAttributes(data) {
 		}
 	}
 
-	// Copying non-attributes and non-data properties
 	for (let key in data) {
 		if (key !== 'attributes' && key !== 'data') {
 			flattened[key] = data[key];
 		}
 	}
 
-	// Handling nested data
 	if (data.data) {
 		flattened = { ...flattened, ...flattenAttributes(data.data) };
 	}

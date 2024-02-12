@@ -22,12 +22,12 @@ export const UserDetailsForm = ({ lang, userData, userDetailsDictionary }) => {
 	const toast = useToast();
 
 	useEffect(() => {
-		if (state && state.status === 'success')
+		if (state && state?.status === 'success')
 			toast({
 				status: 'success',
 				title: userDetailsForm.success,
 			});
-		else if (state && state.status === 'error') {
+		else if (state && state?.status === 'error') {
 			toast({
 				status: 'error',
 				title: userDetailsForm.error,
@@ -74,12 +74,12 @@ export const UserDetailsForm = ({ lang, userData, userDetailsDictionary }) => {
 							bgColor="#3b3d46"
 							defaultValue={username}
 							placeholder={userDetailsForm.firstName}
-							_placeholder={{ color: '#fff' }}
 							style={
 								lang === 'he' ? { direction: 'ltr', textAlign: 'right' } : null
 							}
 							focusBorderColor="#a28445"
 							border={'1px solid transparent'}
+							borderRadius={'2px'}
 						/>
 						<FormErrorMessage
 							fontSize={'14px'}
@@ -96,7 +96,7 @@ export const UserDetailsForm = ({ lang, userData, userDetailsDictionary }) => {
 							bgColor="#3b3d46"
 							defaultValue={lastName}
 							placeholder="Last name"
-							_placeholder={{ color: '#fff' }}
+							borderRadius={'2px'}
 							style={
 								lang === 'he' ? { direction: 'ltr', textAlign: 'right' } : null
 							}
@@ -124,7 +124,7 @@ export const UserDetailsForm = ({ lang, userData, userDetailsDictionary }) => {
 							bgColor="#3b3d46"
 							defaultValue={email}
 							placeholder="Mail"
-							_placeholder={{ color: '#fff' }}
+							borderRadius={'2px'}
 							style={
 								lang === 'he' ? { direction: 'ltr', textAlign: 'right' } : null
 							}
@@ -149,7 +149,7 @@ export const UserDetailsForm = ({ lang, userData, userDetailsDictionary }) => {
 							bgColor="#3b3d46"
 							defaultValue={phone}
 							placeholder="Phone"
-							_placeholder={{ color: '#fff' }}
+							borderRadius={'2px'}
 							style={
 								lang === 'he' ? { direction: 'ltr', textAlign: 'right' } : null
 							}
