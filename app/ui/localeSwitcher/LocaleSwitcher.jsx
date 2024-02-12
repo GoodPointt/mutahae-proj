@@ -4,6 +4,8 @@ import { Link, List, ListItem } from '@chakra-ui/react';
 
 import { i18n } from '@/app/lib/locales/i18n.config';
 
+import { setCookie } from 'cookies-next';
+
 export const LocaleSwitcher = () => {
 	const pathName = usePathname();
 	const searchParams = useSearchParams();
@@ -36,6 +38,10 @@ export const LocaleSwitcher = () => {
 		}
 	};
 
+	// useEffect(() => {
+	// 	setCookie('lang', lang === 'en' ? 'he' : 'en');
+	// }, [lang]);
+
 	return (
 		<List display="flex">
 			{i18n.locales.map(locale => (
@@ -47,6 +53,7 @@ export const LocaleSwitcher = () => {
 								: `${redirectedPathName(locale)}`
 						}
 						{...linksStyle(locale)}
+						onClick={() => setCookie('lang', locale)}
 						fontSize={'14px'}
 						fontWeight={'500'}
 						p={'6px 12px'}

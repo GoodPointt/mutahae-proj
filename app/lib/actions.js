@@ -143,18 +143,19 @@ export async function submitUserDetails(prevState, formData) {
 	}
 }
 
-export const logout = () => {
+export const logout = (prevState, formData) => {
+	const { lang } = formData;
 	try {
 		cookies().delete('userId');
 		cookies().delete('jwt');
 
-		revalidatePath('/');
-		redirect('/');
+		revalidatePath(`/`);
+		redirect(`/${lang}/`);
 	} catch (error) {
 		console.error(error);
 
 		revalidatePath('/');
-		redirect('/');
+		redirect(`/${lang}/`);
 	}
 };
 

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import LoginForm from '@/app/ui/auth/LoginForm';
 import ProviderButton from '@/app/ui/providerButton/ProviderButton';
 import SectionWrapper from '@/app/ui/sectionWrapper/SectionWrapper';

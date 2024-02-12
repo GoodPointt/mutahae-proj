@@ -1,3 +1,4 @@
+import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
 import { i18n } from '../locales/i18n.config';
@@ -20,17 +21,16 @@ export function middleware(request) {}
 
 export function withI18nMiddleware(middleware) {
 	return async (request, event, response) => {
-		// do i18n stuff
 		const pathname = request.nextUrl.pathname;
 		const search = request.nextUrl.search;
+		const lang = cookies().get('lang')?.value;
 
 		const pathnameIsMissingLocale = i18n.locales.every(
 			locale => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
 		);
 
-		// Redirect if there is no locale
 		if (pathnameIsMissingLocale) {
-			const locale = getLocale(request);
+			const locale = lang || getLocale(request);
 
 			return NextResponse.redirect(
 				new URL(
