@@ -1,18 +1,28 @@
 'use client';
 
+import { useMemo } from 'react';
+import { useFormState } from 'react-dom';
 import Image from 'next/image';
 import Link from 'next/link';
 
 import { Box, Button, Heading, Text, useMediaQuery } from '@chakra-ui/react';
 
-import Star from '../svg/Star';
+import { submitGoodToFavorite } from '@/app/lib/actions';
 
-const ProductItem = ({ product, lang }) => {
+import FavBtn from '../singleProduct/FavBtn/FavBtn';
+
+const ProductItem = ({ product, lang, productId, favorites }) => {
 	const [isModileScreen] = useMediaQuery('(max-width: 1024px)');
+	const [, formAction] = useFormState(submitGoodToFavorite);
 
 	const [firstImageUrl] = (product?.img?.data || [])
 		.map(({ attributes }) => attributes?.url)
 		.filter(url => url);
+
+	const isFavorite = useMemo(
+		() => favorites && favorites.some(({ id }) => id === productId),
+		[favorites, productId]
+	);
 
 	return (
 		<Box
@@ -60,7 +70,7 @@ const ProductItem = ({ product, lang }) => {
 						}}
 					>
 						<Image
-							src={firstImageUrl || '/img/product.png'}
+							src={product.imgUrl || firstImageUrl || '/img/product.png'}
 							alt={product.title + '' + product.descShort || 'product image'}
 							fill
 							sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -80,17 +90,6 @@ const ProductItem = ({ product, lang }) => {
 						pt={'16px'}
 						gap={4}
 					>
-						<Box
-							as={'span'}
-							width={'24px'}
-							position={'absolute'}
-							top={'20px'}
-							right={'20px'}
-							zIndex={'4px'}
-							fill={product.isFavorite ? '#A28445' : 'transparent'}
-						>
-							{<Star />}
-						</Box>
 						<Heading color={'#fff'} fontSize={'24'} mx={4}>
 							{product?.title || ''}
 						</Heading>
@@ -114,6 +113,17 @@ const ProductItem = ({ product, lang }) => {
 					</Box>
 				</article>
 			</Link>
+			{favorites ? (
+				<form action={() => formAction({ goodId: productId })}>
+					<FavBtn
+						position={'absolute'}
+						top={'0px'}
+						right={'0px'}
+						zIndex={'10'}
+						isFavorite={isFavorite}
+					/>
+				</form>
+			) : null}
 		</Box>
 	);
 };

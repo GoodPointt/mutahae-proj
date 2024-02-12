@@ -2,8 +2,9 @@ import { Grid } from '@chakra-ui/react';
 
 import ProductItem from '../../productItem/ProductItem';
 
-const ProductList = ({ list, lang }) => {
+const ProductList = ({ list, lang, favorites }) => {
 	// if (!isLoading)
+
 	return (
 		<Grid
 			as={'ul'}
@@ -15,12 +16,14 @@ const ProductList = ({ list, lang }) => {
 			padding={0}
 		>
 			{list &&
-				list.map(({ attributes }) => {
+				list.map(({ id, attributes }) => {
 					return (
 						<ProductItem
+							favorites={favorites}
 							key={attributes.uid}
 							product={attributes}
 							lang={lang}
+							productId={id}
 						/>
 					);
 				})}

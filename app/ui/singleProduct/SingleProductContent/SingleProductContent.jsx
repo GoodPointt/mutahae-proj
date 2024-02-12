@@ -7,6 +7,7 @@ import {
 	fetchIsFavorite,
 } from '@/app/lib/api/profileInstance';
 
+import SectionWrapper from '../../sectionWrapper/SectionWrapper';
 import SkeletonSingleProduct from '../../skeletons/SkeletonSingleProduct';
 import SingleProduct from '../SingleProduct';
 
@@ -31,16 +32,18 @@ const SingleProductContent = async ({ id, lang, dictionary }) => {
 		: null;
 
 	return (
-		<Suspense fallback={<SkeletonSingleProduct dictionary={dictionary} />}>
-			<SingleProduct
-				userId={userId}
-				product={product}
-				dictionary={dictionary}
-				isFavorite={isFavorite}
-				bagPrice={totalPrice}
-				bagData={bagData}
-			/>
-		</Suspense>
+		<SectionWrapper pb={'60px'}>
+			<Suspense fallback={<SkeletonSingleProduct dictionary={dictionary} />}>
+				<SingleProduct
+					userId={userId}
+					product={product}
+					dictionary={dictionary}
+					isFavorite={isFavorite}
+					bagPrice={totalPrice}
+					bagData={bagData}
+				/>
+			</Suspense>
+		</SectionWrapper>
 	);
 };
 
