@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 import {
 	Flex,
@@ -15,6 +16,7 @@ import {
 	fetchgetProductsByCategorie,
 	fetchProductBySubCategorie,
 	fetchProducts,
+	fetchProductsByQuery,
 } from '@/app/lib/api/instance';
 
 import ScrollToTopButton from '../scrollToTopButton/ScrollToTopButton';
@@ -24,8 +26,14 @@ import SkeletotonClientProductGrid from '../skeletons/SkeletotonClientProductGri
 import CategoryMenu from './categoryMenu/CategoryMenu';
 import MobileFilterMenu from './mobileFilterMenu/MobileFilterMenu';
 import ProductList from './productList/ProductList';
+import SortMenu from './sortMenu/SortMenu';
 
-import { parseAsInteger, useQueryState } from 'nuqs';
+import {
+	parseAsInteger,
+	parseAsString,
+	parseAsStringLiteral,
+	useQueryState,
+} from 'nuqs';
 
 const ProductsGrid = ({
 	lang,
@@ -39,10 +47,28 @@ const ProductsGrid = ({
 	const [isLoading, setIsLoading] = useState(false);
 	const [activeTab, setActiveTab] = useState(0);
 
+	const searchParams = useSearchParams();
+
 	const [category, setCategory] = useQueryState('category');
 	const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1));
 	const [sub_category, setSub_category] = useQueryState('sub_category');
 	const [total, setTotal] = useQueryState('total', parseAsInteger);
+	const [query, setQuery] = useQueryState(
+		'query',
+		parseAsString.withDefault(searchParams.get('query'))
+	);
+	const [sortValue, setSortValue] = useQueryState(
+		'sort',
+		parseAsString.withDefault('publishedAt')
+	);
+
+	const sortOrders = ['asc', 'desc'];
+	const sortValues = ['price', 'thickness', 'width', 'length'];
+
+	const [sortOrder, setSortOrder] = useQueryState(
+		'sort_order',
+		parseAsStringLiteral(sortOrders).withDefault('asc')
+	);
 
 	const loader = useRef(null);
 
@@ -77,30 +103,44 @@ const ProductsGrid = ({
 			let dataToSet = [];
 			let totalToSet = 0;
 
-			for (let i = 1; i <= page; i++) {
-				let response;
-				if (category && sub_category) {
-					response = await fetchProductBySubCategorie(
-						lang,
-						i,
-						category,
-						sub_category
-					);
-				} else if (category) {
-					response = await fetchgetProductsByCategorie(lang, i, category);
-				} else {
-					response = await fetchProducts(lang, i);
+			if (query) {
+				dataToSet = await fetchProductsByQuery(query, lang);
+				totalToSet = dataToSet.length;
+			} else {
+				for (let i = 1; i <= page; i++) {
+					let response;
+
+					if (category && sub_category) {
+						response = await fetchProductBySubCategorie(
+							lang,
+							i,
+							sortValue,
+							sortOrder,
+							category,
+							sub_category
+						);
+					} else if (category) {
+						response = await fetchgetProductsByCategorie(
+							lang,
+							sortValue,
+							sortOrder,
+							i,
+							category
+						);
+					} else {
+						response = await fetchProducts(lang, sortValue, sortOrder, i);
+					}
+
+					dataToSet = [...dataToSet, ...response.data];
+					totalToSet = response.total;
 				}
 
-				dataToSet = [...dataToSet, ...response.data];
-				totalToSet = response.total;
-			}
+				if (category) {
+					const activeTabIndex =
+						categories.findIndex(el => el.id === category) + 1;
 
-			if (category) {
-				const activeTabIndex =
-					categories.findIndex(el => el.id === category) + 1;
-
-				setActiveTab(activeTabIndex);
+					setActiveTab(activeTabIndex);
+				}
 			}
 
 			setRenderList(dataToSet);
@@ -111,7 +151,7 @@ const ProductsGrid = ({
 			setIsLoading(false);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [categories, category, page, sub_category]);
+	}, [categories, category, page, sub_category, sortValue, sortOrder]);
 
 	useEffect(() => {
 		fetchData();
@@ -159,6 +199,13 @@ const ProductsGrid = ({
 		setCategories(sortedCategoriesArr);
 	}, [categoriesList]);
 
+	const toggleSort = value => {
+		setSortValue(value);
+		setSortOrder(prevOrder =>
+			prevOrder === sortOrders[0] ? sortOrders[1] : sortOrders[0]
+		);
+	};
+
 	return (
 		<SectionWrapper
 			heading={heading}
@@ -183,7 +230,7 @@ const ProductsGrid = ({
 				onChange={index => setActiveTab(index)}
 				isManual={true}
 			>
-				<TabList display={{ base: 'none', md: 'flex' }} mb={'2.5rem'}>
+				<TabList display={{ base: 'none', md: 'flex' }}>
 					<Tab
 						key={'All'}
 						mx={'12px'}
@@ -199,6 +246,7 @@ const ProductsGrid = ({
 							setPage(1);
 							setCategory(null);
 							setSub_category(null);
+							setQuery(null);
 						}}
 					>
 						{dictionary.catalogPage.menu.all}
@@ -217,6 +265,7 @@ const ProductsGrid = ({
 										setCategory(id),
 											category !== id && setSub_category(null),
 											setPage(1);
+										setQuery(null);
 									}}
 								>
 									<CategoryMenu
@@ -234,6 +283,16 @@ const ProductsGrid = ({
 							</Flex>
 						))}
 				</TabList>
+
+				<SortMenu
+					sortValues={sortValues}
+					toggleSort={toggleSort}
+					sortOrder={sortOrder}
+					sortValue={sortValue}
+					dictionary={dictionary}
+					lang={lang}
+				/>
+
 				<TabPanels px={'0'}>
 					<TabPanel key={'All'} px={'0'} py={'0'}>
 						{isLoading && page < 2 ? (

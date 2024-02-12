@@ -47,7 +47,7 @@ const SkeletotonClientProductGrid = () => {
 			m={'0 auto'}
 			padding={0}
 		>
-			{Array.from({ length: 6 }, (v, i) => (
+			{Array.from({ length: 9 }, (v, i) => (
 				<SkeletonProductItem key={i} />
 			))}
 		</Grid>
