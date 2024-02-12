@@ -21,6 +21,16 @@ function getProtectedRoutes(protectedPaths, locales) {
 	return protectedPathsWithLocale;
 }
 
+export const getLocaleFromPathname = pathname => {
+	if (pathname.startsWith('/he')) {
+		return pathname.substring(0, 3);
+	} else if (pathname.startsWith('/en')) {
+		return pathname.substring(0, 3);
+	} else {
+		return null;
+	}
+};
+
 export function withAuthMiddleware(middleware) {
 	return async (request, event) => {
 		const response = NextResponse.next();
@@ -28,6 +38,7 @@ export function withAuthMiddleware(middleware) {
 		const token = cookies().get('jwt')?.value;
 
 		const pathname = request.nextUrl.pathname;
+		const localeFromPath = getLocaleFromPathname(pathname);
 
 		const protectedPathsWithLocale = getProtectedRoutes(protectedPaths, [
 			...i18n.locales,
@@ -42,13 +53,13 @@ export function withAuthMiddleware(middleware) {
 		}
 
 		if (!token && protectedPathsWithLocale.includes(pathname)) {
-			const signInUrl = new URL('/auth/login', request.url);
+			const signInUrl = new URL(`${localeFromPath}/auth/login`, request.url);
 
 			return NextResponse.redirect(signInUrl);
 		}
 
 		if (pathname.includes('/auth') && token) {
-			return NextResponse.redirect(new URL('/', request.url));
+			return NextResponse.redirect(new URL(`${localeFromPath}/`, request.url));
 		}
 
 		return middleware(request, event, response);

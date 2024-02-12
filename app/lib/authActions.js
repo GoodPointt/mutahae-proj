@@ -44,6 +44,7 @@ export async function loginAction(prevState, formData) {
 	const { email, password } = validatedFields.data;
 
 	const goods = JSON.parse(formData.get('localGoods'));
+	const lang = formData.get('lang');
 
 	try {
 		const response = await loginUserByEmailAndPassword(email, password);
@@ -73,8 +74,7 @@ export async function loginAction(prevState, formData) {
 
 		return { error: 'Server error please try again later.' };
 	}
-
-	return { message: 'success' };
+	redirect(`/${lang}/`);
 }
 
 const registerSchema = z
@@ -122,6 +122,7 @@ export async function registerAction(prevState, formData) {
 	const { email, name, lastName, password } = validatedFields.data;
 
 	const goods = JSON.parse(formData.get('localGoods'));
+	const lang = formData.get('lang');
 
 	try {
 		const response = await registerNewUser(email, name, lastName, password);
@@ -160,7 +161,7 @@ export async function registerAction(prevState, formData) {
 
 		return { error: 'Server error please try again later.' };
 	}
-	redirect('/');
+	redirect(`/${lang}/`);
 }
 
 const recoverySchema = z

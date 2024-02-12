@@ -6,12 +6,12 @@ import { Box, Button } from '@chakra-ui/react';
 
 import { logout } from '../../lib/actions';
 
-export const Logout = ({ logoutDictionary }) => {
+export const Logout = ({ logoutDictionary, lang }) => {
 	// eslint-disable-next-line no-unused-vars
 	const [state, dispatch] = useFormState(logout, null);
 
 	return (
-		<Box as="form" action={dispatch}>
+		<Box as="form" action={() => dispatch({ lang })}>
 			<Button
 				bg="transparent"
 				color="#fff"
