@@ -127,7 +127,7 @@ const ProductCard = ({ good, hasToken, setGoods, productCount, bagPrice }) => {
 							<SubmitButton
 								variant="unstyled"
 								bgColor="transparent"
-								hover="transparent"
+								_hover={{ bgColor: 'transparent' }}
 								strokeHover={'#EE4B2B'}
 								display={'flex'}
 								justifyContent={'center'}
@@ -141,7 +141,7 @@ const ProductCard = ({ good, hasToken, setGoods, productCount, bagPrice }) => {
 						<Button
 							variant="unstyled"
 							bgColor="transparent"
-							hover="transparent"
+							_hover={{ bgColor: 'transparent' }}
 							display={'flex'}
 							justifyContent={'center'}
 							stroke={'#fff'}

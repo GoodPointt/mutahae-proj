@@ -15,24 +15,26 @@ export const AddressSection = ({ dictionary, userAddress }) => {
 				{title}
 			</Heading>
 
-			{addressList.map((address, i) => {
-				const { id, attributes } = address;
-				const { region, city, street, app, index } = attributes;
+			{addressList &&
+				addressList.length > 0 &&
+				addressList.map((address, i) => {
+					const { id, attributes } = address;
+					const { region, city, street, app, index } = attributes;
 
-				return (
-					<AddressList
-						key={id}
-						id={id}
-						region={region}
-						city={city}
-						street={street}
-						app={app}
-						index={index}
-						isBorder={i > 0}
-						dictionary={dictionary}
-					/>
-				);
-			})}
+					return (
+						<AddressList
+							key={id}
+							id={id}
+							region={region}
+							city={city}
+							street={street}
+							app={app}
+							index={index}
+							isBorder={i > 0}
+							dictionary={dictionary}
+						/>
+					);
+				})}
 		</Box>
 	);
 };

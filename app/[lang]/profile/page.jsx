@@ -1,4 +1,5 @@
 import React from 'react';
+import { redirect } from 'next/navigation';
 
 import { AddressSection } from '../../ui/profile/AddressSection';
 import { AddressForm } from '../../ui/profile/forms/AddressForm';
@@ -12,7 +13,15 @@ import { getDictionary } from '../../lib/locales/dictionary';
 
 const Profile = async ({ params: { lang } }) => {
 	const { data: userData } = await fetchUserData();
-	const { data: userAddress } = await fetchUserAddress();
+	let userAddress;
+	try {
+		const { data } = await fetchUserAddress();
+		userAddress = data;
+	} catch (error) {
+		if (error.response.status === 401) {
+			return redirect('/expired?expired=true');
+		} else return { error: 'Server error please try again later.' };
+	}
 	const dictionary = await getDictionary(lang);
 	const {
 		contactInformation,

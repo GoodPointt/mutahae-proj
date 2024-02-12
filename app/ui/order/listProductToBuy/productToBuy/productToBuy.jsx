@@ -71,7 +71,7 @@ const ProductToBuy = ({ good, goodId, authToken, setGoods, productCount }) => {
 					<SubmitButton
 						variant="unstyled"
 						bgColor="transparent"
-						hover="transparent"
+						_hover={{ bgColor: 'transparent' }}
 						strokeHover={'#EE4B2B'}
 						display={'flex'}
 						justifyContent={'center'}
@@ -83,7 +83,7 @@ const ProductToBuy = ({ good, goodId, authToken, setGoods, productCount }) => {
 					<IconButton
 						variant="unstyled"
 						bgColor="transparent"
-						hover="transparent"
+						_hover={{ bgColor: 'transparent' }}
 						display={'flex'}
 						justifyContent={'center'}
 						stroke={'#fff'}
