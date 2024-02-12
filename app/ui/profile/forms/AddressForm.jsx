@@ -25,13 +25,13 @@ export const AddressForm = ({ lang, dictionary }) => {
 		dictionary;
 
 	useEffect(() => {
-		if (state && state.status === 'success') {
+		if (state && state?.status === 'success') {
 			toast({
 				status: 'success',
 				title: success,
 			});
 			ref.current?.reset();
-		} else if (state && state.status === 'error') {
+		} else if (state && state?.status === 'error') {
 			toast({
 				status: 'error',
 				title: error,
@@ -81,7 +81,7 @@ export const AddressForm = ({ lang, dictionary }) => {
 							type="text"
 							bgColor="#3b3d46"
 							placeholder={region}
-							_placeholder={{ color: '#fff' }}
+							borderRadius={'2px'}
 							style={
 								lang === 'he' ? { direction: 'ltr', textAlign: 'right' } : null
 							}
@@ -102,7 +102,7 @@ export const AddressForm = ({ lang, dictionary }) => {
 							type="text"
 							bgColor="#3b3d46"
 							placeholder={city}
-							_placeholder={{ color: '#fff' }}
+							borderRadius={'2px'}
 							style={
 								lang === 'he' ? { direction: 'ltr', textAlign: 'right' } : null
 							}
@@ -129,7 +129,7 @@ export const AddressForm = ({ lang, dictionary }) => {
 							type="text"
 							bgColor="#3b3d46"
 							placeholder={street}
-							_placeholder={{ color: '#fff' }}
+							borderRadius={'2px'}
 							style={
 								lang === 'he' ? { direction: 'ltr', textAlign: 'right' } : null
 							}
@@ -150,7 +150,7 @@ export const AddressForm = ({ lang, dictionary }) => {
 							type="text"
 							bgColor="#3b3d46"
 							placeholder={app}
-							_placeholder={{ color: '#fff' }}
+							borderRadius={'2px'}
 							style={
 								lang === 'he' ? { direction: 'ltr', textAlign: 'right' } : null
 							}
@@ -171,7 +171,7 @@ export const AddressForm = ({ lang, dictionary }) => {
 							type="number"
 							bgColor="#3b3d46"
 							placeholder={index}
-							_placeholder={{ color: '#fff' }}
+							borderRadius={'2px'}
 							style={
 								lang === 'he' ? { direction: 'ltr', textAlign: 'right' } : null
 							}

@@ -32,9 +32,9 @@ const getFavorites = async () => {
 
 		return data;
 	} catch (e) {
-		console.error(e.response.status);
+		console.error(e.response?.status);
 		console.error(e.message);
-		if (e.response.status === 401) {
+		if (e.response?.status === 401) {
 			return redirect('/expired?expired=true');
 		} else return notFound();
 	}
@@ -76,9 +76,9 @@ const handleFavorites = async goodId => {
 
 		return flattenAttributes(response);
 	} catch (error) {
-		console.error(error.response.status);
+		console.error(error.response?.status);
 		console.error(error.message);
-		if (error.response.status === 401) redirect('/profile?expired=true');
+		if (error.response?.status === 401) redirect('/profile?expired=true');
 		else return notFound();
 	}
 };
@@ -93,9 +93,9 @@ const isFavorite = async goodId => {
 
 		return favorites.some(good => good.id === goodId);
 	} catch (error) {
-		console.error(error.response.status);
+		console.error(error.response?.status);
 		console.error(error.message);
-		if (error.response.status === 401) redirect('/profile?expired=true');
+		if (error.response?.status === 401) redirect('/profile?expired=true');
 		else return notFound();
 	}
 };
@@ -123,9 +123,9 @@ const getOrders = async () => {
 
 		return data;
 	} catch (e) {
-		console.error(e.response.status);
+		console.error(e.response?.status);
 		console.error(e.message);
-		if (e.response.status === 401) redirect('/profile?expired=true');
+		if (e.response?.status === 401) redirect('/profile?expired=true');
 		else return notFound();
 	}
 };
@@ -145,9 +145,9 @@ export const fetchUserData = async () => {
 
 		return data;
 	} catch (e) {
-		console.error(e.response.status);
+		console.error(e.response?.status);
 		console.error(e.message);
-		if (e.response.status === 401) {
+		if (e.response?.status === 401) {
 			return redirect('/expired?expired=true');
 		} else return notFound();
 	}
@@ -171,9 +171,9 @@ export const updateUserData = async userData => {
 			status: 'success',
 		};
 	} catch (error) {
-		console.error(error.response.status);
+		console.error(error.response?.status);
 		console.error(error.message);
-		if (error.response.status === 401) redirect('/profile?expired=true');
+		if (error.response?.status === 401) redirect('/profile?expired=true');
 		else
 			return {
 				status: 'error',
@@ -201,9 +201,9 @@ export const changePassword = async dataPassword => {
 			status: 'success',
 		};
 	} catch (error) {
-		console.error(error.response.status);
+		console.error(error.response?.status);
 		console.error(error);
-		if (error.response.status === 401) redirect('/profile?expired=true');
+		if (error.response?.status === 401) redirect('/profile?expired=true');
 		else
 			return {
 				status: 'error',
@@ -235,9 +235,9 @@ export const addUserAddress = async dataAddress => {
 			status: 'success',
 		};
 	} catch (error) {
-		console.error(error.response.status);
+		console.error(error.response?.status);
 		console.error(error.message);
-		if (error.response.status === 401) {
+		if (error.response?.status === 401) {
 			return redirect('/expired?expired=true');
 		} else
 			return {
@@ -262,9 +262,9 @@ export const deleteUserAddress = async addressId => {
 			status: 'success',
 		};
 	} catch (error) {
-		console.error(error.response.status);
+		console.error(error.response?.status);
 		console.error(error.message);
-		if (error.response.status === 401) {
+		if (error.response?.status === 401) {
 			return redirect('/expired?expired=true');
 		} else
 			return {
@@ -297,9 +297,9 @@ export const fetchUserAddress = async () => {
 
 		return data;
 	} catch (e) {
-		console.error(e.response.status);
+		console.error(e.response?.status);
 		console.error(e.message);
-		if (e.response.status === 401) {
+		if (e.response?.status === 401) {
 			return redirect('/expired?expired=true');
 		} else return { error: 'Server error please try again later.' };
 	}
@@ -327,9 +327,9 @@ const getBagByUserId = async () => {
 
 		return flattenAttributes(goodsInBagData);
 	} catch (error) {
-		console.error(error.response.status);
+		console.error(error.response?.status);
 		console.error(error.message);
-		if (error.response.status === 401) {
+		if (error.response?.status === 401) {
 			return redirect('/expired?expired=true');
 		} else return { error: 'Server error please try again later.' };
 	}
@@ -364,9 +364,9 @@ const createOrder = async (totalPrice, goods, cityId) => {
 			},
 		});
 	} catch (error) {
-		console.error(error.response.status);
+		console.error(error.response?.status);
 		console.error(error);
-		if (error.response.status === 401) {
+		if (error.response?.status === 401) {
 			return redirect('/expired?expired=true');
 		} else return { error: error.message };
 	}
@@ -426,9 +426,9 @@ const addToBag = async (count, goodId, goodPrice) => {
 			}
 		);
 	} catch (error) {
-		console.error(error.response.status);
+		console.error(error.response?.status);
 		console.error(error);
-		if (error.response.status === 401) {
+		if (error.response?.status === 401) {
 			return redirect('/expired?expired=true');
 		} else return { error: error.message };
 	}
@@ -461,8 +461,8 @@ const updateAllGoodsInBag = async (goods, bagPrice) => {
 		);
 	} catch (error) {
 		console.error(error.message);
-		console.error(error.response.status);
-		if (error.response.status === 401) {
+		console.error(error.response?.status);
+		if (error.response?.status === 401) {
 			return redirect('/expired?expired=true');
 		} else return { error: error.message };
 	}
@@ -500,9 +500,9 @@ const deleteProductFromBag = async (goodId, bagPrice) => {
 			}
 		);
 	} catch (error) {
-		console.error(error.response.status);
+		console.error(error.response?.status);
 		console.error(error.message);
-		if (error.response.status === 401) {
+		if (error.response?.status === 401) {
 			return redirect('/expired?expired=true');
 		} else return { error: error.message };
 	}
@@ -535,9 +535,9 @@ const setLocalBagOnServer = async localGoods => {
 			}
 		);
 	} catch (error) {
-		console.error(error.response.status);
+		console.error(error.response?.status);
 		console.error(error.message);
-		if (error.response.status === 401) {
+		if (error.response?.status === 401) {
 			return redirect('/expired?expired=true');
 		} else return { error: 'Server error please try again later.' };
 	}
@@ -568,9 +568,9 @@ const resetBag = async () => {
 			}
 		);
 	} catch (error) {
-		console.error(error.response.status);
+		console.error(error.response?.status);
 		console.error(error.message);
-		if (error.response.status === 401) {
+		if (error.response?.status === 401) {
 			return redirect('/expired?expired=true');
 		} else return { error: 'Server error please try again later.' };
 	}
@@ -591,9 +591,9 @@ const getUserDataForOrder = async () => {
 
 		return data;
 	} catch (e) {
-		console.error(e.response.status);
+		console.error(e.response?.status);
 		console.error(e.message);
-		if (e.response.status === 401) {
+		if (e.response?.status === 401) {
 			return redirect('/expired?expired=true');
 		} else return { error: 'Server error please try again later.' };
 	}
@@ -644,9 +644,9 @@ const getOrderByUserId = async userId => {
 
 		return flattenAttributes(responseData);
 	} catch (error) {
-		console.error(error.response.status);
+		console.error(error.response?.status);
 		console.error(error.message);
-		if (error.response.status === 401) {
+		if (error.response?.status === 401) {
 			return redirect('/expired?expired=true');
 		} else return { error: 'Server error please try again later.' };
 	}

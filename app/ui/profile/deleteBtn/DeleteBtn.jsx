@@ -19,19 +19,20 @@ export const DeleteBtn = ({ id, dictionary }) => {
 	const { btn, success, error } = dictionary;
 
 	useEffect(() => {
-		if (state && state.status === 'success') {
+		if (state && state?.status === 'success') {
 			setIsSubmitting(true);
 			toast({
 				status: 'success',
 				title: success,
 			});
 			router.refresh();
-		} else if (state && state.status === 'error') {
+		} else if (state && state?.status === 'error') {
 			toast({
 				status: 'error',
 				title: error,
 			});
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [state]);
 
 	return (

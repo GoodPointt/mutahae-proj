@@ -30,12 +30,12 @@ export const RessetPasswordForm = ({ lang, ressetPassDictionary }) => {
 	const toast = useToast();
 
 	useEffect(() => {
-		if (state && state.status === 'success')
+		if (state && state?.status === 'success')
 			toast({
 				status: 'success',
 				title: success,
 			});
-		else if (state && state.status === 'error') {
+		else if (state && state?.status === 'error') {
 			toast({
 				status: 'error',
 				title: error,
@@ -71,7 +71,7 @@ export const RessetPasswordForm = ({ lang, ressetPassDictionary }) => {
 							type="password"
 							bgColor="#3b3d46"
 							placeholder={currentPassword}
-							_placeholder={{ color: '#fff' }}
+							borderRadius={'2px'}
 							style={
 								lang === 'he' ? { direction: 'ltr', textAlign: 'right' } : null
 							}
@@ -92,7 +92,7 @@ export const RessetPasswordForm = ({ lang, ressetPassDictionary }) => {
 							type="password"
 							bgColor="#3b3d46"
 							placeholder={newPassword}
-							_placeholder={{ color: '#fff' }}
+							borderRadius={'2px'}
 							style={
 								lang === 'he' ? { direction: 'ltr', textAlign: 'right' } : null
 							}
@@ -113,7 +113,7 @@ export const RessetPasswordForm = ({ lang, ressetPassDictionary }) => {
 							type="password"
 							bgColor="#3b3d46"
 							placeholder={confirmPassword}
-							_placeholder={{ color: '#fff' }}
+							borderRadius={'2px'}
 							style={
 								lang === 'he' ? { direction: 'ltr', textAlign: 'right' } : null
 							}
