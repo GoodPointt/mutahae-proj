@@ -26,7 +26,7 @@ const IsInBag = ({ isInBag, onOpen }) => {
 						as={motion.button}
 						initial={{ opacity: 0, y: -10 }}
 						animate={{ opacity: 1, y: isMobile ? 45 : -45 }}
-						exit={{ opacity: 0, y: -20 }}
+						exit={{ opacity: 0, y: isMobile ? 35 : -20 }}
 						pos={'absolute'}
 						_hover={{ stroke: '#81672e', bgColor: 'transparent' }}
 						transition="0.2s easeOut"

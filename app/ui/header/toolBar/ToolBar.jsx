@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 
-import { Box, Button, Flex, Text, useDisclosure } from '@chakra-ui/react';
+import { Box, Button, Flex, useDisclosure } from '@chakra-ui/react';
 
 import Bag from '../../bag/Bag';
 import Modal from '../../modal/Modal';
@@ -72,10 +72,11 @@ const ToolBar = ({
 			</Link>
 		),
 		BAG_ICON: (
-			<Text as={'span'} pos={'relative'}>
+			<>
 				<BagNavIcon />
 				{bagLength !== 0 && (
 					<Box
+						as="span"
 						pos={'absolute'}
 						borderRadius={'50%'}
 						display={'flex'}
@@ -92,7 +93,7 @@ const ToolBar = ({
 						{bagLength}
 					</Box>
 				)}
-			</Text>
+			</>
 		),
 	};
 
@@ -143,7 +144,7 @@ const ToolBar = ({
 									_hover={{ bg: 'none' }}
 									onClick={() => handleClick(id)}
 								>
-									<Box w={'24px'} h={'24px'}>
+									<Box w={'24px'} h={'24px'} pos={'relative'}>
 										{item}
 									</Box>
 								</Button>

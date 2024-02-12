@@ -31,13 +31,14 @@ const Favorites = async ({ params: { lang } }) => {
 					favorites[0].goods.map(good => {
 						const { uid, locale, title, descShort } = good;
 						const { img } = good;
-						const imgUrl = img ? img[0].formats.small.url : '/img/product.png';
+						const imgUrl = img && img[0].url;
 
 						return (
 							<ProductItem
 								lang={locale}
+								favorites={favorites[0].goods}
+								productId={good.id}
 								product={{
-									isFavorite: true,
 									uid,
 									title: title,
 									button: 'Add To Bag',
@@ -53,16 +54,16 @@ const Favorites = async ({ params: { lang } }) => {
 					favorites[0].goods.map(good => {
 						const { uid, locale } = good;
 						const { title: title_he, descShort: descShort_he } =
-							good.localizations[0];
+							good.localizations[0] || {};
 						const { img } = good;
 
-						const imgUrl = img ? img[0].formats.small.url : '/img/product.png';
+						const imgUrl = img && img[0].url;
 
 						return (
 							<ProductItem
 								lang={locale}
+								favorites={favorites[0].goods}
 								product={{
-									isFavorite: true,
 									uid,
 									title: title_he,
 									button: 'Add To Bag',
