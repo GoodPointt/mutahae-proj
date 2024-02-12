@@ -26,6 +26,7 @@ const Shipping = ({
 	setCityId,
 	userAddress,
 	setOwnCity,
+	ownCity,
 }) => {
 	const [isOpenSelect, setIsOpenSelect] = useState(false);
 	const [enteredAddress, setEnteredAddress] = useState('');
@@ -189,6 +190,7 @@ const Shipping = ({
 								_hover={{ backgroundColor: '#3b3d46' }}
 								onClick={() => {
 									setSelectedCity(item.cityName);
+									setOwnCity('');
 									setCityId(item.id);
 								}}
 							>
@@ -197,6 +199,11 @@ const Shipping = ({
 						))}
 					</MenuList>
 				</Menu>
+				{ownCity && (
+					<Text mt={'10px'} fontSize={'14px'}>
+						{dictionary.order.message}
+					</Text>
+				)}
 			</Box>
 		</>
 	);

@@ -22,7 +22,7 @@ const FinalAmount = ({
 			position={{ base: 'static', xl: 'absolute' }}
 			top={0}
 			right={0}
-			w={{ base: '100%', sm: '340px' }}
+			w={{ base: '100%', md: '340px' }}
 		>
 			<Heading as={'h2'} fontSize={'20px'} fontFamily={600} mb={'30px'}>
 				{dictionary.order.orderTitle}

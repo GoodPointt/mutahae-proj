@@ -45,6 +45,7 @@ const ContactInfo = ({
 	const { isOpen = false, onOpen, onClose } = useDisclosure();
 
 	const ref = useRef(null);
+	const scrollRef = useRef(null);
 	const maskedInputRef = useRef(null);
 
 	const cityDetails = arrayCities.find(item => {
@@ -54,13 +55,20 @@ const ContactInfo = ({
 		);
 	});
 
+	function calculatePrice(weight, basePrice) {
+		let multiplier = Math.floor(weight / 5000) + 1;
+
+		return basePrice * multiplier;
+	}
+
+	const weightGoods = goodsToMap.reduce((acc, { count, good }) => {
+		const flattenGood = flattenAttributes(good);
+
+		return acc + flattenGood.weight * count;
+	}, 0);
+
 	const deliveryPrice = cityDetails?.zone.data.attributes.price;
-
-	// const weightGoods = goodsToMap.reduce((acc, { count, good }) => {
-	// 	const flattenGood = flattenAttributes(good);
-
-	// 	return acc + flattenGood.weight * count;
-	// }, 0);
+	const totalDeliveryPrice = calculatePrice(weightGoods, deliveryPrice);
 
 	const bagPrice = goodsToMap.reduce((acc, { count, good }) => {
 		const flattenGood = flattenAttributes(good);
@@ -68,17 +76,13 @@ const ContactInfo = ({
 		return acc + flattenGood.price * count;
 	}, 0);
 
-	const totalPrice = deliveryPrice ? bagPrice + deliveryPrice : bagPrice;
+	const totalPrice = totalDeliveryPrice
+		? bagPrice + totalDeliveryPrice
+		: bagPrice;
 	const dis = goodsToMap.length === 0;
 
 	useEffect(() => {
-		if (!authToken) {
-			setGoodsToMap(localGoods || []);
-		} else {
-			const { goods } = orderData || {};
-
-			setGoodsToMap(goods || []);
-		}
+		setGoodsToMap(authToken ? orderData?.goods || [] : localGoods || []);
 	}, [authToken, orderData, localGoods]);
 
 	useEffect(() => {
@@ -120,8 +124,16 @@ const ContactInfo = ({
 		}
 	}, [state, authToken, onOpen, setLocalGoods, setSelectedCity]);
 
+	useEffect(() => {
+		if (state?.errors && Object.keys(state?.errors).length > 0) {
+			scrollRef.current.scrollIntoView({ behavior: 'smooth' });
+			setIsSubmitting(false);
+		}
+	}, [state?.errors]);
+
 	const handleFormSubmit = event => {
 		event.preventDefault();
+		setIsSubmitting(true);
 		const formData = new FormData(event.target);
 		const formValues = Object.fromEntries(formData.entries());
 
@@ -162,7 +174,7 @@ const ContactInfo = ({
 
 	return (
 		<>
-			<Box position="relative">
+			<Box position="relative" ref={scrollRef}>
 				{goodsToMap.length !== 0 && (
 					<ListProductToBuy
 						goodsToMap={goodsToMap}
@@ -314,6 +326,7 @@ const ContactInfo = ({
 							selectedCity={selectedCity}
 							userAddress={userAddress}
 							setOwnCity={setOwnCity}
+							ownCity={ownCity}
 						/>
 					</Box>
 
@@ -322,7 +335,7 @@ const ContactInfo = ({
 						selectedCity={selectedCity}
 						arrayCities={arrayCities}
 						isSubmitting={isSubmitting}
-						deliveryPrice={deliveryPrice}
+						deliveryPrice={totalDeliveryPrice}
 						totalPrice={totalPrice}
 						bagPrice={bagPrice}
 						dis={dis}

@@ -209,7 +209,8 @@
 		"subtotal": "Subtotal",
 		"shippingPrice": "Shipping",
 		"total": "Total",
-		"button": "Buy now"
+		"button": "Buy now",
+		"message": "Exact shipping cost to your address will be provided by our consultant."
 	},
 	"orderThankYou": {
 		"title": "Thank you for choosing Mutag Haetz!",
