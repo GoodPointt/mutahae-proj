@@ -205,9 +205,6 @@ a:hover,
 	text-decoration: none;
 }
 
-.recharts-surface {
-	color: white;
-}
 
 @media (max-width: 999px) {
 	main {
