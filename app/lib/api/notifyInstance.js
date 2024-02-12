@@ -6,9 +6,7 @@ export const notifyInstance = axios.create({
 
 export const sendTgNotification = async message => {
 	try {
-		const { data } = await notifyInstance.post(`/notify`, message);
-
-		return data;
+		return await notifyInstance.post(`/notify`, message);
 	} catch (e) {
 		console.error(e);
 	}

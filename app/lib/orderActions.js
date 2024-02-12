@@ -1,8 +1,9 @@
 'use server';
 
+import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 
-import { fetchCreateOrder } from './api/profileInstance';
+import { fetchCreateOrder, fetchResetBag } from './api/profileInstance';
 
 import { z } from 'zod';
 
@@ -42,7 +43,7 @@ const schema = z
 
 export async function submitData(prevState, formData) {
 	const { firstName, lastName, email, phone } = formData.payload.formValues;
-	const { totalPrice, goods, deliveryAddress, cityId } = formData.payload;
+	const { totalPrice, goods, deliveryAddress, cityId, lang } = formData.payload;
 	const token = cookies().get('jwt')?.value;
 
 	const validatedFields = schema.safeParse({
@@ -62,6 +63,8 @@ export async function submitData(prevState, formData) {
 		if (token) {
 			await fetchCreateOrder(totalPrice, goods, cityId);
 		}
+		await fetchResetBag();
+		revalidatePath(`/${lang}/order`);
 
 		return {
 			firstName,

@@ -37,7 +37,7 @@ const IsAccount = ({ dictionary, lang }) => {
 						mb: '25px',
 						width: '100%',
 
-						'@media (min-width: 481px)': {
+						'@media (minWidth: 481px)': {
 							width: '50%',
 						},
 					}}
@@ -49,7 +49,7 @@ const IsAccount = ({ dictionary, lang }) => {
 						mb: '25px',
 						width: '100%',
 
-						'@media (min-width: 481px)': {
+						'@media (minWidth: 481px)': {
 							width: '50%',
 						},
 					}}

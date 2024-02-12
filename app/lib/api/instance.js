@@ -207,13 +207,14 @@ const getCities = async () => {
 
 export const fetchCities = cache(getCities);
 
-const getProductsByQuery = async value => {
+const getProductsByQuery = async (value, lang) => {
 	try {
 		const {
 			data: { data },
 		} = await instance.get(
-			`/api/goods?locale=en&filters[title][$containsi]=${value}&populate=img&sort[0]=title:asc`
+			`/api/goods?locale=${lang}&filters[$or][0][title][$containsi]=${value}&filters[$or][1][wood][$containsi]=${value}&filters[$or][2][sub_categories][title][$containsi]=${value}&populate[0]=img&populate[1]=sub_categories&populate[2]=categories&sort[0]=title:asc`
 		);
+
 		if (data.length === 0) {
 			return [];
 		}

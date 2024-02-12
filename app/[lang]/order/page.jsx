@@ -8,6 +8,7 @@ import { Heading } from '@chakra-ui/react';
 import { fetchCities } from '@/app/lib/api/instance';
 import {
 	fetchBagByUserId,
+	fetchUserAddressForOrder,
 	fetchUserDataForOrder,
 } from '@/app/lib/api/profileInstance';
 import { getDictionary } from '@/app/lib/locales/dictionary';
@@ -16,6 +17,7 @@ const Order = async ({ params: { lang } }) => {
 	const dictionary = await getDictionary(lang);
 	const arrCities = await fetchCities();
 	const { data } = await fetchUserDataForOrder();
+	const response = await fetchUserAddressForOrder();
 	const userId = cookies().get('userId')?.value;
 
 	let orderData = [];
@@ -61,7 +63,6 @@ const Order = async ({ params: { lang } }) => {
 			>
 				{dictionary.order.subtitle}
 			</Heading>
-
 			<Wrapper
 				authToken={authToken}
 				arrayCities={arrayCities}
@@ -70,6 +71,7 @@ const Order = async ({ params: { lang } }) => {
 				userData={data}
 				orderData={orderData[0]}
 				userId={userId}
+				userAddress={response?.data}
 			/>
 		</SectionWrapper>
 	);

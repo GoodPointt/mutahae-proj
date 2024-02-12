@@ -556,6 +556,30 @@ const getUserDataForOrder = async () => {
 
 export const fetchUserDataForOrder = cache(getUserDataForOrder);
 
+export const getUserAddressForOrder = async () => {
+	try {
+		const token = cookies().get('jwt')?.value;
+		const userId = cookies().get('userId')?.value;
+
+		if (!token || !userId) return null;
+		profileInstance.defaults.headers.authorization = `Bearer ${token}`;
+
+		const data = profileInstance.get(
+			`/api/user-addresses?filters[user][id][$eq]=${userId}`
+		);
+
+		if (!data) {
+			return null;
+		}
+
+		return data;
+	} catch (e) {
+		console.error(e.message);
+	}
+};
+
+export const fetchUserAddressForOrder = cache(getUserAddressForOrder);
+
 const getOrderByUserId = async userId => {
 	try {
 		const token = cookies().get('jwt').value;
