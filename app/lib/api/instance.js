@@ -9,12 +9,12 @@ export const instance = axios.create({
 });
 instance.defaults.headers.authorization = `Bearer ${process.env.NEXT_PUBLIC_STRAPI_TOKEN}`;
 
-const getProducts = async (lang, page = 1) => {
+const getProducts = async (lang, sortBy, sortOrder, page = 1) => {
 	try {
 		const {
 			data: { data, meta },
 		} = await instance.get(
-			`api/goods?locale=${lang}&populate=img&sort[0]=publishedAt:asc&pagination[page]=${page}&pagination[pageSize]=9`
+			`api/goods?locale=${lang}&populate=img&sort[0]=${sortBy}:${sortOrder}&pagination[page]=${page}&pagination[pageSize]=9`
 		);
 		if (data.length === 0) {
 			return { data: [], total: 0 };
@@ -30,12 +30,18 @@ const getProducts = async (lang, page = 1) => {
 
 export const fetchProducts = cache(getProducts);
 
-const getProductsByCategorie = async (lang, page = 1, uid) => {
+const getProductsByCategorie = async (
+	lang,
+	sortBy,
+	sortOrder,
+	page = 1,
+	uid
+) => {
 	try {
 		const {
 			data: { data, meta },
 		} = await instance.get(
-			`api/goods?locale=${lang}&populate=deep&filters[categories][uid][$eq]=${uid}&sort[0]=publishedAt:asc&pagination[page]=${page}&pagination[pageSize]=9`
+			`api/goods?locale=${lang}&populate=deep&filters[categories][uid][$eq]=${uid}&sort[0]=${sortBy}:${sortOrder}&pagination[page]=${page}&pagination[pageSize]=9`
 		);
 		if (data.length === 0) {
 			return notFound();
@@ -51,12 +57,19 @@ const getProductsByCategorie = async (lang, page = 1, uid) => {
 
 export const fetchgetProductsByCategorie = cache(getProductsByCategorie);
 
-const getProductBySubCategorie = async (lang, page, category, sub_category) => {
+const getProductBySubCategorie = async (
+	lang,
+	page,
+	sortBy,
+	sortOrder,
+	category,
+	sub_category
+) => {
 	try {
 		const {
 			data: { data, meta },
 		} = await instance.get(
-			`api/goods?locale=${lang}&populate=deep&filters[0][categories][uid][$eq]=${category}&filters[1][sub_categories][uid][$eq]=${sub_category}&sort[0]=publishedAt:asc&pagination[page]=${page}&pagination[pageSize]=9`
+			`api/goods?locale=${lang}&populate=deep&filters[0][categories][uid][$eq]=${category}&filters[1][sub_categories][uid][$eq]=${sub_category}&sort[0]=${sortBy}:${sortOrder}&pagination[page]=${page}&pagination[pageSize]=9`
 		);
 
 		if (data.length === 0) {

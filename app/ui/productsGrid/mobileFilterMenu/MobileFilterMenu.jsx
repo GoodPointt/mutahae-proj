@@ -30,9 +30,6 @@ const MobileFilterMenu = ({
 }) => {
 	const [displayCategoryTitle, setDisplayCategoryTitle] = useState('');
 	const [isOpen, setIsOpen] = useState(false);
-	// const [showPlaceholder, setShowPlaceholder] = useState(false);
-	// const [prevScrollPosition, setPrevScrollPosition] = useState(0);
-	// const [mobileFilterStyle, setMobileFilterStyle] = useState({});
 
 	useEffect(() => {
 		if (isOpen) {
@@ -41,71 +38,6 @@ const MobileFilterMenu = ({
 			document.body.style.overflow = '';
 		}
 	}, [isOpen]);
-
-	// useEffect(() => {
-	// 	const handleScroll = () => {
-	// 		const currentScrollPosition = window.scrollY;
-	// 		const scrollingUp = prevScrollPosition > currentScrollPosition;
-
-	// 		setPrevScrollPosition(currentScrollPosition);
-
-	// 		if (isOpen) {
-	// 			setMobileFilterStyle({
-	// 				position: 'fixed',
-	// 				top: '90px',
-	// 				zIndex: 99,
-	// 				// eslint-disable-next-line sonarjs/no-duplicate-string
-	// 				transition: 'all 1.5s ease-in-out, opacity 0.5s ease-in-out',
-	// 				transform: 'translateY(0)',
-	// 				width: '95%',
-	// 				background: 'linear-gradient(to right, #434343 0%, black 100%)',
-	// 				opacity: 1,
-	// 			});
-	// 			setShowPlaceholder(true);
-
-	// 			return;
-	// 		}
-
-	// 		let mobileFilterStyleAfterScroll;
-
-	// 		if (currentScrollPosition <= 90) {
-	// 			mobileFilterStyleAfterScroll = {
-	// 				opacity: 1,
-	// 			};
-	// 			setShowPlaceholder(false);
-	// 		} else if (scrollingUp) {
-	// 			mobileFilterStyleAfterScroll = {
-	// 				position: 'fixed',
-	// 				top: '90px',
-	// 				zIndex: 99,
-	// 				transition: 'all 1.5s ease-in-out, opacity 0.5s ease-in-out',
-	// 				transform: 'translateY(0)',
-	// 				width: '95%',
-	// 				background: 'linear-gradient(to right, #434343 0%, black 100%)',
-	// 				opacity: 1,
-	// 			};
-	// 			setShowPlaceholder(true);
-	// 		} else {
-	// 			mobileFilterStyleAfterScroll = {
-	// 				position: 'fixed',
-	// 				top: '0',
-	// 				zIndex: 99,
-	// 				transition: 'all 1.5s ease-in-out, opacity 0.5s ease-in-out',
-	// 				transform: 'translateY(-100%)',
-	// 				opacity: 0,
-	// 			};
-	// 			setShowPlaceholder(true);
-	// 		}
-
-	// 		setMobileFilterStyle(mobileFilterStyleAfterScroll);
-	// 	};
-
-	// 	window.addEventListener('scroll', handleScroll);
-
-	// 	return () => {
-	// 		window.removeEventListener('scroll', handleScroll);
-	// 	};
-	// }, [prevScrollPosition, isOpen]);
 
 	useEffect(() => {
 		const filteredCategory = categories.find(el => el.id === category);
@@ -116,15 +48,7 @@ const MobileFilterMenu = ({
 
 	return (
 		<>
-			{/* {showPlaceholder && (
-				<Box as="div" h={'65px'} display={showPlaceholder ? 'block' : 'none'} />
-			)} */}
-			<Box
-				width={'100%'}
-				display={{ base: 'block', md: 'none' }}
-				mb={'2.5rem'}
-				// style={mobileFilterStyle}
-			>
+			<Box width={'100%'} display={{ base: 'block', md: 'none' }}>
 				<Flex
 					position={'relative'}
 					justifyContent={'space-between'}
@@ -180,7 +104,7 @@ const MobileFilterMenu = ({
 								maxHeight: '80dvh',
 								maxWidth: '400px',
 								backgroundColor: '#181617',
-								padding: '12px 16px',
+								padding: '12px 16px 48px',
 								marginTop: isOpen ? '0' : '-20px',
 								opacity: isOpen ? '1' : '0',
 								overflowY: 'auto',
@@ -195,7 +119,7 @@ const MobileFilterMenu = ({
 							/>
 
 							<Flex as="ul" flexDir={'column'} gap={'4px'}>
-								<Box as={'li'}>
+								<Box as={'li'} key={'All'}>
 									<Button
 										variant={'ghost'}
 										display={'flex'}
@@ -252,14 +176,14 @@ const MobileFilterMenu = ({
 														gap={'4px'}
 														alignItems={'flex-start'}
 													>
-														<Box as={'li'}>
+														<Box as={'li'} key={'all'}>
 															<Button
 																variant={'ghost'}
 																display={'flex'}
 																justifyContent={'flex-start'}
 																fontSize={'16px'}
 																fontWeight={'500'}
-																color={category ? 'white' : '#a28445'}
+																color={'white'}
 																transition={'all 0.3s'}
 																_hover={{
 																	bg: 'none',
