@@ -192,7 +192,7 @@ export const changePassword = async dataPassword => {
 		profileInstance.defaults.headers.authorization = `Bearer ${token}`;
 
 		const { data } = await profileInstance.post(
-			'/api/profile/change-password',
+			'/api/auth/change-password',
 			dataPassword
 		);
 

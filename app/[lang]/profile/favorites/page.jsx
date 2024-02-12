@@ -7,13 +7,9 @@ const Favorites = async ({ params: { lang } }) => {
 	const favorites = await fetchFavorites();
 	const dictionary = await getDictionary(lang);
 
-	const favoritesData = favorites[0].goods.filter(
-		({ locale }) => locale === lang
-	);
-
 	return (
 		<FavoritesContent
-			favorites={favoritesData}
+			favorites={favorites[0].goods}
 			dictionary={dictionary}
 			lang={lang}
 		/>

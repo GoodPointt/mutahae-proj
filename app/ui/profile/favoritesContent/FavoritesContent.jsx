@@ -52,61 +52,26 @@ export const FavoritesContent = ({ favorites, dictionary, lang }) => {
 							],
 						};
 
-						if (lang === 'en' && locale === 'he') return;
+						if (lang === 'he' && locale === 'en') {
+							if (!good.localizations.length) return;
+							const { title: title_he, descShort: descShort_he } =
+								good.localizations[0];
 
-						if (lang === 'en' && locale === 'en') {
 							return (
 								<ProductItem
 									lang={locale}
 									product={{
 										isFavorite: true,
 										uid,
-										title: title,
-										button: 'Add To Bag',
+										title: title_he,
+										button: 'להוסיף לסל',
 										img: { ...imgData },
-										descShort: descShort,
+										descShort: descShort_he,
 									}}
 									key={uid}
 								/>
 							);
 						}
-						if (lang === 'he' && locale === 'he') {
-							return (
-								<ProductItem
-									lang={locale}
-									product={{
-										isFavorite: true,
-										uid,
-										title: title,
-										button: 'להוסיף לתיק',
-										img: { ...imgData },
-										descShort: descShort,
-									}}
-									key={uid}
-								/>
-							);
-						}
-					})}
-				{favorites &&
-					lang === 'he' &&
-					favorites.map(good => {
-						const { uid, locale } = good;
-
-						if (!good.localizations.length) return;
-
-						const { title: title_he, descShort: descShort_he } =
-							good.localizations[0];
-						const { img } = good;
-
-						const imgData = {
-							data: [
-								{
-									attributes: {
-										url: img[0].url,
-									},
-								},
-							],
-						};
 
 						return (
 							<ProductItem
@@ -114,10 +79,10 @@ export const FavoritesContent = ({ favorites, dictionary, lang }) => {
 								product={{
 									isFavorite: true,
 									uid,
-									title: title_he,
-									button: 'להוסיף לתיק',
+									title: title,
+									button: lang === 'he' ? 'להוסיף לסל' : 'Add To Bag',
 									img: { ...imgData },
-									descShort: descShort_he,
+									descShort: descShort,
 								}}
 								key={uid}
 							/>
