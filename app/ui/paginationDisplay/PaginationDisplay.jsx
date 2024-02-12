@@ -5,19 +5,19 @@ import { Button, Flex, useMediaQuery } from '@chakra-ui/react';
 import ArrowLeft from '../svg/ArrowLeft';
 import ArrowRight from '../svg/ArrowRight';
 
-const PaginationDisplay = ({ total, setTotal, page, setPage, renderList }) => {
+const PaginationDisplay = ({ total, setTotal, page, setPage }) => {
 	const [buttonsArr, setButtonsArr] = useState([]);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [countPages, setCountPages] = useState();
 
 	const [isLargerThan1278] = useMediaQuery('(min-width: 1278px)');
 
-	let limit = 6;
+	let limit = 4;
 
 	useEffect(() => {
-		total && renderList && setTotal(total);
+		total && setTotal(total);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [renderList, total]);
+	}, [total]);
 
 	useEffect(() => {
 		setCountPages(Math.ceil(total / limit));
@@ -39,12 +39,12 @@ const PaginationDisplay = ({ total, setTotal, page, setPage, renderList }) => {
 
 	if (countPages > 1)
 		return (
-			<Flex dir={'ltr'}>
+			<Flex dir={'ltr'} justifyContent="center">
 				<Button
 					key={'next'}
 					variant={'ghost'}
 					visibility={hasPrev ? 'visible' : 'hidden'}
-					transition={'all 0.3s'}
+					transition={'all 0.1s'}
 					fill={'white'}
 					stroke={'white'}
 					_hover={{
@@ -64,7 +64,7 @@ const PaginationDisplay = ({ total, setTotal, page, setPage, renderList }) => {
 						fontSize={'14px'}
 						color={'white'}
 						borderRadius={'0'}
-						transition={'all 0.3s'}
+						transition={'all 0.1s'}
 						_hover={{
 							color: '#a98841',
 							bg: 'none',
@@ -78,7 +78,7 @@ const PaginationDisplay = ({ total, setTotal, page, setPage, renderList }) => {
 				<Button
 					key={'prev'}
 					variant={'ghost'}
-					transition={'all 0.3s'}
+					transition={'all 0.1s'}
 					fill={'white'}
 					stroke={'white'}
 					_hover={{
