@@ -33,6 +33,14 @@ export function withAuthMiddleware(middleware) {
 			...i18n.locales,
 		]);
 
+		const search = request.nextUrl.search;
+		if (token && search.includes('?expired=true')) {
+			response.cookies.delete('jwt');
+			response.cookies.delete('userId');
+
+			return response;
+		}
+
 		if (!token && protectedPathsWithLocale.includes(pathname)) {
 			const signInUrl = new URL('/auth/login', request.url);
 
