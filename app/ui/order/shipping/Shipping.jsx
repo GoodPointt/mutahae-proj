@@ -18,6 +18,8 @@ import {
 import IconOrderArrow from '../../svg/OrderArrowDown';
 import IconOrderArrowUp from '../../svg/OrderArrowUp';
 
+import './styles.css';
+
 const Shipping = ({
 	dictionary,
 	arrayCities,
@@ -125,12 +127,20 @@ const Shipping = ({
 						focusBorderColor="#a28445"
 						width={'100%'}
 						rightIcon={isOpenSelect ? <IconOrderArrowUp /> : <IconOrderArrow />}
-						fontSize={'18px'}
+						fontSize={'16px'}
+						height={'auto'}
+						pt={'10px'}
+						pb={'10px'}
 						color={'#ffffff'}
 						textAlign={'start'}
 						border={'1px solid transparent'}
 						_hover={{ border: '1px solid white' }}
 						_expanded={{ borderColor: '#a28445', background: '#3B3D46' }}
+						style={{
+							whiteSpace: 'normal',
+							overflow: 'visible',
+							textOverflow: 'clip',
+						}}
 					>
 						{selectedCity
 							? selectedCity
@@ -158,6 +168,7 @@ const Shipping = ({
 							borderTop={'transparent'}
 							borderLeft={'transparent'}
 							borderRight={'transparent'}
+							style={{ overflowY: 'auto', maxHeight: '200px' }}
 							_hover={{
 								backgroundColor: '#3b3d46',
 							}}
@@ -171,11 +182,17 @@ const Shipping = ({
 										bg={'#181617'}
 										borderRadius={0}
 										key={address + i}
+										fontSize={'16px'}
 										_hover={{ backgroundColor: '#3b3d46' }}
 										onClick={() => {
 											setSelectedCity(fullAddress);
 											setCityId(fullAddress);
 											setOwnCity(address.attributes.city);
+										}}
+										style={{
+											whiteSpace: 'normal',
+											overflow: 'visible',
+											textOverflow: 'clip',
 										}}
 									>
 										{fullAddress}
@@ -187,6 +204,7 @@ const Shipping = ({
 								bg={'#181617'}
 								borderRadius={0}
 								key={index}
+								fontSize={'16px'}
 								_hover={{ backgroundColor: '#3b3d46' }}
 								onClick={() => {
 									setSelectedCity(item.cityName);

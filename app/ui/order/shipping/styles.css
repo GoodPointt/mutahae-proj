@@ -1,0 +1,9 @@
+.chakra-button ~ div {
+	z-index: 10000000000 !important;
+}
+
+@media (max-width: 460px) {
+	.chakra-button ~ div {
+		min-width: auto !important;
+	}
+}
