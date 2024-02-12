@@ -45,7 +45,6 @@ const ContactInfo = ({
 	const { isOpen = false, onOpen, onClose } = useDisclosure();
 
 	const ref = useRef(null);
-	const scrollRef = useRef(null);
 	const maskedInputRef = useRef(null);
 
 	const cityDetails = arrayCities.find(item => {
@@ -126,7 +125,7 @@ const ContactInfo = ({
 
 	useEffect(() => {
 		if (state?.errors && Object.keys(state?.errors).length > 0) {
-			scrollRef.current.scrollIntoView({ behavior: 'smooth' });
+			ref.current.scrollIntoView({ behavior: 'smooth' });
 			setIsSubmitting(false);
 		}
 	}, [state?.errors]);
@@ -174,7 +173,7 @@ const ContactInfo = ({
 
 	return (
 		<>
-			<Box position="relative" ref={scrollRef}>
+			<Box position="relative">
 				{goodsToMap.length !== 0 && (
 					<ListProductToBuy
 						goodsToMap={goodsToMap}
@@ -339,6 +338,7 @@ const ContactInfo = ({
 						totalPrice={totalPrice}
 						bagPrice={bagPrice}
 						dis={dis}
+						lang={lang}
 					/>
 				</Flex>
 			</Box>
