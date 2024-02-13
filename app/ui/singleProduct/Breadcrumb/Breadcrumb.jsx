@@ -9,8 +9,8 @@ import { Box, Flex, Text } from '@chakra-ui/react';
 import HomeIcon from '../../svg/HomeIcon';
 
 const BreadcrumbBar = ({ productTitle, dictionary }) => {
-	const pathname = usePathname();
 	const pathSegments = pathname.split('/').filter(segment => segment !== '');
+	const pathname = usePathname();
 	const lang = pathSegments[0];
 
 	return (
