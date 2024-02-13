@@ -8,10 +8,11 @@ import SectionWrapper from '../sectionWrapper/SectionWrapper';
 const Hero = async ({ dictionary, lang }) => {
 	return (
 		<SectionWrapper
-			bg={'url("/img/hero-bg.jpg")'}
 			style={{
 				paddingTop: '156px',
 				paddingBottom: '156px',
+				backgroundImage:
+					'linear-gradient(90deg, rgba(8,5,0,0.6783963585434174) 0%, rgba(31,21,0,0.6111694677871149) 29%, rgba(0,212,255,0) 58%), url("/img/hero-bg.jpg")',
 			}}
 		>
 			<Heading
