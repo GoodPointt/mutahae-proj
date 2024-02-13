@@ -14,7 +14,7 @@ import './catalogSlider.css';
 import { Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-const CatalogSlider = ({ products, lang, heading }) => {
+const CatalogSlider = ({ products: { data }, lang, heading }) => {
 	return (
 		<SectionWrapper
 			heading={heading}
@@ -46,8 +46,8 @@ const CatalogSlider = ({ products, lang, heading }) => {
 				}}
 				modules={[Navigation]}
 			>
-				{products.length > 0 &&
-					products.data.map(product => (
+				{data.length > 0 &&
+					data.map(product => (
 						<SwiperSlide key={product.attributes.uid}>
 							<ProductItem product={product.attributes} lang={lang} />
 						</SwiperSlide>

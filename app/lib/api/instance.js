@@ -9,7 +9,12 @@ export const instance = axios.create({
 });
 instance.defaults.headers.authorization = `Bearer ${process.env.NEXT_PUBLIC_STRAPI_TOKEN}`;
 
-const getProducts = async (lang, sortBy, sortOrder, page = 1) => {
+const getProducts = async (
+	lang,
+	sortBy = 'createdAt',
+	sortOrder = 'desc',
+	page = 1
+) => {
 	try {
 		const {
 			data: { data, meta },
