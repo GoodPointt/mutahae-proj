@@ -173,6 +173,20 @@ const Shipping = ({
 								backgroundColor: '#3b3d46',
 							}}
 						/>
+						<MenuItem
+							bg={'#181617'}
+							borderRadius={0}
+							key={-1}
+							fontSize={'16px'}
+							_hover={{ backgroundColor: '#3b3d46' }}
+							onClick={() => {
+								setSelectedCity('Self-Pickup');
+								setOwnCity('');
+								setCityId();
+							}}
+						>
+							{dictionary.order.self}
+						</MenuItem>
 						{addressList &&
 							addressList.map((address, i) => {
 								const fullAddress = formatAddress(address);
@@ -186,7 +200,7 @@ const Shipping = ({
 										_hover={{ backgroundColor: '#3b3d46' }}
 										onClick={() => {
 											setSelectedCity(fullAddress);
-											setCityId(fullAddress);
+											setCityId(address.id);
 											setOwnCity(address.attributes.city);
 										}}
 										style={{
