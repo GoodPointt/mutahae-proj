@@ -226,7 +226,8 @@
 			"logout": "התנתקות"
 		},
 		"favorites": {
-			"title": "מועדפים"
+			"title": "מועדפים",
+			"btnAdd": "הוסף לסל"
 		},
 		"contactInformation": {
 			"title": "מידע ליצירת קשר",

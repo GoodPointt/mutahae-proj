@@ -38,7 +38,7 @@ export const UserDetailsForm = ({ lang, userData, userDetailsDictionary }) => {
 
 	const maskedInputRef = useRef(null);
 
-	const { username, lastName, phone, email } = userData;
+	const { firstName, lastName, phone, email } = userData;
 
 	const firstNameError =
 		state?.errors?.firstName && state?.errors?.firstName.length > 0
@@ -69,10 +69,10 @@ export const UserDetailsForm = ({ lang, userData, userDetailsDictionary }) => {
 				>
 					<FormControl isInvalid={firstNameError} mb="25px">
 						<Input
-							name="username"
+							name="firstName"
 							type="text"
 							bgColor="#3b3d46"
-							defaultValue={username}
+							defaultValue={firstName}
 							placeholder={userDetailsForm.firstName}
 							style={
 								lang === 'he' ? { direction: 'ltr', textAlign: 'right' } : null

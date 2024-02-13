@@ -105,11 +105,11 @@ export async function submitData(prevState, formData) {
 }
 
 export async function submitUserDetails(prevState, formData) {
-	const { username, lastName, email, phone } = Object.fromEntries(formData);
-	const userData = { username, lastName, email, phone };
+	const { firstName, lastName, email, phone } = Object.fromEntries(formData);
+	const userData = { firstName, lastName, email, phone };
 
 	const validatedFields = schema.safeParse({
-		username,
+		firstName,
 		lastName,
 		email,
 		phone,

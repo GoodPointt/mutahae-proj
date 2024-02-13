@@ -19,6 +19,8 @@ export const FavoritesContent = ({ favorites, dictionary, lang }) => {
 		setFavoriteData(favorites.slice(startFrom, page * 4));
 	}, [favorites, page]);
 
+	const { title, btnAdd } = dictionary.profile.favorites;
+
 	return (
 		<>
 			<Heading
@@ -26,7 +28,7 @@ export const FavoritesContent = ({ favorites, dictionary, lang }) => {
 				mb={{ base: 6, lg: 8 }}
 				fontSize={{ base: '2xl', lg: '4xl' }}
 			>
-				{dictionary.profile.favorites.title}
+				{title}
 			</Heading>
 			<Grid
 				as={'ul'}
@@ -80,7 +82,7 @@ export const FavoritesContent = ({ favorites, dictionary, lang }) => {
 									isFavorite: true,
 									uid,
 									title: title,
-									button: lang === 'he' ? 'להוסיף לסל' : 'Add To Bag',
+									button: btnAdd,
 									img: { ...imgData },
 									descShort: descShort,
 								}}
