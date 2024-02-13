@@ -13,10 +13,8 @@ const Homepage = async ({ params: { lang } }) => {
 	const dictionary = await getDictionary(lang);
 
 	// eslint-disable-next-line no-undef
-	const [products, contacts] = await Promise.all([
-		fetchProducts(lang),
-		fetchContacts(lang),
-	]);
+	const products = await fetchProducts(lang);
+	const contacts = await fetchContacts(lang);
 
 	return (
 		<Box>
