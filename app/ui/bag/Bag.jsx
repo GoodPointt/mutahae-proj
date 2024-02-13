@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useFormState } from 'react-dom';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
@@ -27,6 +27,7 @@ const Bag = ({ bagData, hasToken, onClose, dictionary }) => {
 
 	const [state, formAction] = useFormState(updateAllGoodsInBag, initialState);
 	const router = useRouter();
+	const [discount, setDiscount] = useState(false);
 	const totalPrice = goodsToMap.reduce((acc, { count, good }) => {
 		const flattenGood = flattenAttributes(good);
 
@@ -34,6 +35,23 @@ const Bag = ({ bagData, hasToken, onClose, dictionary }) => {
 	}, 0);
 
 	const { lang } = useParams();
+
+	const discountedPrice = useMemo(() => {
+		if (totalPrice > 5000) {
+			setDiscount(true);
+
+			return Math.floor(totalPrice - totalPrice * 0.05);
+		}
+		if (totalPrice > 10000) {
+			setDiscount(true);
+
+			return Math.floor(totalPrice - totalPrice * 0.1);
+		}
+
+		setDiscount(false);
+
+		return null;
+	}, [totalPrice]);
 
 	useEffect(() => {
 		if (state?.message) {
@@ -78,7 +96,25 @@ const Bag = ({ bagData, hasToken, onClose, dictionary }) => {
 						<Text>{dictionary.bag.shipping}</Text>
 						<Flex justifyContent={'space-between'}>
 							<Text>{dictionary.bag.subtotal}</Text>
-							<Text as={'span'}>{totalPrice} ₪</Text>
+							<Box display={'flex'} flexDir={'column'}>
+								<Text
+									as={'span'}
+									textDecoration={discount ? 'line-through' : 'none'}
+									color={discount ? '#808080' : '#fff'}
+								>
+									{totalPrice} ₪
+								</Text>
+								{discount && (
+									<Text
+										as="span"
+										fontSize={'16px'}
+										color={'#f84147'}
+										textAlign={'end'}
+									>
+										{discount && discountedPrice}
+									</Text>
+								)}
+							</Box>
 						</Flex>
 						{hasToken ? (
 							<form

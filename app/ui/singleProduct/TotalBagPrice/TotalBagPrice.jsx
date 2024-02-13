@@ -13,6 +13,8 @@ const TotalBagPrice = ({ count, totalPrice, isCentered, dictionary }) => {
 					<Text
 						key="count"
 						as={motion.p}
+						w={'100%'}
+						textAlign={'center'}
 						initial={{
 							opacity: 0,
 							y: -20,

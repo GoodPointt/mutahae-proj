@@ -41,6 +41,7 @@ const Counter = ({ count, setCount, isInBag }) => {
 				h={'max-content'}
 				variant={'unstyled'}
 				isDisabled={isInBag}
+				w={'100px'}
 				minH={0}
 				p={'9px'}
 				border={'1px transparent solid'}
