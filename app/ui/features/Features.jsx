@@ -5,7 +5,7 @@ import SectionWrapper from '../sectionWrapper/SectionWrapper';
 const Features = ({ dictionary }) => {
 	return (
 		<SectionWrapper bg="#000">
-			<Box>
+			<Box ml={'24px'}>
 				<List
 					display={'grid'}
 					gridTemplateColumns={['1fr', 'repeat(3, 1fr)']}
@@ -15,31 +15,17 @@ const Features = ({ dictionary }) => {
 						<ListItem
 							display={'flex'}
 							flexDirection={'column'}
-							alignItems={'center'}
+							p={'35px'}
 							key={el.feat}
-							textAlign={'center'}
+							gap={'30px'}
+							borderLeft={'1px #a28445 solid'}
 						>
-							<Box
-								display={'flex'}
-								flexDirection={'column'}
-								border={'1px #a28445 solid'}
-								borderRight={'none'}
-								w={'100px'}
-								h={'100px'}
-								transform={'rotate(45deg)'}
-								justifyContent={'center'}
-								alignItems={'center'}
-							>
-								<Text
-									transform={'rotate(-45deg)'}
-									color={'#a28445'}
-									fontWeight={600}
-									fontSize={'24px'}
-								>
-									{el.feat}
-								</Text>
-							</Box>
-							<Text mt={'44px'}>{el.title}</Text>
+							<Text fontWeight={700} fontSize={'40px'} lineHeight={1.2}>
+								{el.feat}
+							</Text>
+							<Text fontWeight={500} fontSize={'18px'} lineHeight={1.5}>
+								{el.title}
+							</Text>
 						</ListItem>
 					))}
 				</List>
