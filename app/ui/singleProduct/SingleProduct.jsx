@@ -30,6 +30,8 @@ import IsInBag from './isInBag/IsInBag';
 import SingleProductSlider from './singleProductSlider/SingleProductSlider';
 import TotalBagPrice from './TotalBagPrice/TotalBagPrice';
 
+import { AnimatePresence, motion } from 'framer-motion';
+
 const SingleProduct = ({
 	userId,
 	dictionary,
@@ -40,6 +42,7 @@ const SingleProduct = ({
 	const {
 		id: goodId,
 		attributes: {
+			uid,
 			img: { data: imgs },
 			title,
 			length,
@@ -65,6 +68,16 @@ const SingleProduct = ({
 	const [isInBag, setIsInBag] = useState(false);
 
 	useEffect(() => {
+		if (userId) {
+			const good = bagData[0].goods.find(({ good }) => good.data.id === goodId);
+			good ? setCount(good.count) : setCount(1);
+		} else {
+			const good = localBag.find(({ good }) => good.id === goodId);
+			good ? setCount(good.count) : setCount(1);
+		}
+	}, [bagData, goodId, localBag, userId]);
+
+	useEffect(() => {
 		if (!userId) {
 			const totalLocalPrice = localBag.reduce((acc, { count, good }) => {
 				const flattenGood = flattenAttributes(good);
@@ -79,22 +92,24 @@ const SingleProduct = ({
 
 	useEffect(() => {
 		if (!userId) {
-			const isInLocalBag = localBag.some(({ good }) => good.id === goodId);
+			const isInLocalBag = localBag.some(
+				({ good }) => good.attributes.uid === uid
+			);
 			setIsInBag(isInLocalBag);
 		} else {
 			const isInBag = bagData[0].goods.some(
-				({ good }) => good.data.id === goodId
+				({ good }) => good.data.attributes.uid === uid
 			);
 			setIsInBag(isInBag);
 		}
-	}, [bagData, goodId, localBag, userId]);
+	}, [bagData, localBag, uid, userId]);
 
-	const addGoodInLocal = (count, goodId) => {
-		const isSame = localBag.find(({ good }) => good.id === goodId);
+	const addGoodInLocal = (count, goodUid) => {
+		const isSame = localBag.find(({ good }) => good.attributes.uid === goodUid);
 
 		if (isSame) {
 			const updatedBag = localBag.map(item => {
-				if (item.good.id === goodId) {
+				if (item.good.attributes.id === goodUid) {
 					return { ...item, count: item.count + count };
 				}
 
@@ -115,7 +130,7 @@ const SingleProduct = ({
 				alignItems={'center'}
 				mb={'30px'}
 			>
-				<BreadcrumbBar productTitle={title} />
+				<BreadcrumbBar productTitle={title} dictionary={dictionary} />
 				{userId && (
 					<form
 						action={() => favoriteAction({ goodId })}
@@ -152,7 +167,7 @@ const SingleProduct = ({
 					)}
 					<List>
 						{Object.entries(productDetails).map(
-							([option, value]) =>
+							([option, value], i) =>
 								value && (
 									<ListItem key={option}>
 										<Text
@@ -161,7 +176,7 @@ const SingleProduct = ({
 											fontSize="sm"
 											fontWeight="600"
 										>
-											{option}:
+											{dictionary.singleProduct.productData[i]}
 											<Text as="span" ml="4px" fontWeight="400">
 												{value}
 											</Text>
@@ -177,7 +192,15 @@ const SingleProduct = ({
 						mt={{ base: '30px', lg: 'auto' }}
 						alignItems={'center'}
 					>
-						<Counter count={count} setCount={setCount} />
+						<Box pos={'relative'}>
+							<Counter count={count} setCount={setCount} isInBag={isInBag} />
+							<TotalBagPrice
+								dictionary={dictionary}
+								count={count}
+								totalPrice={price * count}
+								isInBag={isInBag}
+							/>
+						</Box>
 						{userId ? (
 							<form
 								action={() =>
@@ -188,39 +211,79 @@ const SingleProduct = ({
 									})
 								}
 							>
-								<Box pos={'relative'}>
-									<SubmitButton type="submit" message={'loading'}>
-										<Text as={'span'}>{dictionary.buttons.bag}</Text>
-									</SubmitButton>
-									<TotalBagPrice
-										count={count}
-										totalPrice={price * count}
-										isInBag={isInBag}
-									/>
-									<IsInBag isInBag={isInBag} onOpen={onOpen} />
+								<Box
+									pos={'relative'}
+									display={'flex'}
+									w={'100%'}
+									justifyContent={'center'}
+								>
+									{isInBag ? (
+										<IsInBag
+											isInBag={isInBag}
+											onOpen={onOpen}
+											dictionary={dictionary}
+										/>
+									) : (
+										<AnimatePresence>
+											<Box
+												as={motion.div}
+												w={'100%'}
+												initial={{ opacity: 0, y: -20 }}
+												animate={{ opacity: 1, y: 0 }}
+												exit={{ opacity: 0, y: 0 }}
+												transitionDuration={'0.2s'}
+												transitionTimingFunction={'ease'}
+											>
+												<SubmitButton
+													type="submit"
+													message={dictionary.buttons.loaders.addBtn}
+												>
+													<Text as={'span'}>{dictionary.buttons.bag}</Text>
+												</SubmitButton>
+											</Box>
+										</AnimatePresence>
+									)}
 								</Box>
 							</form>
 						) : (
-							<Box pos={'relative'}>
-								<Button
-									w={'100%'}
-									color={'#fff'}
-									_hover={{ bgColor: '#81672e' }}
-									borderRadius={0}
-									bgColor={'#a28445'}
-									pos={'relative'}
-									onClick={() => {
-										addGoodInLocal(count, goodId);
-									}}
-								>
-									{dictionary.buttons.bag}
-								</Button>
-								<TotalBagPrice
-									count={count}
-									totalPrice={price * count}
-									isInBag={isInBag}
-								/>
-								<IsInBag isInBag={isInBag} onOpen={onOpen} />
+							<Box
+								pos={'relative'}
+								display={'flex'}
+								w={'100%'}
+								justifyContent={'center'}
+							>
+								{isInBag ? (
+									<IsInBag
+										isInBag={isInBag}
+										onOpen={onOpen}
+										dictionary={dictionary}
+									/>
+								) : (
+									<AnimatePresence>
+										<Box
+											as={motion.div}
+											w={'100%'}
+											initial={{ opacity: 0, y: -20 }}
+											animate={{ opacity: 1, y: 0 }}
+											exit={{ opacity: 0, y: 0 }}
+											transition="0.2s easeOut"
+										>
+											<Button
+												w={'100%'}
+												color={'#fff'}
+												_hover={{ bgColor: '#81672e' }}
+												borderRadius={0}
+												bgColor={'#a28445'}
+												pos={'relative'}
+												onClick={() => {
+													addGoodInLocal(count, uid);
+												}}
+											>
+												{dictionary.buttons.bag}
+											</Button>
+										</Box>
+									</AnimatePresence>
+								)}
 							</Box>
 						)}
 					</Grid>
@@ -246,6 +309,7 @@ const SingleProduct = ({
 				<Bag
 					bagData={bagData ? bagData[0] : {}}
 					hasToken={!!userId}
+					dictionary={dictionary}
 					onClose={onClose}
 				/>
 			</Modal>

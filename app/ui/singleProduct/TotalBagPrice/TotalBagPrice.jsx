@@ -1,16 +1,11 @@
 'use client';
 import React from 'react';
 
-import { Text, useMediaQuery } from '@chakra-ui/react';
+import { Text } from '@chakra-ui/react';
 
 import { AnimatePresence, motion } from 'framer-motion';
 
-const TotalBagPrice = ({ count, totalPrice, isCentered }) => {
-	const [isMobile] = useMediaQuery('(max-width: 480px)', {
-		ssr: true,
-		fallback: false,
-	});
-
+const TotalBagPrice = ({ count, totalPrice, isCentered, dictionary }) => {
 	return (
 		<>
 			<AnimatePresence>
@@ -20,17 +15,17 @@ const TotalBagPrice = ({ count, totalPrice, isCentered }) => {
 						as={motion.p}
 						initial={{
 							opacity: 0,
-							y: isMobile ? 33 : -20,
+							y: -20,
 							translateX: isCentered && '-50%',
 						}}
-						animate={{ opacity: 1, y: isMobile ? 55 : -30 }}
-						exit={{ opacity: 0, y: isMobile ? 33 : -20 }}
+						animate={{ opacity: 1, y: -30 }}
+						exit={{ opacity: 0, y: -20 }}
 						pos={'absolute'}
 						transition="0.2s easeOut"
 						top={'0'}
 						left={isCentered ? '50%' : '0'}
 					>
-						Total: {totalPrice}₪
+						{dictionary.bag.total}: {totalPrice} ₪
 					</Text>
 				) : null}
 			</AnimatePresence>

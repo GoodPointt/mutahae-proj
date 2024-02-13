@@ -8,7 +8,7 @@ import { Box, Flex, Text } from '@chakra-ui/react';
 
 import HomeIcon from '../../svg/HomeIcon';
 
-const BreadcrumbBar = ({ productTitle }) => {
+const BreadcrumbBar = ({ productTitle, dictionary }) => {
 	const pathname = usePathname();
 	const pathSegments = pathname.split('/').filter(segment => segment !== '');
 	const lang = pathSegments[0];
@@ -29,11 +29,18 @@ const BreadcrumbBar = ({ productTitle }) => {
 							listStyleType={'none'}
 							key={index}
 						>
-							{index < pathSegments.length - 1 && segment !== lang && (
+							{segment === 'catalog' && (
 								<Link href={`/${pathSegments.slice(0, index + 1).join('/')}`}>
-									{segment}
+									{dictionary.hero.btnCatalog}
 								</Link>
 							)}
+							{index < pathSegments.length - 1 &&
+								segment !== lang &&
+								segment !== 'catalog' && (
+									<Link href={`/${pathSegments.slice(0, index + 1).join('/')}`}>
+										{segment}
+									</Link>
+								)}
 							{index === pathSegments.length - 1 && (
 								<Text as={'span'} textColor={'#666'}>
 									{productTitle}
