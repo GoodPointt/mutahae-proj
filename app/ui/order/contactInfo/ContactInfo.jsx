@@ -2,13 +2,13 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useFormState } from 'react-dom';
-import ReactInputMask from 'react-input-mask';
 
 import {
 	Box,
 	Flex,
 	FormControl,
 	FormErrorMessage,
+	Heading,
 	Input,
 	useDisclosure,
 } from '@chakra-ui/react';
@@ -45,7 +45,6 @@ const ContactInfo = ({
 	const { isOpen = false, onOpen, onClose } = useDisclosure();
 
 	const ref = useRef(null);
-	const maskedInputRef = useRef(null);
 
 	const cityDetails = arrayCities.find(item => {
 		return (
@@ -75,9 +74,24 @@ const ContactInfo = ({
 		return acc + flattenGood.price * count;
 	}, 0);
 
+	const discountThreshold1 = 5000;
+	const discountThreshold2 = 10000;
+	const discount1 = 0.05;
+	const discount2 = 0.08;
+
+	let discount = 0;
+	if (bagPrice > discountThreshold2) {
+		discount = discount2;
+	} else if (bagPrice > discountThreshold1) {
+		discount = discount1;
+	}
+
+	const discountedBagPrice = Math.round(bagPrice * (1 - discount));
+
 	const totalPrice = totalDeliveryPrice
-		? bagPrice + totalDeliveryPrice
-		: bagPrice;
+		? discountedBagPrice + totalDeliveryPrice
+		: discountedBagPrice;
+
 	const dis = goodsToMap.length === 0;
 
 	useEffect(() => {
@@ -182,6 +196,14 @@ const ContactInfo = ({
 						authToken={authToken}
 					/>
 				)}
+				<Heading
+					as={'h3'}
+					fontSize={'20px'}
+					fontFamily={600}
+					marginBottom={'30px'}
+				>
+					{dictionary.order.subtitle}
+				</Heading>
 				<Flex
 					flexDirection={{ base: 'column', xl: 'row' }}
 					gap={'50px'}
@@ -285,11 +307,9 @@ const ContactInfo = ({
 								</FormControl>
 								<FormControl isInvalid={phoneError}>
 									<Input
-										ref={maskedInputRef}
 										pl={lang === 'en' ? 4 : null}
 										pr={lang === 'he' ? 4 : null}
 										name="phone"
-										as={ReactInputMask}
 										type="tel"
 										focusBorderColor="#a28445"
 										border="1px solid transparent"
@@ -337,6 +357,8 @@ const ContactInfo = ({
 						deliveryPrice={totalDeliveryPrice}
 						totalPrice={totalPrice}
 						bagPrice={bagPrice}
+						discount={discount}
+						discountedBagPrice={discountedBagPrice}
 						dis={dis}
 						lang={lang}
 					/>

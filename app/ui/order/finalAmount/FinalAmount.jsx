@@ -10,6 +10,8 @@ const FinalAmount = ({
 	deliveryPrice,
 	totalPrice,
 	bagPrice,
+	discount,
+	discountedBagPrice,
 	dis,
 	lang,
 }) => {
@@ -31,7 +33,23 @@ const FinalAmount = ({
 			<Flex color={'#808080'} fontSize={'14px'} flexDir={'column'} gap={'10px'}>
 				<Flex justifyContent="space-between">
 					<Box as="span">{dictionary.order.subtotal}</Box>
-					<Box as="span">{`₪${bagPrice ? bagPrice : 0}`}</Box>
+					{discount > 0 ? (
+						<Flex flexDir={'column'} position={'relative'}>
+							<Box
+								as="span"
+								textDecoration={'line-through'}
+								textAlign={'end'}
+							>{`₪${bagPrice ? bagPrice : 0}`}</Box>
+							<Box
+								as="span"
+								fontSize={'16px'}
+								color={'#f84147'}
+								textAlign={'end'}
+							>{`₪${discountedBagPrice}`}</Box>
+						</Flex>
+					) : (
+						<Box as="span">{`₪${bagPrice ? bagPrice : 0}`}</Box>
+					)}
 				</Flex>
 				<Flex
 					justifyContent="space-between"
