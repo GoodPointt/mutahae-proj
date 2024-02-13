@@ -582,11 +582,11 @@ const getUserDataForOrder = async () => {
 	try {
 		const userId = cookies().get('userId')?.value;
 
-		if (!userId) return {};
+		if (!userId) return null;
 
 		const data = profileInstance.get(`/api/users/${userId}`);
 		if (!data) {
-			return {};
+			return null;
 		}
 
 		return data;

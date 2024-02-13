@@ -204,6 +204,7 @@
 		"shippingTitle": "Shipping",
 		"shippingDesc": "*According to the carrier's rates",
 		"select": "Сhoose A Сity",
+		"self": "Self-Pickup",
 		"ownCity": "Enter your city",
 		"orderTitle": "My Order",
 		"subtotal": "Subtotal",

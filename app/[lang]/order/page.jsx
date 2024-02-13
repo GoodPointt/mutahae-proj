@@ -16,7 +16,7 @@ import { getDictionary } from '@/app/lib/locales/dictionary';
 const Order = async ({ params: { lang } }) => {
 	const dictionary = await getDictionary(lang);
 	const arrCities = await fetchCities();
-	const { data } = await fetchUserDataForOrder();
+	const data = await fetchUserDataForOrder();
 	const response = await fetchUserAddressForOrder();
 	const userId = cookies().get('userId')?.value;
 
@@ -55,20 +55,12 @@ const Order = async ({ params: { lang } }) => {
 			>
 				{dictionary.order.title}
 			</Heading>
-			<Heading
-				as={'h3'}
-				fontSize={'20px'}
-				fontFamily={600}
-				marginBottom={'30px'}
-			>
-				{dictionary.order.subtitle}
-			</Heading>
 			<Wrapper
 				authToken={authToken}
 				arrayCities={arrayCities}
 				dictionary={dictionary}
 				lang={lang}
-				userData={data}
+				userData={data?.data}
 				orderData={orderData[0]}
 				userId={userId}
 				userAddress={response?.data}
