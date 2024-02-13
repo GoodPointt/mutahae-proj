@@ -231,7 +231,8 @@
 			"logout": "Logout"
 		},
 		"favorites": {
-			"title": "Favorites"
+			"title": "Favorites",
+			"btnAdd": "Add To Bag"
 		},
 		"contactInformation": {
 			"title": "Contact Information",
