@@ -11,6 +11,7 @@ const ListProductToBuy = ({
 	setGoodsToMap,
 	setLocalGoods,
 	authToken,
+	dictionary,
 }) => {
 	return (
 		<Flex
@@ -32,6 +33,7 @@ const ListProductToBuy = ({
 							flexDir={{ base: 'column', md: 'row' }}
 						>
 							<ProductCard
+								dictionary={dictionary}
 								setGoods={authToken ? setGoodsToMap : setLocalGoods}
 								hasToken={authToken}
 								productCount={count}

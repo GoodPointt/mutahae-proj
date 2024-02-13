@@ -191,6 +191,7 @@ const ContactInfo = ({
 				{goodsToMap.length !== 0 && (
 					<ListProductToBuy
 						goodsToMap={goodsToMap}
+						dictionary={dictionary}
 						setGoodsToMap={setGoodsToMap}
 						setLocalGoods={setLocalGoods}
 						authToken={authToken}

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useFormState } from 'react-dom';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
@@ -14,8 +14,10 @@ import { flattenAttributes } from '@/app/lib/utils/flattenAttributes';
 
 import ProductCard from '../productCard/ProductCard';
 import SubmitButton from '../submitButton/SubmitButton';
+import ArrowLeft from '../svg/ArrowLeft';
+import ArrowRight from '../svg/ArrowRight';
 
-const Bag = ({ bagData, hasToken, onClose }) => {
+const Bag = ({ bagData, hasToken, onClose, dictionary }) => {
 	const [goodsToMap, setGoodsToMap] = useState([]);
 	const [localGoods, setLocalGoods] = useLocalBag('localBag', []);
 
@@ -25,6 +27,7 @@ const Bag = ({ bagData, hasToken, onClose }) => {
 
 	const [state, formAction] = useFormState(updateAllGoodsInBag, initialState);
 	const router = useRouter();
+	const [discount, setDiscount] = useState(false);
 	const totalPrice = goodsToMap.reduce((acc, { count, good }) => {
 		const flattenGood = flattenAttributes(good);
 
@@ -32,6 +35,23 @@ const Bag = ({ bagData, hasToken, onClose }) => {
 	}, 0);
 
 	const { lang } = useParams();
+
+	const discountedPrice = useMemo(() => {
+		if (totalPrice > 5000) {
+			setDiscount(true);
+
+			return Math.floor(totalPrice - totalPrice * 0.05);
+		}
+		if (totalPrice > 10000) {
+			setDiscount(true);
+
+			return Math.floor(totalPrice - totalPrice * 0.1);
+		}
+
+		setDiscount(false);
+
+		return null;
+	}, [totalPrice]);
 
 	useEffect(() => {
 		if (state?.message) {
@@ -50,7 +70,7 @@ const Bag = ({ bagData, hasToken, onClose }) => {
 
 	return (
 		<Flex flexDir={'column'}>
-			<Heading as={'h2'}>Bag</Heading>
+			<Heading as={'h2'}>{dictionary.bag.title}</Heading>
 			{goodsToMap.length !== 0 ? (
 				<>
 					<List>
@@ -64,6 +84,7 @@ const Bag = ({ bagData, hasToken, onClose }) => {
 								<ProductCard
 									hasToken={hasToken}
 									productCount={count}
+									dictionary={dictionary}
 									good={flattenAttributes(good)}
 									setGoods={hasToken ? setGoodsToMap : setLocalGoods}
 									bagPrice={totalPrice}
@@ -72,10 +93,28 @@ const Bag = ({ bagData, hasToken, onClose }) => {
 						))}
 					</List>
 					<Flex mt={'30px'} maxW={'100%'} flexDir={'column'} gap={'30px'}>
-						<Text>*Shipping calculated at checkout</Text>
+						<Text>{dictionary.bag.shipping}</Text>
 						<Flex justifyContent={'space-between'}>
-							<Text>Subtotal:</Text>
-							<Text as={'span'}>{totalPrice + '₪'}</Text>
+							<Text>{dictionary.bag.subtotal}</Text>
+							<Box display={'flex'} flexDir={'column'}>
+								<Text
+									as={'span'}
+									textDecoration={discount ? 'line-through' : 'none'}
+									color={discount ? '#808080' : '#fff'}
+								>
+									{totalPrice} ₪
+								</Text>
+								{discount && (
+									<Text
+										as="span"
+										fontSize={'16px'}
+										color={'#f84147'}
+										textAlign={'end'}
+									>
+										{discount && discountedPrice}
+									</Text>
+								)}
+							</Box>
 						</Flex>
 						{hasToken ? (
 							<form
@@ -90,9 +129,9 @@ const Bag = ({ bagData, hasToken, onClose }) => {
 									textColor={'#fff'}
 									borderRadius={'0px'}
 									_hover={{ bgColor: '#81672e' }}
-									message={'Creating an order'}
+									message={dictionary.buttons.loaders.order}
 								>
-									Order {totalPrice + '₪'}
+									{dictionary.buttons.order} {totalPrice} ₪
 								</SubmitButton>
 							</form>
 						) : (
@@ -110,21 +149,70 @@ const Bag = ({ bagData, hasToken, onClose }) => {
 									style={{
 										display: 'flex',
 										width: '100%',
+										gap: '5px',
 										height: '100%',
 										alignItems: 'center',
 										justifyContent: 'center',
 									}}
 								>
-									Order {totalPrice + '₪'}
+									<Text as={'span'}>{dictionary.buttons.order}</Text>
+									<Text as={'span'}>{totalPrice} ₪</Text>
 								</Link>
 							</Button>
 						)}
 					</Flex>
 				</>
 			) : (
-				<Text textAlign={'center'} py={'50px'}>
-					Nothing in the bag
-				</Text>
+				<Flex
+					flexDir={'column'}
+					gap={'30px'}
+					justifyContent={'center'}
+					alignItems={'center'}
+					p={'30px'}
+					pb={0}
+				>
+					<Text textAlign={'center'} py={'40px'}>
+						{dictionary.bag.emptyBag}
+					</Text>
+					<Button
+						pos={'relative'}
+						variant={'link'}
+						textColor={'#fff'}
+						borderRadius={'0px'}
+						_after={{
+							content: '""',
+							pos: 'absolute',
+							bottom: '-5px',
+							left: 0,
+							display: 'block',
+							h: '1px',
+							w: '100%',
+							bgColor: '#81672e',
+							opacity: 0,
+						}}
+						stroke={'#fff'}
+						rightIcon={lang === 'en' ? <ArrowRight /> : <ArrowLeft />}
+						_hover={{
+							color: '#81672e',
+							stroke: '#81672e',
+							_after: { opacity: 1 },
+						}}
+						onClick={onClose}
+					>
+						<Link
+							href={`/${lang}/catalog`}
+							style={{
+								display: 'flex',
+								width: '100%',
+								height: '100%',
+								alignItems: 'center',
+								justifyContent: 'center',
+							}}
+						>
+							{dictionary.buttons.emptyBagLink}
+						</Link>
+					</Button>
+				</Flex>
 			)}
 		</Flex>
 	);

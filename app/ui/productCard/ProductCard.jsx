@@ -1,5 +1,5 @@
 'use client';
-import React, { useCallback, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useFormState } from 'react-dom';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
@@ -14,7 +14,14 @@ import TotalBagPrice from '../singleProduct/TotalBagPrice/TotalBagPrice';
 import SubmitButton from '../submitButton/SubmitButton';
 import DeleteIcon from '../svg/DeleteIcon';
 
-const ProductCard = ({ good, hasToken, setGoods, productCount, bagPrice }) => {
+const ProductCard = ({
+	good,
+	hasToken,
+	setGoods,
+	productCount,
+	bagPrice,
+	dictionary,
+}) => {
 	const [count, setCount] = useState(productCount);
 	const [, formAction] = useFormState(deleteProductFromBag);
 	const {
@@ -34,7 +41,7 @@ const ProductCard = ({ good, hasToken, setGoods, productCount, bagPrice }) => {
 
 	const { lang } = useParams();
 
-	const sizes = useCallback(() => {
+	const sizes = useMemo(() => {
 		const sizesArray =
 			(locale === 'he' && lang === 'he') || (locale === 'en' && lang === 'en')
 				? [
@@ -87,14 +94,18 @@ const ProductCard = ({ good, hasToken, setGoods, productCount, bagPrice }) => {
 					/>
 				</Box>
 				<List>
-					<Heading as={'h4'} fontSize={'24px'}>
+					<Heading as={'h4'} fontSize={'20px'}>
 						{(locale === 'he' && lang === 'he') ||
 						(locale === 'en' && lang === 'en')
 							? title
 							: localizations[0]?.title}
 					</Heading>
-					{price && <Text>{price}₪</Text>}
-					{sizes() && <Text textColor={'#808080'}>Sizes: {sizes()}</Text>}
+					{price && <Text>{price} ₪</Text>}
+					{sizes && (
+						<Text textColor={'#808080'}>
+							{dictionary.bag.sizes} {sizes}
+						</Text>
+					)}
 					<Text textTransform={'capitalize'} textColor={'#808080'}>
 						{(locale === 'he' && lang === 'he') ||
 						(locale === 'en' && lang === 'en')
@@ -104,7 +115,7 @@ const ProductCard = ({ good, hasToken, setGoods, productCount, bagPrice }) => {
 				</List>
 			</Flex>
 			<Grid
-				mt={{ base: '30px', md: '0px' }}
+				mt={{ base: '50px', md: '0px' }}
 				templateColumns={{ base: 'repeat(2, 1fr)' }}
 				w={'100%'}
 				justifyContent={'center'}
@@ -113,6 +124,7 @@ const ProductCard = ({ good, hasToken, setGoods, productCount, bagPrice }) => {
 					<Counter count={count} setCount={handleCounterChange} />
 					<TotalBagPrice
 						count={count}
+						dictionary={dictionary}
 						totalPrice={price * count}
 						isCentered={true}
 					/>

@@ -62,7 +62,8 @@ const ToolBar = ({
 						top={'-4px'}
 						w={'12px'}
 						h={'12px'}
-						right={'-4px'}
+						right={lang === 'he' ? null : '-4px'}
+						left={lang === 'he' ? '-4px' : null}
 						fontSize={'10px'}
 						color={'#fff'}
 					>
@@ -86,7 +87,8 @@ const ToolBar = ({
 						top={'-4px'}
 						w={'12px'}
 						h={'12px'}
-						right={'-4px'}
+						right={lang === 'he' ? null : '-4px'}
+						left={lang === 'he' ? '-4px' : null}
 						fontSize={'10px'}
 						color={'#fff'}
 					>
@@ -157,7 +159,12 @@ const ToolBar = ({
 			</Flex>
 			<Modal isOpen={isOpen} onClose={handleClose} lang={lang}>
 				{variant === 'BAG_ICON' && (
-					<Bag bagData={bagData} hasToken={hasToken} onClose={onClose} />
+					<Bag
+						bagData={bagData}
+						hasToken={hasToken}
+						onClose={onClose}
+						dictionary={dictionary}
+					/>
 				)}
 				{variant === 'SEARCH_ICON' && (
 					<SearchField

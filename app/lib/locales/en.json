@@ -7,7 +7,14 @@
 		"bag": "Add to bag",
 		"forgotPass": "*Forgot your password?",
 		"createAcc": "Create account",
-		"cancel": "Cancel"
+		"cancel": "Cancel",
+		"order": "Order",
+		"inBag": "In bag",
+		"emptyBagLink": "Search products in catalog",
+		"loaders": {
+			"order": "Creating an order",
+			"addBtn": "Adding product in bag"
+		}
 	},
 	"header": {
 		"navItems": [
@@ -35,12 +42,15 @@
 	},
 	"singleProduct": {
 		"description": "Desciption",
-		"width": "Width: ",
-		"length": "Length: ",
-		"thickness": "Thickness: ",
-		"wood": "Wood: ",
-		"type": "Type: ",
-		"manufacturer": "Manufacturer: ",
+		"productData": [
+			"Width: ",
+			"Length: ",
+			"Thickness: ",
+			"Wood: ",
+			"Type:  ",
+			"Manufacturer:"
+		],
+
 		"price": "Price: ",
 		"pickup": {
 			"title": "Delivery",
@@ -53,8 +63,8 @@
 				"Zone 5: Hadera, Netanya, Haifa, and settlements in the north - ₪900.00"
 			],
 			"pss": [
-				"* Orders over ₪5000 - 50% discount.",
-				"** Orders over ₪10,000 - 80% discount."
+				"* Orders over ₪5000 - 5% discount.",
+				"** Orders over ₪10,000 - 8% discount."
 			]
 		}
 	},
@@ -289,5 +299,13 @@
 		{ "thickness": "Sort by thickness" },
 		{ "width": "Sort by width" },
 		{ "length": "Sort by length" }
-	]
+	],
+	"bag": {
+		"sizes": "Sizes: ",
+		"title": "Bag",
+		"emptyBag": "Nothing in bag",
+		"shipping": "*Shipping calculated at checkout",
+		"subtotal": "Subtotal",
+		"total": "Total"
+	}
 }
