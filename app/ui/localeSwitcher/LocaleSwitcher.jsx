@@ -19,7 +19,7 @@ export const LocaleSwitcher = () => {
 	};
 
 	const getLocaleDisplayName = locale => {
-		return locale === 'he' ? 'HE' : 'EN';
+		return locale === 'he' ? 'עב' : 'EN';
 	};
 
 	const currentLocale = pathName.split('/')[1];
@@ -37,10 +37,6 @@ export const LocaleSwitcher = () => {
 			};
 		}
 	};
-
-	// useEffect(() => {
-	// 	setCookie('lang', lang === 'en' ? 'he' : 'en');
-	// }, [lang]);
 
 	return (
 		<List display="flex">
