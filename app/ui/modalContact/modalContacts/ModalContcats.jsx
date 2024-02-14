@@ -1,13 +1,4 @@
 import {
-	BsFacebook,
-	BsInstagram,
-	BsTelegram,
-	BsWhatsapp,
-} from 'react-icons/bs';
-import { FaViber } from 'react-icons/fa';
-import { MdEmail, MdLocationOn, MdPhone } from 'react-icons/md';
-
-import {
 	Box,
 	Heading,
 	HStack,
@@ -16,6 +7,15 @@ import {
 	Text,
 	VStack,
 } from '@chakra-ui/react';
+
+import EmailIcon from '../../svg/EmailIcon';
+import FacebookIcon from '../../svg/FacebookIcon';
+import InstagramIcon from '../../svg/InstagramIcon';
+import LocationIcon from '../../svg/LocationIcon';
+import PhoneIcon from '../../svg/PhoneIcon';
+import Tg from '../../svg/Tg';
+import Viber from '../../svg/Viber';
+import WhatsApp from '../../svg/WhatsApp';
 
 const ModalContacts = ({ contacts, dictionary, lang }) => {
 	return (
@@ -34,15 +34,16 @@ const ModalContacts = ({ contacts, dictionary, lang }) => {
 						href={`tel:+${contacts.phone}`}
 						size="md"
 						minH="48px"
-						max-width="200px"
+						width="100%"
 						color="#DCE2FF"
 						transition="all 300ms ease"
 						_hover={{
 							color: '#a68640',
 							transform: 'translateX(3px)',
 						}}
+						fill="#a28445"
 					>
-						<MdPhone color="#a28445" size="20px" />
+						<PhoneIcon />
 						<Text
 							display="flex"
 							flexDir={lang === 'he' ? 'row-reverse' : 'row'}
@@ -60,15 +61,16 @@ const ModalContacts = ({ contacts, dictionary, lang }) => {
 						href={`mailto:${contacts.mail}`}
 						size="md"
 						minH="48px"
-						width="fit-content"
+						width="100%"
 						color="#DCE2FF"
 						transition="all 300ms ease"
 						_hover={{
 							color: '#a68640',
 							transform: 'translateX(3px)',
 						}}
+						fill="#a28445"
 					>
-						<MdEmail color="#a28445" size="20px" />
+						<EmailIcon />
 						<Text>{contacts.email}</Text>
 					</Link>
 
@@ -76,12 +78,12 @@ const ModalContacts = ({ contacts, dictionary, lang }) => {
 						href={contacts.addressUrl}
 						rel={'noopener noreferrer nofollow'}
 						display={'flex'}
-						gap={2}
+						gap={1}
 						borderRadius={'5px'}
 						p={2}
 						size="md"
 						minH="48px"
-						width="200px"
+						width="100%"
 						color="#DCE2FF"
 						transition="all 300ms ease"
 						_hover={{
@@ -89,8 +91,9 @@ const ModalContacts = ({ contacts, dictionary, lang }) => {
 							transform: 'translateX(3px)',
 						}}
 						style={{ whiteSpace: 'break-spaces' }}
+						fill="#a28445"
 					>
-						<MdLocationOn color="#a28445" size="40px" />
+						<LocationIcon />
 						<Text>{contacts.address}</Text>
 					</Link>
 				</VStack>
@@ -100,7 +103,7 @@ const ModalContacts = ({ contacts, dictionary, lang }) => {
 					as={'a'}
 					rel={'noopener noreferrer nofollow'}
 					aria-label="facebook"
-					icon={<BsFacebook size="28px" />}
+					icon={<FacebookIcon />}
 					href={contacts.fb}
 					target="_blank"
 					color={'#a28445'}
@@ -118,7 +121,7 @@ const ModalContacts = ({ contacts, dictionary, lang }) => {
 					rel={'noopener noreferrer nofollow'}
 					aria-label="instagram"
 					target="_blank"
-					icon={<BsInstagram size="28px" />}
+					icon={<InstagramIcon size="28px" />}
 					href={contacts.insta}
 					color={'#a28445'}
 					variant="ghost"
@@ -134,7 +137,7 @@ const ModalContacts = ({ contacts, dictionary, lang }) => {
 					as={'a'}
 					rel={'noopener noreferrer nofollow'}
 					aria-label="whatsapp"
-					icon={<BsWhatsapp size="28px" />}
+					icon={<WhatsApp />}
 					href={contacts.watsapp}
 					target="_blank"
 					color={'#a28445'}
@@ -151,7 +154,7 @@ const ModalContacts = ({ contacts, dictionary, lang }) => {
 					as={'a'}
 					rel={'noopener noreferrer nofollow'}
 					aria-label="telegram"
-					icon={<BsTelegram size="28px" />}
+					icon={<Tg />}
 					href={contacts.tg}
 					target="_blank"
 					color={'#a28445'}
@@ -165,10 +168,11 @@ const ModalContacts = ({ contacts, dictionary, lang }) => {
 					transition="all 500ms ease"
 				/>
 				<IconButton
+					fill={'red'}
 					as={'a'}
 					rel={'noopener noreferrer nofollow'}
 					aria-label="viber"
-					icon={<FaViber size="28px" />}
+					icon={<Viber />}
 					href={contacts.viber}
 					target="_blank"
 					color={'#a28445'}

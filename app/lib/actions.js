@@ -50,10 +50,7 @@ const schema = z
 			.string()
 			.trim()
 			.min(1, { message: 'required' })
-			.regex(
-				new RegExp(/^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/),
-				'invalid'
-			),
+			.regex(new RegExp(/(?:\+?\d{1,3}[-()]?)?\d{7,10}/), 'invalid'),
 	})
 	.partial();
 

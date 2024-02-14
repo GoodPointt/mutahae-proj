@@ -1,7 +1,5 @@
 'use client';
 
-import { IoMdCloseCircleOutline } from 'react-icons/io';
-
 import {
 	IconButton,
 	Modal,
@@ -11,6 +9,8 @@ import {
 } from '@chakra-ui/react';
 
 import useLang from '@/app/lib/hooks/useLang';
+
+import CloseIcon from '../svg/CloseIcon';
 
 const ModalWindow = ({
 	isCloseButton = true,
@@ -46,7 +46,7 @@ const ModalWindow = ({
 						variant="ghost"
 						aria-label="close"
 						color={'#ccc'}
-						icon={<IoMdCloseCircleOutline size="28px" />}
+						icon={<CloseIcon />}
 						size="lg"
 						isRound={true}
 						_active={{ bgColor: 'transparent' }}

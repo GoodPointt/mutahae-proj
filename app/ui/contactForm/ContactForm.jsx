@@ -2,8 +2,6 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { useFormState } from 'react-dom';
-import { FaAsterisk } from 'react-icons/fa';
-import ReactInputMask from 'react-input-mask';
 
 import {
 	Box,
@@ -25,6 +23,7 @@ import sendEmail from '../../lib/utils/sendEmail';
 import ModalWindow from '../modalWindow/ModalWindow';
 import SubmitButton from '../submitButton/SubmitButton';
 import SuccessSubmitMsg from '../successSubmitMsg/SuccessSubmitMsg';
+import AsteriskIcon from '../svg/AsteriskIcon';
 
 const ContactForm = ({ dictionary }) => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
@@ -34,7 +33,6 @@ const ContactForm = ({ dictionary }) => {
 	const toast = useToast();
 
 	const ref = useRef(null);
-	const maskedInputRef = useRef(null);
 
 	const lang = useLang();
 
@@ -70,7 +68,6 @@ const ContactForm = ({ dictionary }) => {
 					}
 
 					ref.current?.reset();
-					maskedInputRef.current.value = '';
 
 					toast({
 						status: 'success',
@@ -128,27 +125,24 @@ const ContactForm = ({ dictionary }) => {
 			<FormControl isInvalid={phoneError} pb="25px">
 				<InputGroup>
 					{lang === 'he' ? (
-						<InputRightElement pointerEvents="none" right={-2.5}>
-							<FaAsterisk size={6} color="crimson" />
+						<InputRightElement pointerEvents="none" right={'-10px'} top={'0'}>
+							<AsteriskIcon />
 						</InputRightElement>
 					) : (
-						<InputLeftElement pointerEvents="none" left={-2.5}>
-							<FaAsterisk size={6} color="crimson" />
+						<InputLeftElement pointerEvents="none" left={'-10px'} top={'0'}>
+							<AsteriskIcon />
 						</InputLeftElement>
 					)}
 					<Input
-						ref={maskedInputRef}
 						pl={lang === 'en' ? 4 : null}
 						pr={lang === 'he' ? 4 : null}
 						name="phone"
-						as={ReactInputMask}
 						type="tel"
 						focusBorderColor="#a28445"
 						border="1px solid transparent"
 						bgColor="#3b3d46"
 						borderRadius={'2px'}
 						placeholder={dictionary.formContact.phoneLabel}
-						mask={'+\\972-**-***-****'}
 						errorBorderColor="crimson"
 						textAlign={lang === 'he' ? 'right' : 'left'}
 					/>
