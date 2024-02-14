@@ -40,10 +40,6 @@ const Modal = ({ isOpen, onClose, children, lang }) => {
 							borderRadius: '2px',
 							maxHeight: '10px',
 						},
-						'&::-webkit-scrollbar-track': {
-							backgroundColor: '#A28445',
-							borderRadius: '2px',
-						},
 					}}
 				>
 					<Box>

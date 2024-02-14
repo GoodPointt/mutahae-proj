@@ -150,11 +150,21 @@ const Shipping = ({
 					</MenuButton>
 					<MenuList
 						maxHeight="270px"
+						// max-height="90vh"
 						overflowY="auto"
 						bg={'#181617'}
 						borderRadius={'2px'}
 						borderColor={'#a28445'}
 						padding={0}
+						css={{
+							'&::-webkit-scrollbar': {
+								width: '3px',
+							},
+							'&::-webkit-scrollbar-thumb': {
+								backgroundColor: '#A28445',
+								borderRadius: '2px',
+							},
+						}}
 					>
 						<Input
 							type="text"
@@ -180,7 +190,7 @@ const Shipping = ({
 							fontSize={'16px'}
 							_hover={{ backgroundColor: '#3b3d46' }}
 							onClick={() => {
-								setSelectedCity('Self-Pickup');
+								setSelectedCity(dictionary.order.self);
 								setOwnCity('');
 								setCityId();
 							}}

@@ -42,7 +42,7 @@ const FilteredProduct = ({ product, lang }) => {
 							{product?.title || ''}
 						</Heading>
 						<Box as="span" fontSize={'16px'} fontWeight={'500'}>
-							€160
+							{`${product?.price} ₪`}
 						</Box>
 						<Text
 							fontSize={'14px'}
