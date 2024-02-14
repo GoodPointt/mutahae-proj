@@ -3,6 +3,8 @@
 import ProductItem from '@/app/ui/productItem/ProductItem';
 import SectionWrapper from '@/app/ui/sectionWrapper/SectionWrapper';
 
+import { Link } from '@chakra-ui/next-js';
+
 import 'swiper/react';
 import 'swiper/css/free-mode';
 import 'swiper/css/navigation';
@@ -17,7 +19,10 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 const CatalogSlider = ({ products: { data }, lang, heading }) => {
 	return (
 		<SectionWrapper
+			isLink={'true'}
 			heading={heading}
+			headingAs={Link}
+			href={`/${lang}/catalog`}
 			bg={
 				'linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(25,25,25,1) 50%, rgba(0,0,0,1) 100%)'
 			}

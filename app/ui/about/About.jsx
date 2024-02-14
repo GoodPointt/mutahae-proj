@@ -47,7 +47,6 @@ const About = ({ dictionary, contacts, lang }) => {
 					}}
 					fontSize={{ base: '14px', sm: '16px' }}
 					w={{ base: '100%', lg: '75%', xl: '55%' }}
-					ml={{ base: '0px', sm: '24px' }}
 				>
 					<List display={'flex'} flexDirection={'column'} gap={'24px'}>
 						{dictionary?.aboutUs.main.map(el => (
