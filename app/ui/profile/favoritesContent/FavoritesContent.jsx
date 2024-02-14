@@ -54,26 +54,7 @@ export const FavoritesContent = ({ favorites, dictionary, lang }) => {
 							],
 						};
 
-						if (lang === 'he' && locale === 'en') {
-							if (!good.localizations.length) return;
-							const { title: title_he, descShort: descShort_he } =
-								good.localizations[0];
-
-							return (
-								<ProductItem
-									lang={locale}
-									product={{
-										isFavorite: true,
-										uid,
-										title: title_he,
-										button: 'להוסיף לסל',
-										img: { ...imgData },
-										descShort: descShort_he,
-									}}
-									key={uid}
-								/>
-							);
-						}
+						const localizations = good.localizations[0];
 
 						return (
 							<ProductItem
@@ -81,10 +62,14 @@ export const FavoritesContent = ({ favorites, dictionary, lang }) => {
 								product={{
 									isFavorite: true,
 									uid,
-									title: title,
+									title:
+										localizations && lang == 'he' ? localizations.title : title,
 									button: btnAdd,
 									img: { ...imgData },
-									descShort: descShort,
+									descShort:
+										localizations && lang == 'he'
+											? localizations.descShort
+											: descShort,
 								}}
 								key={uid}
 							/>
