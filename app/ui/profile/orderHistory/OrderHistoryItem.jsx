@@ -1,11 +1,12 @@
 import React from 'react';
 import Image from 'next/image';
 
+import { Link } from '@chakra-ui/next-js';
 import { Box, Flex, Heading, Text } from '@chakra-ui/react';
 
-export const OrderHistoryItem = ({ lang, title, descShort, imgurl }) => {
+export const OrderHistoryItem = ({ lang, title, descShort, imgurl, uid }) => {
 	return (
-		<Box display="flex">
+		<Box display="flex" as={Link} href={`/${lang}/catalog/${uid}`}>
 			<Box
 				position="relative"
 				w="100px"
