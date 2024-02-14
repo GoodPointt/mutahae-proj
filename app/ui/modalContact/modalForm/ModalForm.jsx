@@ -2,9 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import { useFormState } from 'react-dom';
-import { BsPerson } from 'react-icons/bs';
-import { MdOutlineEmail, MdPhone } from 'react-icons/md';
-import ReactInputMask from 'react-input-mask';
 
 import SubmitButton from '@/app/ui/submitButton/SubmitButton';
 
@@ -23,7 +20,12 @@ import {
 } from '@chakra-ui/react';
 
 import { submitData } from '@/app/lib/actions';
+import { sendTgNotification } from '@/app/lib/api/notifyInstance';
 import sendEmail from '@/app/lib/utils/sendEmail';
+
+import EmailIcon from '../../svg/EmailIcon';
+import PersonIcon from '../../svg/PersonIcon';
+import PhoneIcon from '../../svg/PhoneIcon';
 
 const ModalForm = ({ setIsSuccess, dictionary, lang, title, uid }) => {
 	const [state, dispatch] = useFormState(submitData, undefined);
@@ -34,7 +36,17 @@ const ModalForm = ({ setIsSuccess, dictionary, lang, title, uid }) => {
 			if (state?.message === 'succsess') {
 				try {
 					setIsSubmitting(true);
-					const res = await sendEmail({ ...state, title, uid });
+					let res;
+					try {
+						res = await sendEmail({ ...state, title, uid });
+					} catch (error) {
+						console.error('email_not_send', error);
+					}
+					try {
+						await sendTgNotification(state);
+					} catch (error) {
+						console.error('tg_notify_not_send', error);
+					}
 					if (res.status === 200) {
 						toast({
 							status: 'success',
@@ -77,12 +89,12 @@ const ModalForm = ({ setIsSuccess, dictionary, lang, title, uid }) => {
 						<FormLabel>{dictionary.formContact.nameLabel}</FormLabel>
 						<InputGroup borderColor="#E0E1E7">
 							{lang === 'he' ? (
-								<InputRightElement pointerEvents="none">
-									<BsPerson color="gray.800" />
+								<InputRightElement pointerEvents="none" fill={'gray.800'}>
+									<PersonIcon />
 								</InputRightElement>
 							) : (
-								<InputLeftElement pointerEvents="none">
-									<BsPerson color="gray.800" />
+								<InputLeftElement pointerEvents="none" fill={'gray.800'}>
+									<PersonIcon />
 								</InputLeftElement>
 							)}
 							<Input
@@ -120,12 +132,12 @@ const ModalForm = ({ setIsSuccess, dictionary, lang, title, uid }) => {
 						<FormLabel>{dictionary.formContact.mailLabel}</FormLabel>
 						<InputGroup borderColor="#E0E1E7">
 							{lang === 'he' ? (
-								<InputRightElement pointerEvents="none">
-									<MdOutlineEmail color="gray.800" />
+								<InputRightElement pointerEvents="none" fill="gray.800">
+									<EmailIcon />
 								</InputRightElement>
 							) : (
-								<InputLeftElement pointerEvents="none">
-									<MdOutlineEmail color="gray.800" />
+								<InputLeftElement pointerEvents="none" fill="gray.800">
+									<EmailIcon />
 								</InputLeftElement>
 							)}
 							<Input
@@ -167,23 +179,21 @@ const ModalForm = ({ setIsSuccess, dictionary, lang, title, uid }) => {
 						</FormLabel>
 						<InputGroup borderColor="#E0E1E7">
 							{lang === 'he' ? (
-								<InputRightElement pointerEvents="none">
-									<MdPhone color="gray.800" />
+								<InputRightElement pointerEvents="none" fill="gray.800">
+									<PhoneIcon />
 								</InputRightElement>
 							) : (
-								<InputLeftElement pointerEvents="none">
-									<MdPhone color="gray.800" />
+								<InputLeftElement pointerEvents="none" fill="gray.800">
+									<PhoneIcon />
 								</InputLeftElement>
 							)}
 							<Input
 								focusBorderColor="#a28445"
-								as={ReactInputMask}
 								type="tel"
 								name="phone"
 								border={'1px solid transparent'}
 								bgColor={'white'}
 								size="md"
-								mask={'+\\972-**-***-****'}
 								px={10}
 								isInvalid={phoneError}
 								errorBorderColor="crimson"

@@ -1,11 +1,5 @@
 'use client';
 
-import { FaYoutube } from 'react-icons/fa';
-import { RiDoubleQuotesR } from 'react-icons/ri';
-import {
-	TbCircleArrowLeftFilled,
-	TbCircleArrowRightFilled,
-} from 'react-icons/tb';
 import ReactPlayer from 'react-player';
 import Image from 'next/image';
 
@@ -24,6 +18,10 @@ import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 
 import ModalWindow from '../modalWindow/ModalWindow';
+import ArrowLeftIcon from '../svg/ArrowLeftIcon';
+import ArrowRightIcon from '../svg/ArrowRightIcon';
+import QutersIcon from '../svg/QutersIcon';
+import YoutubeIcon from '../svg/YoutubeIcon';
 
 import 'swiper/css';
 
@@ -45,7 +43,7 @@ const SwiperNavigation = () => {
 					swiper.slideNext();
 				}}
 			>
-				<TbCircleArrowLeftFilled fontSize="30px" color="#a28445" />
+				<ArrowLeftIcon />
 			</Button>
 			<Button
 				bg="transparent"
@@ -58,7 +56,7 @@ const SwiperNavigation = () => {
 					swiper.slideNext();
 				}}
 			>
-				<TbCircleArrowRightFilled fontSize="30px" color="#a28445" />
+				<ArrowRightIcon />
 			</Button>
 		</>
 	);
@@ -124,8 +122,10 @@ const BlogSlider = ({ posts, lang }) => {
 											_hover={{ bgColor: 'transparent', color: '#c72a2a' }}
 											color="#a54444"
 											px="10px"
+											w={'80px'}
+											h={'60px'}
 										>
-											<FaYoutube size={40} />
+											<YoutubeIcon />
 										</Button>
 									)}
 									<ModalWindow
@@ -158,8 +158,14 @@ const BlogSlider = ({ posts, lang }) => {
 											{title}
 										</Text>
 									)}
-									<Box position="absolute" top={0}>
-										<RiDoubleQuotesR size="40px" color="#a28445" />
+									<Box
+										mb="10px"
+										position="absolute"
+										top={0}
+										w={'70px'}
+										h={'70px'}
+									>
+										<QutersIcon />
 									</Box>
 									{preview && (
 										<Text fontSize={{ base: '12px', lg: '13px', xl: '14px' }}>

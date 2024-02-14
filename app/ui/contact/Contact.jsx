@@ -1,5 +1,3 @@
-import { MdEmail, MdLocationOn, MdPhone } from 'react-icons/md';
-
 import {
 	Box,
 	Flex,
@@ -13,6 +11,9 @@ import {
 import ContactForm from '../contactForm/ContactForm';
 import GoogleMap from '../googleMap/GoogleMap';
 import SectionWrapper from '../sectionWrapper/SectionWrapper';
+import EmailIcon from '../svg/EmailIcon';
+import LocationIcon from '../svg/LocationIcon';
+import PhoneIcon from '../svg/PhoneIcon';
 
 const Contact = ({ lang, dictionary, contacts }) => {
 	const { addressUrl, address, phone, email } = contacts;
@@ -39,8 +40,11 @@ const Contact = ({ lang, dictionary, contacts }) => {
 									color: '#b1b0b0',
 								}}
 								transition={'all 0.3s'}
+								fill="#a28445"
 							>
-								<MdLocationOn color="#a28445" size="24px" />
+								<Box width={'28px'}>
+									<LocationIcon />
+								</Box>
 								{addressUrl && address && (
 									<Link
 										_hover={{ textDecoration: 'none' }}
@@ -64,8 +68,9 @@ const Contact = ({ lang, dictionary, contacts }) => {
 								color: '#b1b0b0',
 							}}
 							transition={'all 0.3s'}
+							fill="#a28445"
 						>
-							<MdPhone color="#a28445" size="20px" />
+							<PhoneIcon />
 							{phone && (
 								<Link
 									_hover={{ textDecoration: 'none' }}
@@ -88,8 +93,9 @@ const Contact = ({ lang, dictionary, contacts }) => {
 								color: '#b1b0b0',
 							}}
 							transition={'all 0.3s'}
+							fill="#a28445"
 						>
-							<MdEmail color="#a28445" size="20px" />
+							<EmailIcon />
 							{email && (
 								<Link
 									_hover={{ textDecoration: 'none' }}

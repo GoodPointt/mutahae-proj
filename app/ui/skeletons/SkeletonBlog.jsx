@@ -1,10 +1,9 @@
-import { RiDoubleQuotesR } from 'react-icons/ri';
-
 import { Box, Divider, Skeleton, SkeletonText, Text } from '@chakra-ui/react';
 
 import { getDictionary } from '@/app/lib/locales/dictionary';
 
 import SectionWrapper from '../sectionWrapper/SectionWrapper';
+import QutersIcon from '../svg/QutersIcon';
 import TextLink from '../textLink/TextLink';
 
 const SkeletonBlog = async ({ lang }) => {
@@ -30,8 +29,8 @@ const SkeletonBlog = async ({ lang }) => {
 				<Box position="relative" width={'100%'} pt="60px">
 					<SkeletonText mb={7} skeletonHeight="6" noOfLines={1} w={'40%'} />
 
-					<Box position="absolute" top={0}>
-						<RiDoubleQuotesR size="40px" color="#a28445" />
+					<Box mb="10px" position="absolute" top={0} w={'70px'} h={'70px'}>
+						<QutersIcon />
 					</Box>
 					<SkeletonText mb="10px" skeletonHeight="2" noOfLines={5} w={'90%'} />
 				</Box>

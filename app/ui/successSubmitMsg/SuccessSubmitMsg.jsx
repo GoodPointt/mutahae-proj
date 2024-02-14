@@ -1,14 +1,14 @@
 import React from 'react';
-import { FaRegCheckCircle } from 'react-icons/fa';
 
 import { Flex, Text } from '@chakra-ui/react';
 
 import Btn from '../button/Btn';
+import SuccessIcon from '../svg/SuccessIcon';
 
 const SuccessSubmitMsg = ({ onClick, dictionary }) => {
 	return (
 		<Flex align={'center'} justify={'center'} flexDir={'column'} gap={4}>
-			<FaRegCheckCircle size={100} color="#42b62eb5" />
+			<SuccessIcon />
 			<Text fontSize={'24px'} textAlign={'center'}>
 				{dictionary.formContact.toasts.form.successMsg1}
 			</Text>
