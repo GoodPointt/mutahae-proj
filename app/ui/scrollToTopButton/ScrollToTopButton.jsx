@@ -32,15 +32,18 @@ const ScrollToTopButton = () => {
 		isVisible && (
 			<IconButton
 				icon={<ArrowUp />}
+				display={'flex'}
+				alignItems={'center'}
+				justifyContent={'center'}
 				isRound="true"
-				size="lg"
+				size={'lg'}
 				position="fixed"
 				bottom="30px"
 				right="30px"
 				onClick={scrollToTop}
 				aria-label="Scroll to top"
 				bg={'#a28445b0'}
-				zIndex={999999}
+				zIndex={100}
 			/>
 		)
 	);

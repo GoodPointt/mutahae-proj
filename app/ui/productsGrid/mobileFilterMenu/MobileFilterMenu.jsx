@@ -104,7 +104,7 @@ const MobileFilterMenu = ({
 								maxHeight: '80dvh',
 								maxWidth: '400px',
 								backgroundColor: '#181617',
-								padding: '12px 16px 48px',
+								padding: '12px 16px 88px',
 								marginTop: isOpen ? '0' : '-20px',
 								opacity: isOpen ? '1' : '0',
 								overflowY: 'auto',

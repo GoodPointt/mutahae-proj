@@ -1,15 +1,19 @@
 'use client';
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import Link from 'next/link';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 import {
+	Box,
+	Center,
 	Flex,
 	Tab,
 	TabList,
 	TabPanel,
 	TabPanels,
 	Tabs,
+	Text,
 } from '@chakra-ui/react';
 
 import {
@@ -104,7 +108,12 @@ const ProductsGrid = ({
 			let totalToSet = 0;
 
 			if (query) {
-				dataToSet = await fetchProductsByQuery(query, lang);
+				dataToSet = await fetchProductsByQuery(
+					query,
+					lang,
+					sortValue,
+					sortOrder
+				);
 				totalToSet = dataToSet.length;
 			} else {
 				for (let i = 1; i <= page; i++) {
@@ -206,108 +215,133 @@ const ProductsGrid = ({
 		);
 	};
 
-	return (
-		<SectionWrapper
-			heading={heading}
-			bg={'linear-gradient(to right, #434343 0%, black 100%)'}
-			position={'relative'}
-		>
-			<MobileFilterMenu
-				category={category}
-				categories={categories}
-				setCategory={setCategory}
-				setSub_category={setSub_category}
-				setPage={setPage}
-				sub_category={sub_category}
-				dictionary={dictionary}
-				lang={lang}
-				refMobFilter
-			/>
-			<Tabs
-				lazyBehavior
-				index={activeTab}
-				borderBottom={'#a28445'}
-				onChange={index => setActiveTab(index)}
-				isManual={true}
+	//УДАЛИТЬ ПОСЛЕ НАПОЛНЕНИЯ АНГЛ КАТАЛОГА!!!!!
+	//==================================================
+
+	const pathname = usePathname();
+
+	const redirectedPathName = locale => {
+		if (!pathname) return '/';
+		const segments = pathname.split('/');
+		segments[1] = locale;
+
+		return segments.join('/');
+	};
+
+	if (lang === 'en')
+		return (
+			<SectionWrapper>
+				<Text>
+					Apologies, at this moment our catalog is only available in the Hebrew
+					version. We are currently working on creating content for the English
+					version. Would you like to view it in another language?
+				</Text>
+
+				<Center>
+					<Flex as={'ul'} mt={'32px'} gap={'32px'}>
+						{' '}
+						<Box as="li" width={'50px'}>
+							<Link href={redirectedPathName('he')}>Yes</Link>
+						</Box>
+						<Box as="li" width={'50px'}>
+							<Link href={'/'}>No</Link>
+						</Box>
+					</Flex>
+				</Center>
+			</SectionWrapper>
+		);
+
+	if (lang === 'he')
+		//============================================================================
+		return (
+			<SectionWrapper
+				heading={heading}
+				bg={'linear-gradient(to right, #434343 0%, black 100%)'}
+				position={'relative'}
 			>
-				<TabList display={{ base: 'none', md: 'flex' }}>
-					<Tab
-						key={'All'}
-						mx={'12px'}
-						fontSize={'18px'}
-						fontWeight={'500'}
-						transition={'all 0.3s'}
-						_selected={{ color: '#a28445' }}
-						_hover={{
-							bg: 'none',
-							color: '#a98841',
-						}}
-						onClick={() => {
-							setPage(1);
-							setCategory(null);
-							setSub_category(null);
-							setQuery(null);
-						}}
-					>
-						{dictionary.catalogPage.menu.all}
-					</Tab>
-
-					{categories &&
-						categories.map(({ id, title, subCategories }) => (
-							<Flex key={id} mx={'12px'}>
-								<Tab
-									px={0}
-									_selected={{ color: '#a28445' }}
-									color={'white'}
-									fontSize={'18px'}
-									fontWeight={'500'}
-									onClick={() => {
-										setCategory(id),
-											category !== id && setSub_category(null),
-											setPage(1);
-										setQuery(null);
-									}}
-								>
-									<CategoryMenu
-										id={id}
-										title={title}
-										subCategories={subCategories}
-										setCategory={setCategory}
-										setSub_category={setSub_category}
-										setPage={setPage}
-										sub_category={sub_category}
-										category={category}
-										dictionary={dictionary}
-									/>
-								</Tab>
-							</Flex>
-						))}
-				</TabList>
-
-				<SortMenu
-					sortValues={sortValues}
-					toggleSort={toggleSort}
-					sortOrder={sortOrder}
-					sortValue={sortValue}
+				<MobileFilterMenu
+					category={category}
+					categories={categories}
+					setCategory={setCategory}
+					setSub_category={setSub_category}
+					setPage={setPage}
+					sub_category={sub_category}
 					dictionary={dictionary}
 					lang={lang}
+					refMobFilter
 				/>
+				<Tabs
+					lazyBehavior
+					index={activeTab}
+					borderBottom={'#a28445'}
+					onChange={index => setActiveTab(index)}
+					isManual={true}
+				>
+					<TabList display={{ base: 'none', md: 'flex' }}>
+						<Tab
+							key={'All'}
+							mx={'12px'}
+							fontSize={'18px'}
+							fontWeight={'500'}
+							transition={'all 0.3s'}
+							_selected={{ color: '#a28445' }}
+							_hover={{
+								bg: 'none',
+								color: '#a98841',
+							}}
+							onClick={() => {
+								setPage(1);
+								setCategory(null);
+								setSub_category(null);
+								setQuery(null);
+							}}
+						>
+							{dictionary.catalogPage.menu.all}
+						</Tab>
 
-				<TabPanels px={'0'}>
-					<TabPanel key={'All'} px={'0'} py={'0'}>
-						{isLoading && page < 2 ? (
-							<SkeletotonClientProductGrid />
-						) : (
-							<ProductList
-								list={renderList}
-								favorites={favorites}
-								lang={lang}
-								isLoading={isLoading}
-							/>
-						)}
-					</TabPanel>
-					{categories.map(({ id }) => (
-						<TabPanel key={id} px={'0'} py={'0'}>
+						{categories &&
+							categories.map(({ id, title, subCategories }) => (
+								<Flex key={id} mx={'12px'}>
+									<Tab
+										px={0}
+										_selected={{ color: '#a28445' }}
+										color={'white'}
+										fontSize={'18px'}
+										fontWeight={'500'}
+										onClick={() => {
+											setCategory(id),
+												category !== id && setSub_category(null),
+												setPage(1);
+											setQuery(null);
+										}}
+									>
+										<CategoryMenu
+											id={id}
+											title={title}
+											subCategories={subCategories}
+											setCategory={setCategory}
+											setSub_category={setSub_category}
+											setPage={setPage}
+											sub_category={sub_category}
+											category={category}
+											dictionary={dictionary}
+										/>
+									</Tab>
+								</Flex>
+							))}
+					</TabList>
+
+					<SortMenu
+						sortValues={sortValues}
+						toggleSort={toggleSort}
+						sortOrder={sortOrder}
+						sortValue={sortValue}
+						dictionary={dictionary}
+						lang={lang}
+					/>
+
+					<TabPanels px={'0'}>
+						<TabPanel key={'All'} px={'0'} py={'0'}>
 							{isLoading && page < 2 ? (
 								<SkeletotonClientProductGrid />
 							) : (
@@ -319,14 +353,27 @@ const ProductsGrid = ({
 								/>
 							)}
 						</TabPanel>
-					))}
-				</TabPanels>
-				{hasNext && <div ref={loader} />}
-			</Tabs>
-			{isLoading && <SkeletotonClientProductGrid />}
-			<ScrollToTopButton />
-		</SectionWrapper>
-	);
+						{categories.map(({ id }) => (
+							<TabPanel key={id} px={'0'} py={'0'}>
+								{isLoading && page < 2 ? (
+									<SkeletotonClientProductGrid />
+								) : (
+									<ProductList
+										list={renderList}
+										favorites={favorites}
+										lang={lang}
+										isLoading={isLoading}
+									/>
+								)}
+							</TabPanel>
+						))}
+					</TabPanels>
+					{hasNext && <div ref={loader} />}
+				</Tabs>
+				{isLoading && <SkeletotonClientProductGrid />}
+				<ScrollToTopButton />
+			</SectionWrapper>
+		);
 };
 
 export default ProductsGrid;
