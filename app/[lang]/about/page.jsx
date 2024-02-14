@@ -31,7 +31,7 @@ const AboutPage = async ({ params: { lang } }) => {
 	return (
 		<>
 			<About dictionary={dictionary} contacts={contacts} lang={lang} />
-			<Features dictionary={dictionary.aboutUs.features} />
+			<Features dictionary={dictionary.aboutUs.features} lang={lang} />
 			<Suspense>
 				<Team dictionary={dictionary.aboutUs.team} members={members} />
 			</Suspense>
