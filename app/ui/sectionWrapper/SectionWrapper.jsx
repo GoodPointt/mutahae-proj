@@ -13,6 +13,7 @@ const SectionWrapper = ({
 	w = '',
 	zIndex = '',
 	style = {},
+	href,
 }) => {
 	return (
 		<Box
@@ -30,15 +31,32 @@ const SectionWrapper = ({
 			zIndex={zIndex}
 		>
 			<Container maxW={{ base: '744px', lg: '1000px', xl: '1176px' }} px="12px">
-				{heading && (
-					<Heading
-						as={headingAs}
-						mb={{ base: 6, lg: 8 }}
-						fontSize={{ base: '2xl', lg: '4xl' }}
-					>
-						{heading}
-					</Heading>
-				)}
+				{heading &&
+					(href ? (
+						<Heading
+							as={headingAs}
+							href={href ? href : null}
+							display={'inline-block'}
+						>
+							<Heading
+								_hover={headingAs !== 'h2' ? { color: '#81672e' } : null}
+								transition={'all 0.3s'}
+								mb={{ base: 6, lg: 8 }}
+								as="h2"
+								fontSize={{ base: '2xl', lg: '4xl' }}
+							>
+								{heading}
+							</Heading>
+						</Heading>
+					) : (
+						<Heading
+							as={headingAs}
+							mb={{ base: 6, lg: 8 }}
+							fontSize={{ base: '2xl', lg: '4xl' }}
+						>
+							{heading}
+						</Heading>
+					))}
 				{children}
 			</Container>
 		</Box>

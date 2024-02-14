@@ -7,6 +7,7 @@ const Btn = ({
 	onClick,
 	as = 'button',
 	href = null,
+	color = 'white',
 }) => {
 	return (
 		<Button
@@ -16,7 +17,7 @@ const Btn = ({
 			bgColor={bgColor}
 			display={'flex'}
 			justifyContent={'center'}
-			color={'white'}
+			color={color}
 			transition={'all 0.3s'}
 			_hover={{ bgColor: '#81672e' }}
 			onClick={onClick}
