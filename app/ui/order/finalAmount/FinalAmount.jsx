@@ -39,16 +39,16 @@ const FinalAmount = ({
 								as="span"
 								textDecoration={'line-through'}
 								textAlign={'end'}
-							>{`₪${bagPrice ? bagPrice : 0}`}</Box>
+							>{`${bagPrice ? bagPrice : 0} ₪`}</Box>
 							<Box
 								as="span"
 								fontSize={'16px'}
 								color={'#f84147'}
 								textAlign={'end'}
-							>{`₪${discountedBagPrice}`}</Box>
+							>{`${discountedBagPrice} ₪`}</Box>
 						</Flex>
 					) : (
-						<Box as="span">{`₪${bagPrice ? bagPrice : 0}`}</Box>
+						<Box as="span">{`${bagPrice ? bagPrice : 0} ₪`}</Box>
 					)}
 				</Flex>
 				<Flex
@@ -57,7 +57,7 @@ const FinalAmount = ({
 					borderBottom={'1px solid #3B3D46'}
 				>
 					<Box as="span">{dictionary.order.shippingPrice}</Box>
-					<Box as="span">{`₪${deliveryPrice ? deliveryPrice : 0}`}</Box>
+					<Box as="span">{`${deliveryPrice ? deliveryPrice : 0} ₪`}</Box>
 				</Flex>
 				<Flex
 					justifyContent="space-between"
@@ -65,7 +65,7 @@ const FinalAmount = ({
 					paddingBottom={'10px'}
 				>
 					<Box as="span">{dictionary.order.total}</Box>
-					<Box as="span">{`₪${totalPrice ? totalPrice : 0}`}</Box>
+					<Box as="span">{`${totalPrice ? totalPrice : 0} ₪`}</Box>
 				</Flex>
 				<SubmitButton isSubmitting={isSubmitting} dis={dis}>
 					{dictionary.order.button}

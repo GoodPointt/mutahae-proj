@@ -7,6 +7,7 @@ import {
 	Box,
 	Button,
 	Divider,
+	Flex,
 	Input,
 	InputGroup,
 	InputRightElement,
@@ -15,13 +16,14 @@ import {
 
 import { fetchProductsByQuery } from '../../../lib/api/instance';
 
+import ArrowLeft from '../../svg/ArrowLeft';
+import ArrowRight from '../../svg/ArrowRight';
 import FilteredProduct from '../filteredProduct/FilteredProduct';
 
 import { useDebouncedCallback } from 'use-debounce';
 
 const SearchField = ({ lang, onClose, setQuery, query, dictionary }) => {
-	const [filter, setFilter] = useState('');
-
+	const [noResult, setNoResult] = useState(false);
 	const [filteredProducts, setFilteredProducts] = useState([]);
 
 	const ref = useRef(null);
@@ -30,29 +32,37 @@ const SearchField = ({ lang, onClose, setQuery, query, dictionary }) => {
 		const fetchData = async () => {
 			try {
 				const filteredProducts = await fetchProductsByQuery(query, lang);
+				if (filteredProducts.length === 0 && query) {
+					setQuery(null);
+
+					setFilteredProducts(filteredProducts);
+					setNoResult(true);
+
+					return;
+				}
+				setNoResult(false);
 				setFilteredProducts(filteredProducts);
 			} catch (error) {
 				console.error('Error fetching products:', error);
 			}
 		};
-
-		fetchData();
-	}, [query, lang]);
+		if (query !== null) {
+			fetchData();
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [query]);
 
 	const handleSearch = useDebouncedCallback(e => {
 		if (e.target.value) {
 			e.target.value.length > 0 && setQuery(e.target.value);
-			setFilter(e.target.value);
 		} else {
 			setQuery(null);
-			setFilter('');
 		}
 	}, 300);
 
 	const clearSearch = () => {
 		ref?.current?.reset();
 		setQuery(null);
-		setFilter('');
 	};
 
 	return (
@@ -127,8 +137,57 @@ const SearchField = ({ lang, onClose, setQuery, query, dictionary }) => {
 				</Box>
 			)}
 
-			{filteredProducts.length === 0 && query !== '' && filter !== '' && (
-				<Text>{dictionary.searchField.noResultText}</Text>
+			{noResult && (
+				<Flex
+					flexDir={'column'}
+					gap={'30px'}
+					justifyContent={'center'}
+					alignItems={'center'}
+					p={'30px'}
+					pb={0}
+				>
+					<Text textAlign={'center'} py={'40px'}>
+						{dictionary.searchField.noResultText}
+					</Text>
+					<Button
+						pos={'relative'}
+						variant={'link'}
+						textColor={'#fff'}
+						borderRadius={'0px'}
+						_after={{
+							content: '""',
+							pos: 'absolute',
+							bottom: '-5px',
+							left: 0,
+							display: 'block',
+							h: '1px',
+							w: '100%',
+							bgColor: '#81672e',
+							opacity: 0,
+						}}
+						stroke={'#fff'}
+						rightIcon={lang === 'en' ? <ArrowRight /> : <ArrowLeft />}
+						_hover={{
+							color: '#81672e',
+							stroke: '#81672e',
+							_after: { opacity: 1 },
+						}}
+						onClick={onClose}
+					>
+						<Link
+							href={`/catalog`}
+							style={{
+								display: 'flex',
+								width: '100%',
+								height: '100%',
+								alignItems: 'center',
+								justifyContent: 'center',
+							}}
+						>
+							{dictionary.buttons.emptyBagLink}
+						</Link>
+					</Button>
+				</Flex>
 			)}
 
 			{filteredProducts.length > 0 && (
