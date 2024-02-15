@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useState } from 'react';
 import { useFormState } from 'react-dom';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -11,18 +11,36 @@ import { submitGoodToFavorite } from '@/app/lib/actions';
 
 import FavBtn from '../singleProduct/FavBtn/FavBtn';
 
-const ProductItem = ({ product, lang, productId, favorites }) => {
-	const [isModileScreen] = useMediaQuery('(max-width: 1024px)');
-	const [, formAction] = useFormState(submitGoodToFavorite);
+import { parseAsFloat, useQueryState } from 'nuqs';
 
-	const [firstImageUrl] = (product?.img?.data || [])
+const ProductItem = ({ product, lang, favs, setFavs }) => {
+	const [isModileScreen] = useMediaQuery('(max-width: 1024px)');
+	const [isFavorite, setIsFavorite] = useState(
+		favs?.some(item => item.id === product.id)
+	);
+
+	const [, formAction] = useFormState(submitGoodToFavorite, null);
+
+	const [, setFavorite] = useQueryState(
+		'favs',
+		parseAsFloat.withDefault(JSON.parse(localStorage.getItem('favs'))?.length)
+	);
+
+	const handleIsFavs = productId => {
+		const isExisting = favs.some(item => item.id === productId);
+
+		if (!isExisting) {
+			setFavs(prev => [...prev, product]);
+			setFavorite(prev => prev + 1);
+		} else {
+			setFavs(favs.filter(({ id }) => id !== productId));
+			setFavorite(prev => prev - 1);
+		}
+	};
+
+	const [firstImageUrl] = (product?.attributes?.img?.data || [])
 		.map(({ attributes }) => attributes?.url)
 		.filter(url => url);
-
-	const isFavorite = useMemo(
-		() => favorites && favorites.some(({ id }) => id === productId),
-		[favorites, productId]
-	);
 
 	return (
 		<Box
@@ -119,13 +137,21 @@ const ProductItem = ({ product, lang, productId, favorites }) => {
 					</Box>
 				</article>
 			</Link>
-			{favorites ? (
-				<form action={() => formAction({ goodId: productId })}>
+			{favs ? (
+				<form
+					action={() => {
+						formAction({ goodId: product.id });
+					}}
+				>
 					<FavBtn
 						position={'absolute'}
 						top={'0px'}
 						right={'0px'}
 						zIndex={'10'}
+						onClick={() => {
+							setIsFavorite(!isFavorite);
+							handleIsFavs(product.id);
+						}}
 						isFavorite={isFavorite}
 					/>
 				</form>

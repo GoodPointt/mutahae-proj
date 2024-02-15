@@ -300,7 +300,7 @@
 		{ "width": "Sort by width" },
 		{ "length": "Sort by length" }
 	],
-"sortBtn":"Sort",
+	"sortBtn": "Sort",
 	"bag": {
 		"sizes": "Sizes: ",
 		"title": "Bag",

@@ -14,7 +14,7 @@ import FavoriteNavIcon from '../../svg/FavoriteNavIcon';
 import ProfileNavIcon from '../../svg/ProfileNavIcon';
 import Search from '../../svg/Search';
 
-import { useQueryState } from 'nuqs';
+import { parseAsFloat, useQueryState } from 'nuqs';
 
 const ToolBar = ({
 	lang,
@@ -22,7 +22,6 @@ const ToolBar = ({
 	bagData,
 	dictionary,
 	bagLength,
-	favoritesLength,
 	displayIcons = [
 		'SEARCH_ICON',
 		'PROFILE_ICON',
@@ -33,6 +32,12 @@ const ToolBar = ({
 	const { isOpen = false, onOpen, onClose } = useDisclosure();
 	const [variant, setVariant] = useState();
 	const [query, setQuery] = useQueryState('query');
+	const [favorite] = useQueryState(
+		'favs',
+		parseAsFloat.withDefault(
+			JSON.parse(localStorage.getItem('favs'))?.length || 0
+		)
+	);
 
 	const mapIcon = {
 		SEARCH_ICON: <Search />,
@@ -51,7 +56,7 @@ const ToolBar = ({
 				style={{ position: 'relative' }}
 			>
 				<FavoriteNavIcon />
-				{favoritesLength !== 0 && (
+				{favorite !== 0 && (
 					<Box
 						pos={'absolute'}
 						borderRadius={'50%'}
@@ -67,7 +72,7 @@ const ToolBar = ({
 						fontSize={'10px'}
 						color={'#fff'}
 					>
-						{favoritesLength}
+						{favorite}
 					</Box>
 				)}
 			</Link>

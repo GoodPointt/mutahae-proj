@@ -7,7 +7,7 @@ import {
 	fetchContacts,
 	fetchListCategoriesAndSubCategories,
 } from '@/app/lib/api/instance';
-import { fetchFavorites } from '@/app/lib/api/profileInstance';
+// import { fetchFavorites } from '@/app/lib/api/profileInstance';
 import { getDictionary } from '@/app/lib/locales/dictionary';
 
 export const metadata = {
@@ -33,12 +33,12 @@ const CatalogPage = async ({ params: { lang } }) => {
 	const contacts = await fetchContacts(lang);
 	let favorites = null;
 
-	if (userId) {
-		const fetchedFavorites = await fetchFavorites();
-		if (fetchedFavorites && fetchedFavorites.length > 0) {
-			favorites = fetchedFavorites[0].goods;
-		}
-	}
+	// if (userId) {
+	// 	const fetchedFavorites = await fetchFavorites();
+	// 	if (fetchedFavorites && fetchedFavorites.length > 0) {
+	// 		favorites = fetchedFavorites[0].goods;
+	// 	}
+	// }
 
 	return (
 		<>
