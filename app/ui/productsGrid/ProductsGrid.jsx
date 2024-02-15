@@ -39,13 +39,7 @@ import {
 	useQueryState,
 } from 'nuqs';
 
-const ProductsGrid = ({
-	lang,
-	heading,
-	data: categoriesList,
-	dictionary,
-	favorites,
-}) => {
+const ProductsGrid = ({ lang, heading, data: categoriesList, dictionary }) => {
 	const [renderList, setRenderList] = useState([]);
 	const [categories, setCategories] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
@@ -358,7 +352,6 @@ const ProductsGrid = ({
 							) : (
 								<ProductList
 									list={renderList}
-									favorites={favorites}
 									lang={lang}
 									isLoading={isLoading}
 								/>
@@ -371,7 +364,6 @@ const ProductsGrid = ({
 								) : (
 									<ProductList
 										list={renderList}
-										favorites={favorites}
 										lang={lang}
 										isLoading={isLoading}
 									/>

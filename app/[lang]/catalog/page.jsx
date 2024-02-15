@@ -31,14 +31,6 @@ const CatalogPage = async ({ params: { lang } }) => {
 	} = dictionary;
 
 	const contacts = await fetchContacts(lang);
-	let favorites = null;
-
-	// if (userId) {
-	// 	const fetchedFavorites = await fetchFavorites();
-	// 	if (fetchedFavorites && fetchedFavorites.length > 0) {
-	// 		favorites = fetchedFavorites[0].goods;
-	// 	}
-	// }
 
 	return (
 		<>
@@ -47,7 +39,6 @@ const CatalogPage = async ({ params: { lang } }) => {
 				heading={navItems[1].title}
 				data={data}
 				userId={userId}
-				favorites={favorites}
 				dictionary={dictionary}
 			/>
 			<Contact lang={lang} dictionary={dictionary} contacts={contacts} />
