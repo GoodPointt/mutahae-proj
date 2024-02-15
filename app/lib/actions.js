@@ -146,8 +146,10 @@ export const logout = (prevState, formData) => {
 		cookies().delete('userId');
 		cookies().delete('jwt');
 
-		revalidatePath(`/`);
-		redirect(`/${lang}/`);
+		// revalidatePath(`/`);
+
+		// redirect(`/${lang}/`);
+		return { status: 200 };
 	} catch (error) {
 		console.error(error);
 
@@ -301,7 +303,7 @@ export async function submitGoodToFavorite(prevState, formData) {
 		const response = await fetchHandleFavorites(goodId);
 
 		if (response?.status === 200) {
-			revalidatePath('/');
+			// revalidatePath('/');
 
 			return {
 				status: response?.status,

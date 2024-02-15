@@ -135,7 +135,7 @@ export const fetchUserData = async () => {
 	try {
 		const userId = cookies().get('userId')?.value;
 
-		if (!userId) throw new Error('User id not found!');
+		// if (!userId) throw new Error('User id not found!');
 
 		const data = profileInstance.get(`/api/users/${userId}`);
 

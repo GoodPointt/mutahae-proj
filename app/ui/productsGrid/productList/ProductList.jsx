@@ -1,8 +1,16 @@
+import { useEffect, useState } from 'react';
+
 import { Grid } from '@chakra-ui/react';
 
 import ProductItem from '../../productItem/ProductItem';
 
 const ProductList = ({ list, lang, favorites }) => {
+	const [favs, setFavs] = useState(favorites);
+
+	useEffect(() => {
+		localStorage.setItem('favs', JSON.stringify(favs));
+	}, [favs]);
+
 	return (
 		<Grid
 			as={'ul'}
@@ -14,13 +22,15 @@ const ProductList = ({ list, lang, favorites }) => {
 			padding={0}
 		>
 			{list &&
-				list.map(({ id, attributes }) => (
+				list.map(product => (
 					<ProductItem
+						favs={favs}
+						setFavs={setFavs}
 						favorites={favorites}
-						key={attributes.uid}
-						product={attributes}
+						key={product.id}
+						product={product}
 						lang={lang}
-						productId={id}
+						// productId={id}
 					/>
 				))}
 		</Grid>

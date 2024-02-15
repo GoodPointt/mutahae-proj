@@ -42,7 +42,8 @@ const HeaderWrapper = ({
 		if (hasToken) {
 			setLocalBag([]);
 		}
-	}, [hasToken, isAuth, setLocalBag]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isAuth]);
 
 	useEffect(() => {
 		if (hasToken) {
