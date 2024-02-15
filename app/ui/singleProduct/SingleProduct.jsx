@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useFormState } from 'react-dom';
+import { useParams, useRouter } from 'next/navigation';
 
 import {
 	Box,
@@ -13,6 +14,7 @@ import {
 	ListItem,
 	Text,
 	useDisclosure,
+	VisuallyHiddenInput,
 } from '@chakra-ui/react';
 
 import { submitGoodToFavorite, submitProductToBag } from '@/app/lib/actions';
@@ -31,6 +33,8 @@ import SingleProductSlider from './singleProductSlider/SingleProductSlider';
 import TotalBagPrice from './TotalBagPrice/TotalBagPrice';
 
 import { AnimatePresence, motion } from 'framer-motion';
+
+export const dynamic = 'force-dynamic';
 
 const SingleProduct = ({
 	userId,
@@ -62,10 +66,13 @@ const SingleProduct = ({
 	const [count, setCount] = useState(1);
 	const [localBag, setLocalBag] = useLocalBag('localBag', []);
 
-	const [, formAction] = useFormState(submitProductToBag);
+	const [state, formAction] = useFormState(submitProductToBag);
 	const [, favoriteAction] = useFormState(submitGoodToFavorite);
 	const [totalPrice, setTotalPrice] = useState(null);
 	const [isInBag, setIsInBag] = useState(false);
+
+	const { lang } = useParams();
+	const router = useRouter();
 
 	useEffect(() => {
 		if (userId) {
@@ -120,6 +127,13 @@ const SingleProduct = ({
 			setLocalBag([...localBag, { count, good: product }]);
 		}
 	};
+
+	useEffect(() => {
+		if (state?.status === 200) {
+			router.refresh();
+			setIsInBag(true);
+		}
+	}, [state, router]);
 
 	return (
 		<>
@@ -202,15 +216,15 @@ const SingleProduct = ({
 							/>
 						</Box>
 						{userId ? (
-							<form
-								action={() =>
-									formAction({
-										count,
-										goodId,
-										goodPrice: count * price,
-									})
-								}
-							>
+							<form action={formAction}>
+								<VisuallyHiddenInput name={'count'} defaultValue={count} />
+								<VisuallyHiddenInput name={'goodId'} defaultValue={goodId} />
+								<VisuallyHiddenInput
+									name="goodPrice"
+									defaultValue={count * price}
+								/>
+								<VisuallyHiddenInput name={'uid'} defaultValue={uid} />
+								<VisuallyHiddenInput name={'lang'} defaultValue={lang} />
 								<Box
 									pos={'relative'}
 									display={'flex'}

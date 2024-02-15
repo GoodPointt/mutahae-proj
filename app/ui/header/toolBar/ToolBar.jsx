@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 import { Box, Button, Flex, useDisclosure } from '@chakra-ui/react';
@@ -22,6 +22,7 @@ const ToolBar = ({
 	bagData,
 	dictionary,
 	bagLength,
+	favorites,
 	displayIcons = [
 		'SEARCH_ICON',
 		'PROFILE_ICON',
@@ -38,6 +39,10 @@ const ToolBar = ({
 			JSON.parse(localStorage.getItem('favs'))?.length || 0
 		)
 	);
+
+	useEffect(() => {
+		localStorage.setItem('favs', JSON.stringify(favorites));
+	}, [favorites]);
 
 	const mapIcon = {
 		SEARCH_ICON: <Search />,
@@ -126,6 +131,22 @@ const ToolBar = ({
 		setQuery(null);
 		onClose();
 	};
+
+	// useEffect(() => {
+	// 	const updateAllBag = async () => {
+	// 		const url =
+	// 			process.env.NEXT_PUBLIC_STRAPI_API_URL +
+	// 			`/api/bags/${66}?populate=goods`;
+
+	// 		try {
+	// 			// const res = await axios.put(url, data: {goods:  []})
+	// 		} catch (error) {
+
+	// 		}
+	// 	};
+	// 	if (!isOpen && isDifferentCount) {
+	// 	}
+	// });
 
 	return (
 		<>

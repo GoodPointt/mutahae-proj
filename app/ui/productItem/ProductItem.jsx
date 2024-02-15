@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { Box, Button, Heading, Text, useMediaQuery } from '@chakra-ui/react';
 
 import { submitGoodToFavorite } from '@/app/lib/actions';
+import { flattenAttributes } from '@/app/lib/utils/flattenAttributes';
 
 import FavBtn from '../singleProduct/FavBtn/FavBtn';
 
@@ -30,7 +31,7 @@ const ProductItem = ({ product, lang, favs, setFavs }) => {
 		const isExisting = favs.some(item => item.id === productId);
 
 		if (!isExisting) {
-			setFavs(prev => [...prev, product]);
+			setFavs(prev => [...prev, flattenAttributes(product)]);
 			setFavorite(prev => prev + 1);
 		} else {
 			setFavs(favs.filter(({ id }) => id !== productId));
@@ -58,7 +59,7 @@ const ProductItem = ({ product, lang, favs, setFavs }) => {
 				},
 			}}
 		>
-			<Link href={`/${lang}/catalog/${product.uid}`}>
+			<Link href={`/${lang}/catalog/${product.attributes.uid}`}>
 				<article>
 					<Box
 						borderRadius={'2px'}

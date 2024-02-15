@@ -1,18 +1,17 @@
 'use client';
 import React, { useMemo, useState } from 'react';
-import { useFormState } from 'react-dom';
 import Image from 'next/image';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 
 import { Box, Button, Flex, Grid, Heading, List, Text } from '@chakra-ui/react';
 
-import { deleteProductFromBag } from '@/app/lib/actions';
 import { flattenAttributes } from '@/app/lib/utils/flattenAttributes';
 
 import Counter from '../singleProduct/Counter/Counter';
 import TotalBagPrice from '../singleProduct/TotalBagPrice/TotalBagPrice';
-import SubmitButton from '../submitButton/SubmitButton';
 import DeleteIcon from '../svg/DeleteIcon';
+
+import axios from 'axios';
 
 const ProductCard = ({
 	good,
@@ -21,11 +20,13 @@ const ProductCard = ({
 	productCount,
 	bagPrice,
 	dictionary,
+	goods,
+	bagId,
 }) => {
 	const [count, setCount] = useState(productCount);
-	const [, formAction] = useFormState(deleteProductFromBag);
+	// const [, formAction] = useFormState(deleteProductFromBag);
+	const [isExist, setIsExist] = useState(true);
 	const {
-		id,
 		uid,
 		img,
 		descShort,
@@ -40,6 +41,8 @@ const ProductCard = ({
 	} = good;
 
 	const { lang } = useParams();
+
+	const { refresh } = useRouter();
 
 	const sizes = useMemo(() => {
 		const sizesArray =
@@ -75,8 +78,40 @@ const ProductCard = ({
 		});
 	};
 
+	const deleteGoodFromServerBag = async () => {
+		const goodsWithoutDeleted = goods.filter(
+			({ good }) => good.data.attributes.uid !== uid
+		);
+		try {
+			setIsExist(false);
+			const url =
+				process.env.NEXT_PUBLIC_STRAPI_API_URL +
+				`/api/bags/${bagId}?populate=goods`;
+
+			const response = await axios.put(
+				url,
+				{ data: { goods: goodsWithoutDeleted, bagPrice: bagPrice } },
+				{
+					headers: {
+						'Content-Type': 'application/json',
+					},
+				}
+			);
+
+			if (response?.status !== 200) {
+				setIsExist(true);
+			}
+		} catch (error) {
+			console.error(error);
+		}
+
+		refresh();
+	};
+
 	return (
 		<Grid
+			style={{ filter: !isExist ? 'grayscale(1)' : null }}
+			transition={'filter 1s ease'}
 			templateColumns={{ base: '1fr', md: '1.2fr 1fr' }}
 			alignItems={'center'}
 			flexDir={{ base: 'column', md: 'row' }}
@@ -121,7 +156,11 @@ const ProductCard = ({
 				justifyContent={'center'}
 			>
 				<Box pos={'relative'}>
-					<Counter count={count} setCount={handleCounterChange} />
+					<Counter
+						count={count}
+						setCount={handleCounterChange}
+						isExist={isExist}
+					/>
 					<TotalBagPrice
 						count={count}
 						dictionary={dictionary}
@@ -131,24 +170,19 @@ const ProductCard = ({
 				</Box>
 				<Flex justifyContent={'center'}>
 					{hasToken ? (
-						<form
-							action={() =>
-								formAction({ goodId: id, bagPrice: bagPrice - price * count })
-							}
+						<Button
+							variant="unstyled"
+							bgColor="transparent"
+							onClick={deleteGoodFromServerBag}
+							_hover={{ bgColor: 'transparent', stroke: '#EE4B2B' }}
+							display={'flex'}
+							justifyContent={'center'}
+							stroke={'#fff'}
+							isLoading={!isExist}
+							maxW="360px"
 						>
-							<SubmitButton
-								variant="unstyled"
-								bgColor="transparent"
-								_hover={{ bgColor: 'transparent' }}
-								strokeHover={'#EE4B2B'}
-								display={'flex'}
-								justifyContent={'center'}
-								stroke={'#fff'}
-								maxW="360px"
-							>
-								<DeleteIcon />
-							</SubmitButton>
-						</form>
+							<DeleteIcon />
+						</Button>
 					) : (
 						<Button
 							variant="unstyled"

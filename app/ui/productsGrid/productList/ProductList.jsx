@@ -5,10 +5,14 @@ import { Grid } from '@chakra-ui/react';
 import ProductItem from '../../productItem/ProductItem';
 
 const ProductList = ({ list, lang, favorites }) => {
-	const [favs, setFavs] = useState(favorites);
+	const [favs, setFavs] = useState(
+		typeof window !== 'undefined'
+			? JSON.parse(localStorage.getItem('favs'))
+			: []
+	);
 
 	useEffect(() => {
-		localStorage.setItem('favs', JSON.stringify(favs));
+		localStorage.setItem('favs', JSON.stringify(favs || []));
 	}, [favs]);
 
 	return (

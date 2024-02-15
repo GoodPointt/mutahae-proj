@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import { useFormStatus } from 'react-dom';
 
@@ -7,16 +5,11 @@ import { Button } from '@chakra-ui/react';
 
 import Star from '../../svg/Star';
 
-import { motion } from 'framer-motion';
-
 const FavBtn = ({ isFavorite, ...props }) => {
 	const { pending } = useFormStatus();
 
 	return (
 		<Button
-			as={motion.button}
-			initial={pending && { opacity: 0 }}
-			animate={pending && { opacity: 1 }}
 			type="submit"
 			variant={'unstyled'}
 			display={'flex'}
@@ -30,13 +23,12 @@ const FavBtn = ({ isFavorite, ...props }) => {
 				transform: 'scale(1.13)',
 			}}
 			_disabled={{
-				stroke: '#a28445b0',
-				fill: isFavorite ? '#a28445b0' : 'transparent',
 				_hover: {
 					transform: 'scale(1)',
 					cursor: 'not-allowed',
-					stroke: '#a28445b0',
 				},
+				stroke: '#91773e',
+				fill: '#91773e',
 			}}
 			minW={0}
 			p={'12px'}
