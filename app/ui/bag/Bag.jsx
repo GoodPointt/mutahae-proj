@@ -26,13 +26,23 @@ const Bag = ({ bagData, hasToken, onClose, dictionary }) => {
 	};
 
 	const [state, formAction] = useFormState(updateAllGoodsInBag, initialState);
+
 	const router = useRouter();
 	const [discount, setDiscount] = useState(false);
+
 	const totalPrice = goodsToMap.reduce((acc, { count, good }) => {
 		const flattenGood = flattenAttributes(good);
 
 		return acc + flattenGood.price * count;
 	}, 0);
+
+	// useEffect(() => {
+	// 	const isDifferentCount =
+	// 		hasToken &&
+	// 		goodsToMap.some((good, index) => {
+	// 			return bagData && bagData.goods[index].count !== good.count;
+	// 		});
+	// }, [bagData, goodsToMap, hasToken]);
 
 	const { lang } = useParams();
 
@@ -45,7 +55,7 @@ const Bag = ({ bagData, hasToken, onClose, dictionary }) => {
 		if (totalPrice > 10000) {
 			setDiscount(true);
 
-			return Math.floor(totalPrice - totalPrice * 0.1);
+			return Math.floor(totalPrice - totalPrice * 0.08);
 		}
 
 		setDiscount(false);
@@ -54,10 +64,14 @@ const Bag = ({ bagData, hasToken, onClose, dictionary }) => {
 	}, [totalPrice]);
 
 	useEffect(() => {
+		if (state?.status === 200) {
+			router.push(`/${lang}/order`);
+			onClose();
+		}
 		if (state?.message) {
 			router.push(`/${lang}/not-found`);
 		}
-	}, [lang, onClose, router, state?.message]);
+	}, [lang, onClose, router, state]);
 
 	useEffect(() => {
 		if (!hasToken) {
@@ -85,6 +99,8 @@ const Bag = ({ bagData, hasToken, onClose, dictionary }) => {
 									hasToken={hasToken}
 									productCount={count}
 									dictionary={dictionary}
+									goods={goodsToMap}
+									bagId={hasToken && bagData.id}
 									good={flattenAttributes(good)}
 									setGoods={hasToken ? setGoodsToMap : setLocalGoods}
 									bagPrice={totalPrice}
@@ -120,7 +136,6 @@ const Bag = ({ bagData, hasToken, onClose, dictionary }) => {
 							<form
 								action={() => {
 									formAction({ goods: goodsToMap, bagPrice: totalPrice, lang });
-									onClose();
 								}}
 							>
 								<SubmitButton

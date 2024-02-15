@@ -39,7 +39,7 @@ const HeaderWrapper = ({
 	useEffect(() => {
 		setHasToken(isAuth);
 
-		if (hasToken) {
+		if (isAuth) {
 			setLocalBag([]);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -105,10 +105,10 @@ const HeaderWrapper = ({
 					bagData={bagData}
 					dictionary={dictionary}
 					bagLength={bagLength}
-					favoritesLength={
+					favorites={
 						hasToken && favorites && favorites[0] && favorites[0].goods
-							? favorites[0].goods.length
-							: 0
+							? favorites[0].goods
+							: []
 					}
 				/>
 				<LocaleSwitcher />
@@ -148,10 +148,10 @@ const HeaderWrapper = ({
 						hasToken={hasToken}
 						bagData={bagData}
 						bagLength={bagLength}
-						favoritesLength={
-							isAuth && favorites && favorites[0] && favorites[0].goods
-								? favorites[0].goods.length
-								: 0
+						favorites={
+							hasToken && favorites && favorites[0] && favorites[0].goods
+								? favorites[0].goods
+								: []
 						}
 						dictionary={dictionary}
 						displayIcons={['SEARCH_ICON', 'BAG_ICON']}
