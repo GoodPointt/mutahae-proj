@@ -7,18 +7,28 @@ import { Grid, Heading } from '@chakra-ui/react';
 import PaginationDisplay from '../../paginationDisplay/PaginationDisplay';
 import ProductItem from '../../productItem/ProductItem';
 
-export const FavoritesContent = ({ favorites, dictionary, lang }) => {
-	const [total, setTotal] = useState(favorites.length);
-	const [page, setPage] = useState(1);
-	const [favoriteData, setFavoriteData] = useState(
-		favorites.slice(0, page * 4)
+export const FavoritesContent = ({
+	// favorites,
+	dictionary,
+	// lang,
+}) => {
+	// eslint-disable-next-line no-unused-vars
+	const [favs, setFavs] = useState(
+		typeof window !== 'undefined'
+			? JSON.parse(localStorage.getItem('favs'))
+			: []
 	);
+
+	const [total, setTotal] = useState(favs.length || 0);
+	const [page, setPage] = useState(1);
+	const [favoriteData, setFavoriteData] = useState(favs.slice(0, page * 4));
 
 	useEffect(() => {
 		const startFrom = page > 1 ? (page - 1) * 4 : 0;
-		setFavoriteData(favorites.slice(startFrom, page * 4));
-	}, [favorites, page]);
+		setFavoriteData(favs.slice(startFrom, page * 4));
+	}, [favs, page]);
 
+	// eslint-disable-next-line no-unused-vars
 	const { title, btnAdd } = dictionary.profile.favorites;
 
 	return (
@@ -41,37 +51,38 @@ export const FavoritesContent = ({ favorites, dictionary, lang }) => {
 			>
 				{favoriteData &&
 					favoriteData.map(good => {
-						const { uid, locale, title, descShort } = good;
-						const { img } = good;
+						// const { uid, locale, title, descShort } = good;
+						// const { img } = good;
 
-						const imgData = {
-							data: [
-								{
-									attributes: {
-										url: img[0].url,
-									},
-								},
-							],
-						};
+						// const imgData = {
+						// 	data: [
+						// 		{
+						// 			attributes: {
+						// 				url: img[0].url,
+						// 			},
+						// 		},
+						// 	],
+						// };
 
-						const localizations = good.localizations[0];
+						// const localizations = good.localizations[0];
 
 						return (
 							<ProductItem
-								lang={locale}
-								product={{
-									isFavorite: true,
-									uid,
-									title:
-										localizations && lang == 'he' ? localizations.title : title,
-									button: btnAdd,
-									img: { ...imgData },
-									descShort:
-										localizations && lang == 'he'
-											? localizations.descShort
-											: descShort,
-								}}
-								key={uid}
+								// lang={locale}
+								product={good}
+								// product={{
+								// 	isFavorite: true,
+								// 	uid,
+								// 	title:
+								// 		localizations && lang == 'he' ? localizations.title : title,
+								// 	button: btnAdd,
+								// 	img: { ...imgData },
+								// 	descShort:
+								// 		localizations && lang == 'he'
+								// 			? localizations.descShort
+								// 			: descShort,
+								// }}
+								key={good.id}
 							/>
 						);
 					})}

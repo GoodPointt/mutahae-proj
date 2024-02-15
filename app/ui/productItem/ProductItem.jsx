@@ -39,8 +39,12 @@ const ProductItem = ({ product, lang, favs, setFavs }) => {
 		}
 	};
 
-	const [firstImageUrl] = (product?.attributes?.img?.data || [])
-		.map(({ attributes }) => attributes?.url)
+	const [firstImageUrl] = (product?.img || [])
+		.map(({ url }) => url)
+		.filter(url => url);
+
+	const [sumbnailImageUrl] = (product?.img || [])
+		.map(({ formats }) => formats.thumbnail.url)
 		.filter(url => url);
 
 	return (
@@ -59,7 +63,7 @@ const ProductItem = ({ product, lang, favs, setFavs }) => {
 				},
 			}}
 		>
-			<Link href={`/${lang}/catalog/${product.attributes.uid}`}>
+			<Link href={`/${lang}/catalog/${product.uid}`}>
 				<article>
 					<Box
 						borderRadius={'2px'}
@@ -70,6 +74,7 @@ const ProductItem = ({ product, lang, favs, setFavs }) => {
 						width="100%"
 						height="360px"
 						transition="all 500ms cubic-bezier(0.4, 0, 0.2, 1)"
+						bgImage={`url(${sumbnailImageUrl})` || 'url(/img/product.png)'}
 						bgRepeat={'no-repeat'}
 						bgPos={'center'}
 						bgSize={'cover'}
@@ -125,7 +130,7 @@ const ProductItem = ({ product, lang, favs, setFavs }) => {
 							_hover={{ bgColor: '#81672e' }}
 							borderTopRadius={0}
 							borderBottomRadius={'2px'}
-							aria-label={product?.button || ''}
+							aria-label={product?.button || `buy ${product?.title}`}
 							textShadow={'4px 3px 5px rgba(0,  0,  0, 0.83)'}
 						>
 							{(product?.price &&

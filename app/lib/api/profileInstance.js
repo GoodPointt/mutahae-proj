@@ -34,6 +34,7 @@ const getFavorites = async () => {
 	} catch (e) {
 		console.error(e.response?.status);
 		console.error(e.message);
+		if (e.message === 'Not authorized') return redirect('/auth/login');
 		if (e.response?.status === 401) {
 			return redirect('/expired?expired=true');
 		} else return notFound();
@@ -78,6 +79,8 @@ const handleFavorites = async goodId => {
 	} catch (error) {
 		console.error(error.response?.status);
 		console.error(error.message);
+
+		if (error.message === 'Not authorized') return redirect('/auth/login');
 		if (error.response?.status === 401) redirect('/profile?expired=true');
 		else return notFound();
 	}
@@ -125,6 +128,7 @@ const getOrders = async () => {
 	} catch (e) {
 		console.error(e.response?.status);
 		console.error(e.message);
+		if (e.message === 'Not authorized') return redirect('/auth/login');
 		if (e.response?.status === 401) redirect('/profile?expired=true');
 		else return notFound();
 	}
@@ -203,6 +207,7 @@ export const changePassword = async dataPassword => {
 	} catch (error) {
 		console.error(error.response?.status);
 		console.error(error);
+		if (error.message === 'Not authorized') return redirect('/auth/login');
 		if (error.response?.status === 401) redirect('/profile?expired=true');
 		else
 			return {
@@ -237,6 +242,7 @@ export const addUserAddress = async dataAddress => {
 	} catch (error) {
 		console.error(error.response?.status);
 		console.error(error.message);
+		if (error.message === 'Not authorized') return redirect('/auth/login');
 		if (error.response?.status === 401) {
 			return redirect('/expired?expired=true');
 		} else
@@ -264,6 +270,7 @@ export const deleteUserAddress = async addressId => {
 	} catch (error) {
 		console.error(error.response?.status);
 		console.error(error.message);
+		if (error.message === 'Not authorized') return redirect('/auth/login');
 		if (error.response?.status === 401) {
 			return redirect('/expired?expired=true');
 		} else
@@ -299,6 +306,7 @@ export const fetchUserAddress = async () => {
 	} catch (e) {
 		console.error(e.response?.status);
 		console.error(e.message);
+		if (e.message === 'Not authorized') return redirect('/auth/login');
 		if (e.response?.status === 401) {
 			return redirect('/expired?expired=true');
 		} else return { error: 'Server error please try again later.' };

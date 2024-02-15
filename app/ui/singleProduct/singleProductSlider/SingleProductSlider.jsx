@@ -9,6 +9,8 @@ import './singleProductSlider.css';
 
 const SingleProductSlider = ({ imgs }) => {
 	const startImg = imgs.length !== 0 ? imgs[0].attributes.url : null;
+	const thumbnailImg =
+		imgs.length !== 0 ? imgs[0].attributes.formats.thumbnail.url : null;
 	const [currentImg, setCurrentImg] = useState(startImg);
 
 	return (
@@ -23,6 +25,10 @@ const SingleProductSlider = ({ imgs }) => {
 				h={{ base: '320px', sm: '450px' }}
 				pos={'relative'}
 				mb={{ base: '10px', lg: 0 }}
+				bgImage={`url(${thumbnailImg})`}
+				bgRepeat={'no-repeat'}
+				bgPos={'center'}
+				bgSize={'cover'}
 			>
 				<Image
 					src={currentImg || '/img/product.png'}
