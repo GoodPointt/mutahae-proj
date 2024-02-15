@@ -45,6 +45,7 @@ const ContactInfo = ({
 	const { isOpen = false, onOpen, onClose } = useDisclosure();
 
 	const ref = useRef(null);
+	const dis = goodsToMap.length === 0;
 
 	const cityDetails = arrayCities.find(item => {
 		return (
@@ -53,26 +54,27 @@ const ContactInfo = ({
 		);
 	});
 
-	function calculatePrice(weight, basePrice) {
+	function calculateTotalDeliveryPrice(weight, basePrice) {
 		let multiplier = Math.floor(weight / 5000) + 1;
 
 		return basePrice * multiplier;
 	}
 
-	const weightGoods = goodsToMap.reduce((acc, { count, good }) => {
-		const flattenGood = flattenAttributes(good);
+	const calculateWeightAndPrice = (goods, attribute) =>
+		goods.reduce((acc, { count, good }) => {
+			const flattenGood = flattenAttributes(good);
 
-		return acc + flattenGood.weight * count;
-	}, 0);
+			return acc + flattenGood[attribute] * count;
+		}, 0);
+
+	const weightGoods = calculateWeightAndPrice(goodsToMap, 'weight');
+	const bagPrice = calculateWeightAndPrice(goodsToMap, 'price');
 
 	const deliveryPrice = cityDetails?.zone.data.attributes.price;
-	const totalDeliveryPrice = calculatePrice(weightGoods, deliveryPrice);
-
-	const bagPrice = goodsToMap.reduce((acc, { count, good }) => {
-		const flattenGood = flattenAttributes(good);
-
-		return acc + flattenGood.price * count;
-	}, 0);
+	const totalDeliveryPrice = calculateTotalDeliveryPrice(
+		weightGoods,
+		deliveryPrice
+	);
 
 	const discountThreshold1 = 5000;
 	const discountThreshold2 = 10000;
@@ -91,8 +93,6 @@ const ContactInfo = ({
 	const totalPrice = totalDeliveryPrice
 		? discountedBagPrice + totalDeliveryPrice
 		: discountedBagPrice;
-
-	const dis = goodsToMap.length === 0;
 
 	useEffect(() => {
 		setGoodsToMap(authToken ? orderData?.goods || [] : localGoods || []);
