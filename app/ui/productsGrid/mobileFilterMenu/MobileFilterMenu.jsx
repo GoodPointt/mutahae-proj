@@ -87,8 +87,8 @@ const MobileFilterMenu = ({
 							left="0"
 							bottom={'0'}
 							right={'0'}
-							width="100%"
-							height="100%"
+							width="100dvw"
+							height="100dvh"
 							backgroundColor="rgba(0, 0, 0, 0.2)"
 							zIndex="98"
 							onClick={() => setIsOpen(false)}
@@ -100,7 +100,7 @@ const MobileFilterMenu = ({
 							style={{
 								position: 'absolute',
 								zIndex: isOpen ? '99' : '',
-								width: '100%',
+								width: '94dvw',
 								maxHeight: '80dvh',
 								maxWidth: '400px',
 								backgroundColor: '#181617',

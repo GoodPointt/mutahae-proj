@@ -232,19 +232,30 @@ const ProductsGrid = ({
 		return (
 			<SectionWrapper>
 				<Text>
-					Apologies, at this moment our catalog is only available in the Hebrew
-					version. We are currently working on creating content for the English
-					version. Would you like to view it in another language?
+					Certainly, here is a refined version of the text: We sincerely
+					apologize for the inconvenience. At present, our catalog is
+					exclusively available in Hebrew. We are diligently working on curating
+					content for the English version to accommodate our diverse clientele.
+					Your understanding and patience are greatly appreciated during this
+					process. In the interim, should you wish to explore our offerings in a
+					different language, please let us know. We are committed to providing
+					you with the best possible service.
 				</Text>
 
 				<Center>
-					<Flex as={'ul'} mt={'32px'} gap={'32px'}>
-						{' '}
-						<Box as="li" width={'50px'}>
-							<Link href={redirectedPathName('he')}>Yes</Link>
+					<Flex
+						as={'ul'}
+						mt={'32px'}
+						gap={'32px'}
+						flexDir={{ base: 'column', md: ' row' }}
+					>
+						<Box as="li" borderBottom={'1px solid white'}>
+							<Link href={redirectedPathName('he')}>
+								Change language to Hebrew
+							</Link>
 						</Box>
-						<Box as="li" width={'50px'}>
-							<Link href={'/'}>No</Link>
+						<Box as="li" borderBottom={'1px solid white'}>
+							<Link href={'/'}>Return to the home page</Link>
 						</Box>
 					</Flex>
 				</Center>

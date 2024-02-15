@@ -107,8 +107,14 @@ const ProductItem = ({ product, lang, productId, favorites }) => {
 							borderTopRadius={0}
 							borderBottomRadius={'2px'}
 							aria-label={product?.button || ''}
+							textShadow={'4px 3px 5px rgba(0,  0,  0, 0.83)'}
 						>
-							{product?.button || ''}
+							{(product?.price &&
+								product?.price !== 0 &&
+								`${product?.price} ₪`) ||
+								''}
+
+							{product?.price && product?.unit && ` / ${product?.unit}`}
 						</Button>
 					</Box>
 				</article>
