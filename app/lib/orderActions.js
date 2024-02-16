@@ -3,7 +3,13 @@
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 
-import { fetchCreateOrder, fetchResetBag } from './api/profileInstance';
+import { sendTgNotification } from './api/notifyInstance';
+import {
+	fetchCreateOrder,
+	fetchResetBag,
+	updateUserData,
+} from './api/profileInstance';
+import { flattenAttributes } from './utils/flattenAttributes';
 
 import { z } from 'zod';
 
@@ -34,10 +40,7 @@ const schema = z
 			.string()
 			.trim()
 			.min(1, { message: 'required' })
-			.regex(
-				new RegExp(/^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/),
-				'invalid'
-			),
+			.regex(new RegExp(/(?:\+?\d{1,3}[-()]?)?\d{7,10}/), 'invalid'),
 	})
 	.partial();
 
@@ -62,20 +65,42 @@ export async function submitData(prevState, formData) {
 	try {
 		if (token) {
 			await fetchCreateOrder(totalPrice, goods, cityId);
+			await updateUserData({ firstName, lastName, email, phone });
 		}
-		await fetchResetBag();
-		revalidatePath(`/${lang}/order`);
 
-		return {
+		const listGoods = goods.map(good => ({
+			title: flattenAttributes(good.good).title,
+			count: good.count,
+		}));
+
+		const res = await sendTgNotification({
 			firstName,
 			lastName,
 			email,
 			phone,
-			totalPrice,
-			goods,
-			deliveryAddress,
-			message: 'success',
-		};
+			delivery: deliveryAddress,
+			orderPrice: totalPrice,
+			goods: listGoods,
+		});
+
+		await fetchResetBag();
+		revalidatePath(`/${lang}/order`);
+
+		if (res.status === 201) {
+			return {
+				firstName,
+				lastName,
+				email,
+				phone,
+				totalPrice,
+				goods,
+				deliveryAddress,
+				message: 'success',
+				status: 201,
+			};
+		} else {
+			return { status: res.status };
+		}
 	} catch (error) {
 		console.error(error);
 	}

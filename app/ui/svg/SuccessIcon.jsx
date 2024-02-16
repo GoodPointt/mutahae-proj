@@ -3,8 +3,8 @@ import React from 'react';
 const SuccessIcon = () => {
 	return (
 		<svg
-			width="150px"
-			height="150px"
+			width="90px"
+			height="90px"
 			viewBox="0 0 24 24"
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"

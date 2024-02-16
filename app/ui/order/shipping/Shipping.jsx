@@ -150,7 +150,6 @@ const Shipping = ({
 					</MenuButton>
 					<MenuList
 						maxHeight="270px"
-						// max-height="90vh"
 						overflowY="auto"
 						bg={'#181617'}
 						borderRadius={'2px'}
@@ -161,7 +160,7 @@ const Shipping = ({
 								width: '3px',
 							},
 							'&::-webkit-scrollbar-thumb': {
-								backgroundColor: '#A28445',
+								background: '#A28445',
 								borderRadius: '2px',
 							},
 						}}

@@ -29,14 +29,14 @@ const Order = async ({ params: { lang } }) => {
 	const arrayCities = arrCities.map(({ attributes, id }) => {
 		if (lang === 'he') {
 			return {
-				cityName: attributes.localizations.data[0].attributes.cityName,
+				cityName: attributes.localizations?.data[0]?.attributes.cityName,
 				zone: attributes.zone,
 				id,
 			};
 		} else {
 			return {
-				cityName: attributes.cityName,
-				zone: attributes.zone,
+				cityName: attributes?.cityName,
+				zone: attributes?.zone,
 				id,
 			};
 		}

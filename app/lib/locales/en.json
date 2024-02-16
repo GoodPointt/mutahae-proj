@@ -227,7 +227,12 @@
 	"orderThankYou": {
 		"title": "Thank you for choosing Mutag Haetz!",
 		"message": "Our manager will contact you within 24 hours.",
-		"button": "home"
+		"button": "Catalog"
+	},
+	"orderReject": {
+		"title": " Something went wrong.",
+		"message": "Your order has not been processed. Please contact us by phone or fill out a form for assistance.",
+		"button": "Contact Us"
 	},
 	"searchField": {
 		"search": "Search...",

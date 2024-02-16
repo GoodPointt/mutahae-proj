@@ -36,7 +36,7 @@ const Modal = ({ isOpen, onClose, children, lang }) => {
 							maxHeight: '100px',
 						},
 						'&::-webkit-scrollbar-thumb': {
-							backgroundColor: '#A28445',
+							background: '#A28445',
 							borderRadius: '2px',
 							maxHeight: '10px',
 						},
