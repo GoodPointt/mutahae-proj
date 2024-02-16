@@ -48,26 +48,29 @@ const SingleProductSlider = ({ imgs }) => {
 					overflow={'auto'}
 					className="list"
 				>
-					{imgs.map(({ id, attributes: img }) => (
+					{imgs.map(({ id, attributes }) => (
 						<ListItem key={id}>
 							<Button
 								w={'80px'}
 								h={'80px'}
 								borderRadius={0}
 								border={
-									currentImg === img.url
+									currentImg === attributes.url
 										? '2px rgb(162, 132, 69) solid'
 										: 'none'
 								}
 								_hover={{
-									bg: currentImg === img.url ? 'rgba(0,0,0, 0.5)' : 'inherit',
+									bg:
+										currentImg === attributes.url
+											? 'rgba(0,0,0, 0.5)'
+											: 'inherit',
 								}}
-								bg={currentImg === img.url ? 'rgba(0,0,0, 0.5)' : ''}
-								onClick={() => setCurrentImg(img.url)}
+								bg={currentImg === attributes.url ? 'rgba(0,0,0, 0.5)' : ''}
+								onClick={() => setCurrentImg(attributes.url)}
 							>
 								<Image
-									src={img.url}
-									alt={img.name}
+									src={attributes.formats.thumbnail.url}
+									alt={attributes.name}
 									fill
 									style={{
 										objectFit: 'cover',

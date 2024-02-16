@@ -255,8 +255,8 @@ export const delAddressAction = async (prevState, formData) => {
 };
 
 export async function submitProductToBag(prevState, formData) {
-	// const { count, goodId, goodPrice, uid, lang } = formData;
-	const { count, goodId, goodPrice } = Object.fromEntries(formData);
+	const { count, goodId, goodPrice } = formData;
+
 	try {
 		const res = await fetchAddToBag(count, goodId, goodPrice);
 		if (res?.status === 200) {
@@ -293,9 +293,16 @@ export async function deleteProductFromBag(prevState, formData) {
 	const { goodId, bagPrice } = formData;
 
 	try {
-		const response = await fetchDeleteProductFromBag(goodId, bagPrice);
-		if (response?.status === 200) {
-			revalidatePath('/');
+		const res = await fetchDeleteProductFromBag(goodId, bagPrice);
+
+		if (res.error) {
+			throw new Error(res.error);
+		}
+
+		if (res?.status === 200) {
+			return {
+				status: res?.status,
+			};
 		}
 	} catch (error) {
 		return { message: error.message };

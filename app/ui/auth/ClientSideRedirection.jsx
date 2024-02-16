@@ -66,7 +66,10 @@ const ClientSideRedirection = ({ dictionary, provider, lang }) => {
 								},
 								body: JSON.stringify({
 									data: {
-										goods: localBag,
+										goods: localBag.map(({ count, good: { data } }) => ({
+											good: data,
+											count,
+										})),
 									},
 								}),
 							}

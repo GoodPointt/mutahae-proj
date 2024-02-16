@@ -19,7 +19,7 @@ import ProviderButton from '../providerButton/ProviderButton';
 import EmailIcon from '../svg/EmailIcon';
 import Star from '../svg/Star';
 
-const CallToAuth = () => {
+const CallToAuth = props => {
 	return (
 		<Popover>
 			<PopoverTrigger>
@@ -41,6 +41,7 @@ const CallToAuth = () => {
 						fill: 'transparent',
 						transform: 'scale(1.13)',
 					}}
+					{...props}
 				>
 					<Star />
 				</Button>

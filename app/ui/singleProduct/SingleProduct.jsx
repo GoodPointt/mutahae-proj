@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import { useFormState } from 'react-dom';
-import { useParams, useRouter } from 'next/navigation';
 
 import {
 	Box,
@@ -14,10 +13,9 @@ import {
 	ListItem,
 	Text,
 	useDisclosure,
-	VisuallyHiddenInput,
 } from '@chakra-ui/react';
 
-import { submitGoodToFavorite, submitProductToBag } from '@/app/lib/actions';
+import { submitProductToBag } from '@/app/lib/actions';
 import { useLocalBag } from '@/app/lib/hooks/useLocalBag';
 import { flattenAttributes } from '@/app/lib/utils/flattenAttributes';
 
@@ -27,7 +25,6 @@ import SubmitButton from '../submitButton/SubmitButton';
 
 import BreadcrumbBar from './Breadcrumb/Breadcrumb';
 import Counter from './Counter/Counter';
-import FavBtn from './FavBtn/FavBtn';
 import IsInBag from './isInBag/IsInBag';
 import SingleProductSlider from './singleProductSlider/SingleProductSlider';
 import TotalBagPrice from './TotalBagPrice/TotalBagPrice';
@@ -36,13 +33,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 export const dynamic = 'force-dynamic';
 
-const SingleProduct = ({
-	userId,
-	dictionary,
-	product,
-	isFavorite,
-	bagData,
-}) => {
+const SingleProduct = ({ userId, dictionary, product, bagData, favorites }) => {
 	const {
 		id: goodId,
 		attributes: {
@@ -66,57 +57,46 @@ const SingleProduct = ({
 	const [count, setCount] = useState(1);
 	const [localBag, setLocalBag] = useLocalBag('localBag', []);
 
-	const [state, formAction] = useFormState(submitProductToBag);
-	const [, favoriteAction] = useFormState(submitGoodToFavorite);
+	const [favs, setFavs] = useState(favorites);
+
+	useEffect(() => {
+		localStorage.setItem('favs', JSON.stringify(favs));
+	}, [favs]);
+
+	const [, formAction] = useFormState(submitProductToBag);
+
 	const [totalPrice, setTotalPrice] = useState(null);
 	const [isInBag, setIsInBag] = useState(false);
 
-	const { lang } = useParams();
-	const router = useRouter();
-
 	useEffect(() => {
-		if (userId) {
-			const good = bagData[0].goods.find(({ good }) => good.data.id === goodId);
-			good ? setCount(good.count) : setCount(1);
-		} else {
-			const good = localBag.find(({ good }) => good.id === goodId);
-			good ? setCount(good.count) : setCount(1);
-		}
+		const good = localBag.find(({ good }) => good.data.id === goodId);
+		good ? setCount(good.count) : setCount(1);
 	}, [bagData, goodId, localBag, userId]);
 
 	useEffect(() => {
-		if (!userId) {
-			const totalLocalPrice = localBag.reduce((acc, { count, good }) => {
-				const flattenGood = flattenAttributes(good);
+		const totalLocalPrice = localBag.reduce((acc, { count, good }) => {
+			const flattenGood = flattenAttributes(good);
 
-				return acc + flattenGood.price * count;
-			}, 0);
-			setTotalPrice(totalLocalPrice);
-		} else {
-			setTotalPrice(bagData[0].bagPrice);
-		}
+			return acc + flattenGood.price * count;
+		}, 0);
+		setTotalPrice(totalLocalPrice);
 	}, [localBag, bagData, userId, totalPrice]);
 
 	useEffect(() => {
-		if (!userId) {
-			const isInLocalBag = localBag.some(
-				({ good }) => good.attributes.uid === uid
-			);
-			setIsInBag(isInLocalBag);
-		} else {
-			const isInBag = bagData[0].goods.some(
-				({ good }) => good.data.attributes.uid === uid
-			);
-			setIsInBag(isInBag);
-		}
-	}, [bagData, localBag, uid, userId]);
+		const isInLocalBag = localBag.find(
+			({ good: { data } }) => data.attributes.uid === uid
+		);
+		setIsInBag(isInLocalBag);
+	}, [localBag, uid]);
 
 	const addGoodInLocal = (count, goodUid) => {
-		const isSame = localBag.find(({ good }) => good.attributes.uid === goodUid);
+		const isSame = localBag.find(
+			({ good: { data } }) => data.attributes.uid === goodUid
+		);
 
 		if (isSame) {
 			const updatedBag = localBag.map(item => {
-				if (item.good.attributes.id === goodUid) {
+				if (item.id === goodUid) {
 					return { ...item, count: item.count + count };
 				}
 
@@ -124,16 +104,9 @@ const SingleProduct = ({
 			});
 			setLocalBag(updatedBag);
 		} else {
-			setLocalBag([...localBag, { count, good: product }]);
+			setLocalBag([...localBag, { count, good: { data: product } }]);
 		}
 	};
-
-	useEffect(() => {
-		if (state?.status === 200) {
-			router.refresh();
-			setIsInBag(true);
-		}
-	}, [state, router]);
 
 	return (
 		<>
@@ -144,24 +117,14 @@ const SingleProduct = ({
 				alignItems={'center'}
 				mb={'30px'}
 			>
-				<BreadcrumbBar productTitle={title} dictionary={dictionary} />
-				{userId && (
-					<form
-						action={() => favoriteAction({ goodId })}
-						style={{ display: 'flex', alignItems: 'center' }}
-					>
-						<FavBtn
-							type="submit"
-							variant={'unstyled'}
-							display={'flex'}
-							justifyContent={'center'}
-							isFavorite={isFavorite}
-							minW={0}
-							p={0}
-							maxH={'24px'}
-						/>
-					</form>
-				)}
+				<BreadcrumbBar
+					favs={favs}
+					setFavs={setFavs}
+					productTitle={title}
+					dictionary={dictionary}
+					product={product}
+					userId={userId}
+				/>
 			</Box>
 			<Grid
 				templateColumns={{ base: '1fr', lg: 'repeat(2, 1fr)' }}
@@ -216,48 +179,47 @@ const SingleProduct = ({
 							/>
 						</Box>
 						{userId ? (
-							<form action={formAction}>
-								<VisuallyHiddenInput name={'count'} defaultValue={count} />
-								<VisuallyHiddenInput name={'goodId'} defaultValue={goodId} />
-								<VisuallyHiddenInput
-									name="goodPrice"
-									defaultValue={count * price}
-								/>
-								<VisuallyHiddenInput name={'uid'} defaultValue={uid} />
-								<VisuallyHiddenInput name={'lang'} defaultValue={lang} />
-								<Box
-									pos={'relative'}
-									display={'flex'}
-									w={'100%'}
-									justifyContent={'center'}
-								>
-									{isInBag ? (
-										<IsInBag
-											isInBag={isInBag}
-											onOpen={onOpen}
-											dictionary={dictionary}
-										/>
-									) : (
-										<AnimatePresence>
-											<Box
-												as={motion.div}
-												w={'100%'}
-												initial={{ opacity: 0, y: -20 }}
-												animate={{ opacity: 1, y: 0 }}
-												exit={{ opacity: 0, y: 0 }}
-												transitionDuration={'0.2s'}
-												transitionTimingFunction={'ease'}
-											>
-												<SubmitButton
-													type="submit"
-													message={dictionary.buttons.loaders.addBtn}
+							<form
+								action={() =>
+									formAction({ count, goodId, goodPrice: totalPrice })
+								}
+							>
+								<>
+									<Box
+										pos={'relative'}
+										display={'flex'}
+										w={'100%'}
+										justifyContent={'center'}
+									>
+										{isInBag ? (
+											<IsInBag
+												isInBag={isInBag}
+												onOpen={onOpen}
+												dictionary={dictionary}
+											/>
+										) : (
+											<AnimatePresence>
+												<Box
+													as={motion.div}
+													w={'100%'}
+													initial={{ opacity: 0, y: -20 }}
+													animate={{ opacity: 1, y: 0 }}
+													exit={{ opacity: 0, y: 0 }}
+													transitionDuration={'0.2s'}
+													transitionTimingFunction={'ease'}
 												>
-													<Text as={'span'}>{dictionary.buttons.bag}</Text>
-												</SubmitButton>
-											</Box>
-										</AnimatePresence>
-									)}
-								</Box>
+													<SubmitButton
+														onClick={() => addGoodInLocal(count, uid)}
+														type="submit"
+														message={dictionary.buttons.loaders.addBtn}
+													>
+														<Text as={'span'}>{dictionary.buttons.bag}</Text>
+													</SubmitButton>
+												</Box>
+											</AnimatePresence>
+										)}
+									</Box>
+								</>
 							</form>
 						) : (
 							<Box

@@ -15,6 +15,7 @@ const SubmitButton = ({
 	stroke,
 	strokeHover,
 	message,
+	onClick,
 }) => {
 	const { pending } = useFormStatus();
 
@@ -22,6 +23,7 @@ const SubmitButton = ({
 		<>
 			<Button
 				pos={'relative'}
+				onClick={onClick}
 				variant={variant}
 				bgColor={bgColor}
 				borderRadius={'2px'}
