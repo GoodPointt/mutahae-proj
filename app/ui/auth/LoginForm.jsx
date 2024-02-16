@@ -6,7 +6,6 @@ import { useFormState } from 'react-dom';
 import { Link } from '@chakra-ui/next-js';
 import {
 	Box,
-	Center,
 	FormControl,
 	FormErrorMessage,
 	Input,
@@ -110,19 +109,6 @@ const LoginForm = ({ dictionary, lang }) => {
 				{dictionary.buttons.forgotPass}
 			</Link>
 			<SubmitButton>{dictionary.buttons.send}</SubmitButton>
-			<Center mt={'20px'}>
-				<Link
-					href={`/${lang}/auth/register`}
-					fontSize={'14px'}
-					fontWeight={500}
-					lineHeight={1.5}
-					borderBottomColor={'rgba(255, 255, 255, 1)'}
-					borderBottomWidth={'1px'}
-					_hover={{ bgColor: 'transparent', color: 'lightgray' }}
-				>
-					{dictionary.buttons.createAcc}
-				</Link>
-			</Center>
 		</Box>
 	);
 };

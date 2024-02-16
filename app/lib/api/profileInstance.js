@@ -128,7 +128,7 @@ const getOrders = async () => {
 		console.error(e.response?.status);
 		console.error(e.message);
 
-		if (e.response?.status === 401) redirect('/profile?expired=true');
+		if (e.response?.status === 401) redirect('/expired?expired=true');
 		else return notFound();
 	}
 };
@@ -140,19 +140,12 @@ const getUserData = async () => {
 
 		if (!userId) throw new Error('User id not found!');
 
-		const data = profileInstance.get(`/api/users/${userId}`);
-
-		if (!data) {
-			return notFound();
-		}
-
-		return data;
+		return await profileInstance.get(`/api/users/${userId}`);
 	} catch (e) {
 		console.error(e.response?.status);
 		console.error(e.message);
-		if (e.response?.status === 401) {
-			return redirect('/expired?expired=true');
-		} else return notFound();
+
+		return redirect('/expired?expired=true');
 	}
 };
 
@@ -176,7 +169,7 @@ export const updateUserData = async userData => {
 	} catch (error) {
 		console.error(error.response?.status);
 		console.error(error.message);
-		if (error.response?.status === 401) redirect('/profile?expired=true');
+		if (error.response?.status === 401) redirect('/expired?expired=true');
 		else
 			return {
 				status: 'error',
@@ -207,7 +200,7 @@ export const changePassword = async dataPassword => {
 		console.error(error.response?.status);
 		console.error(error);
 
-		if (error.response?.status === 401) redirect('/profile?expired=true');
+		if (error.response?.status === 401) redirect('/expired?expired=true');
 		else
 			return {
 				status: 'error',
