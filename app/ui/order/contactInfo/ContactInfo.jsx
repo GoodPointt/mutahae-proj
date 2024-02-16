@@ -13,7 +13,6 @@ import {
 	useDisclosure,
 } from '@chakra-ui/react';
 
-import { sendTgNotification } from '@/app/lib/api/notifyInstance';
 import { useLocalBag } from '@/app/lib/hooks/useLocalBag';
 import { flattenAttributes } from '@/app/lib/utils/flattenAttributes';
 import { submitData } from '../../../lib/orderActions';
@@ -22,6 +21,7 @@ import Modal from '../../modal/Modal';
 import FinalAmount from '../finalAmount/FinalAmount';
 import IsAccount from '../isAccount/IsAccount';
 import ListProductToBuy from '../listProductToBuy/ListProductToBuy';
+import OrderReject from '../orderReject/OrderReject';
 import OrderThankYou from '../orderThankYou/OrderThankYou';
 import Shipping from '../shipping/Shipping';
 
@@ -42,6 +42,7 @@ const ContactInfo = ({
 	const [localGoods, setLocalGoods] = useLocalBag('localBag', []);
 	const [cityId, setCityId] = useState();
 	const [ownCity, setOwnCity] = useState('');
+	const [orderReject, setOrderReject] = useState(false);
 	const { isOpen = false, onOpen, onClose } = useDisclosure();
 
 	const ref = useRef(null);
@@ -99,31 +100,19 @@ const ContactInfo = ({
 	}, [authToken, orderData, localGoods]);
 
 	useEffect(() => {
+		setOrderReject(false);
 		const handleNotification = async () => {
 			try {
 				setIsSubmitting(true);
 
-				const listGoods = state.goods.map(good => ({
-					title: authToken
-						? good?.good?.data?.attributes.title
-						: good.good.attributes.title,
-					count: good.count,
-				}));
-
-				const res = await sendTgNotification({
-					firstName: state.firstName,
-					lastName: state.lastName,
-					email: state.email,
-					phone: state.phone,
-					delivery: state.deliveryAddress,
-					orderPrice: state.totalPrice,
-					goods: listGoods,
-				});
-
-				if (res.status === 201) {
+				if (state.status === 201) {
 					onOpen();
 					if (!authToken) setLocalGoods([]);
 					setSelectedCity('');
+				} else {
+					console.error(`Order rejected ${state.status}`);
+					onOpen();
+					setOrderReject(true);
 				}
 			} catch (error) {
 				console.error(error);
@@ -195,6 +184,8 @@ const ContactInfo = ({
 						setGoodsToMap={setGoodsToMap}
 						setLocalGoods={setLocalGoods}
 						authToken={authToken}
+						orderData={orderData}
+						bagPrice={bagPrice}
 					/>
 				)}
 				<Heading
@@ -284,6 +275,7 @@ const ContactInfo = ({
 							>
 								<FormControl isInvalid={emailError}>
 									<Input
+										readOnly={authToken ? true : false}
 										name="email"
 										type="email"
 										bgColor="#3b3d46"
@@ -366,7 +358,11 @@ const ContactInfo = ({
 				</Flex>
 			</Box>
 			<Modal isOpen={isOpen} onClose={onClose} lang={lang}>
-				<OrderThankYou dictionary={dictionary} lang={lang} />
+				{orderReject ? (
+					<OrderReject dictionary={dictionary} lang={lang} />
+				) : (
+					<OrderThankYou dictionary={dictionary} lang={lang} />
+				)}
 			</Modal>
 		</>
 	);

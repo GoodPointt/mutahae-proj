@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useState } from 'react';
 import { useFormState } from 'react-dom';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -8,21 +8,45 @@ import Link from 'next/link';
 import { Box, Button, Heading, Text, useMediaQuery } from '@chakra-ui/react';
 
 import { submitGoodToFavorite } from '@/app/lib/actions';
+import { flattenAttributes } from '@/app/lib/utils/flattenAttributes';
 
+import CallToAuth from '../callToAuth/CallToAuth';
 import FavBtn from '../singleProduct/FavBtn/FavBtn';
 
-const ProductItem = ({ product, lang, productId, favorites }) => {
-	const [isModileScreen] = useMediaQuery('(max-width: 1024px)');
-	const [, formAction] = useFormState(submitGoodToFavorite);
+import { parseAsFloat, useQueryState } from 'nuqs';
 
-	const [firstImageUrl] = (product?.img?.data || [])
-		.map(({ attributes }) => attributes?.url)
+const ProductItem = ({ product, lang, favs, setFavs, isAuth }) => {
+	const [isModileScreen] = useMediaQuery('(max-width: 1024px)');
+	const [isFavorite, setIsFavorite] = useState(
+		favs?.some(item => item.id === product.id)
+	);
+
+	const [, formAction] = useFormState(submitGoodToFavorite, null);
+
+	const [, setFavorite] = useQueryState(
+		'favs',
+		parseAsFloat.withDefault(JSON.parse(localStorage.getItem('favs'))?.length)
+	);
+
+	const handleIsFavs = productId => {
+		const isExisting = favs.some(item => item.id === productId);
+
+		if (!isExisting) {
+			setFavs(prev => [...prev, flattenAttributes(product)]);
+			setFavorite(prev => prev + 1);
+		} else {
+			setFavs(favs.filter(({ id }) => id !== productId));
+			setFavorite(prev => prev - 1);
+		}
+	};
+
+	const [firstImageUrl] = (product?.img || [])
+		.map(({ url }) => url)
 		.filter(url => url);
 
-	const isFavorite = useMemo(
-		() => favorites && favorites.some(({ id }) => id === productId),
-		[favorites, productId]
-	);
+	const [sumbnailImageUrl] = (product?.img || [])
+		.map(({ formats }) => formats.thumbnail.url)
+		.filter(url => url);
 
 	return (
 		<Box
@@ -51,6 +75,7 @@ const ProductItem = ({ product, lang, productId, favorites }) => {
 						width="100%"
 						height="360px"
 						transition="all 500ms cubic-bezier(0.4, 0, 0.2, 1)"
+						bgImage={`url(${sumbnailImageUrl})` || 'url(/img/product.png)'}
 						bgRepeat={'no-repeat'}
 						bgPos={'center'}
 						bgSize={'cover'}
@@ -106,24 +131,40 @@ const ProductItem = ({ product, lang, productId, favorites }) => {
 							_hover={{ bgColor: '#81672e' }}
 							borderTopRadius={0}
 							borderBottomRadius={'2px'}
-							aria-label={product?.button || ''}
+							aria-label={product?.button || `buy ${product?.title}`}
+							textShadow={'4px 3px 5px rgba(0,  0,  0, 0.83)'}
 						>
-							{product?.button || ''}
+							{(product?.price &&
+								product?.price !== 0 &&
+								`${product?.price} ₪`) ||
+								''}
+
+							{product?.price && product?.unit && ` / ${product?.unit}`}
 						</Button>
 					</Box>
 				</article>
 			</Link>
-			{favorites ? (
-				<form action={() => formAction({ goodId: productId })}>
+			{isAuth ? (
+				<form
+					action={() => {
+						formAction({ goodId: product.id });
+					}}
+				>
 					<FavBtn
 						position={'absolute'}
 						top={'0px'}
 						right={'0px'}
 						zIndex={'10'}
+						onClick={() => {
+							setIsFavorite(!isFavorite);
+							handleIsFavs(product.id);
+						}}
 						isFavorite={isFavorite}
 					/>
 				</form>
-			) : null}
+			) : (
+				<CallToAuth />
+			)}
 		</Box>
 	);
 };

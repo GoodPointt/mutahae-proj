@@ -12,6 +12,8 @@ const ListProductToBuy = ({
 	setLocalGoods,
 	authToken,
 	dictionary,
+	orderData,
+	bagPrice,
 }) => {
 	return (
 		<Flex
@@ -38,6 +40,9 @@ const ListProductToBuy = ({
 								hasToken={authToken}
 								productCount={count}
 								good={flattenAttributes(good)}
+								goods={goodsToMap}
+								bagId={authToken && orderData.id}
+								bagPrice={bagPrice}
 							/>
 						</Flex>
 						{index !== goodsToMap.length - 1 && (

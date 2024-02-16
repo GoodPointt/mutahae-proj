@@ -57,7 +57,8 @@ const SortMenu = ({
 						setIsOpen(!isOpen);
 					}}
 				>
-					Sort{isOpen ? <ArrowUp /> : <ArrowDown />}
+					{dictionary.sortBtn}
+					{isOpen ? <ArrowUp /> : <ArrowDown />}
 				</Button>
 
 				{isOpen && (

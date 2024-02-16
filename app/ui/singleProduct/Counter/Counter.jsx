@@ -4,7 +4,7 @@ import React from 'react';
 
 import { Button, Flex, Input } from '@chakra-ui/react';
 
-const Counter = ({ count, setCount, isInBag }) => {
+const Counter = ({ count, setCount, isInBag, isExist = true }) => {
 	const decrement = () => {
 		if (count === 1) {
 			return;
@@ -20,10 +20,10 @@ const Counter = ({ count, setCount, isInBag }) => {
 		<Flex
 			alignItems={'center'}
 			justifyContent={'center'}
-			gap={'40px'}
 			border={'1px #3B3D46 solid'}
 			maxW={'100%'}
-			px={'32px'}
+			gap={'10px'}
+			px={'24px'}
 		>
 			<Button
 				variant={'link'}
@@ -31,7 +31,7 @@ const Counter = ({ count, setCount, isInBag }) => {
 				minW={0}
 				textColor={'#fff'}
 				onClick={decrement}
-				isDisabled={count <= 1 || count === '' || isInBag}
+				isDisabled={count <= 1 || count === '' || isInBag || !isExist}
 			>
 				-
 			</Button>
@@ -40,7 +40,7 @@ const Counter = ({ count, setCount, isInBag }) => {
 				type="number"
 				h={'max-content'}
 				variant={'unstyled'}
-				isDisabled={isInBag}
+				isDisabled={isInBag || !isExist}
 				w={'100px'}
 				minH={0}
 				p={'9px'}
@@ -77,7 +77,7 @@ const Counter = ({ count, setCount, isInBag }) => {
 				minW={0}
 				textColor={'#fff'}
 				onClick={increment}
-				isDisabled={isInBag}
+				isDisabled={isInBag || !isExist}
 			>
 				+
 			</Button>

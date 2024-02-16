@@ -25,6 +25,7 @@ export const RessetPasswordForm = ({ lang, ressetPassDictionary }) => {
 		btn,
 		success,
 		error,
+		validation,
 	} = ressetPassDictionary;
 
 	const toast = useToast();
@@ -83,7 +84,9 @@ export const RessetPasswordForm = ({ lang, ressetPassDictionary }) => {
 							position="absolute"
 							bottom="4px"
 						>
-							{passwordError === 'required' ? 'required' : 'invalid'}
+							{passwordError === 'required'
+								? validation.password.required
+								: validation.password.invalid}
 						</FormErrorMessage>
 					</FormControl>
 					<FormControl isInvalid={newPasswordError} pb="25px">
@@ -104,7 +107,9 @@ export const RessetPasswordForm = ({ lang, ressetPassDictionary }) => {
 							position="absolute"
 							bottom="4px"
 						>
-							{newPasswordError === 'required' ? 'required' : 'invalid'}
+							{newPasswordError === 'required'
+								? validation.password.required
+								: validation.password.invalid}
 						</FormErrorMessage>
 					</FormControl>
 					<FormControl isInvalid={confirmPasswordError} pb="25px">
@@ -126,8 +131,8 @@ export const RessetPasswordForm = ({ lang, ressetPassDictionary }) => {
 							bottom="4px"
 						>
 							{confirmPasswordError === 'required'
-								? 'required'
-								: confirmPasswordError}
+								? validation.password.required
+								: validation.password.not_equal}
 						</FormErrorMessage>
 					</FormControl>
 				</Box>

@@ -1,9 +1,21 @@
+import { useEffect, useState } from 'react';
+
 import { Grid } from '@chakra-ui/react';
+
+import { flattenAttributes } from '@/app/lib/utils/flattenAttributes';
 
 import ProductItem from '../../productItem/ProductItem';
 
-const ProductList = ({ list, lang, favorites }) => {
-	// if (!isLoading)
+const ProductList = ({ list, lang, isAuth }) => {
+	const [favs, setFavs] = useState(
+		typeof window !== 'undefined'
+			? JSON.parse(localStorage.getItem('favs'))
+			: []
+	);
+
+	useEffect(() => {
+		localStorage.setItem('favs', JSON.stringify(favs || []));
+	}, [favs]);
 
 	return (
 		<Grid
@@ -16,17 +28,16 @@ const ProductList = ({ list, lang, favorites }) => {
 			padding={0}
 		>
 			{list &&
-				list.map(({ id, attributes }) => {
-					return (
-						<ProductItem
-							favorites={favorites}
-							key={attributes.uid}
-							product={attributes}
-							lang={lang}
-							productId={id}
-						/>
-					);
-				})}
+				list.map(product => (
+					<ProductItem
+						isAuth={isAuth}
+						favs={favs}
+						setFavs={setFavs}
+						key={product.id}
+						product={flattenAttributes(product)}
+						lang={lang}
+					/>
+				))}
 		</Grid>
 	);
 };

@@ -32,7 +32,8 @@ const MobileMenu = ({ isOpen, onClose, dictionary, hasToken, lang }) => {
 				>
 					<Button
 						variant={'ghost'}
-						ml={'auto'}
+						ml={lang === 'en' && 'auto'}
+						mr={lang === 'he' && 'auto'}
 						_hover={{ bg: 'none' }}
 						color={'white'}
 						onClick={onClose}

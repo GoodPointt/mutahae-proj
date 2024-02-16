@@ -1,7 +1,6 @@
 'use client';
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useFormState } from 'react-dom';
-import ReactInputMask from 'react-input-mask';
 
 import {
 	Box,
@@ -36,8 +35,6 @@ export const UserDetailsForm = ({ lang, userData, userDetailsDictionary }) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [state]);
 
-	const maskedInputRef = useRef(null);
-
 	const { firstName, lastName, phone, email } = userData;
 
 	const firstNameError =
@@ -67,7 +64,7 @@ export const UserDetailsForm = ({ lang, userData, userDetailsDictionary }) => {
 					gap={{ lg: '15px' }}
 					flexDirection={{ base: 'column', lg: 'row' }}
 				>
-					<FormControl isInvalid={firstNameError} mb="25px">
+					<FormControl isInvalid={firstNameError} pb="25px">
 						<Input
 							name="firstName"
 							type="text"
@@ -86,7 +83,9 @@ export const UserDetailsForm = ({ lang, userData, userDetailsDictionary }) => {
 							position="absolute"
 							bottom="4px"
 						>
-							{firstNameError === 'required' ? 'required' : 'invalid'}
+							{firstNameError === 'required'
+								? userDetailsForm.validation.firstName.required
+								: userDetailsForm.validation.firstName.invalid}
 						</FormErrorMessage>
 					</FormControl>
 					<FormControl isInvalid={lstNameNameError} mb="25px">
@@ -108,7 +107,9 @@ export const UserDetailsForm = ({ lang, userData, userDetailsDictionary }) => {
 							position="absolute"
 							bottom="4px"
 						>
-							{lstNameNameError === 'required' ? 'required' : 'invalid'}
+							{lstNameNameError === 'required'
+								? userDetailsForm.validation.lastName.required
+								: userDetailsForm.validation.lastName.invalid}
 						</FormErrorMessage>
 					</FormControl>
 				</Flex>
@@ -117,12 +118,13 @@ export const UserDetailsForm = ({ lang, userData, userDetailsDictionary }) => {
 					mb="15px"
 					flexDirection={{ base: 'column', lg: 'row' }}
 				>
-					<FormControl isInvalid={emailError} mb="25px">
+					<FormControl isInvalid={emailError} pb="25px">
 						<Input
 							name="email"
 							type="email"
 							bgColor="#3b3d46"
 							defaultValue={email}
+							disabled={true}
 							placeholder="Mail"
 							borderRadius={'2px'}
 							style={
@@ -136,16 +138,15 @@ export const UserDetailsForm = ({ lang, userData, userDetailsDictionary }) => {
 							position="absolute"
 							bottom="4px"
 						>
-							{emailError === 'required' ? 'required' : 'invalid'}
+							{emailError === 'required'
+								? userDetailsForm.validation.email.required
+								: userDetailsForm.validation.email.invalid}
 						</FormErrorMessage>
 					</FormControl>
-					<FormControl isInvalid={phoneError} mb="35px">
+					<FormControl isInvalid={phoneError} pb="25px" mb="15px">
 						<Input
-							ref={maskedInputRef}
 							name="phone"
-							as={ReactInputMask}
 							type="tel"
-							mask={'+\\972-**-***-****'}
 							bgColor="#3b3d46"
 							defaultValue={phone}
 							placeholder="Phone"
@@ -163,7 +164,9 @@ export const UserDetailsForm = ({ lang, userData, userDetailsDictionary }) => {
 							position="absolute"
 							bottom="4px"
 						>
-							{phoneError === 'required' ? 'required' : 'invalid'}
+							{phoneError === 'required'
+								? userDetailsForm.validation.phone.required
+								: userDetailsForm.validation.phone.invalid}
 						</FormErrorMessage>
 					</FormControl>
 				</Flex>

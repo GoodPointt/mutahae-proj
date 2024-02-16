@@ -27,6 +27,13 @@ const SearchField = ({ lang, onClose, setQuery, query, dictionary }) => {
 	const [filteredProducts, setFilteredProducts] = useState([]);
 
 	const ref = useRef(null);
+	const inputRef = useRef(null);
+
+	useEffect(() => {
+		if (inputRef.current) {
+			inputRef.current.focus();
+		}
+	}, []);
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -78,6 +85,7 @@ const SearchField = ({ lang, onClose, setQuery, query, dictionary }) => {
 				}}
 			>
 				<Input
+					ref={inputRef}
 					height={0}
 					pt={'25px'}
 					pb={'25px'}

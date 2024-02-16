@@ -50,10 +50,7 @@ const schema = z
 			.string()
 			.trim()
 			.min(1, { message: 'required' })
-			.regex(
-				new RegExp(/^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/),
-				'invalid'
-			),
+			.regex(new RegExp(/(?:\+?\d{1,3}[-()]?)?\d{7,10}/), 'invalid'),
 	})
 	.partial();
 
@@ -149,8 +146,10 @@ export const logout = (prevState, formData) => {
 		cookies().delete('userId');
 		cookies().delete('jwt');
 
-		revalidatePath(`/`);
-		redirect(`/${lang}/`);
+		// revalidatePath(`/`);
+
+		// redirect(`/${lang}/`);
+		return { status: 200 };
 	} catch (error) {
 		console.error(error);
 
@@ -256,12 +255,14 @@ export const delAddressAction = async (prevState, formData) => {
 };
 
 export async function submitProductToBag(prevState, formData) {
-	const { count, goodId, goodPrice } = formData;
-
+	// const { count, goodId, goodPrice, uid, lang } = formData;
+	const { count, goodId, goodPrice } = Object.fromEntries(formData);
 	try {
 		const res = await fetchAddToBag(count, goodId, goodPrice);
 		if (res?.status === 200) {
-			revalidatePath(`/`);
+			return {
+				status: res?.status,
+			};
 		}
 	} catch (error) {
 		return { message: error.message };
@@ -269,7 +270,7 @@ export async function submitProductToBag(prevState, formData) {
 }
 
 export async function updateAllGoodsInBag(prevState, formData) {
-	const { bagPrice, goods, lang } = formData;
+	const { bagPrice, goods } = formData;
 
 	try {
 		const res = await fetchUpdateAllGoodsInBag(goods, bagPrice);
@@ -277,11 +278,15 @@ export async function updateAllGoodsInBag(prevState, formData) {
 		if (res.error) {
 			throw new Error(res.error);
 		}
+
+		if (res?.status === 200) {
+			return {
+				status: res?.status,
+			};
+		}
 	} catch (error) {
 		return { isError: true, message: 'Someting goes wrong. Try again please' };
 	}
-	revalidatePath(`/${lang}/order`);
-	redirect(`/${lang}/order`);
 }
 
 export async function deleteProductFromBag(prevState, formData) {
@@ -304,10 +309,9 @@ export async function submitGoodToFavorite(prevState, formData) {
 		const response = await fetchHandleFavorites(goodId);
 
 		if (response?.status === 200) {
-			revalidatePath('/');
-
 			return {
 				status: response?.status,
+				totalFavorites: response.goods.length,
 			};
 		}
 	} catch (error) {

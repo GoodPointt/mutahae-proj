@@ -160,7 +160,7 @@ const Shipping = ({
 								width: '3px',
 							},
 							'&::-webkit-scrollbar-thumb': {
-								backgroundColor: '#A28445',
+								background: '#A28445',
 								borderRadius: '2px',
 							},
 						}}

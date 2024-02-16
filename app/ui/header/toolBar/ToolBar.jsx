@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 import { Box, Button, Flex, useDisclosure } from '@chakra-ui/react';
@@ -14,7 +14,7 @@ import FavoriteNavIcon from '../../svg/FavoriteNavIcon';
 import ProfileNavIcon from '../../svg/ProfileNavIcon';
 import Search from '../../svg/Search';
 
-import { useQueryState } from 'nuqs';
+import { parseAsFloat, useQueryState } from 'nuqs';
 
 const ToolBar = ({
 	lang,
@@ -22,7 +22,7 @@ const ToolBar = ({
 	bagData,
 	dictionary,
 	bagLength,
-	favoritesLength,
+	favorites,
 	displayIcons = [
 		'SEARCH_ICON',
 		'PROFILE_ICON',
@@ -33,6 +33,16 @@ const ToolBar = ({
 	const { isOpen = false, onOpen, onClose } = useDisclosure();
 	const [variant, setVariant] = useState();
 	const [query, setQuery] = useQueryState('query');
+	const [favorite] = useQueryState(
+		'favs',
+		parseAsFloat.withDefault(
+			JSON.parse(localStorage.getItem('favs'))?.length || 0
+		)
+	);
+
+	useEffect(() => {
+		localStorage.setItem('favs', JSON.stringify(favorites));
+	}, [favorites]);
 
 	const mapIcon = {
 		SEARCH_ICON: <Search />,
@@ -51,7 +61,7 @@ const ToolBar = ({
 				style={{ position: 'relative' }}
 			>
 				<FavoriteNavIcon />
-				{favoritesLength !== 0 && (
+				{favorite !== 0 && (
 					<Box
 						pos={'absolute'}
 						borderRadius={'50%'}
@@ -67,7 +77,7 @@ const ToolBar = ({
 						fontSize={'10px'}
 						color={'#fff'}
 					>
-						{favoritesLength}
+						{favorite}
 					</Box>
 				)}
 			</Link>
@@ -121,6 +131,22 @@ const ToolBar = ({
 		setQuery(null);
 		onClose();
 	};
+
+	// useEffect(() => {
+	// 	const updateAllBag = async () => {
+	// 		const url =
+	// 			process.env.NEXT_PUBLIC_STRAPI_API_URL +
+	// 			`/api/bags/${66}?populate=goods`;
+
+	// 		try {
+	// 			// const res = await axios.put(url, data: {goods:  []})
+	// 		} catch (error) {
+
+	// 		}
+	// 	};
+	// 	if (!isOpen && isDifferentCount) {
+	// 	}
+	// });
 
 	return (
 		<>

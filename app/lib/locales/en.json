@@ -189,12 +189,12 @@
 	"benefits": {
 		"title": "Wood bringing nature to your home – quality and admiration in every board and beam!",
 		"benefitsList": [
-			"Expertise and quality in every project, capturing the authentic feel of oak wood.",
-			"Expertise and quality in every project, capturing the authentic feel of oak wood.",
-			"Expertise and quality in every project, capturing the authentic feel of oak wood.",
-			"Expertise and quality in every project, capturing the authentic feel of oak wood.",
-			"Expertise and quality in every project, capturing the authentic feel of oak wood.",
-			"Expertise and quality in every project, capturing the authentic feel of oak wood."
+			"Mastery and quality in every project – Our company emphasizes a high level of professionalism and quality of work, which promises reliability and longevity of our products.",
+			"Authenticity of materials – Special attention is given to the use of genuine oak wood, ensuring aesthetic appeal and the traditional qualities of the material.",
+			"Heightened attention to detail – Our company's approach involves meticulous work on every detail, which is important for clients seeking individuality and sophistication in finishing.",
+			"Sustainable resource use – A preference for oak wood also indicates a commitment to environmentally sustainable practices, important for modern consumers.",
+			"Versatility of application – Oak timber is known for its strength and durability, making it the ideal choice for various construction and finishing works.",
+			"Aesthetic value – Oak possesses a classic beauty that can bring warmth and richness to any interior, which may be a key factor in choosing our company."
 		]
 	},
 	"profileMobileMenu": {
@@ -226,7 +226,12 @@
 	"orderThankYou": {
 		"title": "Thank you for choosing Mutag Haetz!",
 		"message": "Our manager will contact you within 24 hours.",
-		"button": "home"
+		"button": "Catalog"
+	},
+	"orderReject": {
+		"title": " Something went wrong.",
+		"message": "Your order has not been processed. Please contact us by phone or fill out a form for assistance.",
+		"button": "Contact Us"
 	},
 	"searchField": {
 		"search": "Search...",
@@ -254,7 +259,25 @@
 				"phone": "Phone",
 				"btn": "Save",
 				"success": "Personal information updated successfully",
-				"error": "Oops! Unable to update personal information"
+				"error": "Oops! Unable to update personal information",
+				"validation": {
+					"firstName": {
+						"required": "First name is required",
+						"invalid": "First name should contain only alphabets"
+					},
+					"lastName": {
+						"required": "Last name is required",
+						"invalid": "Last name should contain only alphabets"
+					},
+					"email": {
+						"required": "Email is required",
+						"invalid": "Email is not valid"
+					},
+					"phone": {
+						"required": "Phone number is required",
+						"invalid": "Phone number is not valid"
+					}
+				}
 			}
 		},
 		"historyOfOrders": {
@@ -267,7 +290,14 @@
 			"confirmPassword": "Сonfirm Password",
 			"btn": "Save",
 			"success": "Password updated successfully",
-			"error": "Password update failed. Try again."
+			"error": "Password update failed. Try again.",
+			"validation": {
+				"password": {
+					"required": "Password is required",
+					"invalid": "Password must be at least 6 characters long",
+					"not_equal": "Passwords must be equal"
+				}
+			}
 		},
 		"addAddressForm": {
 			"title": "Add new address",
@@ -300,6 +330,7 @@
 		{ "width": "Sort by width" },
 		{ "length": "Sort by length" }
 	],
+	"sortBtn": "Sort",
 	"bag": {
 		"sizes": "Sizes: ",
 		"title": "Bag",

@@ -34,6 +34,7 @@ const getFavorites = async () => {
 	} catch (e) {
 		console.error(e.response?.status);
 		console.error(e.message);
+
 		if (e.response?.status === 401) {
 			return redirect('/expired?expired=true');
 		} else return notFound();
@@ -78,6 +79,7 @@ const handleFavorites = async goodId => {
 	} catch (error) {
 		console.error(error.response?.status);
 		console.error(error.message);
+
 		if (error.response?.status === 401) redirect('/profile?expired=true');
 		else return notFound();
 	}
@@ -112,7 +114,7 @@ const getOrders = async () => {
 		profileInstance.defaults.headers.authorization = `Bearer ${token}`;
 
 		const response = await profileInstance.get(
-			`/api/orders?populate=deep,4&filters[user][id][$eq]=${userId}`
+			`/api/orders?populate=deep,4&filters[user][id][$eq]=${userId}&sort[0]=createdAt:desc`
 		);
 
 		const { data } = response.data;
@@ -125,13 +127,14 @@ const getOrders = async () => {
 	} catch (e) {
 		console.error(e.response?.status);
 		console.error(e.message);
+
 		if (e.response?.status === 401) redirect('/profile?expired=true');
 		else return notFound();
 	}
 };
 export const fetchOrders = cache(getOrders);
 
-export const fetchUserData = async () => {
+const getUserData = async () => {
 	try {
 		const userId = cookies().get('userId')?.value;
 
@@ -153,7 +156,7 @@ export const fetchUserData = async () => {
 	}
 };
 
-// export const fetchUserData = cache(getUserData);
+export const fetchUserData = cache(getUserData);
 
 export const updateUserData = async userData => {
 	try {
@@ -203,6 +206,7 @@ export const changePassword = async dataPassword => {
 	} catch (error) {
 		console.error(error.response?.status);
 		console.error(error);
+
 		if (error.response?.status === 401) redirect('/profile?expired=true');
 		else
 			return {
@@ -237,6 +241,7 @@ export const addUserAddress = async dataAddress => {
 	} catch (error) {
 		console.error(error.response?.status);
 		console.error(error.message);
+
 		if (error.response?.status === 401) {
 			return redirect('/expired?expired=true');
 		} else
@@ -264,6 +269,7 @@ export const deleteUserAddress = async addressId => {
 	} catch (error) {
 		console.error(error.response?.status);
 		console.error(error.message);
+
 		if (error.response?.status === 401) {
 			return redirect('/expired?expired=true');
 		} else
@@ -299,6 +305,7 @@ export const fetchUserAddress = async () => {
 	} catch (e) {
 		console.error(e.response?.status);
 		console.error(e.message);
+		if (e.message === 'Not authorized') redirect('/auth/login');
 		if (e.response?.status === 401) {
 			return redirect('/expired?expired=true');
 		} else return { error: 'Server error please try again later.' };

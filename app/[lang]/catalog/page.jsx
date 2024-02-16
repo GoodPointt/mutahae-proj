@@ -7,7 +7,7 @@ import {
 	fetchContacts,
 	fetchListCategoriesAndSubCategories,
 } from '@/app/lib/api/instance';
-import { fetchFavorites } from '@/app/lib/api/profileInstance';
+// import { fetchFavorites } from '@/app/lib/api/profileInstance';
 import { getDictionary } from '@/app/lib/locales/dictionary';
 
 export const metadata = {
@@ -31,14 +31,6 @@ const CatalogPage = async ({ params: { lang } }) => {
 	} = dictionary;
 
 	const contacts = await fetchContacts(lang);
-	let favorites = null;
-
-	if (userId) {
-		const fetchedFavorites = await fetchFavorites();
-		if (fetchedFavorites && fetchedFavorites.length > 0) {
-			favorites = fetchedFavorites[0].goods;
-		}
-	}
 
 	return (
 		<>
@@ -46,8 +38,7 @@ const CatalogPage = async ({ params: { lang } }) => {
 				lang={lang}
 				heading={navItems[1].title}
 				data={data}
-				userId={userId}
-				favorites={favorites}
+				isAuth={!!userId}
 				dictionary={dictionary}
 			/>
 			<Contact lang={lang} dictionary={dictionary} contacts={contacts} />
