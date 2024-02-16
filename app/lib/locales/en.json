@@ -254,7 +254,25 @@
 				"phone": "Phone",
 				"btn": "Save",
 				"success": "Personal information updated successfully",
-				"error": "Oops! Unable to update personal information"
+				"error": "Oops! Unable to update personal information",
+				"validation": {
+					"firstName": {
+						"required": "First name is required",
+						"invalid": "First name should contain only alphabets"
+					},
+					"lastName": {
+						"required": "Last name is required",
+						"invalid": "Last name should contain only alphabets"
+					},
+					"email": {
+						"required": "Email is required",
+						"invalid": "Email is not valid"
+					},
+					"phone": {
+						"required": "Phone number is required",
+						"invalid": "Phone number is not valid"
+					}
+				}
 			}
 		},
 		"historyOfOrders": {
@@ -267,7 +285,14 @@
 			"confirmPassword": "Сonfirm Password",
 			"btn": "Save",
 			"success": "Password updated successfully",
-			"error": "Password update failed. Try again."
+			"error": "Password update failed. Try again.",
+			"validation": {
+				"password": {
+					"required": "Password is required",
+					"invalid": "Password must be at least 6 characters long",
+					"not_equal": "Passwords must be equal"
+				}
+			}
 		},
 		"addAddressForm": {
 			"title": "Add new address",
