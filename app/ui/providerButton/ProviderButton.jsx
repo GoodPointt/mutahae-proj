@@ -1,5 +1,8 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 import { Button, Center, Text } from '@chakra-ui/react';
 
@@ -15,6 +18,8 @@ const ProviderButton = ({
 }) => {
 	const backendUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL;
 	let icon;
+
+	const pathname = usePathname();
 
 	switch (variant) {
 		case 'google':
@@ -35,6 +40,11 @@ const ProviderButton = ({
 			<Button
 				as={Link}
 				href={`${backendUrl}/api/connect/${variant}`}
+				onClick={() => {
+					if (!pathname.includes('/auth'))
+						localStorage.setItem('callbackPath', JSON.stringify(pathname));
+					// : null;
+				}}
 				rel="noopener noreferrer"
 				borderRadius={'2px'}
 				w={'full'}
