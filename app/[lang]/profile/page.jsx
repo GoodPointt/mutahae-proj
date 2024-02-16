@@ -46,7 +46,9 @@ const Profile = async ({ params: { lang } }) => {
 			/>
 			<AddressSection userAddress={userAddress} dictionary={addressSection} />
 			<AddressForm dictionary={addAddressForm} />
-			<RessetPasswordForm ressetPassDictionary={ressetPasswordForm} />
+			{userData?.provider === 'local' && (
+				<RessetPasswordForm ressetPassDictionary={ressetPasswordForm} />
+			)}
 		</>
 	);
 };

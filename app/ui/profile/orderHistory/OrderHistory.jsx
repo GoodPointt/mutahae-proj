@@ -39,7 +39,7 @@ export const OrderHistory = ({ lang, orders }) => {
 						<>
 							<Flex
 								key={id}
-								borderTop={index > 0 ? '1px solid #ccc' : null}
+								borderTop={index > 0 ? '1px solid #a98841' : null}
 								pt={index > 0 ? '30px' : null}
 								pb={index !== orders.length - 1 ? '30px' : null}
 							>

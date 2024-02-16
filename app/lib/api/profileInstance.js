@@ -115,7 +115,7 @@ const getOrders = async () => {
 		profileInstance.defaults.headers.authorization = `Bearer ${token}`;
 
 		const response = await profileInstance.get(
-			`/api/orders?populate=deep,4&filters[user][id][$eq]=${userId}`
+			`/api/orders?populate=deep,4&filters[user][id][$eq]=${userId}&sort[0]=createdAt:desc`
 		);
 
 		const { data } = response.data;
