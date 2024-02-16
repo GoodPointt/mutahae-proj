@@ -10,7 +10,7 @@ import ProductItem from '../../productItem/ProductItem';
 export const FavoritesContent = ({
 	// favorites,
 	dictionary,
-	// lang,
+	lang,
 }) => {
 	// eslint-disable-next-line no-unused-vars
 	const [favs, setFavs] = useState(
@@ -68,7 +68,8 @@ export const FavoritesContent = ({
 
 						return (
 							<ProductItem
-								// lang={locale}
+								key={good.id}
+								lang={lang}
 								product={good}
 								// product={{
 								// 	isFavorite: true,
@@ -82,7 +83,6 @@ export const FavoritesContent = ({
 								// 			? localizations.descShort
 								// 			: descShort,
 								// }}
-								key={good.id}
 							/>
 						);
 					})}
