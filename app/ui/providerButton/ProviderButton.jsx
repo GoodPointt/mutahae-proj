@@ -7,7 +7,12 @@ import FbIcon from '../svg/FbIcon';
 import GoogleIcon from '../svg/GoogleIcon';
 import TelegramIcon from '../svg/TelegramIcon';
 
-const ProviderButton = ({ style, variant, dictionary }) => {
+const ProviderButton = ({
+	style,
+	variant,
+	dictionary,
+	minimalistic = false,
+}) => {
 	const backendUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL;
 	let icon;
 
@@ -34,7 +39,7 @@ const ProviderButton = ({ style, variant, dictionary }) => {
 				borderRadius={'2px'}
 				w={'full'}
 				variant={'outline'}
-				border={'1px solid #3B3D46'}
+				border={!minimalistic ? '1px solid #3B3D46' : 'none'}
 				bgColor={'transparent'}
 				fontSize={'14px'}
 				fontWeight={500}
@@ -46,7 +51,11 @@ const ProviderButton = ({ style, variant, dictionary }) => {
 				<Center>
 					<Text>
 						{dictionary}
-						<Text as={'span'} textTransform={'capitalize'}>
+						<Text
+							as={'span'}
+							textTransform={'capitalize'}
+							textDecoration={minimalistic ? 'underline' : 'none'}
+						>
 							{' ' + variant.charAt(0).toUpperCase() + variant.slice(1)}
 						</Text>
 					</Text>

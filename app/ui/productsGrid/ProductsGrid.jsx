@@ -39,7 +39,13 @@ import {
 	useQueryState,
 } from 'nuqs';
 
-const ProductsGrid = ({ lang, heading, data: categoriesList, dictionary }) => {
+const ProductsGrid = ({
+	lang,
+	heading,
+	data: categoriesList,
+	dictionary,
+	isAuth,
+}) => {
 	const [renderList, setRenderList] = useState([]);
 	const [categories, setCategories] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
@@ -351,6 +357,7 @@ const ProductsGrid = ({ lang, heading, data: categoriesList, dictionary }) => {
 								<SkeletotonClientProductGrid />
 							) : (
 								<ProductList
+									isAuth={isAuth}
 									list={renderList}
 									lang={lang}
 									isLoading={isLoading}
@@ -363,6 +370,7 @@ const ProductsGrid = ({ lang, heading, data: categoriesList, dictionary }) => {
 									<SkeletotonClientProductGrid />
 								) : (
 									<ProductList
+										isAuth={isAuth}
 										list={renderList}
 										lang={lang}
 										isLoading={isLoading}
