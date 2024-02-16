@@ -6,7 +6,7 @@ import { flattenAttributes } from '@/app/lib/utils/flattenAttributes';
 
 import ProductItem from '../../productItem/ProductItem';
 
-const ProductList = ({ list, lang }) => {
+const ProductList = ({ list, lang, isAuth }) => {
 	const [favs, setFavs] = useState(
 		typeof window !== 'undefined'
 			? JSON.parse(localStorage.getItem('favs'))
@@ -30,6 +30,7 @@ const ProductList = ({ list, lang }) => {
 			{list &&
 				list.map(product => (
 					<ProductItem
+						isAuth={isAuth}
 						favs={favs}
 						setFavs={setFavs}
 						key={product.id}

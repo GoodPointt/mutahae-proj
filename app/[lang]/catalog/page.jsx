@@ -38,7 +38,7 @@ const CatalogPage = async ({ params: { lang } }) => {
 				lang={lang}
 				heading={navItems[1].title}
 				data={data}
-				userId={userId}
+				isAuth={!!userId}
 				dictionary={dictionary}
 			/>
 			<Contact lang={lang} dictionary={dictionary} contacts={contacts} />

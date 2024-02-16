@@ -10,11 +10,12 @@ import { Box, Button, Heading, Text, useMediaQuery } from '@chakra-ui/react';
 import { submitGoodToFavorite } from '@/app/lib/actions';
 import { flattenAttributes } from '@/app/lib/utils/flattenAttributes';
 
+import CallToAuth from '../callToAuth/CallToAuth';
 import FavBtn from '../singleProduct/FavBtn/FavBtn';
 
 import { parseAsFloat, useQueryState } from 'nuqs';
 
-const ProductItem = ({ product, lang, favs, setFavs }) => {
+const ProductItem = ({ product, lang, favs, setFavs, isAuth }) => {
 	const [isModileScreen] = useMediaQuery('(max-width: 1024px)');
 	const [isFavorite, setIsFavorite] = useState(
 		favs?.some(item => item.id === product.id)
@@ -143,7 +144,7 @@ const ProductItem = ({ product, lang, favs, setFavs }) => {
 					</Box>
 				</article>
 			</Link>
-			{favs ? (
+			{isAuth ? (
 				<form
 					action={() => {
 						formAction({ goodId: product.id });
@@ -161,7 +162,9 @@ const ProductItem = ({ product, lang, favs, setFavs }) => {
 						isFavorite={isFavorite}
 					/>
 				</form>
-			) : null}
+			) : (
+				<CallToAuth />
+			)}
 		</Box>
 	);
 };
