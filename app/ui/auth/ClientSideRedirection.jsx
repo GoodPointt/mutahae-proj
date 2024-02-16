@@ -14,6 +14,11 @@ import { useLocalBag } from '@/app/lib/hooks/useLocalBag';
 import { setCookie } from 'cookies-next';
 
 const ClientSideRedirection = ({ dictionary, provider, lang }) => {
+	const [callbackPath] = useState(
+		typeof window !== 'undefined'
+			? JSON.parse(localStorage.getItem('callbackPath'))
+			: `/${lang}/`
+	);
 	const searchParams = useSearchParams();
 	const access_token = searchParams.get('access_token');
 	const router = useRouter();
@@ -32,6 +37,8 @@ const ClientSideRedirection = ({ dictionary, provider, lang }) => {
 			}
 		)
 			.then(res => {
+				localStorage.removeItem('callbackPath');
+
 				if (res.status !== 200) {
 					setTimeout(() => {
 						setText(dictionary.provider.error);
@@ -71,7 +78,7 @@ const ClientSideRedirection = ({ dictionary, provider, lang }) => {
 
 					setTimeout(() => {
 						setText(dictionary.provider.rederecting);
-						router.refresh();
+						router.replace(callbackPath || `/${lang}/`);
 					}, 200);
 				}
 			})
