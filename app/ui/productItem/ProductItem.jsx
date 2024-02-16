@@ -15,7 +15,7 @@ import FavBtn from '../singleProduct/FavBtn/FavBtn';
 
 import { parseAsFloat, useQueryState } from 'nuqs';
 
-const ProductItem = ({ product, lang, favs, setFavs, isAuth }) => {
+const ProductItem = ({ product, lang, favs, setFavs, isAuth = false }) => {
 	const [isModileScreen] = useMediaQuery('(max-width: 1024px)');
 	const [isFavorite, setIsFavorite] = useState(
 		favs?.some(item => item.id === product.id)
