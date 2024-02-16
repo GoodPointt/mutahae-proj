@@ -59,7 +59,7 @@ const Bag = ({ bagData, hasToken, onClose, dictionary }) => {
 			try {
 				const url =
 					process.env.NEXT_PUBLIC_STRAPI_API_URL +
-					`/api/bags/${66}?populate=goods`;
+					`/api/bags/${bagData.id}?populate=goods`;
 				await axios.put(
 					url,
 					{ data: { goods: flatten } },

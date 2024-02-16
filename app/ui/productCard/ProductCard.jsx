@@ -16,7 +16,6 @@ const ProductCard = ({
 	good,
 	setGoods,
 	productCount,
-	// bagPrice,
 	setIsDeleted,
 	dictionary,
 }) => {
@@ -97,7 +96,7 @@ const ProductCard = ({
 						{(locale === 'he' && lang === 'he') ||
 						(locale === 'en' && lang === 'en')
 							? title
-							: localizations.data[0]?.title}
+							: localizations[0]?.title}
 					</Heading>
 					{price && <Text>{price} ₪</Text>}
 					{sizes && (
@@ -109,7 +108,7 @@ const ProductCard = ({
 						{(locale === 'he' && lang === 'he') ||
 						(locale === 'en' && lang === 'en')
 							? type
-							: localizations.data[0]?.type}
+							: localizations[0]?.type}
 					</Text>
 				</List>
 			</Flex>
