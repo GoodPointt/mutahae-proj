@@ -60,7 +60,12 @@ const LoginForm = ({ dictionary, lang }) => {
 			<FormControl isInvalid={emailError} pb="25px">
 				<VisuallyHiddenInput
 					name="localGoods"
-					value={JSON.stringify(localGoods)}
+					value={JSON.stringify(
+						localGoods.map(({ count, good: { data } }) => ({
+							good: data,
+							count,
+						}))
+					)}
 					onChange={() => setLocalGoods()}
 				/>
 				<VisuallyHiddenInput name="lang" defaultValue={lang} />

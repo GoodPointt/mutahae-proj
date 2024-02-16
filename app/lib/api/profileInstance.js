@@ -37,7 +37,7 @@ const getFavorites = async () => {
 
 		if (e.response?.status === 401) {
 			return redirect('/expired?expired=true');
-		} else return notFound();
+		}
 	}
 };
 
@@ -81,28 +81,26 @@ const handleFavorites = async goodId => {
 		console.error(error.message);
 
 		if (error.response?.status === 401) redirect('/profile?expired=true');
-		else return notFound();
 	}
 };
 
 export const fetchHandleFavorites = cache(handleFavorites);
 
-const isFavorite = async goodId => {
-	try {
-		const response = await fetchFavorites();
+// const isFavorite = async goodId => {
+// 	try {
+// 		const response = await fetchFavorites();
 
-		const favorites = flattenAttributes(response[0].goods);
+// 		const favorites = flattenAttributes(response[0].goods);
 
-		return favorites.some(good => good.id === goodId);
-	} catch (error) {
-		console.error(error.response?.status);
-		console.error(error.message);
-		if (error.response?.status === 401) redirect('/profile?expired=true');
-		else return notFound();
-	}
-};
+// 		return favorites.some(good => good.id === goodId);
+// 	} catch (error) {
+// 		console.error(error.response?.status);
+// 		console.error(error.message);
+// 		if (error.response?.status === 401) redirect('/profile?expired=true');
+// 	}
+// };
 
-export const fetchIsFavorite = cache(isFavorite);
+// export const fetchIsFavorite = cache(isFavorite);
 
 const getOrders = async () => {
 	try {

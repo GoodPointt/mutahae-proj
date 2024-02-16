@@ -8,7 +8,6 @@ import ProductCard from '../../productCard/ProductCard';
 
 const ListProductToBuy = ({
 	goodsToMap,
-	setGoodsToMap,
 	setLocalGoods,
 	authToken,
 	dictionary,
@@ -36,7 +35,7 @@ const ListProductToBuy = ({
 						>
 							<ProductCard
 								dictionary={dictionary}
-								setGoods={authToken ? setGoodsToMap : setLocalGoods}
+								setGoods={setLocalGoods}
 								hasToken={authToken}
 								productCount={count}
 								good={flattenAttributes(good)}

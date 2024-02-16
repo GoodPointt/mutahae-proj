@@ -96,7 +96,7 @@ const ContactInfo = ({
 		: discountedBagPrice;
 
 	useEffect(() => {
-		setGoodsToMap(authToken ? orderData?.goods || [] : localGoods || []);
+		setGoodsToMap(localGoods);
 	}, [authToken, orderData, localGoods]);
 
 	useEffect(() => {
@@ -179,9 +179,8 @@ const ContactInfo = ({
 			<Box position="relative">
 				{goodsToMap.length !== 0 && (
 					<ListProductToBuy
-						goodsToMap={goodsToMap}
+						goodsToMap={localGoods}
 						dictionary={dictionary}
-						setGoodsToMap={setGoodsToMap}
 						setLocalGoods={setLocalGoods}
 						authToken={authToken}
 						orderData={orderData}

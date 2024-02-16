@@ -36,7 +36,9 @@ const ToolBar = ({
 	const [favorite] = useQueryState(
 		'favs',
 		parseAsFloat.withDefault(
-			JSON.parse(localStorage.getItem('favs'))?.length || 0
+			typeof window !== 'undefined' && hasToken
+				? JSON.parse(localStorage.getItem('favs'))?.length
+				: 0
 		)
 	);
 

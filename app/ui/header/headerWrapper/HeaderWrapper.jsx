@@ -40,17 +40,21 @@ const HeaderWrapper = ({
 		setHasToken(isAuth);
 
 		if (isAuth) {
-			setLocalBag([]);
+			const localBagGoodsIds = localBag.map(
+				({ good }) => good.data.attributes.uid
+			);
+			const filteredGoods =
+				bagData &&
+				bagData.goods.filter(
+					({ good }) => !localBagGoodsIds.includes(good.data.attributes.uid)
+				);
+			setLocalBag([...localBag, ...filteredGoods]);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isAuth]);
 
 	useEffect(() => {
-		if (hasToken) {
-			bagData && bagData.goods && setBagLength(bagData.goods.length);
-		} else {
-			setBagLength(localBag.length);
-		}
+		setBagLength(localBag.length);
 	}, [bagData, hasToken, localBag.length, setLocalBag]);
 
 	useEffect(() => {

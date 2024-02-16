@@ -1,14 +1,12 @@
 'use client';
 
-import React, { useEffect, useMemo, useState } from 'react';
-import { useFormState } from 'react-dom';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 
 import { Box, Button, Flex, Heading, List, Text } from '@chakra-ui/react';
 
-import { updateAllGoodsInBag } from '@/app/lib/actions';
 import { useLocalBag } from '@/app/lib/hooks/useLocalBag';
 import { flattenAttributes } from '@/app/lib/utils/flattenAttributes';
 
@@ -17,81 +15,80 @@ import SubmitButton from '../submitButton/SubmitButton';
 import ArrowLeft from '../svg/ArrowLeft';
 import ArrowRight from '../svg/ArrowRight';
 
+import axios from 'axios';
+
 const Bag = ({ bagData, hasToken, onClose, dictionary }) => {
-	const [goodsToMap, setGoodsToMap] = useState([]);
 	const [localGoods, setLocalGoods] = useLocalBag('localBag', []);
-
-	const initialState = {
-		message: '',
-	};
-
-	const [state, formAction] = useFormState(updateAllGoodsInBag, initialState);
+	const [isDeleted, setIsDeleted] = useState(null);
 
 	const router = useRouter();
-	const [discount, setDiscount] = useState(false);
 
-	const totalPrice = goodsToMap.reduce((acc, { count, good }) => {
-		const flattenGood = flattenAttributes(good);
-
-		return acc + flattenGood.price * count;
+	const totalPrice = localGoods.reduce((acc, { count, good: { data } }) => {
+		return acc + data.attributes.price * count;
 	}, 0);
-
-	// useEffect(() => {
-	// 	const isDifferentCount =
-	// 		hasToken &&
-	// 		goodsToMap.some((good, index) => {
-	// 			return bagData && bagData.goods[index].count !== good.count;
-	// 		});
-	// }, [bagData, goodsToMap, hasToken]);
 
 	const { lang } = useParams();
 
-	const discountedPrice = useMemo(() => {
-		if (totalPrice > 5000) {
-			setDiscount(true);
+	const onOrderClick = () => {
+		router.push(`/${lang}/order`);
+		onClose();
+	};
 
-			return Math.floor(totalPrice - totalPrice * 0.05);
-		}
-		if (totalPrice > 10000) {
-			setDiscount(true);
+	const discountThreshold1 = 5000;
+	const discountThreshold2 = 10000;
+	const discount1 = 0.05;
+	const discount2 = 0.08;
 
-			return Math.floor(totalPrice - totalPrice * 0.08);
-		}
+	let discount = 0;
 
-		setDiscount(false);
+	if (totalPrice > discountThreshold2) {
+		discount = discount2;
+	} else if (totalPrice > discountThreshold1) {
+		discount = discount1;
+	}
 
-		return null;
-	}, [totalPrice]);
-
-	useEffect(() => {
-		if (state?.status === 200) {
-			router.push(`/${lang}/order`);
-			onClose();
-		}
-		if (state?.message) {
-			router.push(`/${lang}/not-found`);
-		}
-	}, [lang, onClose, router, state]);
+	const discountedBagPrice = Math.round(totalPrice * (1 - discount));
 
 	useEffect(() => {
-		if (!hasToken) {
-			setGoodsToMap(localGoods || []);
-		} else {
-			const { goods } = bagData || {};
-			setGoodsToMap(goods || []);
+		const flatten = localGoods.map(({ count, good: { data } }) => ({
+			good: data,
+			count,
+		}));
+
+		const deleteGoodFromServerBag = async () => {
+			try {
+				const url =
+					process.env.NEXT_PUBLIC_STRAPI_API_URL +
+					`/api/bags/${66}?populate=goods`;
+				await axios.put(
+					url,
+					{ data: { goods: flatten } },
+					{
+						headers: {
+							'Content-Type': 'application/json',
+						},
+					}
+				);
+			} catch (error) {
+				console.error(error);
+			}
+		};
+		if (isDeleted && hasToken) {
+			deleteGoodFromServerBag();
+			setIsDeleted(false);
 		}
-	}, [hasToken, bagData, localGoods, setLocalGoods]);
+	}, [hasToken, isDeleted, localGoods]);
 
 	return (
 		<Flex flexDir={'column'}>
 			<Heading as={'h2'}>{dictionary.bag.title}</Heading>
-			{goodsToMap.length !== 0 ? (
+			{localGoods.length !== 0 ? (
 				<>
 					<List>
-						{goodsToMap.map(({ good, count }) => (
+						{localGoods.map(({ count, good }) => (
 							<Box
 								as="li"
-								key={good.data ? good.data.attributes.uid : good.attributes.uid}
+								key={good.data.id}
 								py={'30px'}
 								borderBottom={'1px #A28445 solid'}
 							>
@@ -99,10 +96,11 @@ const Bag = ({ bagData, hasToken, onClose, dictionary }) => {
 									hasToken={hasToken}
 									productCount={count}
 									dictionary={dictionary}
-									goods={goodsToMap}
+									setIsDeleted={setIsDeleted}
+									goods={localGoods}
 									bagId={hasToken && bagData.id}
 									good={flattenAttributes(good)}
-									setGoods={hasToken ? setGoodsToMap : setLocalGoods}
+									setGoods={setLocalGoods}
 									bagPrice={totalPrice}
 								/>
 							</Box>
@@ -120,61 +118,30 @@ const Bag = ({ bagData, hasToken, onClose, dictionary }) => {
 								>
 									{totalPrice} ₪
 								</Text>
-								{discount && (
+								{discount !== 0 && (
 									<Text
 										as="span"
 										fontSize={'16px'}
 										color={'#f84147'}
 										textAlign={'end'}
 									>
-										{discount && discountedPrice}
+										{discountedBagPrice} ₪
 									</Text>
 								)}
 							</Box>
 						</Flex>
-						{hasToken ? (
-							<form
-								action={() => {
-									formAction({ goods: goodsToMap, bagPrice: totalPrice, lang });
-								}}
-							>
-								<SubmitButton
-									maxW={{ base: '100%', md: '360px' }}
-									bgColor={'#A28445'}
-									textColor={'#fff'}
-									borderRadius={'0px'}
-									_hover={{ bgColor: '#81672e' }}
-									message={dictionary.buttons.loaders.order}
-								>
-									{dictionary.buttons.order} {totalPrice} ₪
-								</SubmitButton>
-							</form>
-						) : (
-							<Button
-								variant={'unstyled'}
-								maxW={{ base: '100%', lg: '360px' }}
-								bgColor={'#A28445'}
-								textColor={'#fff'}
-								borderRadius={'0px'}
-								_hover={{ bgColor: '#81672e' }}
-								onClick={onClose}
-							>
-								<Link
-									href={`/${lang}/order`}
-									style={{
-										display: 'flex',
-										width: '100%',
-										gap: '5px',
-										height: '100%',
-										alignItems: 'center',
-										justifyContent: 'center',
-									}}
-								>
-									<Text as={'span'}>{dictionary.buttons.order}</Text>
-									<Text as={'span'}>{totalPrice} ₪</Text>
-								</Link>
-							</Button>
-						)}
+
+						<SubmitButton
+							maxW={{ base: '100%', md: '360px' }}
+							bgColor={'#A28445'}
+							textColor={'#fff'}
+							onClick={onOrderClick}
+							borderRadius={'0px'}
+							_hover={{ bgColor: '#81672e' }}
+							message={dictionary.buttons.loaders.order}
+						>
+							{dictionary.buttons.order} {totalPrice} ₪
+						</SubmitButton>
 					</Flex>
 				</>
 			) : (

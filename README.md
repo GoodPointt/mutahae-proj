@@ -4,31 +4,35 @@ Project is under construction... 🛠️👷‍♂️
 
 ### In the 0.2 version of our app, we've introduced several significant updates to enhance user experience and functionality:
 
-
 1. **Authentication Enhancements:**
- 	-	Users can now authenticate using either email or Google provider.
-	- Implemented password reset functionality for added convenience.
-	- Introduced a feature for recovering forgotten passwords securely.
+
+   - Users can now authenticate using either email or Google provider.
+   - Implemented password reset functionality for added convenience.
+   - Introduced a feature for recovering forgotten passwords securely.
 
 2. **User Profile Management:**
-	- Users can now access and manage their profile information.
-	- Enhanced profile management capabilities include updating contact information, delivery  addresses, phone numbers, and passwords.
+
+   - Users can now access and manage their profile information.
+   - Enhanced profile management capabilities include updating contact information, delivery addresses, phone numbers, and passwords.
 
 3. **Favorites List and Order History:**
-	- Introduced a favorites list feature for users to easily bookmark their preferred items.
-	- Added functionality for users to view their order history, providing insight into past purchases.
+
+   - Introduced a favorites list feature for users to easily bookmark their preferred items.
+   - Added functionality for users to view their order history, providing insight into past purchases.
 
 4. **Catalog of Wooden Products:**
-	- Implemented a comprehensive catalog of wooden products.
-	-	Enhanced the catalog with sorting, search, and filtering options for improved navigation and product discovery.
+
+   - Implemented a comprehensive catalog of wooden products.
+   - Enhanced the catalog with sorting, search, and filtering options for improved navigation and product discovery.
 
 5. **Shopping Cart and Ordering:**
-	-	Added a shopping cart feature for users to accumulate items before checkout.
-	-	Implemented an intuitive order page featuring contact and ordering forms for seamless purchasing.
+
+   - Added a shopping cart feature for users to accumulate items before checkout.
+   - Implemented an intuitive order page featuring contact and ordering forms for seamless purchasing.
 
 6. **Discount System:**
-	-	Introduced a discount system to provide users with promotional offers and incentives.
-	
+   - Introduced a discount system to provide users with promotional offers and incentives.
+
 These updates in version 0.2 aim to elevate the overall user experience by providing convenient authentication methods, robust profile management tools, an expanded catalog with advanced search capabilities, and streamlined purchasing processes, ultimately enhancing user satisfaction and engagement with our app.
 
 ### Version 0.1:

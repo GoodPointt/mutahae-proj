@@ -4,7 +4,7 @@ import { cookies } from 'next/headers';
 import { fetchOneProduct } from '@/app/lib/api/instance';
 import {
 	fetchBagByUserId,
-	fetchIsFavorite,
+	fetchFavorites,
 } from '@/app/lib/api/profileInstance';
 
 import SectionWrapper from '../../sectionWrapper/SectionWrapper';
@@ -17,11 +17,11 @@ const SingleProductContent = async ({ id, lang, dictionary }) => {
 	const product = await fetchOneProduct(id, lang);
 
 	let bagData;
-	let isFavorite;
+	let favorites;
 
 	if (userId) {
 		bagData = await fetchBagByUserId(userId);
-		isFavorite = await fetchIsFavorite(product.id);
+		favorites = await fetchFavorites(userId);
 	}
 
 	const totalPrice = userId
@@ -35,10 +35,10 @@ const SingleProductContent = async ({ id, lang, dictionary }) => {
 		<SectionWrapper pb={'60px'}>
 			<Suspense fallback={<SkeletonSingleProduct dictionary={dictionary} />}>
 				<SingleProduct
+					favorites={favorites && favorites[0].goods}
 					userId={userId}
 					product={product}
 					dictionary={dictionary}
-					isFavorite={isFavorite}
 					bagPrice={totalPrice}
 					bagData={bagData}
 				/>

@@ -8,7 +8,7 @@ import ProductItem from '../../productItem/ProductItem';
 
 const ProductList = ({ list, lang, isAuth }) => {
 	const [favs, setFavs] = useState(
-		typeof window !== 'undefined'
+		typeof window !== 'undefined' && isAuth
 			? JSON.parse(localStorage.getItem('favs'))
 			: []
 	);

@@ -5,6 +5,8 @@ import SectionWrapper from '@/app/ui/sectionWrapper/SectionWrapper';
 
 import { Link } from '@chakra-ui/next-js';
 
+import { flattenAttributes } from '@/app/lib/utils/flattenAttributes';
+
 import 'swiper/react';
 import 'swiper/css/free-mode';
 import 'swiper/css/navigation';
@@ -54,7 +56,7 @@ const CatalogSlider = ({ products: { data }, lang, heading }) => {
 				{data.length > 0 &&
 					data.map(product => (
 						<SwiperSlide key={product.attributes.uid}>
-							<ProductItem product={product} lang={lang} />
+							<ProductItem product={flattenAttributes(product)} lang={lang} />
 						</SwiperSlide>
 					))}
 			</Swiper>

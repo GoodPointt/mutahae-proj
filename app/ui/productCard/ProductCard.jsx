@@ -1,31 +1,28 @@
 'use client';
 import React, { useMemo, useState } from 'react';
 import Image from 'next/image';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 
 import { Box, Button, Flex, Grid, Heading, List, Text } from '@chakra-ui/react';
 
+import { useLocalBag } from '@/app/lib/hooks/useLocalBag';
 import { flattenAttributes } from '@/app/lib/utils/flattenAttributes';
 
 import Counter from '../singleProduct/Counter/Counter';
 import TotalBagPrice from '../singleProduct/TotalBagPrice/TotalBagPrice';
 import DeleteIcon from '../svg/DeleteIcon';
 
-import axios from 'axios';
-
 const ProductCard = ({
 	good,
-	hasToken,
 	setGoods,
 	productCount,
-	bagPrice,
+	// bagPrice,
+	setIsDeleted,
 	dictionary,
-	goods,
-	bagId,
 }) => {
 	const [count, setCount] = useState(productCount);
-	// const [, formAction] = useFormState(deleteProductFromBag);
-	const [isExist, setIsExist] = useState(true);
+	const [localGoods, setLocalGoods] = useLocalBag('localBag', []);
+
 	const {
 		uid,
 		img,
@@ -42,8 +39,6 @@ const ProductCard = ({
 
 	const { lang } = useParams();
 
-	const { refresh } = useRouter();
-
 	const sizes = useMemo(() => {
 		const sizesArray =
 			(locale === 'he' && lang === 'he') || (locale === 'en' && lang === 'en')
@@ -58,12 +53,12 @@ const ProductCard = ({
 	}, [lang, length, locale, localizations, thickness, width]);
 
 	const removeItemFromLocal = goodId => {
-		setGoods(() => {
-			const localGoods = JSON.parse(localStorage.getItem('localBag'));
+		const goodsWithoutDeleted = localGoods.filter(
+			({ good }) => good.data.attributes.uid !== goodId
+		);
 
-			return localGoods.filter(({ good }) => good.attributes.uid !== goodId);
-		});
-		window.dispatchEvent(new Event('storage'));
+		setLocalGoods(goodsWithoutDeleted);
+		setIsDeleted(true);
 	};
 
 	const handleCounterChange = newCount => {
@@ -78,39 +73,8 @@ const ProductCard = ({
 		});
 	};
 
-	const deleteGoodFromServerBag = async () => {
-		const goodsWithoutDeleted = goods.filter(
-			({ good }) => good.data.attributes.uid !== uid
-		);
-		try {
-			setIsExist(false);
-			const url =
-				process.env.NEXT_PUBLIC_STRAPI_API_URL +
-				`/api/bags/${bagId}?populate=goods`;
-
-			const response = await axios.put(
-				url,
-				{ data: { goods: goodsWithoutDeleted, bagPrice: bagPrice } },
-				{
-					headers: {
-						'Content-Type': 'application/json',
-					},
-				}
-			);
-
-			if (response?.status !== 200) {
-				setIsExist(true);
-			}
-		} catch (error) {
-			console.error(error);
-		}
-
-		refresh();
-	};
-
 	return (
 		<Grid
-			style={{ filter: !isExist ? 'grayscale(1)' : null }}
 			transition={'filter 1s ease'}
 			templateColumns={{ base: '1fr', md: '1.2fr 1fr' }}
 			alignItems={'center'}
@@ -133,7 +97,7 @@ const ProductCard = ({
 						{(locale === 'he' && lang === 'he') ||
 						(locale === 'en' && lang === 'en')
 							? title
-							: localizations[0]?.title}
+							: localizations.data[0]?.title}
 					</Heading>
 					{price && <Text>{price} ₪</Text>}
 					{sizes && (
@@ -145,7 +109,7 @@ const ProductCard = ({
 						{(locale === 'he' && lang === 'he') ||
 						(locale === 'en' && lang === 'en')
 							? type
-							: localizations[0]?.type}
+							: localizations.data[0]?.type}
 					</Text>
 				</List>
 			</Flex>
@@ -156,11 +120,7 @@ const ProductCard = ({
 				justifyContent={'center'}
 			>
 				<Box pos={'relative'}>
-					<Counter
-						count={count}
-						setCount={handleCounterChange}
-						isExist={isExist}
-					/>
+					<Counter count={count} setCount={handleCounterChange} />
 					<TotalBagPrice
 						count={count}
 						dictionary={dictionary}
@@ -169,33 +129,19 @@ const ProductCard = ({
 					/>
 				</Box>
 				<Flex justifyContent={'center'}>
-					{hasToken ? (
+					{
 						<Button
-							variant="unstyled"
-							bgColor="transparent"
-							onClick={deleteGoodFromServerBag}
-							_hover={{ bgColor: 'transparent', stroke: '#EE4B2B' }}
-							display={'flex'}
-							justifyContent={'center'}
-							stroke={'#fff'}
-							isLoading={!isExist}
-							maxW="360px"
-						>
-							<DeleteIcon />
-						</Button>
-					) : (
-						<Button
-							variant="unstyled"
-							bgColor="transparent"
-							_hover={{ bgColor: 'transparent' }}
-							display={'flex'}
-							justifyContent={'center'}
-							stroke={'#fff'}
 							onClick={() => removeItemFromLocal(uid)}
+							variant="unstyled"
+							bgColor="transparent"
+							_hover={{ bgColor: 'transparent', stroke: 'red' }}
+							display={'flex'}
+							justifyContent={'center'}
+							stroke={'#fff'}
 						>
 							<DeleteIcon />
 						</Button>
-					)}
+					}
 				</Flex>
 			</Grid>
 		</Grid>
