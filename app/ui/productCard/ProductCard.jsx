@@ -5,7 +5,6 @@ import { useParams } from 'next/navigation';
 
 import { Box, Button, Flex, Grid, Heading, List, Text } from '@chakra-ui/react';
 
-import { useLocalBag } from '@/app/lib/hooks/useLocalBag';
 import { flattenAttributes } from '@/app/lib/utils/flattenAttributes';
 
 import Counter from '../singleProduct/Counter/Counter';
@@ -20,7 +19,6 @@ const ProductCard = ({
 	dictionary,
 }) => {
 	const [count, setCount] = useState(productCount);
-	const [localGoods, setLocalGoods] = useLocalBag('localBag', []);
 
 	const {
 		uid,
@@ -52,11 +50,9 @@ const ProductCard = ({
 	}, [lang, length, locale, localizations, thickness, width]);
 
 	const removeItemFromLocal = goodId => {
-		const goodsWithoutDeleted = localGoods.filter(
-			({ good }) => good.data.attributes.uid !== goodId
+		setGoods(prev =>
+			prev.filter(({ good }) => good.data.attributes.uid !== goodId)
 		);
-
-		setLocalGoods(goodsWithoutDeleted);
 		setIsDeleted(true);
 	};
 
