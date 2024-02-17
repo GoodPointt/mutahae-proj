@@ -338,6 +338,8 @@
 		"emptyBag": "Nothing in bag",
 		"shipping": "*Shipping calculated at checkout",
 		"subtotal": "Subtotal",
-		"total": "Total"
+		"total": "Total",
+		"tooltip": "Go to product page",
+		"limit": "Limit of 100 items can be chosen."
 	}
 }
