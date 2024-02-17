@@ -18,7 +18,7 @@ const Counter = ({ count, setCount, isInBag, dictionary, isBlock }) => {
 	};
 
 	const increment = () => {
-		if (count === 1) {
+		if (count === 100) {
 			return;
 		}
 		setCount(count + 1);
@@ -51,6 +51,7 @@ const Counter = ({ count, setCount, isInBag, dictionary, isBlock }) => {
 					type="number"
 					h={'max-content'}
 					variant={'unstyled'}
+					// inputMode="numeric"
 					isDisabled={isInBag}
 					w={'100px'}
 					minH={0}
@@ -81,6 +82,7 @@ const Counter = ({ count, setCount, isInBag, dictionary, isBlock }) => {
 							evt.currentTarget.value !== ''
 								? parseInt(evt.currentTarget.value)
 								: '';
+
 						setCount(value <= 100 ? value : 100);
 						setIsValid(value > 100 ? false : true);
 					}}

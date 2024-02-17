@@ -24,12 +24,12 @@ const SingleProductContent = async ({ id, lang, dictionary }) => {
 		favorites = await fetchFavorites(userId);
 	}
 
-	const totalPrice = userId
-		? bagData[0].goods.length !== 0 &&
-		  bagData[0].goods.reduce((acc, { count, good }) => {
-				return acc + good.data.attributes.price * count;
-		  }, 0)
-		: null;
+	// const totalPrice = userId
+	// 	? bagData[0].goods.length !== 0 &&
+	// 	  bagData[0].goods.reduce((acc, { count, good }) => {
+	// 			return acc + good.data.attributes.price * count;
+	// 	  }, 0)
+	// 	: null;
 
 	return (
 		<SectionWrapper pb={'60px'}>
@@ -39,7 +39,6 @@ const SingleProductContent = async ({ id, lang, dictionary }) => {
 					userId={userId}
 					product={product}
 					dictionary={dictionary}
-					bagPrice={totalPrice}
 					bagData={bagData}
 				/>
 			</Suspense>
