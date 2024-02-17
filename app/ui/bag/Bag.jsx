@@ -93,15 +93,12 @@ const Bag = ({ bagData, hasToken, onClose, dictionary }) => {
 								borderBottom={'1px #A28445 solid'}
 							>
 								<ProductCard
-									hasToken={hasToken}
 									productCount={count}
 									dictionary={dictionary}
 									setIsDeleted={setIsDeleted}
-									goods={localGoods}
-									bagId={hasToken && bagData.id}
 									good={flattenAttributes(good)}
 									setGoods={setLocalGoods}
-									bagPrice={totalPrice}
+									onClose={onClose}
 								/>
 							</Box>
 						))}

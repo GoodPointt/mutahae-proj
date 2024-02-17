@@ -13,6 +13,7 @@ import {
 	ListItem,
 	Text,
 	useDisclosure,
+	useMediaQuery,
 } from '@chakra-ui/react';
 
 import { submitProductToBag } from '@/app/lib/actions';
@@ -56,7 +57,10 @@ const SingleProduct = ({ userId, dictionary, product, bagData, favorites }) => {
 	const { isOpen, onClose, onOpen } = useDisclosure();
 	const [count, setCount] = useState(1);
 	const [localBag, setLocalBag] = useLocalBag('localBag', []);
-
+	const [isMobile] = useMediaQuery('(max-width: 480px)', {
+		ssr: true,
+		fallback: false,
+	});
 	const [favs, setFavs] = useState(favorites);
 
 	useEffect(() => {
@@ -170,7 +174,13 @@ const SingleProduct = ({ userId, dictionary, product, bagData, favorites }) => {
 						alignItems={'center'}
 					>
 						<Box pos={'relative'}>
-							<Counter count={count} setCount={setCount} isInBag={isInBag} />
+							<Counter
+								count={count}
+								setCount={setCount}
+								isInBag={isInBag}
+								isBlock={isMobile}
+								dictionary={dictionary}
+							/>
 							<TotalBagPrice
 								dictionary={dictionary}
 								count={count}

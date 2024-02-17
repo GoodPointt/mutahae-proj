@@ -1,9 +1,19 @@
 'use client';
 import React, { useMemo, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useParams } from 'next/navigation';
 
-import { Box, Button, Flex, Grid, Heading, List, Text } from '@chakra-ui/react';
+import {
+	Box,
+	Button,
+	Flex,
+	Grid,
+	Heading,
+	List,
+	Text,
+	Tooltip,
+} from '@chakra-ui/react';
 
 import { flattenAttributes } from '@/app/lib/utils/flattenAttributes';
 
@@ -17,6 +27,7 @@ const ProductCard = ({
 	productCount,
 	setIsDeleted,
 	dictionary,
+	onClose,
 }) => {
 	const [count, setCount] = useState(productCount);
 
@@ -75,39 +86,56 @@ const ProductCard = ({
 			alignItems={'center'}
 			flexDir={{ base: 'column', md: 'row' }}
 		>
-			<Flex alignItems={'center'} gap={{ base: '10px', lg: '30px' }}>
-				<Box w={'115px'} h={'100px'} pos={'relative'}>
-					<Image
-						src={
-							(img && img.data && img.data[0].attributes.url) ||
-							(img && img[0].url) ||
-							'/img/product.png'
-						}
-						alt={descShort || ''}
-						fill
-					/>
-				</Box>
-				<List>
-					<Heading as={'h4'} fontSize={'20px'}>
-						{(locale === 'he' && lang === 'he') ||
-						(locale === 'en' && lang === 'en')
-							? title
-							: localizations[0]?.title}
-					</Heading>
-					{price && <Text>{price} ₪</Text>}
-					{sizes && (
-						<Text textColor={'#808080'}>
-							{dictionary.bag.sizes} {sizes}
-						</Text>
-					)}
-					<Text textTransform={'capitalize'} textColor={'#808080'}>
-						{(locale === 'he' && lang === 'he') ||
-						(locale === 'en' && lang === 'en')
-							? type
-							: localizations[0]?.type}
-					</Text>
-				</List>
-			</Flex>
+			<Tooltip
+				label={dictionary.bag.tooltip}
+				placement={lang === 'he' ? 'bottom-end' : 'bottom-start'}
+				openDelay={300}
+				left={lang === 'he' ? '10px' : '-10px'}
+				fontSize={'12px'}
+				bottom={'5px'}
+				bgColor={'transparent'}
+			>
+				<Link href={`/${lang}/catalog/${uid}`} onClick={onClose}>
+					<Flex
+						alignItems={'center'}
+						gap={{ base: '10px', lg: '30px' }}
+						_hover={{ filter: 'brightness(0.8	)' }}
+						transition={'filter 250ms ease'}
+					>
+						<Box w={'115px'} h={'100px'} pos={'relative'}>
+							<Image
+								src={
+									(img && img.data && img.data[0].attributes.url) ||
+									(img && img[0].url) ||
+									'/img/product.png'
+								}
+								alt={descShort || ''}
+								fill
+							/>
+						</Box>
+						<List>
+							<Heading as={'h4'} fontSize={'20px'}>
+								{(locale === 'he' && lang === 'he') ||
+								(locale === 'en' && lang === 'en')
+									? title
+									: localizations[0]?.title}
+							</Heading>
+							{price && <Text>{price} ₪</Text>}
+							{sizes && (
+								<Text textColor={'#808080'}>
+									{dictionary.bag.sizes} {sizes}
+								</Text>
+							)}
+							<Text textTransform={'capitalize'} textColor={'#808080'}>
+								{(locale === 'he' && lang === 'he') ||
+								(locale === 'en' && lang === 'en')
+									? type
+									: localizations[0]?.type}
+							</Text>
+						</List>
+					</Flex>
+				</Link>
+			</Tooltip>
 			<Grid
 				mt={{ base: '50px', md: '0px' }}
 				templateColumns={{ base: 'repeat(2, 1fr)' }}
@@ -115,7 +143,11 @@ const ProductCard = ({
 				justifyContent={'center'}
 			>
 				<Box pos={'relative'}>
-					<Counter count={count} setCount={handleCounterChange} />
+					<Counter
+						count={count}
+						setCount={handleCounterChange}
+						dictionary={dictionary}
+					/>
 					<TotalBagPrice
 						count={count}
 						dictionary={dictionary}
