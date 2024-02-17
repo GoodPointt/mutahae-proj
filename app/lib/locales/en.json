@@ -7,7 +7,6 @@
 		"bag": "Add to bag",
 		"forgotPass": "*Forgot your password?",
 		"createAcc": "Create account",
-		"login": "Log in",
 		"cancel": "Cancel",
 		"order": "Order",
 		"inBag": "In bag",
@@ -59,7 +58,7 @@
 			"zones": [
 				"Zone 1: Ra'anana, Ashkelon, Kiryat Malachi, Kiryat Gat, Ashdod, and surrounding settlements - ₪250.00",
 				"Zone 2: Rehovot, Givatayim, Ramat Hasharon, Petah Tikva, Rosh HaAyin, Tel Aviv, and surrounding settlements - ₪350.00",
-				"Zone 3: Sderot, Be'er Sheva, Ofakim, Netivot, Ashkelon, and settlements in the surrounding area - ₪300.00",
+				"Zone 3: Sderot, Be'er Sheva, Ofakim, Netivot, Eshkol, and settlements in the surrounding area - ₪300.00",
 				"Zone 4: Jerusalem, Beit Shemesh, and surrounding settlements - ₪500.00",
 				"Zone 5: Hadera, Netanya, Haifa, and settlements in the north - ₪900.00"
 			],
@@ -230,7 +229,7 @@
 		"button": "Catalog"
 	},
 	"orderReject": {
-		"title": " Something went wrong.",
+		"title": "Something went wrong.",
 		"message": "Your order has not been processed. Please contact us by phone or fill out a form for assistance.",
 		"button": "Contact Us"
 	},
@@ -338,8 +337,6 @@
 		"emptyBag": "Nothing in bag",
 		"shipping": "*Shipping calculated at checkout",
 		"subtotal": "Subtotal",
-		"total": "Total",
-		"tooltip": "Go to product page",
-		"limit": "Limit of 100 items can be chosen."
+		"total": "Total"
 	}
 }

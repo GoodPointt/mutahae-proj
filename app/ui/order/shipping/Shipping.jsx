@@ -29,9 +29,10 @@ const Shipping = ({
 	userAddress,
 	setOwnCity,
 	ownCity,
+	setEnteredAddress,
+	enteredAddress,
 }) => {
 	const [isOpenSelect, setIsOpenSelect] = useState(false);
-	const [enteredAddress, setEnteredAddress] = useState('');
 
 	const addressList = userAddress?.data;
 
@@ -44,6 +45,8 @@ const Shipping = ({
 	};
 
 	const handleCustomCityChange = e => {
+		setSelectedCity('');
+		setOwnCity('');
 		setEnteredAddress(e.target.value);
 	};
 
@@ -173,6 +176,7 @@ const Shipping = ({
 							bg={'#181617'}
 							color={'#ffffff'}
 							focusBorderColor="#a28445"
+							maxLength={50}
 							borderRadius={0}
 							borderTop={'transparent'}
 							borderLeft={'transparent'}
@@ -192,6 +196,7 @@ const Shipping = ({
 								setSelectedCity(dictionary.order.self);
 								setOwnCity('');
 								setCityId();
+								setEnteredAddress('');
 							}}
 						>
 							{dictionary.order.self}
@@ -211,6 +216,7 @@ const Shipping = ({
 											setSelectedCity(fullAddress);
 											setCityId(address.id);
 											setOwnCity(address.attributes.city);
+											setEnteredAddress('');
 										}}
 										style={{
 											whiteSpace: 'normal',
@@ -233,6 +239,7 @@ const Shipping = ({
 									setSelectedCity(item.cityName);
 									setOwnCity('');
 									setCityId(item.id);
+									setEnteredAddress('');
 								}}
 							>
 								{item.cityName}
@@ -240,11 +247,11 @@ const Shipping = ({
 						))}
 					</MenuList>
 				</Menu>
-				{ownCity && (
+				{ownCity || enteredAddress ? (
 					<Text mt={'10px'} fontSize={'14px'}>
 						{dictionary.order.message}
 					</Text>
-				)}
+				) : null}
 			</Box>
 		</>
 	);

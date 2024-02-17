@@ -10,6 +10,7 @@ import {
 	updateUserData,
 } from './api/profileInstance';
 import { flattenAttributes } from './utils/flattenAttributes';
+import { textTrim } from './utils/textTrim';
 
 import { z } from 'zod';
 
@@ -49,12 +50,14 @@ export async function submitData(prevState, formData) {
 	const { totalPrice, goods, deliveryAddress, cityId, lang } = formData.payload;
 	const token = cookies().get('jwt')?.value;
 
-	const validatedFields = schema.safeParse({
-		firstName,
-		lastName,
-		email,
-		phone,
-	});
+	const formDto = {
+		firstName: textTrim(firstName),
+		lastName: textTrim(lastName),
+		email: textTrim(email),
+		phone: textTrim(phone),
+	};
+
+	const validatedFields = schema.safeParse(formDto);
 
 	if (!validatedFields.success) {
 		return {
@@ -63,9 +66,10 @@ export async function submitData(prevState, formData) {
 		};
 	}
 	try {
+		const orderNum = Date.now();
 		if (token) {
-			await fetchCreateOrder(totalPrice, goods, cityId);
-			await updateUserData({ firstName, lastName, email, phone });
+			await fetchCreateOrder(totalPrice, goods, cityId, orderNum);
+			await updateUserData(formDto);
 		}
 
 		const listGoods = goods.map(good => ({
@@ -74,13 +78,11 @@ export async function submitData(prevState, formData) {
 		}));
 
 		const res = await sendTgNotification({
-			firstName,
-			lastName,
-			email,
-			phone,
-			delivery: deliveryAddress,
+			...formDto,
+			delivery: textTrim(deliveryAddress),
 			orderPrice: totalPrice,
 			goods: listGoods,
+			orderNum,
 		});
 
 		await fetchResetBag();
@@ -88,10 +90,7 @@ export async function submitData(prevState, formData) {
 
 		if (res.status === 201) {
 			return {
-				firstName,
-				lastName,
-				email,
-				phone,
+				...formDto,
 				totalPrice,
 				goods,
 				deliveryAddress,
