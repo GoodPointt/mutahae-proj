@@ -21,8 +21,18 @@ export const AddressForm = ({ lang, dictionary }) => {
 	const toast = useToast();
 	const ref = useRef(null);
 
-	const { title, region, city, street, app, index, btn, success, error } =
-		dictionary;
+	const {
+		title,
+		region,
+		city,
+		street,
+		app,
+		index,
+		btn,
+		success,
+		error,
+		validation,
+	} = dictionary;
 
 	useEffect(() => {
 		if (state && state?.status === 'success') {
@@ -75,7 +85,7 @@ export const AddressForm = ({ lang, dictionary }) => {
 					gap={{ lg: '15px' }}
 					flexDirection={{ base: 'column', lg: 'row' }}
 				>
-					<FormControl isInvalid={countryError} mb="25px">
+					<FormControl isInvalid={countryError} pb="25px">
 						<Input
 							name="region"
 							type="text"
@@ -88,15 +98,15 @@ export const AddressForm = ({ lang, dictionary }) => {
 							focusBorderColor="#a28445"
 							border={'1px solid transparent'}
 						/>
-						<FormErrorMessage
+						{/* <FormErrorMessage
 							fontSize={'14px'}
 							position="absolute"
 							bottom="4px"
 						>
 							{countryError === 'required' ? 'required' : 'invalid'}
-						</FormErrorMessage>
+						</FormErrorMessage> */}
 					</FormControl>
-					<FormControl isInvalid={cityError} mb="25px">
+					<FormControl isInvalid={cityError} pb="25px">
 						<Input
 							name="city"
 							type="text"
@@ -114,7 +124,7 @@ export const AddressForm = ({ lang, dictionary }) => {
 							position="absolute"
 							bottom="4px"
 						>
-							{cityError === 'required' ? 'required' : 'invalid'}
+							{cityError === 'required' ? validation.city.required : 'invalid'}
 						</FormErrorMessage>
 					</FormControl>
 				</Flex>
@@ -123,7 +133,7 @@ export const AddressForm = ({ lang, dictionary }) => {
 					mb="35px"
 					flexDirection={{ base: 'column', lg: 'row' }}
 				>
-					<FormControl isInvalid={streetError} mb="25px">
+					<FormControl isInvalid={streetError} pb="25px">
 						<Input
 							name="street"
 							type="text"
@@ -136,13 +146,13 @@ export const AddressForm = ({ lang, dictionary }) => {
 							focusBorderColor="#a28445"
 							border={'1px solid transparent'}
 						/>
-						<FormErrorMessage
+						{/* <FormErrorMessage
 							fontSize={'14px'}
 							position="absolute"
 							bottom="4px"
 						>
 							{streetError === 'required' ? 'required' : 'invalid'}
-						</FormErrorMessage>
+						</FormErrorMessage> */}
 					</FormControl>
 					<FormControl isInvalid={appError}>
 						<Input
@@ -157,15 +167,15 @@ export const AddressForm = ({ lang, dictionary }) => {
 							focusBorderColor="#a28445"
 							border={'1px solid transparent'}
 						/>
-						<FormErrorMessage
+						{/* <FormErrorMessage
 							fontSize={'14px'}
 							position="absolute"
 							bottom="4px"
 						>
 							{appError === 'required' ? 'required' : 'invalid'}
-						</FormErrorMessage>
+						</FormErrorMessage> */}
 					</FormControl>
-					<FormControl isInvalid={indexError} mb="25px">
+					<FormControl isInvalid={indexError} pb="25px">
 						<Input
 							name="index"
 							type="number"
@@ -178,13 +188,13 @@ export const AddressForm = ({ lang, dictionary }) => {
 							focusBorderColor="#a28445"
 							border={'1px solid transparent'}
 						/>
-						<FormErrorMessage
+						{/* <FormErrorMessage
 							fontSize={'14px'}
 							position="absolute"
 							bottom="4px"
 						>
 							{indexError === 'required' ? 'required' : 'invalid'}
-						</FormErrorMessage>
+						</FormErrorMessage> */}
 					</FormControl>
 				</Flex>
 				<SubmitButton w="calc((100% - 15px) /2 )">{btn}</SubmitButton>

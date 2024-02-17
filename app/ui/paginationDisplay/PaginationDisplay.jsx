@@ -7,7 +7,7 @@ import ArrowRight from '../svg/ArrowRight';
 
 const PaginationDisplay = ({ total, setTotal, page, setPage }) => {
 	const [buttonsArr, setButtonsArr] = useState([]);
-	const [currentPage, setCurrentPage] = useState(1);
+
 	const [countPages, setCountPages] = useState();
 
 	const [isLargerThan1278] = useMediaQuery('(min-width: 1278px)');
@@ -16,8 +16,7 @@ const PaginationDisplay = ({ total, setTotal, page, setPage }) => {
 
 	useEffect(() => {
 		total && setTotal(total);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [total]);
+	}, [setTotal, total]);
 
 	useEffect(() => {
 		setCountPages(Math.ceil(total / limit));
@@ -29,7 +28,6 @@ const PaginationDisplay = ({ total, setTotal, page, setPage }) => {
 		!isLargerThan1278 && window.scrollTo({ top: 0, behavior: 'smooth' });
 
 		setPage(newPage);
-		setCurrentPage(newPage);
 	};
 
 	const hasPrev = parseInt(page) > 1;
@@ -69,7 +67,7 @@ const PaginationDisplay = ({ total, setTotal, page, setPage }) => {
 							color: '#a98841',
 							bg: 'none',
 						}}
-						borderBottom={currentPage === pageNumber ? '2px #a28445 solid' : ''}
+						borderBottom={page === pageNumber ? '2px #a28445 solid' : ''}
 						onClick={() => handlePageChange(pageNumber)}
 					>
 						{pageNumber}

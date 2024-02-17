@@ -25,7 +25,8 @@ const ProductItem = ({ product, lang, favs, setFavs, isAuth = false }) => {
 
 	const [, setFavorite] = useQueryState(
 		'favs',
-		parseAsFloat.withDefault(JSON.parse(localStorage.getItem('favs'))?.length)
+		typeof window !== 'undefined' &&
+			parseAsFloat.withDefault(JSON.parse(localStorage.getItem('favs'))?.length)
 	);
 
 	const handleIsFavs = productId => {

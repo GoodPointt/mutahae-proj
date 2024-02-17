@@ -24,7 +24,8 @@ export const OrderHistory = ({ lang, orders }) => {
 			{ordersData &&
 				ordersData.length > 0 &&
 				ordersData.map((order, index) => {
-					const { goods, createdAt, id, orderPrice, city } = order.attributes;
+					const { goods, createdAt, id, orderPrice, city, publishedAt } =
+						order.attributes;
 					const dateOrder = new Date(createdAt);
 
 					const formattedDate = format(dateOrder, 'dd/MM/yyyy', {
@@ -49,7 +50,8 @@ export const OrderHistory = ({ lang, orders }) => {
 										goods.map(product => {
 											if (!product.good.data) return;
 											const { good } = product;
-											const { id } = good.data;
+
+											//const { id } = good.data;
 
 											const { img, uid, localizations, title, descShort } =
 												good.data.attributes;
@@ -61,7 +63,7 @@ export const OrderHistory = ({ lang, orders }) => {
 
 											return (
 												<OrderHistoryItem
-													key={id}
+													key={publishedAt}
 													lang={lang}
 													title={
 														localizData.length && lang == 'he'

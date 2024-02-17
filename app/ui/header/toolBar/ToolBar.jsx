@@ -33,6 +33,7 @@ const ToolBar = ({
 	const { isOpen = false, onOpen, onClose } = useDisclosure();
 	const [variant, setVariant] = useState();
 	const [query, setQuery] = useQueryState('query');
+	//const favsLocal = useClientSideState('favs', 0);
 	const [favorite] = useQueryState(
 		'favs',
 		parseAsFloat.withDefault(
@@ -43,7 +44,8 @@ const ToolBar = ({
 	);
 
 	useEffect(() => {
-		localStorage.setItem('favs', JSON.stringify(favorites));
+		typeof window !== 'undefined' &&
+			localStorage.setItem('favs', JSON.stringify(favorites));
 	}, [favorites]);
 
 	const mapIcon = {

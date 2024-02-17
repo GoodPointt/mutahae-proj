@@ -7,26 +7,30 @@ import { Grid, Heading } from '@chakra-ui/react';
 import PaginationDisplay from '../../paginationDisplay/PaginationDisplay';
 import ProductItem from '../../productItem/ProductItem';
 
-export const FavoritesContent = ({
-	// favorites,
-	dictionary,
-	lang,
-}) => {
-	// eslint-disable-next-line no-unused-vars
-	const [favs, setFavs] = useState(
-		typeof window !== 'undefined'
+export const FavoritesContent = ({ dictionary, lang, isAuth }) => {
+	const [favorites, setFavs] = useState(
+		isAuth && typeof window !== 'undefined'
 			? JSON.parse(localStorage.getItem('favs'))
 			: []
 	);
 
-	const [total, setTotal] = useState(favs.length || 0);
 	const [page, setPage] = useState(1);
-	const [favoriteData, setFavoriteData] = useState(favs.slice(0, page * 4));
+	const [favoriteData, setFavoriteData] = useState(
+		favorites.slice(0, page * 4)
+	);
+	const [total, setTotal] = useState(favorites.length || 0);
+
+	useEffect(() => {
+		localStorage.setItem('favs', JSON.stringify(favorites || []));
+	}, [favorites]);
 
 	useEffect(() => {
 		const startFrom = page > 1 ? (page - 1) * 4 : 0;
-		setFavoriteData(favs.slice(startFrom, page * 4));
-	}, [favs, page]);
+
+		if (favorites.length === startFrom) setPage(prevState => prevState - 1);
+		setFavoriteData(favorites.slice(startFrom, page * 4));
+		setTotal(favorites.length);
+	}, [favorites, page, total]);
 
 	// eslint-disable-next-line no-unused-vars
 	const { title, btnAdd } = dictionary.profile.favorites;
@@ -51,42 +55,44 @@ export const FavoritesContent = ({
 			>
 				{favoriteData &&
 					favoriteData.map(good => {
-						// const { uid, locale, title, descShort } = good;
-						// const { img } = good;
+						//console.log(good);
+						const { id, uid, locale, title, descShort, unit, price } = good;
+						const { img } = good;
 
-						// const imgData = {
-						// 	data: [
-						// 		{
-						// 			attributes: {
-						// 				url: img[0].url,
-						// 			},
-						// 		},
-						// 	],
-						// };
+						const localizations = good?.localizations || [];
 
-						// const localizations = good.localizations[0];
+						//console.log(lang == 'en' && locale === 'he');
 
 						return (
 							<ProductItem
-								key={good.id}
+								favs={favorites}
+								setFavs={setFavs}
+								key={id}
 								lang={lang}
-								product={good}
-								// product={{
-								// 	isFavorite: true,
-								// 	uid,
-								// 	title:
-								// 		localizations && lang == 'he' ? localizations.title : title,
-								// 	button: btnAdd,
-								// 	img: { ...imgData },
-								// 	descShort:
-								// 		localizations && lang == 'he'
-								// 			? localizations.descShort
-								// 			: descShort,
-								// }}
+								isAuth={isAuth}
+								product={{
+									uid,
+									id: id,
+									title:
+										(localizations.length && lang == 'en' && locale === 'he') ||
+										(localizations.length && lang == 'he' && locale === 'en')
+											? localizations[0].title
+											: title,
+									button: btnAdd,
+									img: img,
+									unit: unit,
+									price: price,
+									descShort:
+										(localizations.length && lang == 'en' && locale === 'he') ||
+										(localizations.length && lang == 'he' && locale === 'en')
+											? localizations[0].descShort
+											: descShort,
+								}}
 							/>
 						);
 					})}
 			</Grid>
+
 			<PaginationDisplay
 				total={total}
 				page={page}
