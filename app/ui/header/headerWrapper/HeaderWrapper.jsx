@@ -45,9 +45,13 @@ const HeaderWrapper = ({
 			);
 			const filteredGoods =
 				bagData &&
-				bagData.goods.filter(
-					({ good }) => !localBagGoodsIds.includes(good.data.attributes.uid)
-				);
+				bagData.goods.filter(({ good }) => {
+					if (!good.data) {
+						return;
+					}
+
+					return !localBagGoodsIds.includes(good.data.attributes.uid);
+				});
 			setLocalBag([...localBag, ...filteredGoods]);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
