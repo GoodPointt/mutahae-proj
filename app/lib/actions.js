@@ -15,6 +15,7 @@ import {
 	updateUserData,
 } from './api/profileInstance';
 import { fetchAddToBag } from './api/profileInstance';
+import { textTrim } from './utils/textTrim';
 
 import { z } from 'zod';
 
@@ -57,7 +58,7 @@ const schema = z
 const addressSchema = z
 	.object({
 		region: z.string().trim(),
-		city: z.string().trim(),
+		city: z.string().trim().min(1, { message: 'required' }),
 		street: z.string().trim(),
 		app: z.string().trim(),
 		index: z.string().trim(),
@@ -105,12 +106,14 @@ export async function submitUserDetails(prevState, formData) {
 	const { firstName, lastName, email, phone } = Object.fromEntries(formData);
 	const userData = { firstName, lastName, email, phone };
 
-	const validatedFields = schema.safeParse({
-		firstName,
-		lastName,
-		email,
-		phone,
-	});
+	const formDto = {
+		firstName: textTrim(firstName),
+		lastName: textTrim(lastName),
+		email: textTrim(email),
+		phone: textTrim(phone),
+	};
+
+	const validatedFields = schema.safeParse(formDto);
 
 	if (!validatedFields.success) {
 		return {

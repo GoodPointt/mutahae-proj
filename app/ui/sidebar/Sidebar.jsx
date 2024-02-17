@@ -26,6 +26,8 @@ export const Sidebar = ({ lang, sidebarDictionary }) => {
 				mb="12px"
 				fontSize="20px"
 				color={pathname === profileRoutes.favorites ? '#a98841' : 'inherit'}
+				_hover={{ color: '#a98841' }}
+				_active={{ backgroundColor: 'transparent' }}
 			>
 				<Link href={profileRoutes.favorites}>{favorites}</Link>
 			</ListItem>
@@ -33,6 +35,8 @@ export const Sidebar = ({ lang, sidebarDictionary }) => {
 				mb="12px"
 				fontSize="20px"
 				color={pathname === profileRoutes.contactInfo ? '#a98841' : 'inherit'}
+				_hover={{ color: '#a98841' }}
+				_active={{ backgroundColor: 'transparent' }}
 			>
 				<Link href={profileRoutes.contactInfo}>{contactInformation}</Link>
 			</ListItem>
@@ -42,6 +46,8 @@ export const Sidebar = ({ lang, sidebarDictionary }) => {
 				color={
 					pathname === profileRoutes.historyOfOrders ? '#a98841' : 'inherit'
 				}
+				_hover={{ color: '#a98841' }}
+				_active={{ backgroundColor: 'transparent' }}
 			>
 				<Link href={profileRoutes.historyOfOrders}>{historyOfOrders}</Link>
 			</ListItem>
