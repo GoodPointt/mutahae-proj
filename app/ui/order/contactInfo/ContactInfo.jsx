@@ -107,7 +107,7 @@ const ContactInfo = ({
 
 				if (state.status === 201) {
 					onOpen();
-					if (!authToken) setLocalGoods([]);
+					setLocalGoods([]);
 					setSelectedCity('');
 				} else {
 					console.error(`Order rejected ${state.status}`);
