@@ -14,6 +14,7 @@ import {
 	createFavoritesByUserIdAndJwt,
 } from './api/createUserStorages';
 import { handleLocalBagOnServer, profileInstance } from './api/profileInstance';
+import { textTrim } from './utils/textTrim';
 
 import { z } from 'zod';
 
@@ -43,8 +44,9 @@ export async function loginAction(prevState, formData) {
 
 	const { email, password } = validatedFields.data;
 
-	const goods = JSON.parse(formData.get('localGoods'));
+	const callbackPath = formData.get('callbackPath');
 	const lang = formData.get('lang');
+	const goods = JSON.parse(formData.get('localGoods'));
 
 	try {
 		const response = await loginUserByEmailAndPassword(email, password);
@@ -74,7 +76,8 @@ export async function loginAction(prevState, formData) {
 
 		return { error: 'Server error please try again later.' };
 	}
-	redirect(`/${lang}/`);
+
+	redirect(callbackPath || `/${lang}/`);
 }
 
 const registerSchema = z
@@ -121,11 +124,19 @@ export async function registerAction(prevState, formData) {
 
 	const { email, name, lastName, password } = validatedFields.data;
 
+	const userDto = {
+		email,
+		password,
+		firstName: textTrim(name),
+		lastName: textTrim(lastName),
+	};
+
 	const goods = JSON.parse(formData.get('localGoods'));
+	const callbackPath = formData.get('callbackPath');
 	const lang = formData.get('lang');
 
 	try {
-		const response = await registerNewUser(email, name, lastName, password);
+		const response = await registerNewUser(userDto);
 
 		const userData = await response.json();
 
@@ -161,7 +172,8 @@ export async function registerAction(prevState, formData) {
 
 		return { error: 'Server error please try again later.' };
 	}
-	redirect(`/${lang}/`);
+
+	redirect(callbackPath || `/${lang}/`);
 }
 
 const recoverySchema = z

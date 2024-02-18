@@ -1,4 +1,7 @@
+'use client';
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 import {
 	Box,
@@ -20,6 +23,8 @@ import EmailIcon from '../svg/EmailIcon';
 import Star from '../svg/Star';
 
 const CallToAuth = props => {
+	const pathname = usePathname();
+
 	return (
 		<Popover>
 			<PopoverTrigger>
@@ -70,7 +75,17 @@ const CallToAuth = props => {
 								transition={'all 200ms ease'}
 								textDecoration="underline"
 							>
-								<Flex gap={3} align={'center'}>
+								<Flex
+									gap={3}
+									align={'center'}
+									onClick={() => {
+										if (pathname.includes('/order'))
+											localStorage.setItem(
+												'callbackPath',
+												JSON.stringify(pathname)
+											);
+									}}
+								>
 									<Box fill={'#ccc'}>
 										<EmailIcon />
 									</Box>

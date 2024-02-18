@@ -41,9 +41,8 @@ const ProviderButton = ({
 				as={Link}
 				href={`${backendUrl}/api/connect/${variant}`}
 				onClick={() => {
-					if (!pathname.includes('/auth'))
+					if (pathname.includes('/order'))
 						localStorage.setItem('callbackPath', JSON.stringify(pathname));
-					// : null;
 				}}
 				rel="noopener noreferrer"
 				borderRadius={'2px'}

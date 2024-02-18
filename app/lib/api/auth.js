@@ -1,7 +1,7 @@
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL;
 if (!STRAPI_URL) throw new Error('Missing STRAPI_URL environment variable.');
 
-export const registerNewUser = async (email, name, lastName, password) => {
+export const registerNewUser = async dto => {
 	const url = `${STRAPI_URL}/api/auth/local/register`;
 
 	return await fetch(url, {
@@ -10,11 +10,8 @@ export const registerNewUser = async (email, name, lastName, password) => {
 			'Content-Type': 'application/json',
 		},
 		body: JSON.stringify({
-			email,
-			password,
-			firstName: name,
-			lastName,
-			username: email.split('@')[0],
+			...dto,
+			username: dto.email.split('@')[0],
 		}),
 		cache: 'no-cache',
 	});
