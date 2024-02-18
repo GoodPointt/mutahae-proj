@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useFormState } from 'react-dom';
 
 import { Link } from '@chakra-ui/next-js';
@@ -22,6 +22,12 @@ const LoginForm = ({ dictionary, lang }) => {
 	const [state, dispatch] = useFormState(loginAction, undefined);
 	const toast = useToast();
 	const [localGoods, setLocalGoods] = useLocalStorage('localBag', []);
+
+	const [callbackPath] = useState(
+		typeof window !== 'undefined'
+			? JSON.parse(localStorage.getItem('callbackPath'))
+			: `/${lang}/`
+	);
 
 	const ref = useRef(null);
 
@@ -68,6 +74,7 @@ const LoginForm = ({ dictionary, lang }) => {
 					)}
 					onChange={() => setLocalGoods()}
 				/>
+				<VisuallyHiddenInput name="callbackPath" defaultValue={callbackPath} />
 				<VisuallyHiddenInput name="lang" defaultValue={lang} />
 				<Input
 					autoComplete="on"

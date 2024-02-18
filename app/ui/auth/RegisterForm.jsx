@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useFormState } from 'react-dom';
 
 import {
@@ -21,6 +21,12 @@ const RegisterForm = ({ dictionary, lang }) => {
 	const [state, dispatch] = useFormState(registerAction, undefined);
 	const toast = useToast();
 	const [localGoods, setLocalGoods] = useLocalStorage('localBag', []);
+	const [callbackPath] = useState(
+		typeof window !== 'undefined'
+			? JSON.parse(localStorage.getItem('callbackPath'))
+			: `/${lang}/`
+	);
+
 	const ref = useRef(null);
 
 	const nameError =
@@ -77,6 +83,7 @@ const RegisterForm = ({ dictionary, lang }) => {
 					onChange={() => setLocalGoods()}
 				/>
 				<VisuallyHiddenInput name="lang" defaultValue={lang} />
+				<VisuallyHiddenInput name="callbackPath" defaultValue={callbackPath} />
 				<Input
 					autoComplete="on"
 					name="name"

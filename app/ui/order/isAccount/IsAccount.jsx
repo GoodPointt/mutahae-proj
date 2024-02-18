@@ -1,10 +1,14 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
+
 import { Flex, Link, Text } from '@chakra-ui/react';
 
 import ProviderButton from '../../providerButton/ProviderButton';
 
 const IsAccount = ({ dictionary, lang }) => {
+	const pathname = usePathname();
+
 	return (
 		<>
 			<Text
@@ -14,6 +18,9 @@ const IsAccount = ({ dictionary, lang }) => {
 			>
 				{dictionary.order.accountQuestion}{' '}
 				<Link
+					onClick={() => {
+						localStorage.setItem('callbackPath', JSON.stringify(pathname));
+					}}
 					href={`/${lang}/auth/login`}
 					borderBottom={'1px solid white'}
 					paddingBottom={'2px'}
@@ -23,6 +30,9 @@ const IsAccount = ({ dictionary, lang }) => {
 				</Link>{' '}
 				or{' '}
 				<Link
+					onClick={() => {
+						localStorage.setItem('callbackPath', JSON.stringify(pathname));
+					}}
 					href={`/${lang}/auth/register`}
 					borderBottom={'1px solid white'}
 					paddingBottom={'2px'}
@@ -44,7 +54,7 @@ const IsAccount = ({ dictionary, lang }) => {
 					variant={'google'}
 					dictionary={dictionary.formContact.signInProvider}
 				/>
-				<ProviderButton
+				{/* <ProviderButton
 					style={{
 						mb: '25px',
 						width: '100%',
@@ -55,7 +65,7 @@ const IsAccount = ({ dictionary, lang }) => {
 					}}
 					variant={'facebook'}
 					dictionary={dictionary.formContact.signInProvider}
-				/>
+				/> */}
 			</Flex>
 		</>
 	);
