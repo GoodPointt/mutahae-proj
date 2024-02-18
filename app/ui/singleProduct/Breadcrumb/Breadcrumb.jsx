@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormState } from 'react-dom';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -30,6 +30,7 @@ const BreadcrumbBar = ({
 	const [isFavorite, setIsFavorite] = useState(
 		favs?.some(item => item.id === product.id)
 	);
+	const [callbackPath, setCallbackPath] = useState('/');
 
 	const [, favoriteAction] = useFormState(submitGoodToFavorite, null);
 	const [, setFavorite] = useQueryState(
@@ -53,6 +54,11 @@ const BreadcrumbBar = ({
 		}
 	};
 
+	useEffect(() => {
+		const url = JSON.parse(localStorage.getItem('callbackPath'));
+		setCallbackPath(url || `/${lang}/catalog`);
+	}, [lang]);
+
 	return (
 		<>
 			{pathSegments.length > 0 && (
@@ -70,9 +76,7 @@ const BreadcrumbBar = ({
 							key={index}
 						>
 							{segment === 'catalog' && (
-								<Link href={`/${pathSegments.slice(0, index + 1).join('/')}`}>
-									{dictionary.hero.btnCatalog}
-								</Link>
+								<Link href={callbackPath}>{dictionary.hero.btnCatalog}</Link>
 							)}
 							{index < pathSegments.length - 1 &&
 								segment !== lang &&

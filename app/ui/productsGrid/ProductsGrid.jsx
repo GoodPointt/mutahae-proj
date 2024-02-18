@@ -227,6 +227,29 @@ const ProductsGrid = ({
 
 		return segments.join('/');
 	};
+	//==================================================
+	const updateLinkUrl = useCallback(() => {
+		const queryParams = {
+			total: total,
+			category: category,
+			sub_category: sub_category,
+			page: page,
+			query: query,
+		};
+		const queryStringParams = Object.entries(queryParams)
+			.filter(([, value]) => value !== null && value !== undefined)
+			.map(([key, value]) => `${key}=${value}`)
+			.join('&');
+
+		const queryString = queryStringParams ? `?${queryStringParams}` : '';
+		const linkUrl = pathname + queryString;
+
+		localStorage.setItem('callbackPath', JSON.stringify(linkUrl));
+	}, [category, page, pathname, query, sub_category, total]);
+
+	useEffect(() => {
+		updateLinkUrl();
+	}, [updateLinkUrl]);
 
 	if (lang === 'en')
 		return (
