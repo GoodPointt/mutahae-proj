@@ -64,7 +64,7 @@ const SingleProduct = ({ userId, dictionary, product, bagData, favorites }) => {
 	const [favs, setFavs] = useState(favorites);
 
 	useEffect(() => {
-		localStorage.setItem('favs', JSON.stringify(favs));
+		localStorage.setItem('favs', JSON.stringify(favs || []));
 	}, [favs]);
 
 	const [, formAction] = useFormState(submitProductToBag);
