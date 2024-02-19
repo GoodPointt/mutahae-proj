@@ -30,6 +30,7 @@ import SkeletotonClientProductGrid from '../skeletons/SkeletotonClientProductGri
 import CategoryMenu from './categoryMenu/CategoryMenu';
 import MobileFilterMenu from './mobileFilterMenu/MobileFilterMenu';
 import ProductList from './productList/ProductList';
+import SearchInCatalog from './searchInCatalog/SearchInCatalog';
 import SortMenu from './sortMenu/SortMenu';
 
 import {
@@ -101,70 +102,81 @@ const ProductsGrid = ({
 		return () => observer.disconnect();
 	}, [observerCallback, hasNext]);
 
-	const fetchData = useCallback(async () => {
-		setIsLoading(true);
-		try {
-			let dataToSet = [];
-			let totalToSet = 0;
+	// eslint-disable-next-line sonarjs/cognitive-complexity
+	useEffect(() => {
+		(async () => {
+			setIsLoading(true);
+			try {
+				if (query) {
+					const response = await fetchProductsByQuery(
+						query,
+						lang,
+						sortValue,
+						sortOrder
+					);
 
-			if (query) {
-				dataToSet = await fetchProductsByQuery(
-					query,
-					lang,
-					sortValue,
-					sortOrder
-				);
-				totalToSet = dataToSet.length;
-			} else {
-				for (let i = 1; i <= page; i++) {
-					let response;
+					setRenderList(response);
+					setActiveTab(0);
+
+					return;
+				} else {
+					const activeTabIndex =
+						categories.findIndex(el => el.id === category) + 1;
+					setActiveTab(activeTabIndex);
 
 					if (category && sub_category) {
-						response = await fetchProductBySubCategorie(
+						const response = await fetchProductBySubCategorie(
 							lang,
-							i,
+							page,
 							sortValue,
 							sortOrder,
 							category,
 							sub_category
 						);
-					} else if (category) {
-						response = await fetchgetProductsByCategorie(
+
+						if (page > 1) setRenderList(prev => [...prev, ...response.data]);
+						if (page === 1) setRenderList(response.data);
+						setTotal(response.total);
+
+						return;
+					}
+
+					if (category && !sub_category) {
+						const response = await await fetchgetProductsByCategorie(
 							lang,
 							sortValue,
 							sortOrder,
-							i,
+							page,
 							category
 						);
-					} else {
-						response = await fetchProducts(lang, sortValue, sortOrder, i);
+
+						if (page > 1) setRenderList(prev => [...prev, ...response.data]);
+						if (page === 1) setRenderList(response.data);
+						setTotal(response.total);
+
+						return;
 					}
 
-					dataToSet = [...dataToSet, ...response.data];
-					totalToSet = response.total;
-				}
+					const response = await fetchProducts(
+						lang,
+						sortValue,
+						sortOrder,
+						page
+					);
 
-				if (category) {
-					const activeTabIndex =
-						categories.findIndex(el => el.id === category) + 1;
+					if (page > 1) setRenderList(prev => [...prev, ...response.data]);
 
-					setActiveTab(activeTabIndex);
+					if (page === 1) setRenderList(response.data);
+					setTotal(response.total);
 				}
+			} catch (error) {
+				console.error(error);
+			} finally {
+				setIsLoading(false);
 			}
-
-			setRenderList(dataToSet);
-			setTotal(totalToSet);
-		} catch (error) {
-			console.error(error);
-		} finally {
-			setIsLoading(false);
-		}
+		})();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [categories, category, page, sub_category, sortValue, sortOrder]);
-
-	useEffect(() => {
-		fetchData();
-	}, [fetchData]);
+	}, [categories, category, page, sub_category, sortValue, sortOrder, query]);
 
 	useEffect(() => {
 		if (!categoriesList) return;
@@ -228,13 +240,13 @@ const ProductsGrid = ({
 		return segments.join('/');
 	};
 	//==================================================
-	const updateLinkUrl = useCallback(() => {
+	const setCallbackPath = () => {
 		const queryParams = {
-			total: total,
+			// total: total,
 			category: category,
 			sub_category: sub_category,
-			page: page,
-			query: query,
+			// page: page,
+			// query: query,
 		};
 		const queryStringParams = Object.entries(queryParams)
 			.filter(([, value]) => value !== null && value !== undefined)
@@ -245,11 +257,7 @@ const ProductsGrid = ({
 		const linkUrl = pathname + queryString;
 
 		localStorage.setItem('callbackPath', JSON.stringify(linkUrl));
-	}, [category, page, pathname, query, sub_category, total]);
-
-	useEffect(() => {
-		updateLinkUrl();
-	}, [updateLinkUrl]);
+	};
 
 	if (lang === 'en')
 		return (
@@ -293,6 +301,12 @@ const ProductsGrid = ({
 				bg={'linear-gradient(to right, #434343 0%, black 100%)'}
 				position={'relative'}
 			>
+				<SearchInCatalog
+					dictionary={dictionary}
+					lang={lang}
+					query={query}
+					setQuery={setQuery}
+				/>
 				<MobileFilterMenu
 					category={category}
 					categories={categories}
@@ -304,6 +318,7 @@ const ProductsGrid = ({
 					lang={lang}
 					refMobFilter
 				/>
+
 				<Tabs
 					lazyBehavior
 					index={activeTab}
@@ -384,6 +399,8 @@ const ProductsGrid = ({
 									list={renderList}
 									lang={lang}
 									isLoading={isLoading}
+									setCallbackPath={setCallbackPath}
+									dictionary={dictionary}
 								/>
 							)}
 						</TabPanel>
@@ -397,6 +414,8 @@ const ProductsGrid = ({
 										list={renderList}
 										lang={lang}
 										isLoading={isLoading}
+										setCallbackPath={setCallbackPath}
+										dictionary={dictionary}
 									/>
 								)}
 							</TabPanel>

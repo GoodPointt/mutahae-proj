@@ -16,7 +16,14 @@ import FavBtn from '../singleProduct/FavBtn/FavBtn';
 
 import { parseAsFloat, useQueryState } from 'nuqs';
 
-const ProductItem = ({ product, lang, favs, setFavs, isAuth = false }) => {
+const ProductItem = ({
+	product,
+	lang,
+	favs,
+	setFavs,
+	isAuth = false,
+	setCallbackPath,
+}) => {
 	const [isModileScreen] = useMediaQuery('(max-width: 1024px)');
 
 	const [isFavorite, setIsFavorite] = useState(
@@ -76,7 +83,12 @@ const ProductItem = ({ product, lang, favs, setFavs, isAuth = false }) => {
 				},
 			}}
 		>
-			<Link href={`/${lang}/catalog/${product.uid}`}>
+			<Link
+				href={`/${lang}/catalog/${product.uid}`}
+				onClick={() => {
+					setCallbackPath();
+				}}
+			>
 				<article>
 					<Box
 						borderRadius={'2px'}

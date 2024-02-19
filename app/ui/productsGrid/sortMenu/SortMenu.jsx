@@ -153,12 +153,16 @@ const SortMenu = ({
 							color={'white'}
 							fontSize={'16px'}
 							fontWeight={'500'}
-							_hover={{ bg: 'transparent' }}
+							transition={'all 0.5 ease'}
+							_hover={{
+								bg: 'transparent',
+								color: '#a28445',
+								stroke: '#a28445',
+							}}
 							onClick={() => {
 								toggleSort(`${el}`);
 								!isLargerThan768 && setIsOpen(!isOpen);
 							}}
-							fill={'white'}
 							stroke={'white'}
 						>
 							{getTranslation(el)}
