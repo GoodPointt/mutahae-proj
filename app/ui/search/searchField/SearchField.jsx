@@ -97,6 +97,9 @@ const SearchField = ({ lang, onClose, setQuery, query, dictionary }) => {
 					placeholder={dictionary.searchField.search}
 					border={'none'}
 					onChange={handleSearch}
+					style={
+						lang === 'he' ? { direction: 'ltr', textAlign: 'right' } : null
+					}
 					_placeholder={{ color: '#808080' }}
 					_active={{ outlineColor: 'transparent' }}
 					_focus={{
