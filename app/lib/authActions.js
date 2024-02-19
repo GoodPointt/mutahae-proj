@@ -65,6 +65,10 @@ export async function loginAction(prevState, formData) {
 				value: userData.user.id,
 				httpOnly: true,
 			});
+			cookies().set({
+				name: 'lang',
+				value: lang,
+			});
 			profileInstance.defaults.headers.authorization = `Bearer ${userData.jwt}`;
 		}
 
@@ -164,6 +168,10 @@ export async function registerAction(prevState, formData) {
 				name: 'userId',
 				value: userData.user.id,
 				httpOnly: true,
+			});
+			cookies().set({
+				name: 'lang',
+				value: lang,
 			});
 			profileInstance.defaults.headers.authorization = `Bearer ${userData.jwt}`;
 		}
