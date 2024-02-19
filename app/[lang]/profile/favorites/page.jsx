@@ -5,7 +5,6 @@ import { FavoritesContent } from '../../../ui/profile/favoritesContent/Favorites
 import { getDictionary } from '../../../lib/locales/dictionary';
 
 const Favorites = async ({ params: { lang } }) => {
-	//const favorites = await fetchFavorites();
 	const dictionary = await getDictionary(lang);
 	const userId = cookies().get('userId')?.value;
 

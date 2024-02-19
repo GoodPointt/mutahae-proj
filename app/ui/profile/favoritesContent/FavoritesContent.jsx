@@ -35,11 +35,6 @@ export const FavoritesContent = ({ dictionary, lang, isAuth }) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [page, favorites]);
 
-	// const prevPage = () => {
-	// 	const startFrom = page > 1 ? (page - 1) * 4 : 0;
-	// 	setFavoriteData(favorites.slice(startFrom, page * 4));
-	// }
-
 	// eslint-disable-next-line no-unused-vars
 	const { title, btnAdd } = dictionary.profile.favorites;
 
@@ -63,13 +58,10 @@ export const FavoritesContent = ({ dictionary, lang, isAuth }) => {
 			>
 				{favoriteData &&
 					favoriteData.map(good => {
-						//console.log(good);
 						const { id, uid, locale, title, descShort, unit, price } = good;
 						const { img } = good;
 
 						const localizations = good?.localizations || [];
-
-						//console.log(lang == 'en' && locale === 'he');
 
 						return (
 							<ProductItem
