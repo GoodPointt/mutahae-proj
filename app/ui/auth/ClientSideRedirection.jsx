@@ -53,6 +53,12 @@ const ClientSideRedirection = ({ dictionary, provider, lang }) => {
 			.then(async res => {
 				if (res.jwt) {
 					const bagRes = await createBagByUserIdAndJwt(res.jwt, res.user.id);
+
+					await createFavoritesByUserIdAndJwt(res.jwt, res.user.id);
+
+					setCookie('jwt', res.jwt);
+					setCookie('userId', res.user.id);
+
 					if (localBag.length !== 0) {
 						await fetch(
 							`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/bags/${

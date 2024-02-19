@@ -20,7 +20,7 @@ import SubmitButton from '../submitButton/SubmitButton';
 const RegisterForm = ({ dictionary, lang }) => {
 	const [state, dispatch] = useFormState(registerAction, undefined);
 	const toast = useToast();
-	const [localGoods, setLocalGoods] = useLocalStorage('localBag', []);
+	const [localGoods] = useLocalStorage('localBag', []);
 	const [callbackPath] = useState(
 		typeof window !== 'undefined'
 			? JSON.parse(localStorage.getItem('callbackPath'))
@@ -74,13 +74,12 @@ const RegisterForm = ({ dictionary, lang }) => {
 			<FormControl isInvalid={nameError} pb="25px">
 				<VisuallyHiddenInput
 					name="localGoods"
-					value={JSON.stringify(
+					defaultValue={JSON.stringify(
 						localGoods.map(({ count, good: { data } }) => ({
 							good: data,
 							count,
 						}))
 					)}
-					onChange={() => setLocalGoods()}
 				/>
 				<VisuallyHiddenInput name="lang" defaultValue={lang} />
 				<VisuallyHiddenInput name="callbackPath" defaultValue={callbackPath} />

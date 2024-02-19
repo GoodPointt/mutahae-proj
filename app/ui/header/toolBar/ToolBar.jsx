@@ -5,6 +5,8 @@ import Link from 'next/link';
 
 import { Box, Button, Flex, useDisclosure } from '@chakra-ui/react';
 
+import { useLocalBag } from '@/app/lib/hooks/useLocalBag';
+
 import Bag from '../../bag/Bag';
 import Modal from '../../modal/Modal';
 import SearchField from '../../search/searchField/SearchField';
@@ -14,6 +16,7 @@ import FavoriteNavIcon from '../../svg/FavoriteNavIcon';
 import ProfileNavIcon from '../../svg/ProfileNavIcon';
 import Search from '../../svg/Search';
 
+import axios from 'axios';
 import { setCookie } from 'cookies-next';
 import { parseAsFloat, useQueryState } from 'nuqs';
 
@@ -48,6 +51,11 @@ const ToolBar = ({
 	useEffect(() => {
 		if (favId) setCookie('favId', favId);
 	}, [favId]);
+	const [localGoods] = useLocalBag('localBag');
+
+	const totalPrice = localGoods.reduce((acc, { count, good: { data } }) => {
+		return acc + data.attributes.price * count;
+	}, 0);
 
 	useEffect(() => {
 		typeof window !== 'undefined' &&
@@ -142,21 +150,26 @@ const ToolBar = ({
 		onClose();
 	};
 
-	// useEffect(() => {
-	// 	const updateAllBag = async () => {
-	// 		const url =
-	// 			process.env.NEXT_PUBLIC_STRAPI_API_URL +
-	// 			`/api/bags/${66}?populate=goods`;
+	const handleModalBagClose = () => {
+		const flatten = localGoods.map(({ count, good: { data } }) => ({
+			good: data,
+			count,
+		}));
 
-	// 		try {
-	// 			// const res = await axios.put(url, data: {goods:  []})
-	// 		} catch (error) {
+		if (hasToken) {
+			const url =
+				process.env.NEXT_PUBLIC_STRAPI_API_URL +
+				`/api/bags/${bagData.id}?populate=goods`;
 
-	// 		}
-	// 	};
-	// 	if (!isOpen && isDifferentCount) {
-	// 	}
-	// });
+			try {
+				axios.put(url, { data: { goods: flatten, bagPrice: totalPrice } });
+			} catch (error) {
+				console.error(error);
+			}
+		}
+
+		onClose();
+	};
 
 	return (
 		<>
@@ -193,7 +206,11 @@ const ToolBar = ({
 					}
 				})}
 			</Flex>
-			<Modal isOpen={isOpen} onClose={handleClose} lang={lang}>
+			<Modal
+				isOpen={isOpen}
+				onClose={variant === 'BAG_ICON' ? handleModalBagClose : handleClose}
+				lang={lang}
+			>
 				{variant === 'BAG_ICON' && (
 					<Bag
 						bagData={bagData}

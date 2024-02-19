@@ -309,14 +309,13 @@ export const fetchUserAddress = async () => {
 
 const getBagByUserId = async () => {
 	try {
-		const token = cookies().get('jwt')?.value;
 		const userId = cookies().get('userId')?.value;
 
 		const res = await profileInstance.get(
 			`/api/bags?populate[0]=goods&populate[1]=goods.good&populate[2]=goods.good.img&populate[3]=goods.good.localizations&filters[user][id][$eq]=${userId}`,
 			{
 				headers: {
-					Authorization: 'Bearer ' + token,
+					// Authorization: 'Bearer ' + token,
 				},
 			}
 		);
@@ -439,10 +438,6 @@ export const fetchAddToBag = cache(addToBag);
 
 const updateAllGoodsInBag = async (goods, bagPrice) => {
 	try {
-		const token = cookies().get('jwt')?.value;
-
-		profileInstance.defaults.headers.authorization = `Bearer ${token}`;
-
 		const response = await fetchBagByUserId();
 
 		return await profileInstance.put(
@@ -473,10 +468,6 @@ export const fetchUpdateAllGoodsInBag = cache(updateAllGoodsInBag);
 
 const deleteProductFromBag = async (goodId, bagPrice) => {
 	try {
-		const token = cookies().get('jwt')?.value;
-
-		profileInstance.defaults.headers.authorization = `Bearer ${token}`;
-
 		const response = await fetchBagByUserId();
 
 		const goodsInBag = flattenAttributes(response[0].goods);
@@ -513,19 +504,20 @@ export const fetchDeleteProductFromBag = cache(deleteProductFromBag);
 
 const setLocalBagOnServer = async localGoods => {
 	try {
-		const token = cookies().get('jwt')?.value;
-
-		profileInstance.defaults.headers.authorization = `Bearer ${token}`;
-
 		const bag = await fetchBagByUserId();
+		const goodsInBag = flattenAttributes(bag[0].goods);
 
-		const body = localGoods;
+		const localGoodsIds = localGoods.map(({ good }) => good.data.id);
+
+		const goods = goodsInBag.filter(({ good }) =>
+			localGoodsIds.includes(good.id.data)
+		);
 
 		return await profileInstance.put(
 			`/api/bags/${bag[0].id}?populate=goods`,
 			{
 				data: {
-					goods: body,
+					goods: goods,
 				},
 			},
 			{

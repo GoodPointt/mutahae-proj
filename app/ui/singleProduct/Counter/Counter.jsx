@@ -51,7 +51,7 @@ const Counter = ({ count, setCount, isInBag, dictionary, isBlock }) => {
 					type="number"
 					h={'max-content'}
 					variant={'unstyled'}
-					// inputMode="numeric"
+					inputMode="numeric"
 					isDisabled={isInBag}
 					w={'100px'}
 					minH={0}
@@ -72,8 +72,7 @@ const Counter = ({ count, setCount, isInBag, dictionary, isBlock }) => {
 					value={count}
 					onBlur={evt => {
 						(evt.currentTarget.value === '' ||
-							evt.currentTarget.value === '0' ||
-							parseInt(evt.currentTarget.value) < 0) &&
+							parseInt(evt.currentTarget.value) <= 0) &&
 							setCount(1);
 						setIsValid(true);
 					}}

@@ -29,7 +29,27 @@ const Bag = ({ bagData, hasToken, onClose, dictionary }) => {
 
 	const { lang } = useParams();
 
-	const onOrderClick = () => {
+	const onOrderClick = async () => {
+		const flatten = localGoods.map(({ count, good: { data } }) => ({
+			good: data,
+			count,
+		}));
+		try {
+			const url =
+				process.env.NEXT_PUBLIC_STRAPI_API_URL +
+				`/api/bags/${bagData.id}?populate=goods`;
+			axios.put(
+				url,
+				{ data: { goods: flatten, bagPrice: totalPrice } },
+				{
+					headers: {
+						'Content-Type': 'application/json',
+					},
+				}
+			);
+		} catch (error) {
+			console.error(error);
+		}
 		router.push(`/${lang}/order`);
 		onClose();
 	};
@@ -62,7 +82,7 @@ const Bag = ({ bagData, hasToken, onClose, dictionary }) => {
 					`/api/bags/${bagData.id}?populate=goods`;
 				await axios.put(
 					url,
-					{ data: { goods: flatten } },
+					{ data: { goods: flatten, bagPrice: totalPrice } },
 					{
 						headers: {
 							'Content-Type': 'application/json',
@@ -77,6 +97,7 @@ const Bag = ({ bagData, hasToken, onClose, dictionary }) => {
 			deleteGoodFromServerBag();
 			setIsDeleted(false);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [hasToken, isDeleted, localGoods]);
 
 	return (
