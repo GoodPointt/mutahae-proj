@@ -30,6 +30,7 @@ import IsInBag from './isInBag/IsInBag';
 import SingleProductSlider from './singleProductSlider/SingleProductSlider';
 import TotalBagPrice from './TotalBagPrice/TotalBagPrice';
 
+import axios from 'axios';
 import { AnimatePresence, motion } from 'framer-motion';
 
 export const dynamic = 'force-dynamic';
@@ -56,7 +57,7 @@ const SingleProduct = ({ userId, dictionary, product, bagData, favorites }) => {
 	const productDetails = { length, width, thickness, wood, type, manufacturer };
 	const { isOpen, onClose, onOpen } = useDisclosure();
 	const [count, setCount] = useState(1);
-	const [localBag, setLocalBag] = useLocalBag('localBag', []);
+	const [localGoods, setLocalBag] = useLocalBag('localBag', []);
 	const [isMobile] = useMediaQuery('(max-width: 480px)', {
 		ssr: true,
 		fallback: false,
@@ -73,33 +74,33 @@ const SingleProduct = ({ userId, dictionary, product, bagData, favorites }) => {
 	const [isInBag, setIsInBag] = useState(false);
 
 	useEffect(() => {
-		const good = localBag.find(({ good }) => good.data.id === goodId);
+		const good = localGoods.find(({ good }) => good.data.id === goodId);
 		good ? setCount(good.count) : setCount(1);
-	}, [bagData, goodId, localBag, userId]);
+	}, [bagData, goodId, localGoods, userId]);
 
 	useEffect(() => {
-		const totalLocalPrice = localBag.reduce((acc, { count, good }) => {
+		const totalLocalPrice = localGoods.reduce((acc, { count, good }) => {
 			const flattenGood = flattenAttributes(good);
 
 			return acc + flattenGood.price * count;
 		}, 0);
 		setTotalPrice(totalLocalPrice);
-	}, [localBag, bagData, userId, totalPrice]);
+	}, [localGoods, bagData, userId, totalPrice]);
 
 	useEffect(() => {
-		const isInLocalBag = localBag.find(
+		const isInLocalBag = localGoods.find(
 			({ good: { data } }) => data.attributes.uid === uid
 		);
 		setIsInBag(isInLocalBag);
-	}, [localBag, uid]);
+	}, [localGoods, uid]);
 
 	const addGoodInLocal = (count, goodUid) => {
-		const isSame = localBag.find(
+		const isSame = localGoods.find(
 			({ good: { data } }) => data.attributes.uid === goodUid
 		);
 
 		if (isSame) {
-			const updatedBag = localBag.map(item => {
+			const updatedBag = localGoods.map(item => {
 				if (item.id === goodUid) {
 					return { ...item, count: item.count + count };
 				}
@@ -108,8 +109,29 @@ const SingleProduct = ({ userId, dictionary, product, bagData, favorites }) => {
 			});
 			setLocalBag(updatedBag);
 		} else {
-			setLocalBag([...localBag, { count, good: { data: product } }]);
+			setLocalBag([...localGoods, { count, good: { data: product } }]);
 		}
+	};
+
+	const handleModalBagClose = () => {
+		const flatten = localGoods.map(({ count, good: { data } }) => ({
+			good: data,
+			count,
+		}));
+
+		if (userId) {
+			const url =
+				process.env.NEXT_PUBLIC_STRAPI_API_URL +
+				`/api/bags/${bagData[0].id}?populate=goods`;
+
+			try {
+				axios.put(url, { data: { goods: flatten, bagPrice: totalPrice } });
+			} catch (error) {
+				console.error(error);
+			}
+		}
+
+		onClose();
 	};
 
 	return (
@@ -191,7 +213,7 @@ const SingleProduct = ({ userId, dictionary, product, bagData, favorites }) => {
 						{userId ? (
 							<form
 								action={() =>
-									formAction({ count, goodId, goodPrice: totalPrice })
+									formAction({ count, goodId, goodPrice: price * count })
 								}
 							>
 								<>
@@ -291,7 +313,7 @@ const SingleProduct = ({ userId, dictionary, product, bagData, favorites }) => {
 				</>
 			)}
 
-			<Modal isOpen={isOpen} onClose={onClose}>
+			<Modal isOpen={isOpen} onClose={handleModalBagClose}>
 				<Bag
 					bagData={bagData ? bagData[0] : {}}
 					hasToken={!!userId}

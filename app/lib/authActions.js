@@ -149,10 +149,6 @@ export async function registerAction(prevState, formData) {
 				goods
 			);
 
-			if (bagResponse.ok && goods.length !== 0) {
-				await handleLocalBagOnServer(goods);
-			}
-
 			await createFavoritesByUserIdAndJwt(userData.jwt, userData.user.id);
 
 			cookies().set({
@@ -165,7 +161,11 @@ export async function registerAction(prevState, formData) {
 				value: userData.user.id,
 				httpOnly: true,
 			});
+
 			profileInstance.defaults.headers.authorization = `Bearer ${userData.jwt}`;
+			if (bagResponse.ok && goods.length !== 0) {
+				await handleLocalBagOnServer(goods);
+			}
 		}
 	} catch (error) {
 		console.error(error);

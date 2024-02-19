@@ -40,19 +40,9 @@ const HeaderWrapper = ({
 		setHasToken(isAuth);
 
 		if (isAuth) {
-			const localBagGoodsIds = localBag.map(
-				({ good }) => good.data.attributes.uid
-			);
-			const filteredGoods =
-				bagData &&
-				bagData.goods.filter(({ good }) => {
-					if (!good.data) {
-						return;
-					}
+			const nonEmptyGoods = bagData.goods.filter(({ good }) => good.data);
 
-					return !localBagGoodsIds.includes(good.data.attributes.uid);
-				});
-			setLocalBag([...localBag, ...filteredGoods]);
+			setLocalBag(bagData && nonEmptyGoods);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isAuth]);
