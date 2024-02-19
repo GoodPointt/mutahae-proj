@@ -47,6 +47,7 @@ const Shipping = ({
 	const handleCustomCityChange = e => {
 		setSelectedCity('');
 		setOwnCity('');
+		setCityId(null);
 		setEnteredAddress(e.target.value);
 	};
 
@@ -195,7 +196,7 @@ const Shipping = ({
 							onClick={() => {
 								setSelectedCity(dictionary.order.self);
 								setOwnCity('');
-								setCityId();
+								setCityId(null);
 								setEnteredAddress('');
 							}}
 						>

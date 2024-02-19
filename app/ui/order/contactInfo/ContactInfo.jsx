@@ -40,7 +40,7 @@ const ContactInfo = ({
 	const [goodsToMap, setGoodsToMap] = useState([]);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [localGoods, setLocalGoods] = useLocalBag('localBag', []);
-	const [cityId, setCityId] = useState();
+	const [cityId, setCityId] = useState(null);
 	const [ownCity, setOwnCity] = useState('');
 	const [orderReject, setOrderReject] = useState(false);
 	const [enteredAddress, setEnteredAddress] = useState('');
@@ -111,6 +111,8 @@ const ContactInfo = ({
 					setLocalGoods([]);
 					setSelectedCity('');
 					setEnteredAddress('');
+					setOwnCity('');
+					setCityId(null);
 				} else {
 					console.error(`Order rejected ${state.status}`);
 					onOpen();
@@ -220,6 +222,7 @@ const ContactInfo = ({
 										bgColor="#3b3d46"
 										borderRadius={'2px'}
 										position={'relative'}
+										maxLength={30}
 										defaultValue={userData?.firstName || ''}
 										placeholder={dictionary.order.firstName}
 										style={
@@ -247,6 +250,7 @@ const ContactInfo = ({
 										type="text"
 										bgColor="#3b3d46"
 										borderRadius={'2px'}
+										maxLength={30}
 										defaultValue={userData?.lastName || ''}
 										placeholder={dictionary.order.lastName}
 										style={
@@ -281,6 +285,7 @@ const ContactInfo = ({
 										type="email"
 										bgColor="#3b3d46"
 										borderRadius={'2px'}
+										maxLength={30}
 										defaultValue={userData?.email || ''}
 										placeholder={dictionary.order.mail}
 										style={
@@ -308,6 +313,7 @@ const ContactInfo = ({
 										focusBorderColor="#a28445"
 										border="1px solid transparent"
 										bgColor="#3b3d46"
+										maxLength={30}
 										borderRadius={'2px'}
 										defaultValue={userData?.phone || ''}
 										placeholder={dictionary.order.phone}
