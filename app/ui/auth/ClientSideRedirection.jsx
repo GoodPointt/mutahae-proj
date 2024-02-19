@@ -81,6 +81,12 @@ const ClientSideRedirection = ({ dictionary, provider, lang }) => {
 							}
 						);
 					}
+					await createFavoritesByUserIdAndJwt(res.jwt, res.user.id);
+					setCookie('jwt', res.jwt);
+					setCookie('userId', res.user.id);
+					setCookie('lang', lang);
+
+
 					setTimeout(() => {
 						setText(dictionary.provider.rederecting);
 						router.replace(callbackPath || `/${lang}/`);

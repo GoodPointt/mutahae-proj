@@ -65,6 +65,10 @@ export async function loginAction(prevState, formData) {
 				value: userData.user.id,
 				httpOnly: true,
 			});
+			cookies().set({
+				name: 'lang',
+				value: lang,
+			});
 			profileInstance.defaults.headers.authorization = `Bearer ${userData.jwt}`;
 		}
 
@@ -161,7 +165,10 @@ export async function registerAction(prevState, formData) {
 				value: userData.user.id,
 				httpOnly: true,
 			});
-
+			cookies().set({
+				name: 'lang',
+				value: lang,
+			});
 			profileInstance.defaults.headers.authorization = `Bearer ${userData.jwt}`;
 			if (bagResponse.ok && goods.length !== 0) {
 				await handleLocalBagOnServer(goods);
