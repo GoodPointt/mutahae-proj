@@ -24,8 +24,7 @@ export const OrderHistory = ({ lang, orders }) => {
 			{ordersData &&
 				ordersData.length > 0 &&
 				ordersData.map((order, index) => {
-					const { goods, createdAt, id, orderPrice, city, publishedAt } =
-						order.attributes;
+					const { goods, createdAt, orderPrice, city } = order.attributes;
 					const dateOrder = new Date(createdAt);
 
 					const formattedDate = format(dateOrder, 'dd/MM/yyyy', {
@@ -37,106 +36,101 @@ export const OrderHistory = ({ lang, orders }) => {
 					const cityHe = cityData?.localizations?.data[0]?.attributes?.cityName;
 
 					return (
-						<>
-							<Flex
-								key={id}
-								borderTop={index > 0 ? '1px solid #a98841' : null}
-								pt={index > 0 ? '30px' : null}
-								pb={index !== orders.length - 1 ? '30px' : null}
-							>
-								<Flex gap="30px" flexDir="column" flex={1}>
-									{goods &&
-										goods.length > 0 &&
-										goods.map(product => {
-											if (!product.good.data) return;
-											const { good } = product;
+						<Flex
+							key={Date.now() + Math.random()}
+							borderTop={index > 0 ? '1px solid #a98841' : null}
+							pt={index > 0 ? '30px' : null}
+							pb={index !== orders.length - 1 ? '30px' : null}
+						>
+							<Flex gap="30px" flexDir="column" flex={1}>
+								{goods &&
+									goods.length > 0 &&
+									goods.map(product => {
+										if (!product.good.data) return;
+										const { good } = product;
 
-											//const { id } = good.data;
+										const { img, uid, localizations, title, descShort } =
+											good.data.attributes;
 
-											const { img, uid, localizations, title, descShort } =
-												good.data.attributes;
+										const localizData = localizations.data;
 
-											const localizData = localizations.data;
+										const imgurl =
+											img?.data[0].attributes.formats.thumbnail.url;
 
-											const imgurl =
-												img?.data[0].attributes.formats.thumbnail.url;
-
-											return (
-												<OrderHistoryItem
-													key={publishedAt}
-													lang={lang}
-													title={
-														localizData.length && lang == 'he'
-															? localizData[0]?.attributes.title || title
-															: title
-													}
-													imgurl={imgurl}
-													descShort={
-														localizData.length && lang == 'he'
-															? localizData[0]?.attributes.descShort ||
-															  descShort
-															: descShort
-													}
-													uid={uid}
-												/>
-											);
-										})}
-								</Flex>
-								<Box
-									ml={{ base: 0, lg: lang === 'he' ? 0 : 'auto' }}
-									mr={{ base: 0, lg: lang === 'en' ? 0 : 'auto' }}
-									my="auto"
-								>
-									<Text
-										fontSize="14px"
-										color="#808080"
-										textAlign={{
-											base: lang === 'he' ? 'right' : 'left',
-											lg: lang === 'he' ? 'left' : 'right',
-										}}
-										mb="14px"
-									>
-										{formattedDate}
-									</Text>
-
-									{lang === 'en' && cityData && (
-										<Text
-											fontSize="14px"
-											textAlign={{
-												base: lang === 'he' ? 'right' : 'left',
-												lg: lang === 'he' ? 'left' : 'right',
-											}}
-											mb="14px"
-										>
-											{cityData?.cityName}
-										</Text>
-									)}
-									{lang === 'he' && cityHe && (
-										<Text
-											fontSize="14px"
-											textAlign={{
-												base: lang === 'he' ? 'right' : 'left',
-												lg: lang === 'he' ? 'left' : 'right',
-											}}
-											mb="14px"
-										>
-											{cityHe}
-										</Text>
-									)}
-
-									<Text
-										fontSize="14px"
-										textAlign={{
-											base: lang === 'he' ? 'right' : 'left',
-											lg: lang === 'he' ? 'left' : 'right',
-										}}
-										mb="14px"
-									>
-										{`${orderPrice}₪`}
-									</Text>
-								</Box>
+										return (
+											<OrderHistoryItem
+												key={Date.now() + Math.random()}
+												lang={lang}
+												title={
+													localizData.length && lang == 'he'
+														? localizData[0]?.attributes.title || title
+														: title
+												}
+												imgurl={imgurl}
+												descShort={
+													localizData.length && lang == 'he'
+														? localizData[0]?.attributes.descShort || descShort
+														: descShort
+												}
+												uid={uid}
+											/>
+										);
+									})}
 							</Flex>
-						</>
+							<Box
+								ml={{ base: 0, lg: lang === 'he' ? 0 : 'auto' }}
+								mr={{ base: 0, lg: lang === 'en' ? 0 : 'auto' }}
+								my="auto"
+							>
+								<Text
+									fontSize="14px"
+									color="#808080"
+									textAlign={{
+										base: lang === 'he' ? 'right' : 'left',
+										lg: lang === 'he' ? 'left' : 'right',
+									}}
+									mb="14px"
+								>
+									{formattedDate}
+								</Text>
+
+								{lang === 'en' && cityData && (
+									<Text
+										fontSize="14px"
+										textAlign={{
+											base: lang === 'he' ? 'right' : 'left',
+											lg: lang === 'he' ? 'left' : 'right',
+										}}
+										mb="14px"
+									>
+										{cityData?.cityName}
+									</Text>
+								)}
+								{lang === 'he' && cityHe && (
+									<Text
+										fontSize="14px"
+										textAlign={{
+											base: lang === 'he' ? 'right' : 'left',
+											lg: lang === 'he' ? 'left' : 'right',
+										}}
+										mb="14px"
+									>
+										{cityHe}
+									</Text>
+								)}
+
+								<Text
+									fontSize="14px"
+									textAlign={{
+										base: lang === 'he' ? 'right' : 'left',
+										lg: lang === 'he' ? 'left' : 'right',
+									}}
+									mb="14px"
+								>
+									{`${orderPrice}₪`}
+								</Text>
+							</Box>
+						</Flex>
 					);
 				})}
 			<PaginationDisplay
