@@ -86,7 +86,6 @@ const ClientSideRedirection = ({ dictionary, provider, lang }) => {
 					setCookie('userId', res.user.id);
 					setCookie('lang', lang);
 
-
 					setTimeout(() => {
 						setText(dictionary.provider.rederecting);
 						router.replace(callbackPath || `/${lang}/`);
