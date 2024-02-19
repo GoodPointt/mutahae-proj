@@ -58,6 +58,12 @@ export default async function RootLayout({ children, params: { lang } }) {
 	const dictionary = await getDictionary(lang);
 	const contacts = await fetchContacts(lang);
 
+	// cookies().set({
+	// 	name: 'jwt',
+	// 	value: userData.jwt,
+	// 	httpOnly: true,
+	// });
+
 	return (
 		<html lang={lang} dir={lang === 'he' ? 'rtl' : 'ltr'}>
 			{/* <link

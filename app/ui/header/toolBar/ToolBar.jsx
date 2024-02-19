@@ -14,6 +14,7 @@ import FavoriteNavIcon from '../../svg/FavoriteNavIcon';
 import ProfileNavIcon from '../../svg/ProfileNavIcon';
 import Search from '../../svg/Search';
 
+import { setCookie } from 'cookies-next';
 import { parseAsFloat, useQueryState } from 'nuqs';
 
 const ToolBar = ({
@@ -23,6 +24,7 @@ const ToolBar = ({
 	dictionary,
 	bagLength,
 	favorites,
+	favId,
 	displayIcons = [
 		'SEARCH_ICON',
 		'PROFILE_ICON',
@@ -42,6 +44,10 @@ const ToolBar = ({
 				: 0
 		)
 	);
+
+	useEffect(() => {
+		if (favId) setCookie('favId', favId);
+	}, [favId]);
 
 	useEffect(() => {
 		typeof window !== 'undefined' &&

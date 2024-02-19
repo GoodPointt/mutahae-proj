@@ -14,6 +14,10 @@ export const FavoritesContent = ({ dictionary, lang, isAuth }) => {
 			: []
 	);
 
+	useEffect(() => {
+		localStorage.setItem('favs', JSON.stringify(favorites || []));
+	}, [favorites]);
+
 	const [page, setPage] = useState(1);
 	const [favoriteData, setFavoriteData] = useState(
 		favorites.slice(0, page * 4)
@@ -21,16 +25,18 @@ export const FavoritesContent = ({ dictionary, lang, isAuth }) => {
 	const [total, setTotal] = useState(favorites.length || 0);
 
 	useEffect(() => {
-		localStorage.setItem('favs', JSON.stringify(favorites || []));
-	}, [favorites]);
-
-	useEffect(() => {
 		const startFrom = page > 1 ? (page - 1) * 4 : 0;
 
 		if (favorites.length === startFrom) setPage(prevState => prevState - 1);
 		setFavoriteData(favorites.slice(startFrom, page * 4));
 		setTotal(favorites.length);
-	}, [favorites, page, total]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [page, favorites]);
+
+	// const prevPage = () => {
+	// 	const startFrom = page > 1 ? (page - 1) * 4 : 0;
+	// 	setFavoriteData(favorites.slice(startFrom, page * 4));
+	// }
 
 	// eslint-disable-next-line no-unused-vars
 	const { title, btnAdd } = dictionary.profile.favorites;

@@ -57,11 +57,15 @@ const schema = z
 
 const addressSchema = z
 	.object({
-		region: z.string().trim(),
-		city: z.string().trim().min(1, { message: 'required' }),
-		street: z.string().trim(),
-		app: z.string().trim(),
-		index: z.string().trim(),
+		region: z.string().trim().max(10, { message: 'invalid' }),
+		city: z
+			.string()
+			.trim()
+			.min(1, { message: 'required' })
+			.max(10, { message: 'invalid' }),
+		street: z.string().trim().max(10, { message: 'invalid' }),
+		app: z.string().trim().max(10, { message: 'invalid' }),
+		index: z.string().trim().max(10, { message: 'invalid' }),
 	})
 	.partial();
 
@@ -313,10 +317,13 @@ export async function deleteProductFromBag(prevState, formData) {
 }
 
 export async function submitGoodToFavorite(prevState, formData) {
-	const { goodId } = formData;
+	const { goodId, goods } = formData;
 
 	try {
-		const response = await fetchHandleFavorites(goodId);
+		const response = await fetchHandleFavorites({
+			goods,
+			goodId,
+		});
 
 		if (response?.status === 200) {
 			return {
