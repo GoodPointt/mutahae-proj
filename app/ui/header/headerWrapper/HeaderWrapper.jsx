@@ -118,6 +118,7 @@ const HeaderWrapper = ({
 							? favorites[0].goods
 							: []
 					}
+					favId={hasToken && favorites && favorites[0]?.id}
 				/>
 				<LocaleSwitcher />
 			</Flex>

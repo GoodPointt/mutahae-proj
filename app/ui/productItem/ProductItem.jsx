@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useFormState } from 'react-dom';
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 
 import { Box, Button, Heading, Text, useMediaQuery } from '@chakra-ui/react';
 
@@ -17,17 +18,27 @@ import { parseAsFloat, useQueryState } from 'nuqs';
 
 const ProductItem = ({ product, lang, favs, setFavs, isAuth = false }) => {
 	const [isModileScreen] = useMediaQuery('(max-width: 1024px)');
+
 	const [isFavorite, setIsFavorite] = useState(
 		favs?.some(item => item.id === product.id)
 	);
 
-	const [, formAction] = useFormState(submitGoodToFavorite, null);
+	const [state, formAction] = useFormState(submitGoodToFavorite, null);
+	const path = usePathname();
+	const router = useRouter();
 
 	const [, setFavorite] = useQueryState(
 		'favs',
 		typeof window !== 'undefined' &&
 			parseAsFloat.withDefault(JSON.parse(localStorage.getItem('favs'))?.length)
 	);
+
+	useEffect(() => {
+		if (path.includes('/favorites') && state?.status === 200) {
+			handleIsFavs(product.id);
+			router.refresh();
+		}
+	}, [path, state]);
 
 	const handleIsFavs = productId => {
 		const isExisting = favs.some(item => item.id === productId);
@@ -148,7 +159,7 @@ const ProductItem = ({ product, lang, favs, setFavs, isAuth = false }) => {
 			{isAuth ? (
 				<form
 					action={() => {
-						formAction({ goodId: product.id });
+						formAction({ goods: favs, goodId: product.id });
 					}}
 				>
 					<FavBtn
@@ -157,8 +168,11 @@ const ProductItem = ({ product, lang, favs, setFavs, isAuth = false }) => {
 						right={'0px'}
 						zIndex={'10'}
 						onClick={() => {
-							setIsFavorite(!isFavorite);
-							handleIsFavs(product.id);
+							if (!path.includes('/favorites')) {
+								setIsFavorite(!isFavorite);
+
+								handleIsFavs(product.id);
+							}
 						}}
 						isFavorite={isFavorite}
 					/>

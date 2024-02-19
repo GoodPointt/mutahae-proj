@@ -43,19 +43,21 @@ const getFavorites = async () => {
 
 export const fetchFavorites = cache(getFavorites);
 
-const handleFavorites = async goodId => {
+const handleFavorites = async ({ goods, goodId }) => {
 	try {
 		const token = cookies().get('jwt')?.value;
 		const userId = cookies().get('userId')?.value;
+		const favId = cookies().get('favId')?.value;
 
 		if (!token || !userId) {
 			throw new Error('Not authorized');
 		}
-		const favorites = await getFavorites();
+
+		//const favorites = await getFavorites();
 
 		profileInstance.defaults.headers.authorization = `Bearer ${token}`;
 
-		const flattenFavorites = flattenAttributes(favorites[0].goods);
+		const flattenFavorites = flattenAttributes(goods);
 
 		const isSame = flattenFavorites.some(item => item.id === goodId);
 
@@ -64,7 +66,7 @@ const handleFavorites = async goodId => {
 			: [...flattenFavorites, goodId];
 
 		const response = await profileInstance.put(
-			`/api/favorites/${favorites[0].id}?populate=goods`,
+			`/api/favorites/${favId}?populate=goods`,
 			{
 				data: { goods: body, user: userId },
 			},

@@ -98,13 +98,13 @@ export const AddressForm = ({ lang, dictionary }) => {
 							focusBorderColor="#a28445"
 							border={'1px solid transparent'}
 						/>
-						{/* <FormErrorMessage
+						<FormErrorMessage
 							fontSize={'14px'}
 							position="absolute"
 							bottom="4px"
 						>
 							{countryError === 'required' ? 'required' : 'invalid'}
-						</FormErrorMessage> */}
+						</FormErrorMessage>
 					</FormControl>
 					<FormControl isInvalid={cityError} pb="25px">
 						<Input
