@@ -27,8 +27,10 @@ export const FavoritesContent = ({ dictionary, lang, isAuth }) => {
 	useEffect(() => {
 		const startFrom = page > 1 ? (page - 1) * 4 : 0;
 
-		if (favorites.length === startFrom) setPage(prevState => prevState - 1);
+		if (favorites.length > 0 && favorites.length === startFrom)
+			setPage(prevState => prevState - 1);
 		setFavoriteData(favorites.slice(startFrom, page * 4));
+
 		setTotal(favorites.length);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [page, favorites]);
