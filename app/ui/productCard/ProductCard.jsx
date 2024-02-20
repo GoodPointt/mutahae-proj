@@ -138,7 +138,7 @@ const ProductCard = ({
 			</Tooltip>
 			<Grid
 				mt={{ base: '50px', md: '0px' }}
-				templateColumns={{ base: 'repeat(2, 1fr)' }}
+				templateColumns={{ base: '3fr 1fr' }}
 				w={'100%'}
 				justifyContent={'center'}
 			>

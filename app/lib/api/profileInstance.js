@@ -312,12 +312,7 @@ const getBagByUserId = async () => {
 		const userId = cookies().get('userId')?.value;
 
 		const res = await profileInstance.get(
-			`/api/bags?populate[0]=goods&populate[1]=goods.good&populate[2]=goods.good.img&populate[3]=goods.good.localizations&filters[user][id][$eq]=${userId}`,
-			{
-				headers: {
-					// Authorization: 'Bearer ' + token,
-				},
-			}
+			`/api/bags?populate[0]=goods&populate[1]=goods.good&populate[2]=goods.good.img&populate[3]=goods.good.localizations&filters[user][id][$eq]=${userId}`
 		);
 
 		const {
@@ -373,130 +368,6 @@ const createOrder = async (totalPrice, goods, cityId, orderNum) => {
 };
 
 export const fetchCreateOrder = cache(createOrder);
-
-const addToBag = async (count, goodId, goodPrice) => {
-	try {
-		const response = await fetchBagByUserId();
-
-		const goodsInBag = flattenAttributes(response[0].goods);
-
-		const isSame = goodsInBag.some(({ good }) => good.data.id === goodId);
-
-		let bagPrice = 0;
-		let body = [];
-
-		if (isSame) {
-			body = goodsInBag.map(item => {
-				if (item.good.data.id === goodId) {
-					bagPrice += goodPrice;
-
-					return { ...item, count: item.count + count };
-				}
-				bagPrice += item.good.data.attributes.price * item.count;
-
-				return item;
-			});
-		} else {
-			body = [...goodsInBag, { count, good: goodId }];
-			bagPrice =
-				goodsInBag.reduce(
-					(acc, { count: itemCount, good }) =>
-						acc + good.data.attributes.price * itemCount,
-					0
-				) + goodPrice;
-		}
-
-		return await profileInstance.put(
-			`/api/bags/${response[0].id}?populate=goods`,
-			{
-				data: {
-					bagPrice,
-					goods: body,
-				},
-			},
-			{
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				cache: 'no-cache',
-			}
-		);
-	} catch (error) {
-		console.error(error.response?.status);
-		console.error(error);
-		if (error.response?.status === 401) {
-			return redirect('/expired?expired=true');
-		} else return { error: error.message };
-	}
-};
-
-export const fetchAddToBag = cache(addToBag);
-
-const updateAllGoodsInBag = async (goods, bagPrice) => {
-	try {
-		const response = await fetchBagByUserId();
-
-		return await profileInstance.put(
-			`/api/bags/${response[0].id}?populate=goods`,
-			{
-				data: {
-					bagPrice,
-					goods: [...goods],
-				},
-			},
-			{
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				cache: 'no-cache',
-			}
-		);
-	} catch (error) {
-		console.error(error.message);
-		console.error(error.response?.status);
-		if (error.response?.status === 401) {
-			return redirect('/expired?expired=true');
-		} else return { error: error.message };
-	}
-};
-
-export const fetchUpdateAllGoodsInBag = cache(updateAllGoodsInBag);
-
-const deleteProductFromBag = async (goodId, bagPrice) => {
-	try {
-		const response = await fetchBagByUserId();
-
-		const goodsInBag = flattenAttributes(response[0].goods);
-
-		const goodsWithoutDeleted = goodsInBag.filter(
-			({ good }) => good.data.id !== goodId
-		);
-
-		return await profileInstance.put(
-			`/api/bags/${response[0].id}?populate=goods`,
-			{
-				data: {
-					bagPrice,
-					goods: [...goodsWithoutDeleted],
-				},
-			},
-			{
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				cache: 'no-cache',
-			}
-		);
-	} catch (error) {
-		console.error(error.response?.status);
-		console.error(error.message);
-		if (error.response?.status === 401) {
-			return redirect('/expired?expired=true');
-		} else return { error: error.message };
-	}
-};
-
-export const fetchDeleteProductFromBag = cache(deleteProductFromBag);
 
 const setLocalBagOnServer = async localGoods => {
 	try {

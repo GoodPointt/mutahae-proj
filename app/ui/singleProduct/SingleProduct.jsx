@@ -1,11 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useFormState } from 'react-dom';
 
 import {
 	Box,
-	Button,
 	Flex,
 	Grid,
 	Heading,
@@ -16,7 +14,6 @@ import {
 	useMediaQuery,
 } from '@chakra-ui/react';
 
-import { submitProductToBag } from '@/app/lib/actions';
 import { useLocalBag } from '@/app/lib/hooks/useLocalBag';
 import { flattenAttributes } from '@/app/lib/utils/flattenAttributes';
 
@@ -68,8 +65,6 @@ const SingleProduct = ({ userId, dictionary, product, bagData, favorites }) => {
 		localStorage.setItem('favs', JSON.stringify(favs || []));
 	}, [favs]);
 
-	const [, formAction] = useFormState(submitProductToBag);
-
 	const [totalPrice, setTotalPrice] = useState(null);
 	const [isInBag, setIsInBag] = useState(false);
 
@@ -94,25 +89,6 @@ const SingleProduct = ({ userId, dictionary, product, bagData, favorites }) => {
 		setIsInBag(isInLocalBag);
 	}, [localGoods, uid]);
 
-	const addGoodInLocal = (count, goodUid) => {
-		const isSame = localGoods.find(
-			({ good: { data } }) => data.attributes.uid === goodUid
-		);
-
-		if (isSame) {
-			const updatedBag = localGoods.map(item => {
-				if (item.id === goodUid) {
-					return { ...item, count: item.count + count };
-				}
-
-				return item;
-			});
-			setLocalBag(updatedBag);
-		} else {
-			setLocalBag([...localGoods, { count, good: { data: product } }]);
-		}
-	};
-
 	const handleModalBagClose = () => {
 		const flatten = localGoods.map(({ count, good: { data } }) => ({
 			good: data,
@@ -132,6 +108,43 @@ const SingleProduct = ({ userId, dictionary, product, bagData, favorites }) => {
 		}
 
 		onClose();
+	};
+
+	const addGood = async (count, goodUid) => {
+		const isSame = localGoods.find(
+			({ good: { data } }) => data.attributes.uid === goodUid
+		);
+		let updatedBag = [];
+
+		if (isSame) {
+			updatedBag = localGoods.map(item => {
+				if (item.id === goodUid) {
+					return { ...item, count: item.count + count };
+				}
+
+				return item;
+			});
+			setLocalBag(updatedBag);
+		} else {
+			updatedBag = [...localGoods, { count, good: { data: product } }];
+			setLocalBag(updatedBag);
+		}
+
+		if (userId) {
+			const flatten = updatedBag.map(({ count, good: { data } }) => ({
+				good: data,
+				count,
+			}));
+			const url =
+				process.env.NEXT_PUBLIC_STRAPI_API_URL +
+				`/api/bags/${bagData[0].id}?populate=goods`;
+
+			try {
+				axios.put(url, { data: { goods: flatten, bagPrice: price * count } });
+			} catch (error) {
+				console.error(error);
+			}
+		}
 	};
 
 	return (
@@ -210,50 +223,7 @@ const SingleProduct = ({ userId, dictionary, product, bagData, favorites }) => {
 								isInBag={isInBag}
 							/>
 						</Box>
-						{userId ? (
-							<form
-								action={() =>
-									formAction({ count, goodId, goodPrice: price * count })
-								}
-							>
-								<>
-									<Box
-										pos={'relative'}
-										display={'flex'}
-										w={'100%'}
-										justifyContent={'center'}
-									>
-										{isInBag ? (
-											<IsInBag
-												isInBag={isInBag}
-												onOpen={onOpen}
-												dictionary={dictionary}
-											/>
-										) : (
-											<AnimatePresence>
-												<Box
-													as={motion.div}
-													w={'100%'}
-													initial={{ opacity: 0, y: -20 }}
-													animate={{ opacity: 1, y: 0 }}
-													exit={{ opacity: 0, y: 0 }}
-													transitionDuration={'0.2s'}
-													transitionTimingFunction={'ease'}
-												>
-													<SubmitButton
-														onClick={() => addGoodInLocal(count, uid)}
-														type="submit"
-														message={dictionary.buttons.loaders.addBtn}
-													>
-														<Text as={'span'}>{dictionary.buttons.bag}</Text>
-													</SubmitButton>
-												</Box>
-											</AnimatePresence>
-										)}
-									</Box>
-								</>
-							</form>
-						) : (
+						<>
 							<Box
 								pos={'relative'}
 								display={'flex'}
@@ -274,26 +244,21 @@ const SingleProduct = ({ userId, dictionary, product, bagData, favorites }) => {
 											initial={{ opacity: 0, y: -20 }}
 											animate={{ opacity: 1, y: 0 }}
 											exit={{ opacity: 0, y: 0 }}
-											transition="0.2s easeOut"
+											transitionDuration={'0.2s'}
+											transitionTimingFunction={'ease'}
 										>
-											<Button
-												w={'100%'}
-												color={'#fff'}
-												_hover={{ bgColor: '#81672e' }}
-												borderRadius={0}
-												bgColor={'#a28445'}
-												pos={'relative'}
-												onClick={() => {
-													addGoodInLocal(count, uid);
-												}}
+											<SubmitButton
+												onClick={() => addGood(count, uid)}
+												type="submit"
+												message={dictionary.buttons.loaders.addBtn}
 											>
-												{dictionary.buttons.bag}
-											</Button>
+												<Text as={'span'}>{dictionary.buttons.bag}</Text>
+											</SubmitButton>
 										</Box>
 									</AnimatePresence>
 								)}
 							</Box>
-						)}
+						</>
 					</Grid>
 				</Flex>
 			</Grid>
