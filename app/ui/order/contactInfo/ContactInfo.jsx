@@ -43,6 +43,7 @@ const ContactInfo = ({
 	const [cityId, setCityId] = useState(null);
 	const [ownCity, setOwnCity] = useState('');
 	const [orderReject, setOrderReject] = useState(false);
+	const [userAddressId, setUserAddressId] = useState('null');
 	const [enteredAddress, setEnteredAddress] = useState('');
 	const { isOpen = false, onOpen, onClose } = useDisclosure();
 
@@ -113,6 +114,7 @@ const ContactInfo = ({
 					setEnteredAddress('');
 					setOwnCity('');
 					setCityId(null);
+					setUserAddressId(null);
 				} else {
 					console.error(`Order rejected ${state.status}`);
 					onOpen();
@@ -151,6 +153,7 @@ const ContactInfo = ({
 				goods: goodsToMap,
 				deliveryAddress: selectedCity || enteredAddress,
 				cityId,
+				userAddressId,
 				lang,
 			},
 		});
@@ -348,6 +351,9 @@ const ContactInfo = ({
 							ownCity={ownCity}
 							enteredAddress={enteredAddress}
 							setEnteredAddress={setEnteredAddress}
+							setUserAddressId={setUserAddressId}
+							userAddressId={userAddressId}
+							lang={lang}
 						/>
 					</Box>
 

@@ -31,6 +31,8 @@ const Shipping = ({
 	ownCity,
 	setEnteredAddress,
 	enteredAddress,
+	lang,
+	setUserAddressId,
 }) => {
 	const [isOpenSelect, setIsOpenSelect] = useState(false);
 
@@ -48,6 +50,7 @@ const Shipping = ({
 		setSelectedCity('');
 		setOwnCity('');
 		setCityId(null);
+		setUserAddressId(null);
 		setEnteredAddress(e.target.value);
 	};
 
@@ -179,10 +182,19 @@ const Shipping = ({
 							focusBorderColor="#a28445"
 							maxLength={50}
 							borderRadius={0}
+							style={
+								lang === 'he'
+									? {
+											direction: 'ltr',
+											textAlign: 'right',
+											overflowY: 'auto',
+											maxHeight: '200px',
+									  }
+									: { overflowY: 'auto', maxHeight: '200px' }
+							}
 							borderTop={'transparent'}
 							borderLeft={'transparent'}
 							borderRight={'transparent'}
-							style={{ overflowY: 'auto', maxHeight: '200px' }}
 							_hover={{
 								backgroundColor: '#3b3d46',
 							}}
@@ -197,6 +209,7 @@ const Shipping = ({
 								setSelectedCity(dictionary.order.self);
 								setOwnCity('');
 								setCityId(null);
+								setUserAddressId(null);
 								setEnteredAddress('');
 							}}
 						>
@@ -215,7 +228,8 @@ const Shipping = ({
 										_hover={{ backgroundColor: '#3b3d46' }}
 										onClick={() => {
 											setSelectedCity(fullAddress);
-											setCityId(address.id);
+											setUserAddressId(address.id);
+											setCityId(null);
 											setOwnCity(address.attributes.city);
 											setEnteredAddress('');
 										}}
@@ -240,6 +254,7 @@ const Shipping = ({
 									setSelectedCity(item.cityName);
 									setOwnCity('');
 									setCityId(item.id);
+									setUserAddressId(null);
 									setEnteredAddress('');
 								}}
 							>

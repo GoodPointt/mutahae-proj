@@ -47,7 +47,8 @@ const schema = z
 
 export async function submitData(prevState, formData) {
 	const { firstName, lastName, email, phone } = formData.payload.formValues;
-	const { totalPrice, goods, deliveryAddress, cityId, lang } = formData.payload;
+	const { totalPrice, goods, deliveryAddress, cityId, userAddressId, lang } =
+		formData.payload;
 	const token = cookies().get('jwt')?.value;
 
 	const formDto = {
@@ -68,7 +69,13 @@ export async function submitData(prevState, formData) {
 	try {
 		const orderNum = Date.now();
 		if (token) {
-			await fetchCreateOrder(totalPrice, goods, cityId, orderNum);
+			await fetchCreateOrder(
+				totalPrice,
+				goods,
+				cityId,
+				userAddressId,
+				orderNum
+			);
 			await updateUserData(formDto);
 		}
 

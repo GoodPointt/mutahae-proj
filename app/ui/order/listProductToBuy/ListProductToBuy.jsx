@@ -10,7 +10,6 @@ import axios from 'axios';
 
 const ListProductToBuy = ({
 	goodsToMap,
-
 	setLocalGoods,
 	authToken,
 	dictionary,
