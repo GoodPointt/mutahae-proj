@@ -1,6 +1,6 @@
 import { cache } from 'react';
 import { cookies } from 'next/headers';
-import { notFound, redirect } from 'next/navigation';
+import { redirect } from 'next/navigation';
 
 import { flattenAttributes } from '../utils/flattenAttributes';
 
@@ -35,9 +35,7 @@ const getFavorites = async () => {
 		console.error('getFavorites', e.response?.status);
 		console.error('getFavorites', e.message);
 
-		if (e.response?.status === 401) {
-			return redirect('/expired?expired=true');
-		}
+		return redirect('/expired?expired=true');
 	}
 };
 
@@ -82,7 +80,7 @@ const handleFavorites = async ({ goods, goodId }) => {
 		console.error('handleFavorites', error.response?.status);
 		console.error('handleFavorites', error.message);
 
-		if (error.response?.status === 401) redirect('/profile?expired=true');
+		if (error.response?.status === 401) redirect('/expired?expired=true');
 	}
 };
 
@@ -128,8 +126,7 @@ const getOrders = async () => {
 		console.error('getOrders', e.response?.status);
 		console.error('getOrders', e.message);
 
-		if (e.response?.status === 401) redirect('/expired?expired=true');
-		else return notFound();
+		return redirect('/expired?expired=true');
 	}
 };
 export const fetchOrders = cache(getOrders);

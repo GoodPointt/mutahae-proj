@@ -1,13 +1,13 @@
-import { OrderHistory } from '../../../ui/profile/orderHistory/OrderHistory';
+import { Suspense } from 'react';
+
+import SsrOrderHistory from '../../../ui/profile/orderHistory/SsrOrderHistory';
+import SkeletonOrderHistory from '../../../ui/skeletons/SkeletonOrderHistory';
 
 import { Heading } from '@chakra-ui/react';
 
-import { fetchOrders } from '../../../lib/api/profileInstance';
 import { getDictionary } from '../../../lib/locales/dictionary';
 
 const HistoryOfOrders = async ({ params: { lang } }) => {
-	const orders = await fetchOrders();
-
 	const dictionary = await getDictionary(lang);
 	const {
 		historyOfOrders: { title },
@@ -22,7 +22,10 @@ const HistoryOfOrders = async ({ params: { lang } }) => {
 			>
 				{title}
 			</Heading>
-			<OrderHistory lang={lang} orders={orders} />
+
+			<Suspense fallback={<SkeletonOrderHistory lang={lang} />}>
+				<SsrOrderHistory lang={lang} dictionary={dictionary} />
+			</Suspense>
 		</>
 	);
 };

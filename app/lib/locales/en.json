@@ -311,9 +311,8 @@
 			"success": "Address added successfully",
 			"error": "Oops! Unable to add address. Please try again",
 			"validation": {
-				"city": {
-					"required": "City is required"
-				}
+				"required": "Field is required",
+				"invalid": "Enter no more than 10 characters"
 			}
 		},
 		"addressSection": {

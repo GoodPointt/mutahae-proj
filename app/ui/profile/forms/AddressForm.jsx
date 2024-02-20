@@ -103,7 +103,9 @@ export const AddressForm = ({ lang, dictionary }) => {
 							position="absolute"
 							bottom="4px"
 						>
-							{countryError === 'required' ? 'required' : 'invalid'}
+							{countryError === 'required'
+								? validation.required
+								: validation.invalid}
 						</FormErrorMessage>
 					</FormControl>
 					<FormControl isInvalid={cityError} pb="25px">
@@ -124,7 +126,9 @@ export const AddressForm = ({ lang, dictionary }) => {
 							position="absolute"
 							bottom="4px"
 						>
-							{cityError === 'required' ? validation.city.required : 'invalid'}
+							{cityError === 'required'
+								? validation.required
+								: validation.invalid}
 						</FormErrorMessage>
 					</FormControl>
 				</Flex>
@@ -146,15 +150,17 @@ export const AddressForm = ({ lang, dictionary }) => {
 							focusBorderColor="#a28445"
 							border={'1px solid transparent'}
 						/>
-						{/* <FormErrorMessage
+						<FormErrorMessage
 							fontSize={'14px'}
 							position="absolute"
 							bottom="4px"
 						>
-							{streetError === 'required' ? 'required' : 'invalid'}
-						</FormErrorMessage> */}
+							{streetError === 'required'
+								? validation.required
+								: validation.invalid}
+						</FormErrorMessage>
 					</FormControl>
-					<FormControl isInvalid={appError}>
+					<FormControl isInvalid={appError} pb={{ base: '25px', lg: 0 }}>
 						<Input
 							name="app"
 							type="text"
@@ -167,13 +173,15 @@ export const AddressForm = ({ lang, dictionary }) => {
 							focusBorderColor="#a28445"
 							border={'1px solid transparent'}
 						/>
-						{/* <FormErrorMessage
+						<FormErrorMessage
 							fontSize={'14px'}
 							position="absolute"
 							bottom="4px"
 						>
-							{appError === 'required' ? 'required' : 'invalid'}
-						</FormErrorMessage> */}
+							{appError === 'required'
+								? validation.required
+								: validation.invalid}
+						</FormErrorMessage>
 					</FormControl>
 					<FormControl isInvalid={indexError} pb="25px">
 						<Input
@@ -188,13 +196,15 @@ export const AddressForm = ({ lang, dictionary }) => {
 							focusBorderColor="#a28445"
 							border={'1px solid transparent'}
 						/>
-						{/* <FormErrorMessage
+						<FormErrorMessage
 							fontSize={'14px'}
 							position="absolute"
 							bottom="4px"
 						>
-							{indexError === 'required' ? 'required' : 'invalid'}
-						</FormErrorMessage> */}
+							{indexError === 'required'
+								? validation.required
+								: validation.invalid}
+						</FormErrorMessage>
 					</FormControl>
 				</Flex>
 				<SubmitButton w="calc((100% - 15px) /2 )">{btn}</SubmitButton>
