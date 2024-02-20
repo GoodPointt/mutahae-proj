@@ -1,26 +1,14 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 
-import { AddressSection } from '../../ui/profile/AddressSection';
-import { AddressForm } from '../../ui/profile/forms/AddressForm';
-import { RessetPasswordForm } from '../../ui/profile/forms/RessetPasswordForm';
-import { UserDetailsForm } from '../../ui/profile/forms/UserDetailsForm';
+import SsrUserDetailsForm from '../../ui/profile/forms/SsrUserDetailsForm';
+import SkeletonUserDetails from '../../ui/skeletons/SkeletonUserDetails';
 
 import { Heading } from '@chakra-ui/react';
 
-import { fetchUserAddress, fetchUserData } from '../../lib/api/profileInstance';
 import { getDictionary } from '../../lib/locales/dictionary';
 
 const Profile = async ({ params: { lang } }) => {
-	const { data: userData } = await fetchUserData();
-	const { data: userAddress } = await fetchUserAddress();
-
 	const dictionary = await getDictionary(lang);
-	const {
-		contactInformation,
-		ressetPasswordForm,
-		addAddressForm,
-		addressSection,
-	} = dictionary.profile;
 
 	return (
 		<>
@@ -29,18 +17,12 @@ const Profile = async ({ params: { lang } }) => {
 				mb={{ base: '20px', lg: '40px' }}
 				fontSize={{ base: '2xl', lg: '4xl' }}
 			>
-				{contactInformation.title}
+				{dictionary.profile.contactInformation.title}
 			</Heading>
-			<UserDetailsForm
-				userData={userData}
-				lang={lang}
-				userDetailsDictionary={contactInformation}
-			/>
-			<AddressSection userAddress={userAddress} dictionary={addressSection} />
-			<AddressForm dictionary={addAddressForm} lang={lang} />
-			{userData?.provider === 'local' && (
-				<RessetPasswordForm ressetPassDictionary={ressetPasswordForm} />
-			)}
+
+			<Suspense fallback={<SkeletonUserDetails />}>
+				<SsrUserDetailsForm lang={lang} dictionary={dictionary} />
+			</Suspense>
 		</>
 	);
 };
