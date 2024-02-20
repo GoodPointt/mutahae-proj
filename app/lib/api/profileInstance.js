@@ -16,7 +16,7 @@ const getFavorites = async () => {
 		const userId = cookies().get('userId')?.value;
 
 		if (!token || !userId) {
-			throw new Error('Not authorized');
+			throw new Error('getFavorites Not authorized');
 		}
 		profileInstance.defaults.headers.authorization = `Bearer ${token}`;
 
@@ -50,7 +50,7 @@ const handleFavorites = async ({ goods, goodId }) => {
 		const favId = cookies().get('favId')?.value;
 
 		if (!token || !userId) {
-			throw new Error('Not authorized');
+			throw new Error('handleFavorites Not authorized');
 		}
 
 		//const favorites = await getFavorites();
@@ -109,7 +109,7 @@ const getOrders = async () => {
 		const token = cookies().get('jwt')?.value;
 		const userId = cookies().get('userId')?.value;
 		if (!token || !userId) {
-			throw new Error('Not authorized');
+			throw new Error('getOrders Not authorized');
 		}
 		profileInstance.defaults.headers.authorization = `Bearer ${token}`;
 
@@ -138,7 +138,7 @@ const getUserData = async () => {
 	try {
 		const userId = cookies().get('userId')?.value;
 
-		if (!userId) throw new Error('User id not found!');
+		if (!userId) throw new Error('getUserData User id not found!');
 
 		return await profileInstance.get(`/api/users/${userId}`);
 	} catch (e) {
@@ -155,7 +155,7 @@ export const updateUserData = async userData => {
 	try {
 		const userId = cookies().get('userId')?.value;
 
-		if (!userId) throw new Error('User id not found!');
+		if (!userId) throw new Error('updateUserData User id not found!');
 
 		const { data } = await profileInstance.put(
 			`/api/users/${userId}`,
@@ -183,7 +183,7 @@ export const changePassword = async dataPassword => {
 		const token = cookies().get('jwt')?.value;
 
 		if (!token) {
-			throw new Error('Not authorized');
+			throw new Error('changePassword Not authorized');
 		}
 		profileInstance.defaults.headers.authorization = `Bearer ${token}`;
 
@@ -215,7 +215,7 @@ export const addUserAddress = async dataAddress => {
 		const userId = cookies().get('userId')?.value;
 
 		if (!token || !userId) {
-			throw new Error('Not authorized');
+			throw new Error('addUserAddress Not authorized');
 		}
 		profileInstance.defaults.headers.authorization = `Bearer ${token}`;
 
@@ -225,7 +225,7 @@ export const addUserAddress = async dataAddress => {
 				...dataAddress,
 			},
 		});
-		if (!data) throw new Error('Failed to add user address.');
+		if (!data) throw new Error('addUserAddress Failed to add user address.');
 
 		return {
 			data,
@@ -250,7 +250,7 @@ export const deleteUserAddress = async addressId => {
 		const token = cookies().get('jwt')?.value;
 
 		if (!token) {
-			throw new Error('Not authorized');
+			throw new Error('deleteUserAddress Not authorized');
 		}
 		profileInstance.defaults.headers.authorization = `Bearer ${token}`;
 
@@ -279,7 +279,7 @@ export const getUserAddress = async () => {
 		const userId = cookies().get('userId')?.value;
 
 		if (!token || !userId) {
-			throw new Error('Not authorized');
+			throw new Error('getUserAddress Not authorized');
 		}
 
 		profileInstance.defaults.headers.authorization = `Bearer ${token}`;
@@ -290,7 +290,7 @@ export const getUserAddress = async () => {
 
 		if (!data) {
 			throw new Error(
-				'Failed to fetch user address. An error occurred while retrieving the address data.'
+				'getUserAddress Failed to fetch user address. An error occurred while retrieving the address data.'
 			);
 		}
 
