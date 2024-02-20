@@ -21,7 +21,7 @@ const Order = async ({ params: { lang } }) => {
 			>
 				{dictionary.order.title}
 			</Heading>
-			<Suspense fallback={<SkeletonOrder />}>
+			<Suspense fallback={<SkeletonOrder dictionary={dictionary} />}>
 				<Wrapper dictionary={dictionary} lang={lang} />
 			</Suspense>
 		</SectionWrapper>
