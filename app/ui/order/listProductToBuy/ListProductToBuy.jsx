@@ -39,7 +39,7 @@ const ListProductToBuy = ({
 					}
 				);
 			} catch (error) {
-				console.error(error);
+				console.error('deleteGoodFromServerBag', error);
 			}
 		};
 		if (isDeleted && authToken) {

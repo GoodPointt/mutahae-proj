@@ -55,7 +55,7 @@ const getProductsByCategorie = async (
 		return { data, total: meta.pagination.total };
 	} catch (e) {
 		if (e.data === undefined) {
-			return console.error('not category');
+			return console.error('getProductsByCategorie', e.message);
 		}
 	}
 };
@@ -84,7 +84,7 @@ const getProductBySubCategorie = async (
 		return { data, total: meta.pagination.total };
 	} catch (e) {
 		if (e.data === undefined) {
-			return console.error('not sub_category');
+			return console.error('getProductBySubCategorie', e.message);
 		}
 	}
 	revalidatePath(`/${lang}/catalog`);
@@ -127,10 +127,10 @@ const getListCategoriesAndSubCategories = async lang => {
 		return data;
 	} catch (error) {
 		if (axios.isAxiosError(error)) {
-			console.error(error.status);
-			console.error(error.response);
+			console.error('getListCategoriesAndSubCategories', error.status);
+			console.error('getListCategoriesAndSubCategories', error.response);
 		} else {
-			console.error(error);
+			console.error('getListCategoriesAndSubCategories', error.message);
 		}
 	}
 };
@@ -166,7 +166,7 @@ export const createContact = async credentials => {
 
 		return data;
 	} catch (e) {
-		console.error(e);
+		console.error('createContact', e.message);
 	}
 };
 
@@ -219,7 +219,7 @@ const getCities = async () => {
 
 		return arrCities;
 	} catch (e) {
-		console.error(e);
+		console.error('getCities', e.message);
 	}
 };
 
@@ -244,7 +244,7 @@ const getProductsByQuery = async (
 
 		return data;
 	} catch (e) {
-		console.error(e);
+		console.error('getProductsByQuery', e.message);
 	}
 };
 

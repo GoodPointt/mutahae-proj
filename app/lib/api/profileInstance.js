@@ -32,8 +32,8 @@ const getFavorites = async () => {
 
 		return data;
 	} catch (e) {
-		console.error(e.response?.status);
-		console.error(e.message);
+		console.error('getFavorites', e.response?.status);
+		console.error('getFavorites', e.message);
 
 		if (e.response?.status === 401) {
 			return redirect('/expired?expired=true');
@@ -79,8 +79,8 @@ const handleFavorites = async ({ goods, goodId }) => {
 
 		return flattenAttributes(response);
 	} catch (error) {
-		console.error(error.response?.status);
-		console.error(error.message);
+		console.error('handleFavorites', error.response?.status);
+		console.error('handleFavorites', error.message);
 
 		if (error.response?.status === 401) redirect('/profile?expired=true');
 	}
@@ -96,8 +96,8 @@ export const fetchHandleFavorites = cache(handleFavorites);
 
 // 		return favorites.some(good => good.id === goodId);
 // 	} catch (error) {
-// 		console.error(error.response?.status);
-// 		console.error(error.message);
+// 		console.error('isFavorite', error.response?.status);
+// 		console.error('isFavorite', error.message);
 // 		if (error.response?.status === 401) redirect('/profile?expired=true');
 // 	}
 // };
@@ -125,8 +125,8 @@ const getOrders = async () => {
 
 		return data;
 	} catch (e) {
-		console.error(e.response?.status);
-		console.error(e.message);
+		console.error('getOrders', e.response?.status);
+		console.error('getOrders', e.message);
 
 		if (e.response?.status === 401) redirect('/expired?expired=true');
 		else return notFound();
@@ -142,8 +142,8 @@ const getUserData = async () => {
 
 		return await profileInstance.get(`/api/users/${userId}`);
 	} catch (e) {
-		console.error(e.response?.status);
-		console.error(e.message);
+		console.error('getUserData', e.response?.status);
+		console.error('getUserData', e.message);
 
 		return redirect('/expired?expired=true');
 	}
@@ -167,8 +167,8 @@ export const updateUserData = async userData => {
 			status: 'success',
 		};
 	} catch (error) {
-		console.error(error.response?.status);
-		console.error(error.message);
+		console.error('updateUserData', error.response?.status);
+		console.error('updateUserData', error.message);
 		if (error.response?.status === 401) redirect('/expired?expired=true');
 		else
 			return {
@@ -197,8 +197,8 @@ export const changePassword = async dataPassword => {
 			status: 'success',
 		};
 	} catch (error) {
-		console.error(error.response?.status);
-		console.error(error);
+		console.error('changePassword', error.response?.status);
+		console.error('changePassword', error.message);
 
 		if (error.response?.status === 401) redirect('/expired?expired=true');
 		else
@@ -232,8 +232,8 @@ export const addUserAddress = async dataAddress => {
 			status: 'success',
 		};
 	} catch (error) {
-		console.error(error.response?.status);
-		console.error(error.message);
+		console.error('addUserAddress', error.response?.status);
+		console.error('addUserAddress', error.message);
 
 		if (error.response?.status === 401) {
 			return redirect('/expired?expired=true');
@@ -260,8 +260,8 @@ export const deleteUserAddress = async addressId => {
 			status: 'success',
 		};
 	} catch (error) {
-		console.error(error.response?.status);
-		console.error(error.message);
+		console.error('deleteUserAddress', error.response?.status);
+		console.error('deleteUserAddress', error.message);
 
 		if (error.response?.status === 401) {
 			return redirect('/expired?expired=true');
@@ -273,7 +273,7 @@ export const deleteUserAddress = async addressId => {
 	}
 };
 
-export const fetchUserAddress = async () => {
+export const getUserAddress = async () => {
 	try {
 		const token = cookies().get('jwt')?.value;
 		const userId = cookies().get('userId')?.value;
@@ -296,8 +296,8 @@ export const fetchUserAddress = async () => {
 
 		return data;
 	} catch (e) {
-		console.error(e.response?.status);
-		console.error(e.message);
+		console.error('getUserAddress', e.response?.status);
+		console.error('getUserAddress', e.message);
 		if (e.message === 'Not authorized') redirect('/auth/login');
 		if (e.response?.status === 401) {
 			return redirect('/expired?expired=true');
@@ -305,7 +305,7 @@ export const fetchUserAddress = async () => {
 	}
 };
 
-// export const fetchUserAddress = cache(getUserAddress);
+export const fetchUserAddress = cache(getUserAddress);
 
 const getBagByUserId = async () => {
 	try {
@@ -321,8 +321,8 @@ const getBagByUserId = async () => {
 
 		return flattenAttributes(goodsInBagData);
 	} catch (error) {
-		console.error(error.response?.status);
-		console.error(error.message);
+		console.error('getBagByUserId', error.response?.status);
+		console.error('getBagByUserId', error.message);
 		if (error.response?.status === 401) {
 			return redirect('/expired?expired=true');
 		} else return { error: 'Server error please try again later.' };
@@ -359,8 +359,8 @@ const createOrder = async (totalPrice, goods, cityId, orderNum) => {
 			},
 		});
 	} catch (error) {
-		console.error(error.response?.status);
-		console.error(error);
+		console.error('createOrder', error.response?.status);
+		console.error('createOrder', error);
 		if (error.response?.status === 401) {
 			return redirect('/expired?expired=true');
 		} else return { error: error.message };
@@ -434,8 +434,8 @@ const resetBag = async () => {
 			}
 		);
 	} catch (error) {
-		console.error(error.response?.status);
-		console.error(error.message);
+		console.error('resetBag', error.response?.status);
+		console.error('resetBag', error.message);
 		if (error.response?.status === 401) {
 			return redirect('/expired?expired=true');
 		} else return { error: 'Server error please try again later.' };
@@ -457,8 +457,8 @@ const getUserDataForOrder = async () => {
 
 		return data;
 	} catch (e) {
-		console.error(e.response?.status);
-		console.error(e.message);
+		console.error('getUserDataForOrder', e.response?.status);
+		console.error('getUserDataForOrder', e.message);
 		if (e.response?.status === 401) {
 			return redirect('/expired?expired=true');
 		} else return { error: 'Server error please try again later.' };
@@ -485,7 +485,7 @@ export const getUserAddressForOrder = async () => {
 
 		return data;
 	} catch (e) {
-		console.error(e.message);
+		console.error('getUserAddressForOrder', e.message);
 	}
 };
 
@@ -510,8 +510,8 @@ const getOrderByUserId = async userId => {
 
 		return flattenAttributes(responseData);
 	} catch (error) {
-		console.error(error.response?.status);
-		console.error(error.message);
+		console.error('getOrderByUserId', error.response?.status);
+		console.error('getOrderByUserId', error.message);
 		if (error.response?.status === 401) {
 			return redirect('/expired?expired=true');
 		} else return { error: 'Server error please try again later.' };

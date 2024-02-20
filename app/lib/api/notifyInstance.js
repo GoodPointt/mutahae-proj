@@ -8,6 +8,6 @@ export const sendTgNotification = async message => {
 	try {
 		return await notifyInstance.post(`/notify`, message);
 	} catch (e) {
-		console.error(e);
+		console.error('sendTgNotification', e);
 	}
 };

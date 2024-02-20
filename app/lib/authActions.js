@@ -76,9 +76,9 @@ export async function loginAction(prevState, formData) {
 			await handleLocalBagOnServer(goods);
 		}
 	} catch (error) {
-		console.error('loginAction', error);
+		console.error('loginAction', error.message);
 
-		return { error: 'loginAction: Server error please try again later.' };
+		return { error: 'Server error please try again later.' };
 	}
 
 	redirect(callbackPath || `/${lang}/`);
@@ -175,7 +175,7 @@ export async function registerAction(prevState, formData) {
 			}
 		}
 	} catch (error) {
-		console.error(error);
+		console.error('createFavoritesByUserIdAndJwt', error.message);
 
 		return { error: 'Server error please try again later.' };
 	}
@@ -218,7 +218,7 @@ export async function recoveryAction(prevState, formData) {
 			return { ...prevState, message: 'success' };
 		}
 	} catch (error) {
-		console.error(error);
+		console.error('recoveryAction', error.message);
 
 		return { error: 'Server error please try again later.' };
 	}
@@ -265,7 +265,7 @@ export async function resetPasswordAction(prevState, formData) {
 			return { ...prevState, message: 'success' };
 		}
 	} catch (error) {
-		console.error(error);
+		console.error('resetPasswordAction', error.message);
 
 		return { error: 'Server error please try again later.' };
 	}

@@ -50,7 +50,7 @@ const Bag = ({ bagData, hasToken, onClose, dictionary }) => {
 					}
 				);
 			} catch (error) {
-				console.error(error);
+				console.error('onOrderClick', error);
 			}
 		}
 		onClose();
@@ -92,7 +92,7 @@ const Bag = ({ bagData, hasToken, onClose, dictionary }) => {
 					}
 				);
 			} catch (error) {
-				console.error(error);
+				console.error('deleteGoodFromServerBag', error);
 			}
 		};
 		if (isDeleted && hasToken) {

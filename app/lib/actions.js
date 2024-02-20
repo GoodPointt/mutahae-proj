@@ -99,7 +99,7 @@ export async function submitData(prevState, formData) {
 			return { name, email, phone, message: 'succsess' };
 		}
 	} catch (error) {
-		console.error(error);
+		console.error('submitData', error.message);
 	}
 }
 
@@ -135,7 +135,7 @@ export async function submitUserDetails(prevState, formData) {
 			status: 'success',
 		};
 	} catch (error) {
-		console.error(error);
+		console.error('submitUserDetails', error.message);
 
 		return {
 			message: error.message,
@@ -156,7 +156,7 @@ export const logout = (prevState, formData) => {
 		// redirect(`/${lang}/`);
 		return { status: 200 };
 	} catch (error) {
-		console.error(error);
+		console.error('logout', error.message);
 
 		revalidatePath('/');
 		redirect(`/${lang}/`);
@@ -250,7 +250,7 @@ export const delAddressAction = async (prevState, formData) => {
 			status: 'success',
 		};
 	} catch (error) {
-		console.error(error);
+		console.error('delAddressAction', error);
 
 		return {
 			status: 'error',

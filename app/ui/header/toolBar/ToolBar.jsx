@@ -166,7 +166,7 @@ const ToolBar = ({
 			try {
 				axios.put(url, { data: { goods: flatten, bagPrice: totalPrice } });
 			} catch (error) {
-				console.error(error);
+				console.error('handleModalBagClose', error);
 			}
 		}
 
