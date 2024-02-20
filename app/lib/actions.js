@@ -9,12 +9,9 @@ import {
 	addUserAddress,
 	changePassword,
 	deleteUserAddress,
-	fetchDeleteProductFromBag,
 	fetchHandleFavorites,
-	fetchUpdateAllGoodsInBag,
 	updateUserData,
 } from './api/profileInstance';
-import { fetchAddToBag } from './api/profileInstance';
 import { textTrim } from './utils/textTrim';
 
 import { z } from 'zod';
@@ -262,60 +259,60 @@ export const delAddressAction = async (prevState, formData) => {
 	}
 };
 
-export async function submitProductToBag(prevState, formData) {
-	const { count, goodId, goodPrice } = formData;
+// export async function submitProductToBag(prevState, formData) {
+// 	const { count, goodId, goodPrice } = formData;
 
-	try {
-		const res = await fetchAddToBag(count, goodId, goodPrice);
-		if (res?.status === 200) {
-			return {
-				status: res?.status,
-			};
-		}
-	} catch (error) {
-		return { message: error.message };
-	}
-}
+// 	try {
+// 		const res = await fetchAddToBag(count, goodId, goodPrice);
+// 		if (res?.status === 200) {
+// 			return {
+// 				status: res?.status,
+// 			};
+// 		}
+// 	} catch (error) {
+// 		return { message: error.message };
+// 	}
+// }
 
-export async function updateAllGoodsInBag(prevState, formData) {
-	const { bagPrice, goods } = formData;
+// export async function updateAllGoodsInBag(prevState, formData) {
+// 	const { bagPrice, goods } = formData;
 
-	try {
-		const res = await fetchUpdateAllGoodsInBag(goods, bagPrice);
+// 	try {
+// 		const res = await fetchUpdateAllGoodsInBag(goods, bagPrice);
 
-		if (res.error) {
-			throw new Error(res.error);
-		}
+// 		if (res.error) {
+// 			throw new Error(res.error);
+// 		}
 
-		if (res?.status === 200) {
-			return {
-				status: res?.status,
-			};
-		}
-	} catch (error) {
-		return { isError: true, message: 'Someting goes wrong. Try again please' };
-	}
-}
+// 		if (res?.status === 200) {
+// 			return {
+// 				status: res?.status,
+// 			};
+// 		}
+// 	} catch (error) {
+// 		return { isError: true, message: 'Someting goes wrong. Try again please' };
+// 	}
+// }
 
-export async function deleteProductFromBag(prevState, formData) {
-	const { goodId, bagPrice } = formData;
+// export async function deleteProductFromBag(prevState, formData) {
+// 	const { goodId, bagPrice } = formData;
 
-	try {
-		const res = await fetchDeleteProductFromBag(goodId, bagPrice);
+// 	try {
+// 		const res = await fetchDeleteProductFromBag(goodId, bagPrice);
 
-		if (res.error) {
-			throw new Error(res.error);
-		}
+// 		if (res.error) {
+// 			throw new Error(res.error);
+// 		}
 
-		if (res?.status === 200) {
-			return {
-				status: res?.status,
-			};
-		}
-	} catch (error) {
-		return { message: error.message };
-	}
-}
+// 		if (res?.status === 200) {
+// 			return {
+// 				status: res?.status,
+// 			};
+// 		}
+// 	} catch (error) {
+// 		return { message: error.message };
+// 	}
+// }
 
 export async function submitGoodToFavorite(prevState, formData) {
 	const { goodId, goods } = formData;
