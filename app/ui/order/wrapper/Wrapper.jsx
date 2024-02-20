@@ -1,33 +1,53 @@
-'use client';
+import { cookies } from 'next/headers';
 
-import { useState } from 'react';
+import { fetchCities } from '@/app/lib/api/instance';
+import {
+	fetchBagByUserId,
+	fetchUserAddressForOrder,
+	fetchUserDataForOrder,
+} from '@/app/lib/api/profileInstance';
 
-import ContactInfo from '../contactInfo/ContactInfo';
+import WrapperClient from './WrapperClient';
 
-const Wrapper = ({
-	authToken,
-	dictionary,
-	lang,
-	arrayCities,
-	userData,
-	orderData,
-	userId,
-	userAddress,
-}) => {
-	const [selectedCity, setSelectedCity] = useState('');
+const Wrapper = async ({ lang, dictionary }) => {
+	const arrCities = await fetchCities();
+	const data = await fetchUserDataForOrder();
+	const response = await fetchUserAddressForOrder();
+	const userId = cookies().get('userId')?.value;
+	const getToken = cookies().get('jwt')?.value;
+	const authToken = getToken === undefined ? false : true;
+
+	let orderData = [];
+	if (userId) {
+		orderData = await fetchBagByUserId(userId);
+	}
+
+	const arrayCities = arrCities.map(({ attributes, id }) => {
+		if (lang === 'he') {
+			return {
+				cityName: attributes.localizations?.data[0]?.attributes.cityName,
+				zone: attributes.zone,
+				id,
+			};
+		} else {
+			return {
+				cityName: attributes?.cityName,
+				zone: attributes?.zone,
+				id,
+			};
+		}
+	});
 
 	return (
-		<ContactInfo
+		<WrapperClient
+			authToken={authToken}
 			arrayCities={arrayCities}
 			dictionary={dictionary}
-			setSelectedCity={setSelectedCity}
 			lang={lang}
-			authToken={authToken}
-			selectedCity={selectedCity}
-			userData={userData}
-			orderData={orderData}
+			userData={data?.data}
+			orderData={orderData[0]}
 			userId={userId}
-			userAddress={userAddress}
+			userAddress={response?.data}
 		/>
 	);
 };
