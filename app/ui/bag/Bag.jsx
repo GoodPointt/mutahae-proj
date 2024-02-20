@@ -3,15 +3,14 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { useRouter } from 'next/navigation';
 
+// import { useRouter } from 'next/navigation';
 import { Box, Button, Flex, Heading, List, Text } from '@chakra-ui/react';
 
 import { useLocalBag } from '@/app/lib/hooks/useLocalBag';
 import { flattenAttributes } from '@/app/lib/utils/flattenAttributes';
 
 import ProductCard from '../productCard/ProductCard';
-import SubmitButton from '../submitButton/SubmitButton';
 import ArrowLeft from '../svg/ArrowLeft';
 import ArrowRight from '../svg/ArrowRight';
 
@@ -21,7 +20,7 @@ const Bag = ({ bagData, hasToken, onClose, dictionary }) => {
 	const [localGoods, setLocalGoods] = useLocalBag('localBag', []);
 	const [isDeleted, setIsDeleted] = useState(null);
 
-	const router = useRouter();
+	// const router = useRouter();
 
 	const totalPrice = localGoods.reduce((acc, { count, good: { data } }) => {
 		return acc + data.attributes.price * count;
@@ -30,7 +29,7 @@ const Bag = ({ bagData, hasToken, onClose, dictionary }) => {
 	const { lang } = useParams();
 
 	const onOrderClick = async () => {
-		router.push(`/${lang}/order`);
+		// router.push(`/${lang}/order`);
 
 		if (hasToken) {
 			const flatten = localGoods.map(({ count, good: { data } }) => ({
@@ -152,7 +151,9 @@ const Bag = ({ bagData, hasToken, onClose, dictionary }) => {
 							</Box>
 						</Flex>
 
-						<SubmitButton
+						<Button
+							as={Link}
+							href={`/order`}
 							maxW={{ base: '100%', md: '360px' }}
 							bgColor={'#A28445'}
 							textColor={'#fff'}
@@ -162,7 +163,7 @@ const Bag = ({ bagData, hasToken, onClose, dictionary }) => {
 							message={dictionary.buttons.loaders.order}
 						>
 							{dictionary.buttons.order} {totalPrice} ₪
-						</SubmitButton>
+						</Button>
 					</Flex>
 				</>
 			) : (
