@@ -331,7 +331,13 @@ const getBagByUserId = async () => {
 
 export const fetchBagByUserId = cache(getBagByUserId);
 
-const createOrder = async (totalPrice, goods, cityId, orderNum) => {
+const createOrder = async (
+	totalPrice,
+	goods,
+	cityId,
+	userAddressId,
+	orderNum
+) => {
 	try {
 		const token = cookies().get('jwt')?.value;
 		const userId = cookies().get('userId')?.value;
@@ -347,6 +353,7 @@ const createOrder = async (totalPrice, goods, cityId, orderNum) => {
 				descShort: good.good.data.attributes.descShort || '',
 				imgUrl,
 				orderNum,
+				user_address: userAddressId,
 			};
 		});
 

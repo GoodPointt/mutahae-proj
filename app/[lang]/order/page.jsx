@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 
+import SkeletonOrder from '@/app/ui/skeletons/SkeletonOrder';
 import Wrapper from '../../ui/order/wrapper/Wrapper';
 import SectionWrapper from '../../ui/sectionWrapper/SectionWrapper';
 
@@ -20,7 +21,7 @@ const Order = async ({ params: { lang } }) => {
 			>
 				{dictionary.order.title}
 			</Heading>
-			<Suspense fallback={'Loading......'}>
+			<Suspense fallback={<SkeletonOrder />}>
 				<Wrapper dictionary={dictionary} lang={lang} />
 			</Suspense>
 		</SectionWrapper>
