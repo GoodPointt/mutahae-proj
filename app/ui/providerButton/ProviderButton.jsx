@@ -41,7 +41,6 @@ const ProviderButton = ({
 			<Button
 				as={Link}
 				href={`${backendUrl}/api/connect/${variant}`}
-				target="_blank"
 				onClick={() => {
 					if (pathname.includes('/auth')) {
 						localStorage.removeItem('callbackPath');
