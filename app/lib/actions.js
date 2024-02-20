@@ -152,6 +152,7 @@ export const logout = (prevState, formData) => {
 	try {
 		cookies().delete('userId');
 		cookies().delete('jwt');
+		cookies().delete('favId');
 
 		// revalidatePath(`/`);
 

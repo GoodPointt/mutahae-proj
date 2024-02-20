@@ -204,13 +204,13 @@ a:hover,
 .chakra-link:hover {
 	text-decoration: none;
 }
-@media (max-width: 999px) {
+@media (max-width: 991px) {
 	main {
 		padding-top: 80px;
 	}
 }
 
-@media (min-width: 1000px) {
+@media (min-width: 992px) {
 	main {
 		padding-top: 150px;
 	}

@@ -55,9 +55,9 @@ const ClientSideRedirection = ({ dictionary, provider, lang }) => {
 					const bagRes = await createBagByUserIdAndJwt(res.jwt, res.user.id);
 
 					await createFavoritesByUserIdAndJwt(res.jwt, res.user.id);
-
 					setCookie('jwt', res.jwt);
 					setCookie('userId', res.user.id);
+					setCookie('lang', lang);
 
 					if (localBag.length !== 0) {
 						await fetch(
@@ -81,10 +81,6 @@ const ClientSideRedirection = ({ dictionary, provider, lang }) => {
 							}
 						);
 					}
-					await createFavoritesByUserIdAndJwt(res.jwt, res.user.id);
-					setCookie('jwt', res.jwt);
-					setCookie('userId', res.user.id);
-					setCookie('lang', lang);
 
 					setTimeout(() => {
 						setText(dictionary.provider.rederecting);

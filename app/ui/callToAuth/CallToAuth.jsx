@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 
 import {
 	Box,
@@ -22,9 +21,7 @@ import ProviderButton from '../providerButton/ProviderButton';
 import EmailIcon from '../svg/EmailIcon';
 import Star from '../svg/Star';
 
-const CallToAuth = props => {
-	const pathname = usePathname();
-
+const CallToAuth = ({ setCallbackPath }) => {
 	return (
 		<Popover>
 			<PopoverTrigger>
@@ -46,7 +43,6 @@ const CallToAuth = props => {
 						fill: 'transparent',
 						transform: 'scale(1.13)',
 					}}
-					{...props}
 				>
 					<Star />
 				</Button>
@@ -79,11 +75,12 @@ const CallToAuth = props => {
 									gap={3}
 									align={'center'}
 									onClick={() => {
-										if (pathname.includes('/order'))
-											localStorage.setItem(
-												'callbackPath',
-												JSON.stringify(pathname)
-											);
+										// if (pathname.includes('/order'))
+										// 	localStorage.setItem(
+										// 		'callbackPath',
+										// 		JSON.stringify(pathname)
+										// 	);
+										setCallbackPath();
 									}}
 								>
 									<Box fill={'#ccc'}>
@@ -93,7 +90,11 @@ const CallToAuth = props => {
 								</Flex>
 							</Box>
 							<Text>or</Text>
-							<ProviderButton variant="google" minimalistic />
+							<ProviderButton
+								variant="google"
+								minimalistic
+								setCallbackPath={setCallbackPath}
+							/>
 						</Flex>
 					</PopoverBody>
 				</PopoverContent>
