@@ -376,10 +376,6 @@ export const fetchCreateOrder = cache(createOrder);
 
 const addToBag = async (count, goodId, goodPrice) => {
 	try {
-		const token = cookies().get('jwt')?.value;
-
-		profileInstance.defaults.headers.authorization = `Bearer ${token}`;
-
 		const response = await fetchBagByUserId();
 
 		const goodsInBag = flattenAttributes(response[0].goods);
@@ -505,19 +501,22 @@ export const fetchDeleteProductFromBag = cache(deleteProductFromBag);
 const setLocalBagOnServer = async localGoods => {
 	try {
 		const bag = await fetchBagByUserId();
+
 		const goodsInBag = flattenAttributes(bag[0].goods);
 
-		const localGoodsIds = localGoods.map(({ good }) => good.data.id);
+		const localGoodsIds = localGoods.map(({ good }) => good.id);
 
-		const goods = goodsInBag.filter(({ good }) =>
-			localGoodsIds.includes(good.id.data)
+		const goods = goodsInBag.filter(
+			({ good }) => !localGoodsIds.includes(good.data.id)
 		);
+
+		const updateGoods = [...goods, ...localGoods];
 
 		return await profileInstance.put(
 			`/api/bags/${bag[0].id}?populate=goods`,
 			{
 				data: {
-					goods: goods,
+					goods: updateGoods,
 				},
 			},
 			{
@@ -528,11 +527,14 @@ const setLocalBagOnServer = async localGoods => {
 			}
 		);
 	} catch (error) {
-		console.error(error.response?.status);
-		console.error(error.message);
+		console.error('setLocalBagOnServer', error.response?.status);
+		console.error('setLocalBagOnServer', error.message);
 		if (error.response?.status === 401) {
 			return redirect('/expired?expired=true');
-		} else return { error: 'Server error please try again later.' };
+		} else
+			return {
+				error: 'setLocalBagOnServer: Server error please try again later.',
+			};
 	}
 };
 

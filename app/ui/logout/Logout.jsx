@@ -15,6 +15,7 @@ export const Logout = ({ logoutDictionary, lang }) => {
 	useEffect(() => {
 		if (state?.status === 200) {
 			localStorage.removeItem('favs');
+			router.refresh();
 		}
 	}, [router, state]);
 

@@ -76,9 +76,9 @@ export async function loginAction(prevState, formData) {
 			await handleLocalBagOnServer(goods);
 		}
 	} catch (error) {
-		console.error(error);
+		console.error('loginAction', error);
 
-		return { error: 'Server error please try again later.' };
+		return { error: 'loginAction: Server error please try again later.' };
 	}
 
 	redirect(callbackPath || `/${lang}/`);

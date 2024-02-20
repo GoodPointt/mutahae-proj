@@ -45,6 +45,7 @@ const ProductItem = ({
 			handleIsFavs(product.id);
 			router.refresh();
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [path, state]);
 
 	const handleIsFavs = productId => {
@@ -190,7 +191,7 @@ const ProductItem = ({
 					/>
 				</form>
 			) : (
-				<CallToAuth />
+				<CallToAuth setCallbackPath={setCallbackPath} />
 			)}
 		</Box>
 	);

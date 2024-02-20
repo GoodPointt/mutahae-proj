@@ -76,7 +76,14 @@ const BreadcrumbBar = ({
 							key={index}
 						>
 							{segment === 'catalog' && (
-								<Link href={callbackPath}>{dictionary.hero.btnCatalog}</Link>
+								<Link
+									href={callbackPath}
+									onClick={() => {
+										localStorage.removeItem('callbackPath');
+									}}
+								>
+									{dictionary.hero.btnCatalog}
+								</Link>
 							)}
 							{index < pathSegments.length - 1 &&
 								segment !== lang &&

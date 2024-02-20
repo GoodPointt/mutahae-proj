@@ -12,6 +12,12 @@ const FilteredProduct = ({ product, lang }) => {
 					href={`/${lang}/catalog/${product.uid}`}
 					display={'flex'}
 					gap={'30px'}
+					onClick={() => {
+						localStorage.setItem(
+							'callbackPath',
+							JSON.stringify(`/${lang}/catalog`)
+						);
+					}}
 				>
 					<Box
 						borderRadius={'2px'}

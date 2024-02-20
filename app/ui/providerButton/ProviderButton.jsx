@@ -15,6 +15,7 @@ const ProviderButton = ({
 	variant,
 	dictionary,
 	minimalistic = false,
+	setCallbackPath,
 }) => {
 	const backendUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL;
 	let icon;
@@ -40,9 +41,15 @@ const ProviderButton = ({
 			<Button
 				as={Link}
 				href={`${backendUrl}/api/connect/${variant}`}
+				target="_blank"
 				onClick={() => {
-					if (pathname.includes('/order'))
+					if (pathname.includes('/auth')) {
+						localStorage.removeItem('callbackPath');
+					} else if (pathname.includes('/order')) {
 						localStorage.setItem('callbackPath', JSON.stringify(pathname));
+					} else {
+						() => setCallbackPath();
+					}
 				}}
 				rel="noopener noreferrer"
 				borderRadius={'2px'}

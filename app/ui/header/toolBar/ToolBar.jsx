@@ -39,14 +39,7 @@ const ToolBar = ({
 	const [variant, setVariant] = useState();
 	const [query, setQuery] = useQueryState('query');
 	//const favsLocal = useClientSideState('favs', 0);
-	const [favorite] = useQueryState(
-		'favs',
-		parseAsFloat.withDefault(
-			typeof window !== 'undefined' && hasToken
-				? JSON.parse(localStorage.getItem('favs'))?.length
-				: 0
-		)
-	);
+	const [favorite, setFavorite] = useQueryState('favs', parseAsFloat);
 
 	useEffect(() => {
 		if (favId) setCookie('favId', favId);
@@ -56,6 +49,15 @@ const ToolBar = ({
 	const totalPrice = localGoods.reduce((acc, { count, good: { data } }) => {
 		return acc + data.attributes.price * count;
 	}, 0);
+
+	useEffect(() => {
+		setFavorite(
+			typeof window !== 'undefined' && hasToken
+				? JSON.parse(localStorage.getItem('favs'))?.length
+				: 0
+		);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [favorite]);
 
 	useEffect(() => {
 		typeof window !== 'undefined' &&

@@ -30,27 +30,30 @@ const Bag = ({ bagData, hasToken, onClose, dictionary }) => {
 	const { lang } = useParams();
 
 	const onOrderClick = async () => {
-		const flatten = localGoods.map(({ count, good: { data } }) => ({
-			good: data,
-			count,
-		}));
-		try {
-			const url =
-				process.env.NEXT_PUBLIC_STRAPI_API_URL +
-				`/api/bags/${bagData.id}?populate=goods`;
-			axios.put(
-				url,
-				{ data: { goods: flatten, bagPrice: totalPrice } },
-				{
-					headers: {
-						'Content-Type': 'application/json',
-					},
-				}
-			);
-		} catch (error) {
-			console.error(error);
-		}
 		router.push(`/${lang}/order`);
+
+		if (hasToken) {
+			const flatten = localGoods.map(({ count, good: { data } }) => ({
+				good: data,
+				count,
+			}));
+			try {
+				const url =
+					process.env.NEXT_PUBLIC_STRAPI_API_URL +
+					`/api/bags/${bagData.id}?populate=goods`;
+				axios.put(
+					url,
+					{ data: { goods: flatten, bagPrice: totalPrice } },
+					{
+						headers: {
+							'Content-Type': 'application/json',
+						},
+					}
+				);
+			} catch (error) {
+				console.error(error);
+			}
+		}
 		onClose();
 	};
 

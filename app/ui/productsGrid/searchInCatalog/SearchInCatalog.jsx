@@ -33,7 +33,7 @@ const SearchInCatalog = ({ dictionary, lang, setQuery }) => {
 	};
 
 	return (
-		<FormControl id="name">
+		<FormControl id="name" display={{ base: 'none', md: 'flex' }}>
 			<InputGroup
 				as={'form'}
 				ref={ref}
@@ -97,7 +97,6 @@ const SearchInCatalog = ({ dictionary, lang, setQuery }) => {
 					}}
 					onFocus={() => setIsSearch(true)}
 					onBlur={() => setIsSearch(false)}
-					// onMouseDown={() => setIsSearch(true)}
 					style={
 						lang === 'he' ? { direction: 'ltr', textAlign: 'right' } : null
 					}

@@ -98,6 +98,7 @@ const HeaderWrapper = ({
 				<ContactsList lang={lang} contacts={contacts} />
 
 				<ToolBar
+					key={hasToken}
 					lang={lang}
 					hasToken={hasToken}
 					bagData={bagData}
@@ -143,6 +144,7 @@ const HeaderWrapper = ({
 					display={{ base: 'flex', lg: 'none' }}
 				>
 					<ToolBar
+						key={hasToken}
 						lang={lang}
 						hasToken={hasToken}
 						bagData={bagData}
@@ -171,6 +173,7 @@ const HeaderWrapper = ({
 			</Flex>
 
 			<MobileMenu
+				key={hasToken}
 				isOpen={isOpen}
 				onClose={onClose}
 				hasToken={hasToken}

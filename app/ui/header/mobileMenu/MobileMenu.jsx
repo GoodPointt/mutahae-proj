@@ -60,7 +60,6 @@ const MobileMenu = ({ isOpen, onClose, dictionary, hasToken, lang }) => {
 							dictionary={dictionary}
 						/>
 						<Flex alignItems={'center'} justifyContent={'space-between'}>
-							{' '}
 							{hasToken && (
 								<Box onClick={onClose}>
 									<Logout
