@@ -54,7 +54,7 @@ const ToolBar = ({
 		setFavorite(
 			typeof window !== 'undefined' && hasToken
 				? JSON.parse(localStorage.getItem('favs'))?.length
-				: 0
+				: null
 		);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [favorite]);
@@ -81,7 +81,7 @@ const ToolBar = ({
 				style={{ position: 'relative' }}
 			>
 				<FavoriteNavIcon />
-				{favorite !== 0 && (
+				{favorite > 0 && (
 					<Box
 						pos={'absolute'}
 						borderRadius={'50%'}
@@ -97,7 +97,7 @@ const ToolBar = ({
 						fontSize={'10px'}
 						color={'#fff'}
 					>
-						{favorite}
+						{favorite !== null && favorite}
 					</Box>
 				)}
 			</Link>

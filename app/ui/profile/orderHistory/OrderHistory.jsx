@@ -24,16 +24,21 @@ export const OrderHistory = ({ lang, orders }) => {
 			{ordersData &&
 				ordersData.length > 0 &&
 				ordersData.map((order, index) => {
-					const { goods, createdAt, orderPrice, city } = order.attributes;
+					const { goods, createdAt, orderPrice, city, user_address, orderNum } =
+						order.attributes;
+
 					const dateOrder = new Date(createdAt);
 
 					const formattedDate = format(dateOrder, 'dd/MM/yyyy', {
 						timeZone: 'UTC',
 					});
 
-					const cityData = city?.data?.attributes;
+					const cityDataDefault = city?.data?.attributes;
 
-					const cityHe = cityData?.localizations?.data[0]?.attributes?.cityName;
+					const cityHe =
+						cityDataDefault?.localizations?.data[0]?.attributes?.cityName;
+
+					const cityData = user_address?.data?.attributes;
 
 					return (
 						<Flex
@@ -84,6 +89,22 @@ export const OrderHistory = ({ lang, orders }) => {
 							>
 								<Text
 									fontSize="14px"
+									textAlign={{
+										base: lang === 'he' ? 'right' : 'left',
+										lg: lang === 'he' ? 'left' : 'right',
+									}}
+								>
+									<Box as={'span'} display={lang === 'he' ? 'none' : 'inline'}>
+										№{' '}
+									</Box>
+									{orderNum?.trim()}
+									<Box as={'span'} display={lang !== 'he' ? 'none' : 'inline'}>
+										{' '}
+										№
+									</Box>
+								</Text>
+								<Text
+									fontSize="14px"
 									color="#808080"
 									textAlign={{
 										base: lang === 'he' ? 'right' : 'left',
@@ -94,7 +115,32 @@ export const OrderHistory = ({ lang, orders }) => {
 									{formattedDate}
 								</Text>
 
-								{lang === 'en' && cityData && (
+								{!cityData ? (
+									(lang === 'en' && cityDataDefault && (
+										<Text
+											fontSize="14px"
+											textAlign={{
+												base: lang === 'he' ? 'right' : 'left',
+												lg: lang === 'he' ? 'left' : 'right',
+											}}
+											mb="14px"
+										>
+											{cityDataDefault?.cityName}
+										</Text>
+									)) ||
+									(lang === 'he' && cityHe && (
+										<Text
+											fontSize="14px"
+											textAlign={{
+												base: lang === 'he' ? 'right' : 'left',
+												lg: lang === 'he' ? 'left' : 'right',
+											}}
+											mb="14px"
+										>
+											{cityHe}
+										</Text>
+									))
+								) : (
 									<Text
 										fontSize="14px"
 										textAlign={{
@@ -102,21 +148,7 @@ export const OrderHistory = ({ lang, orders }) => {
 											lg: lang === 'he' ? 'left' : 'right',
 										}}
 										mb="14px"
-									>
-										{cityData?.cityName}
-									</Text>
-								)}
-								{lang === 'he' && cityHe && (
-									<Text
-										fontSize="14px"
-										textAlign={{
-											base: lang === 'he' ? 'right' : 'left',
-											lg: lang === 'he' ? 'left' : 'right',
-										}}
-										mb="14px"
-									>
-										{cityHe}
-									</Text>
+									>{`${cityData.region}, ${cityData.city}, ${cityData.street}, ${cityData.app}`}</Text>
 								)}
 
 								<Text

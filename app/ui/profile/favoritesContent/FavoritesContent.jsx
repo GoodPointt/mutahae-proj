@@ -1,8 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 
-import { Grid, Heading } from '@chakra-ui/react';
+import { Grid, Heading, Text } from '@chakra-ui/react';
 
 import PaginationDisplay from '../../paginationDisplay/PaginationDisplay';
 import ProductItem from '../../productItem/ProductItem';
@@ -47,51 +48,61 @@ export const FavoritesContent = ({ dictionary, lang, isAuth }) => {
 			>
 				{title}
 			</Heading>
-			<Grid
-				as={'ul'}
-				maxW={'100%'}
-				gridTemplateColumns={'repeat(auto-fill, minmax(300px, 1fr))'}
-				gridGap={10}
-				m={'0 auto'}
-				padding={0}
-				mb="50px"
-			>
-				{favoriteData &&
-					favoriteData.map(good => {
-						const { id, uid, locale, title, descShort, unit, price } = good;
-						const { img } = good;
+			{favoriteData.length > 0 ? (
+				<Grid
+					as={'ul'}
+					maxW={'100%'}
+					gridTemplateColumns={'repeat(auto-fill, minmax(300px, 1fr))'}
+					gridGap={10}
+					m={'0 auto'}
+					padding={0}
+					mb="50px"
+				>
+					{favoriteData &&
+						favoriteData.map(good => {
+							const { id, uid, locale, title, descShort, unit, price } = good;
+							const { img } = good;
 
-						const localizations = good?.localizations || [];
+							const localizations = good?.localizations || [];
 
-						return (
-							<ProductItem
-								favs={favorites}
-								setFavs={setFavs}
-								key={id}
-								lang={lang}
-								isAuth={isAuth}
-								product={{
-									uid,
-									id: id,
-									title:
-										(localizations.length && lang == 'en' && locale === 'he') ||
-										(localizations.length && lang == 'he' && locale === 'en')
-											? localizations[0].title
-											: title,
-									button: btnAdd,
-									img: img,
-									unit: unit,
-									price: price,
-									descShort:
-										(localizations.length && lang == 'en' && locale === 'he') ||
-										(localizations.length && lang == 'he' && locale === 'en')
-											? localizations[0].descShort
-											: descShort,
-								}}
-							/>
-						);
-					})}
-			</Grid>
+							return (
+								<ProductItem
+									favs={favorites}
+									setFavs={setFavs}
+									key={id}
+									lang={lang}
+									isAuth={isAuth}
+									product={{
+										uid,
+										id: id,
+										title:
+											(localizations.length &&
+												lang == 'en' &&
+												locale === 'he') ||
+											(localizations.length && lang == 'he' && locale === 'en')
+												? localizations[0].title
+												: title,
+										button: btnAdd,
+										img: img,
+										unit: unit,
+										price: price,
+										descShort:
+											(localizations.length &&
+												lang == 'en' &&
+												locale === 'he') ||
+											(localizations.length && lang == 'he' && locale === 'en')
+												? localizations[0].descShort
+												: descShort,
+									}}
+								/>
+							);
+						})}
+				</Grid>
+			) : (
+				<Text>
+					<Link href={`/catalog`}>Catalog</Link>
+				</Text>
+			)}
 
 			<PaginationDisplay
 				total={total}

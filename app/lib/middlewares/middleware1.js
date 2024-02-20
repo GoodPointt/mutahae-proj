@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 
 import { i18n } from '../locales/i18n.config';
 
-const protectedPaths = ['/profile'];
+const protectedPaths = ['/profile', '/profile/favorites'];
 
 function getProtectedRoutes(protectedPaths, locales) {
 	let protectedPathsWithLocale = [...protectedPaths];
