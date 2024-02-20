@@ -352,7 +352,6 @@ const createOrder = async (
 				title: good.good.data.attributes.title,
 				descShort: good.good.data.attributes.descShort || '',
 				imgUrl,
-				orderNum,
 			};
 		});
 
@@ -363,6 +362,7 @@ const createOrder = async (
 				orderPrice: totalPrice,
 				city: cityId,
 				user_address: userAddressId,
+				orderNum,
 			},
 		});
 	} catch (error) {
