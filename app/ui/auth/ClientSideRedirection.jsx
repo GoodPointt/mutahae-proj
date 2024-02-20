@@ -89,7 +89,7 @@ const ClientSideRedirection = ({ dictionary, provider, lang }) => {
 				}
 			})
 			.catch(err => {
-				console.error(err);
+				console.error('ClientSideRedirection', err);
 			});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [access_token, provider, router]);

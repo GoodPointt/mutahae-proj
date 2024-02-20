@@ -119,7 +119,7 @@ const ContactInfo = ({
 					setOrderReject(true);
 				}
 			} catch (error) {
-				console.error(error);
+				console.error('handleNotification', error);
 			} finally {
 				setIsSubmitting(false);
 			}

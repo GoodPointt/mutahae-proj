@@ -103,7 +103,7 @@ const SingleProduct = ({ userId, dictionary, product, bagData, favorites }) => {
 			try {
 				axios.put(url, { data: { goods: flatten, bagPrice: totalPrice } });
 			} catch (error) {
-				console.error(error);
+				console.error('SingleProduct_handleModalBagClose', error);
 			}
 		}
 
@@ -142,7 +142,7 @@ const SingleProduct = ({ userId, dictionary, product, bagData, favorites }) => {
 			try {
 				axios.put(url, { data: { goods: flatten, bagPrice: price * count } });
 			} catch (error) {
-				console.error(error);
+				console.error('SingleProduct_addGood', error);
 			}
 		}
 	};

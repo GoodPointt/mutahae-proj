@@ -170,7 +170,7 @@ const ProductsGrid = ({
 					setTotal(response.total);
 				}
 			} catch (error) {
-				console.error(error);
+				console.error('ProductsGrid', error);
 			} finally {
 				setIsLoading(false);
 			}

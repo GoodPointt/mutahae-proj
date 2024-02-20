@@ -101,6 +101,6 @@ export async function submitData(prevState, formData) {
 			return { status: res.status };
 		}
 	} catch (error) {
-		console.error(error);
+		console.error('Order/submitData', error.message);
 	}
 }

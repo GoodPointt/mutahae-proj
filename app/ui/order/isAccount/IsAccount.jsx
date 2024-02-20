@@ -24,7 +24,7 @@ const IsAccount = ({ dictionary, lang }) => {
 					href={`/${lang}/auth/login`}
 					borderBottom={'1px solid white'}
 					paddingBottom={'2px'}
-					_hover={'none'}
+					_hover={{ color: '#ccc' }}
 				>
 					{dictionary.order.login}
 				</Link>{' '}
@@ -36,7 +36,7 @@ const IsAccount = ({ dictionary, lang }) => {
 					href={`/${lang}/auth/register`}
 					borderBottom={'1px solid white'}
 					paddingBottom={'2px'}
-					_hover={'none'}
+					_hover={{ color: '#ccc' }}
 				>
 					{dictionary.order.register}
 				</Link>

@@ -55,7 +55,7 @@ const ModalForm = ({ setIsSuccess, dictionary, lang, title, uid }) => {
 						setIsSuccess(true);
 					}
 				} catch (error) {
-					console.error(error);
+					console.error('ModalForm', error);
 				} finally {
 					setIsSubmitting(false);
 				}

@@ -75,7 +75,7 @@ const ContactForm = ({ dictionary }) => {
 					});
 					onOpen();
 				} catch (error) {
-					console.error(error);
+					console.error('ContactForm', error);
 				} finally {
 					setIsSubmitting(false);
 				}
