@@ -12,18 +12,34 @@ const SkeletonUserDetails = () => {
 						gap={{ lg: '15px' }}
 						flexDirection={{ base: 'column', lg: 'row' }}
 					>
-						<Skeleton flex={1} h="45px" mb="25px" />
+						<Skeleton
+							w={{ base: '100%', lg: 'calc((100% - 15px) /2 )' }}
+							h="45px"
+							mb="25px"
+						/>
 
-						<Skeleton flex={1} h="45px" mb="25px" />
+						<Skeleton
+							w={{ base: '100%', lg: 'calc((100% - 15px) /2 )' }}
+							h="45px"
+							mb="25px"
+						/>
 					</Flex>
 					<Flex
 						gap={{ lg: '15px' }}
 						mb="30px"
 						flexDirection={{ base: 'column', lg: 'row' }}
 					>
-						<Skeleton flex={1} h="45px" mb="25px" />
+						<Skeleton
+							w={{ base: '100%', lg: 'calc((100% - 15px) /2 )' }}
+							h="45px"
+							mb="25px"
+						/>
 
-						<Skeleton flex={1} h="45px" mb="25px" />
+						<Skeleton
+							w={{ base: '100%', lg: 'calc((100% - 15px) /2 )' }}
+							h="45px"
+							mb="25px"
+						/>
 					</Flex>
 					<Skeleton
 						startColor="#a28445;"
