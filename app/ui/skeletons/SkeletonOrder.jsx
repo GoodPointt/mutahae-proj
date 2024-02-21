@@ -58,7 +58,7 @@ const SkeletonOrder = ({ dictionary }) => {
 										<SkeletonText
 											skeletonHeight="4"
 											noOfLines={1}
-											w={{ base: '150px', sm: '190px' }}
+											w={{ base: '130px', sm: '190px' }}
 										/>
 										<SkeletonText skeletonHeight="4" noOfLines={1} w={'30px'} />
 										<SkeletonText skeletonHeight="4" noOfLines={1} w={'20px'} />
@@ -66,7 +66,7 @@ const SkeletonOrder = ({ dictionary }) => {
 								</Flex>
 								<Grid
 									mt={{ base: '50px', md: '0px' }}
-									templateColumns={{ base: '3fr 1fr' }}
+									templateColumns={{ base: '5fr 1fr', sm: '3fr 1fr' }}
 									w={'100%'}
 									justifyContent={'center'}
 								>
