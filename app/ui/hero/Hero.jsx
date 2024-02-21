@@ -33,7 +33,7 @@ const Hero = async ({ dictionary, lang }) => {
 					fontSize={{ base: '27px', lg: '40.5px' }}
 					lineHeight={{ base: '35.91px', lg: '48.6px' }}
 				>
-					{dictionary.hero.title}
+					{dictionary.hero.title}.
 				</Heading>
 				<Text fontSize={'16px'} maxW={'800px'}>
 					{dictionary.hero.desc}

@@ -59,7 +59,9 @@ export function withAuthMiddleware(middleware) {
 		}
 
 		if (pathname.includes('/auth') && token) {
-			return NextResponse.redirect(new URL(`${localeFromPath}/`, request.url));
+			return NextResponse.redirect(
+				new URL(`${localeFromPath}` + search, request.url)
+			);
 		}
 
 		return middleware(request, event, response);
