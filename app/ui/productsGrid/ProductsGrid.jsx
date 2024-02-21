@@ -120,10 +120,6 @@ const ProductsGrid = ({
 
 					return;
 				} else {
-					const activeTabIndex =
-						categories.findIndex(el => el.id === category) + 1;
-					setActiveTab(activeTabIndex);
-
 					if (category && sub_category) {
 						const response = await fetchProductBySubCategorie(
 							lang,
@@ -164,7 +160,8 @@ const ProductsGrid = ({
 						page
 					);
 
-					if (page > 1) setRenderList(prev => [...prev, ...response.data]);
+					if (page > 1)
+						setRenderList(prev => [...prev, ...new Set(response.data)]);
 
 					if (page === 1) setRenderList(response.data);
 					setTotal(response.total);
@@ -177,6 +174,12 @@ const ProductsGrid = ({
 		})();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [categories, category, page, sub_category, sortValue, sortOrder, query]);
+
+	useEffect(() => {
+		const activeTabIndex = categories.findIndex(el => el.id === category) + 1;
+		setActiveTab(activeTabIndex);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [categories]);
 
 	useEffect(() => {
 		if (!categoriesList) return;
@@ -222,6 +225,7 @@ const ProductsGrid = ({
 
 	const toggleSort = value => {
 		setSortValue(value);
+		setPage(1);
 		setSortOrder(prevOrder =>
 			prevOrder === sortOrders[0] ? sortOrders[1] : sortOrders[0]
 		);
@@ -353,8 +357,18 @@ const ProductsGrid = ({
 								<Flex key={id} mx={'12px'}>
 									<Tab
 										px={0}
-										_selected={{ color: '#a28445' }}
+										_selected={{
+											color: '#a28445',
+											fill: '#a28445',
+											stroke: '#a28445',
+										}}
+										_hover={{
+											fill: '#a98841',
+											stroke: '#a98841',
+											color: '#a98841',
+										}}
 										color={'white'}
+										stroke={'white'}
 										fontSize={'18px'}
 										fontWeight={'500'}
 										onClick={() => {

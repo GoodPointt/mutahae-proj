@@ -56,18 +56,8 @@ const CategoryMenu = ({
 				return (
 					<>
 						{subCategories.length > 0 && (
-							<PopoverTrigger _hover={{ bg: 'none' }}>
-								<Flex
-									color={'inherit'}
-									fontWeight={'inherit'}
-									stroke={id === category ? '#a28445' : 'white'}
-									transition={'all 0.3s'}
-									_hover={{
-										fill: '#a98841',
-										stroke: '#a98841',
-										color: '#a98841',
-									}}
-								>
+							<PopoverTrigger>
+								<Flex>
 									{title}
 									{isOpen ? <ArrowUp /> : <ArrowDown />}
 								</Flex>

@@ -84,7 +84,9 @@ const ClientSideRedirection = ({ dictionary, provider, lang }) => {
 
 					setTimeout(() => {
 						setText(dictionary.provider.rederecting);
-						router.replace(callbackPath || `/${lang}/`);
+						router.replace(
+							callbackPath + '?login=true' || `/${lang}?login=true`
+						);
 					}, 200);
 				}
 			})
