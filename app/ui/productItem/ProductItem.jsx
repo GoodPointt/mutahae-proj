@@ -1,10 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useFormState } from 'react-dom';
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
 
 import { Box, Button, Heading, Text, useMediaQuery } from '@chakra-ui/react';
 
@@ -30,23 +29,13 @@ const ProductItem = ({
 		favs?.some(item => item.id === product.id)
 	);
 
-	const [state, formAction] = useFormState(submitGoodToFavorite, null);
-	const path = usePathname();
-	const router = useRouter();
+	const [, formAction] = useFormState(submitGoodToFavorite, null);
 
 	const [, setFavorite] = useQueryState(
 		'favs',
 		typeof window !== 'undefined' &&
 			parseAsFloat.withDefault(JSON.parse(localStorage.getItem('favs'))?.length)
 	);
-
-	useEffect(() => {
-		if (path.includes('/favorites') && state?.status === 200) {
-			handleIsFavs(product.id);
-			router.refresh();
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [path, state]);
 
 	const handleIsFavs = productId => {
 		const isExisting = favs.some(item => item.id === productId);
@@ -181,11 +170,9 @@ const ProductItem = ({
 						right={'0px'}
 						zIndex={'10'}
 						onClick={() => {
-							if (!path.includes('/favorites')) {
-								setIsFavorite(!isFavorite);
+							setIsFavorite(!isFavorite);
 
-								handleIsFavs(product.id);
-							}
+							handleIsFavs(product.id);
 						}}
 						isFavorite={isFavorite}
 					/>
