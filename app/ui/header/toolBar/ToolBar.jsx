@@ -37,6 +37,7 @@ const ToolBar = ({
 }) => {
 	const { isOpen = false, onOpen, onClose } = useDisclosure();
 	const [variant, setVariant] = useState();
+	const [isInit, setIsInit] = useState(true);
 	const [query, setQuery] = useQueryState('query');
 	//const favsLocal = useClientSideState('favs', 0);
 	const [favorite, setFavorite] = useQueryState('favs', parseAsFloat);
@@ -45,6 +46,10 @@ const ToolBar = ({
 		if (favId) setCookie('favId', favId);
 	}, [favId]);
 	const [localGoods] = useLocalBag('localBag');
+
+	useEffect(() => {
+		favorite !== null && setIsInit(false);
+	}, [favorite]);
 
 	const totalPrice = localGoods.reduce((acc, { count, good: { data } }) => {
 		return acc + data.attributes.price * count;
@@ -81,7 +86,7 @@ const ToolBar = ({
 				style={{ position: 'relative' }}
 			>
 				<FavoriteNavIcon />
-				{favorite > 0 && (
+				{((isInit && favorites.length > 0) || (!isInit && favorite !== 0)) && (
 					<Box
 						pos={'absolute'}
 						borderRadius={'50%'}
@@ -97,7 +102,9 @@ const ToolBar = ({
 						fontSize={'10px'}
 						color={'#fff'}
 					>
-						{favorite !== null && favorite}
+						{isInit
+							? favorites.length > 0 && favorites.length
+							: favorite !== 0 && favorite}
 					</Box>
 				)}
 			</Link>

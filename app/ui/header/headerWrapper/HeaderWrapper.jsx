@@ -4,7 +4,6 @@
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 import NavBar from '@/app/ui/navbar/NavBar';
 import SectionWrapper from '@/app/ui/sectionWrapper/SectionWrapper';
@@ -18,8 +17,6 @@ import LocaleSwitcher from '../../localeSwitcher/LocaleSwitcher';
 import Burger from '../../svg/Burger';
 import MobileMenu from '../mobileMenu/MobileMenu';
 import ToolBar from '../toolBar/ToolBar';
-
-import { useQueryState } from 'nuqs';
 
 const HeaderWrapper = ({
 	lang,
@@ -38,15 +35,6 @@ const HeaderWrapper = ({
 	const [headerStyle, setHeaderStyle] = useState({});
 	const [localBag, setLocalBag] = useLocalBag('localBag', []);
 	const [bagLength, setBagLength] = useState(0);
-
-	const [login] = useQueryState('login');
-
-	const router = useRouter();
-
-	useEffect(() => {
-		router.refresh();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [login]);
 
 	useEffect(() => {
 		setHasToken(isAuth);

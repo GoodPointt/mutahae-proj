@@ -87,6 +87,7 @@ const ClientSideRedirection = ({ dictionary, provider, lang }) => {
 						router.replace(
 							callbackPath + '?login=true' || `/${lang}?login=true`
 						);
+						router.refresh();
 					}, 200);
 				}
 			})

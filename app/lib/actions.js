@@ -323,6 +323,8 @@ export async function submitGoodToFavorite(prevState, formData) {
 			goodId,
 		});
 
+		//console.log(response);
+
 		if (response?.status === 200) {
 			return {
 				status: response?.status,
