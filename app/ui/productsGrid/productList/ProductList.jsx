@@ -44,6 +44,7 @@ const ProductList = ({
 				{list &&
 					list.map(product => (
 						<ProductItem
+							dictionary={dictionary}
 							isAuth={isAuth}
 							favs={favs}
 							setFavs={setFavs}

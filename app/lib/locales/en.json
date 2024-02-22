@@ -345,5 +345,10 @@
 		"total": "Total",
 		"tooltip": "Go to product page",
 		"limit": "Limit of 100 items can be chosen."
+	},
+	"cta": {
+		"text": "Enter your account to add favorites",
+		"email": "Login with email",
+		"or": "or"
 	}
 }

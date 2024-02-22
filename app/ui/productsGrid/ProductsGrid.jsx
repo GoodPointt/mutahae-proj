@@ -33,6 +33,7 @@ import ProductList from './productList/ProductList';
 import SearchInCatalog from './searchInCatalog/SearchInCatalog';
 import SortMenu from './sortMenu/SortMenu';
 
+import { setCookie } from 'cookies-next';
 import {
 	parseAsInteger,
 	parseAsString,
@@ -285,7 +286,10 @@ const ProductsGrid = ({
 						flexDir={{ base: 'column', md: ' row' }}
 					>
 						<Box as="li" borderBottom={'1px solid white'}>
-							<Link href={redirectedPathName('he')}>
+							<Link
+								href={redirectedPathName('he')}
+								onClick={() => setCookie('lang', 'he')}
+							>
 								Change language to Hebrew
 							</Link>
 						</Box>
