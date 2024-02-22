@@ -334,7 +334,11 @@ const ProductsGrid = ({
 					onChange={index => setActiveTab(index)}
 					isManual={true}
 				>
-					<TabList display={{ base: 'none', md: 'flex' }}>
+					<TabList
+						display={{ base: 'none', md: 'flex' }}
+						flexWrap={'wrap'}
+						gap={'8px'}
+					>
 						<Tab
 							key={'All'}
 							mx={'12px'}
