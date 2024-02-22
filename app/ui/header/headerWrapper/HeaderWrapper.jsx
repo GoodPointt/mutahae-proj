@@ -115,18 +115,19 @@ const HeaderWrapper = ({
 
 			<Flex justify={'space-between'} alignItems={'center'}>
 				<Link href={'/' + lang}>
-					<Image
-						src={'/img/logo.png'}
-						alt="logo"
-						width="180"
-						height="60"
-						style={{
-							objectFit: 'cover',
-							width: 180,
-							height: 60,
-							display: 'block',
-						}}
-					/>
+					<Box position="relative" w={'180px'} height={'60px'}>
+						<Image
+							src={'/img/logo.png'}
+							alt="logo"
+							priority
+							width="180"
+							height="60"
+							sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+							style={{
+								objectFit: 'cover',
+							}}
+						/>
+					</Box>
 				</Link>
 				<Box as="nav" display={{ base: 'none', lg: 'block' }}>
 					<NavBar

@@ -67,6 +67,7 @@ export const FavoritesContent = ({ dictionary, lang, isAuth }) => {
 
 							return (
 								<ProductItem
+									dictionary={dictionary}
 									favs={favorites}
 									setFavs={setFavs}
 									key={id}

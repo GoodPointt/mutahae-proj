@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useFormState } from 'react-dom';
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 import { Box, Button, Heading, Text, useMediaQuery } from '@chakra-ui/react';
 
@@ -37,6 +38,8 @@ const ProductItem = ({
 		typeof window !== 'undefined' &&
 			parseAsFloat.withDefault(JSON.parse(localStorage.getItem('favs'))?.length)
 	);
+
+	const path = usePathname();
 
 	const handleIsFavs = productId => {
 		const isExisting = favs.some(item => item.id === productId);
@@ -179,7 +182,12 @@ const ProductItem = ({
 					/>
 				</form>
 			) : (
-				<CallToAuth setCallbackPath={setCallbackPath} dictionary={dictionary} />
+				path !== `/${lang}` && (
+					<CallToAuth
+						setCallbackPath={setCallbackPath}
+						dictionary={dictionary}
+					/>
+				)
 			)}
 		</Box>
 	);

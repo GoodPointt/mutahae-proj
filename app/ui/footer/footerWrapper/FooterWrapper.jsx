@@ -4,7 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { Flex, Text, useDisclosure } from '@chakra-ui/react';
+import { Box, Flex, Text, useDisclosure } from '@chakra-ui/react';
 
 import ContactsList from '../../contactsList/ContactsList';
 import NavBar from '../../navbar/NavBar';
@@ -28,18 +28,19 @@ const FooterWrapper = ({ lang, dictionary, contacts, products }) => {
 			>
 				<Flex flexDirection="column" gap={'38px'}>
 					<Link href={'/' + lang}>
-						<Image
-							src={'/img/logo.png'}
-							alt="logo"
-							width="300"
-							height="100"
-							style={{
-								objectFit: 'cover',
-								width: 300,
-								height: 100,
-								display: 'block',
-							}}
-						/>
+						<Box position="relative" w={'300px'} height={'100px'}>
+							<Image
+								src={'/img/logo.png'}
+								alt="logo"
+								priority
+								width="300"
+								height="100"
+								sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+								style={{
+									objectFit: 'cover',
+								}}
+							/>
+						</Box>
 					</Link>
 					<SocialLinks lang={lang} contacts={contacts} />
 				</Flex>
