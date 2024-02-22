@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useFormState } from 'react-dom';
+import { useRouter } from 'next/navigation';
 
 import {
 	Box,
@@ -49,6 +50,7 @@ const ContactInfo = ({
 
 	const ref = useRef(null);
 	const dis = goodsToMap.length === 0;
+	const router = useRouter();
 
 	const cityDetails = arrayCities.find(item => {
 		return (
@@ -157,6 +159,13 @@ const ContactInfo = ({
 				lang,
 			},
 		});
+	};
+
+	const handleClose = () => {
+		onClose();
+		if (!orderReject) {
+			router.push(`/${lang}/catalog`);
+		}
 	};
 
 	const firstNameError =
@@ -372,7 +381,7 @@ const ContactInfo = ({
 					/>
 				</Flex>
 			</Box>
-			<Modal isOpen={isOpen} onClose={onClose} lang={lang}>
+			<Modal isOpen={isOpen} onClose={handleClose} lang={lang}>
 				{orderReject ? (
 					<OrderReject dictionary={dictionary} lang={lang} />
 				) : (
