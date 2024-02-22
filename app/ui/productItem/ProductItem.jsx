@@ -22,6 +22,7 @@ const ProductItem = ({
 	setFavs,
 	isAuth = false,
 	setCallbackPath,
+	dictionary,
 }) => {
 	const [isModileScreen] = useMediaQuery('(max-width: 1024px)');
 
@@ -178,7 +179,7 @@ const ProductItem = ({
 					/>
 				</form>
 			) : (
-				<CallToAuth setCallbackPath={setCallbackPath} />
+				<CallToAuth setCallbackPath={setCallbackPath} dictionary={dictionary} />
 			)}
 		</Box>
 	);

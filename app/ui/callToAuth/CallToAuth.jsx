@@ -21,7 +21,7 @@ import ProviderButton from '../providerButton/ProviderButton';
 import EmailIcon from '../svg/EmailIcon';
 import Star from '../svg/Star';
 
-const CallToAuth = ({ setCallbackPath }) => {
+const CallToAuth = ({ setCallbackPath, dictionary }) => {
 	return (
 		<Popover>
 			<PopoverTrigger>
@@ -54,7 +54,7 @@ const CallToAuth = ({ setCallbackPath }) => {
 					<PopoverCloseButton />
 					<PopoverHeader fontWeight="semibold" border={'none'}>
 						<Text mt={'20px'} textAlign={'center'}>
-							Enter your account to add favorites
+							{dictionary.cta.text}
 						</Text>
 					</PopoverHeader>
 					<PopoverBody mt={'15px'}>
@@ -75,21 +75,16 @@ const CallToAuth = ({ setCallbackPath }) => {
 									gap={3}
 									align={'center'}
 									onClick={() => {
-										// if (pathname.includes('/order'))
-										// 	localStorage.setItem(
-										// 		'callbackPath',
-										// 		JSON.stringify(pathname)
-										// 	);
 										setCallbackPath();
 									}}
 								>
 									<Box fill={'#ccc'}>
 										<EmailIcon />
 									</Box>
-									<Link href={'/auth/login'}>Login with email</Link>
+									<Link href={'/auth/login'}>{dictionary.cta.email}</Link>
 								</Flex>
 							</Box>
-							<Text>or</Text>
+							<Text>{dictionary.cta.or}</Text>
 							<ProviderButton
 								variant="google"
 								minimalistic
