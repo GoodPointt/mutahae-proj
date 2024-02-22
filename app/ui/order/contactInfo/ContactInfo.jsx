@@ -44,7 +44,7 @@ const ContactInfo = ({
 	const [cityId, setCityId] = useState(null);
 	const [ownCity, setOwnCity] = useState('');
 	const [orderReject, setOrderReject] = useState(false);
-	const [userAddressId, setUserAddressId] = useState('null');
+	const [userAddressId, setUserAddressId] = useState(null);
 	const [enteredAddress, setEnteredAddress] = useState('');
 	const { isOpen = false, onOpen, onClose } = useDisclosure();
 
