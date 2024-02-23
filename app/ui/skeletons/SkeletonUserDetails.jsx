@@ -13,6 +13,7 @@ const SkeletonUserDetails = () => {
 						flexDirection={{ base: 'column', lg: 'row' }}
 					>
 						<Skeleton
+							// eslint-disable-next-line sonarjs/no-duplicate-string
 							w={{ base: '100%', lg: 'calc((100% - 15px) /2 )' }}
 							h="45px"
 							mb="25px"

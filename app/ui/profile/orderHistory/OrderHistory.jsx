@@ -1,13 +1,11 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 
-import { Box, Flex, Text } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 
 import PaginationDisplay from '../../paginationDisplay/PaginationDisplay';
 
 import { OrderHistoryItem } from './OrderHistoryItem';
-
-import { format } from 'date-fns';
 
 export const OrderHistory = ({ lang, orders }) => {
 	const [total, setTotal] = useState(orders.length);
@@ -27,25 +25,13 @@ export const OrderHistory = ({ lang, orders }) => {
 					const { goods, createdAt, orderPrice, city, user_address, orderNum } =
 						order.attributes;
 
-					const dateOrder = new Date(createdAt);
-
-					const formattedDate = format(dateOrder, 'dd/MM/yyyy', {
-						timeZone: 'UTC',
-					});
-
-					const cityDataDefault = city?.data?.attributes;
-
-					const cityHe =
-						cityDataDefault?.localizations?.data[0]?.attributes?.cityName;
-
-					const cityData = user_address?.data?.attributes;
-
 					return (
 						<Flex
 							key={Date.now() + Math.random()}
 							borderTop={index > 0 ? '1px solid #a98841' : null}
 							pt={index > 0 ? '30px' : null}
 							pb={index !== orders.length - 1 ? '30px' : null}
+							//flexDir={{ base: 'column', lg: 'row' }}
 						>
 							<Flex gap="30px" flexDir="column" flex={1}>
 								{goods &&
@@ -78,90 +64,15 @@ export const OrderHistory = ({ lang, orders }) => {
 														: descShort
 												}
 												uid={uid}
+												orderNum={orderNum}
+												orderPrice={orderPrice}
+												createdAt={createdAt}
+												city={city}
+												user_address={user_address}
 											/>
 										);
 									})}
 							</Flex>
-							<Box
-								ml={{ base: 0, lg: lang === 'he' ? 0 : 'auto' }}
-								mr={{ base: 0, lg: lang === 'en' ? 0 : 'auto' }}
-								my="auto"
-							>
-								<Text
-									fontSize="14px"
-									textAlign={{
-										base: lang === 'he' ? 'right' : 'left',
-										lg: lang === 'he' ? 'left' : 'right',
-									}}
-								>
-									<Box as={'span'} display={lang === 'he' ? 'none' : 'inline'}>
-										№{' '}
-									</Box>
-									{orderNum?.trim()}
-									<Box as={'span'} display={lang !== 'he' ? 'none' : 'inline'}>
-										{' '}
-										№
-									</Box>
-								</Text>
-								<Text
-									fontSize="14px"
-									color="#808080"
-									textAlign={{
-										base: lang === 'he' ? 'right' : 'left',
-										lg: lang === 'he' ? 'left' : 'right',
-									}}
-									mb="14px"
-								>
-									{formattedDate}
-								</Text>
-
-								{!cityData ? (
-									(lang === 'en' && cityDataDefault && (
-										<Text
-											fontSize="14px"
-											textAlign={{
-												base: lang === 'he' ? 'right' : 'left',
-												lg: lang === 'he' ? 'left' : 'right',
-											}}
-											mb="14px"
-										>
-											{cityDataDefault?.cityName}
-										</Text>
-									)) ||
-									(lang === 'he' && cityHe && (
-										<Text
-											fontSize="14px"
-											textAlign={{
-												base: lang === 'he' ? 'right' : 'left',
-												lg: lang === 'he' ? 'left' : 'right',
-											}}
-											mb="14px"
-										>
-											{cityHe}
-										</Text>
-									))
-								) : (
-									<Text
-										fontSize="14px"
-										textAlign={{
-											base: lang === 'he' ? 'right' : 'left',
-											lg: lang === 'he' ? 'left' : 'right',
-										}}
-										mb="14px"
-									>{`${cityData.region}, ${cityData.city}, ${cityData.street}, ${cityData.app}`}</Text>
-								)}
-
-								<Text
-									fontSize="14px"
-									textAlign={{
-										base: lang === 'he' ? 'right' : 'left',
-										lg: lang === 'he' ? 'left' : 'right',
-									}}
-									mb="14px"
-								>
-									{`${orderPrice}₪`}
-								</Text>
-							</Box>
 						</Flex>
 					);
 				})}

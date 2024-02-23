@@ -350,7 +350,6 @@
 		"text": "Enter your account to add favorites",
 		"email": "Login with email",
 		"or": "or"
-	}
-	,
-	"slider":"View all products in the catalog"
+	},
+	"slider": "View all products in the catalog"
 }
