@@ -56,6 +56,7 @@ const Modal = ({ isOpen, onClose, children, lang }) => {
 						>
 							<CloseIcon />
 						</Button>
+
 						{children}
 					</Box>
 				</ModalBody>

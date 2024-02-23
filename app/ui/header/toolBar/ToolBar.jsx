@@ -104,7 +104,8 @@ const ToolBar = ({
 					>
 						{isInit
 							? favorites.length > 0 && favorites.length
-							: favorite !== 0 && favorite}
+							: (favorite !== 0 && favorite) ||
+							  (favorites.length > 0 && favorites.length)}
 					</Box>
 				)}
 			</Link>

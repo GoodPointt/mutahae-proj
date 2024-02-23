@@ -21,13 +21,13 @@ import ProviderButton from '../providerButton/ProviderButton';
 import EmailIcon from '../svg/EmailIcon';
 import Star from '../svg/Star';
 
-const CallToAuth = ({ setCallbackPath, dictionary }) => {
+const CallToAuth = ({ setCallbackPath, dictionary, pos = 'absolute' }) => {
 	return (
 		<Popover>
 			<PopoverTrigger>
 				<Button
 					variant={'ghost'}
-					position={'absolute'}
+					position={pos}
 					top={'0px'}
 					right={'0px'}
 					zIndex={'10'}

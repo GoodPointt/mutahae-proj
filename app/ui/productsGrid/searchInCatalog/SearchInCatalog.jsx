@@ -38,7 +38,7 @@ const SearchInCatalog = ({ dictionary, lang, setQuery }) => {
 				as={'form'}
 				ref={ref}
 				borderColor="transparent"
-				borderBottomColor={'#ccc'}
+				borderBottomColor={'#A28445'}
 				width={{ base: '100%', md: '25%' }}
 				alignItems={'center'}
 				pb={'28px'}
@@ -87,7 +87,9 @@ const SearchInCatalog = ({ dictionary, lang, setQuery }) => {
 					placeholder={dictionary.searchField.search}
 					onChange={handleSearch}
 					focusBorderColor="transparent"
-					_focus={{ borderBottom: ' 1px solid #A28445' }}
+					_focus={{
+						borderBottom: ' 1px solid #A28445',
+					}}
 					borderRadius={'2px'}
 					ringColor={'transparent'}
 					_hover={{

@@ -34,6 +34,7 @@ const SingleProductSlider = ({ imgs }) => {
 					src={currentImg || '/img/product.png'}
 					alt="img"
 					fill
+					sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 					style={{ objectFit: 'cover' }}
 				/>
 			</Box>
@@ -53,12 +54,31 @@ const SingleProductSlider = ({ imgs }) => {
 							<Button
 								w={'80px'}
 								h={'80px'}
+								p={0}
+								position={'relative'}
 								borderRadius={0}
-								border={
+								borderBottom={
 									currentImg === attributes.url
 										? '2px rgb(162, 132, 69) solid'
 										: 'none'
 								}
+								borderRight={
+									currentImg === attributes.url
+										? '2px rgb(162, 132, 69) solid'
+										: 'none'
+								}
+								borderLeft={
+									currentImg === attributes.url
+										? '2px rgb(162, 132, 69) solid'
+										: 'none'
+								}
+								borderTop={{
+									base:
+										currentImg === attributes.url
+											? '2px rgb(162, 132, 69) solid'
+											: 'none',
+									md: 'none',
+								}}
 								_hover={{
 									bg:
 										currentImg === attributes.url
@@ -72,6 +92,7 @@ const SingleProductSlider = ({ imgs }) => {
 									src={attributes.formats.thumbnail.url}
 									alt={attributes.name}
 									fill
+									sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 									style={{
 										objectFit: 'cover',
 										zIndex: '-1',

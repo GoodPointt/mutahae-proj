@@ -25,7 +25,7 @@ const CatalogSlider = ({ products: { data }, lang, heading, dictionary }) => {
 	const [isModileScreen] = useMediaQuery('(max-width: 1024px)');
 
 	const callbackpath = () =>
-		localStorage.setItem('calbackpath', JSON.stringify('/catalog'));
+		localStorage.setItem('callbackPath', JSON.stringify('/catalog'));
 
 	return (
 		<SectionWrapper
@@ -76,7 +76,7 @@ const CatalogSlider = ({ products: { data }, lang, heading, dictionary }) => {
 					<Link
 						href={`/${lang}/catalog`}
 						onClick={() => {
-							localStorage.setItem('calbackpath', JSON.stringify('/catalog'));
+							localStorage.setItem('callbackPath', JSON.stringify('/catalog'));
 						}}
 					>
 						<Box

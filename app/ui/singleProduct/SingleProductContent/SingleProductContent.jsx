@@ -24,13 +24,6 @@ const SingleProductContent = async ({ id, lang, dictionary }) => {
 		favorites = await fetchFavorites(userId);
 	}
 
-	// const totalPrice = userId
-	// 	? bagData[0].goods.length !== 0 &&
-	// 	  bagData[0].goods.reduce((acc, { count, good }) => {
-	// 			return acc + good.data.attributes.price * count;
-	// 	  }, 0)
-	// 	: null;
-
 	return (
 		<SectionWrapper pb={'60px'}>
 			<Suspense fallback={<SkeletonSingleProduct dictionary={dictionary} />}>
@@ -40,6 +33,7 @@ const SingleProductContent = async ({ id, lang, dictionary }) => {
 					product={product}
 					dictionary={dictionary}
 					bagData={bagData}
+					lang={lang}
 				/>
 			</Suspense>
 		</SectionWrapper>
