@@ -28,7 +28,7 @@ const getProducts = async (
 		return { data, total: meta.pagination.total };
 	} catch (e) {
 		if (e.data === undefined) {
-			return [];
+			return console.error('getProducts', e.message);
 		}
 	}
 };
@@ -49,7 +49,7 @@ const getProductsByCategorie = async (
 			`api/goods?locale=${lang}&populate=deep&filters[categories][uid][$eq]=${uid}&sort[0]=${sortBy}:${sortOrder}&pagination[page]=${page}&pagination[pageSize]=9`
 		);
 		if (data.length === 0) {
-			return notFound();
+			return { data: [], total: 0 };
 		}
 
 		return { data, total: meta.pagination.total };
@@ -78,7 +78,7 @@ const getProductBySubCategorie = async (
 		);
 
 		if (data.length === 0) {
-			return notFound();
+			return { data: [], total: 0 };
 		}
 
 		return { data, total: meta.pagination.total };
@@ -198,7 +198,7 @@ const getMembers = async lang => {
 		return data;
 	} catch (e) {
 		if (e.data === undefined) {
-			return notFound();
+			return console.error('getMembers', e.message);
 		}
 	}
 };

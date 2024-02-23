@@ -32,7 +32,14 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 export const dynamic = 'force-dynamic';
 
-const SingleProduct = ({ userId, dictionary, product, bagData, favorites }) => {
+const SingleProduct = ({
+	userId,
+	dictionary,
+	product,
+	bagData,
+	favorites,
+	lang,
+}) => {
 	const {
 		id: goodId,
 		attributes: {
@@ -278,7 +285,7 @@ const SingleProduct = ({ userId, dictionary, product, bagData, favorites }) => {
 				</>
 			)}
 
-			<Modal isOpen={isOpen} onClose={handleModalBagClose}>
+			<Modal isOpen={isOpen} onClose={handleModalBagClose} lang={lang}>
 				<Bag
 					bagData={bagData ? bagData[0] : {}}
 					hasToken={!!userId}

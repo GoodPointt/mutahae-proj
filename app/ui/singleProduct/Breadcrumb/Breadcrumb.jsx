@@ -56,8 +56,15 @@ const BreadcrumbBar = ({
 
 	useEffect(() => {
 		const url = JSON.parse(localStorage.getItem('callbackPath'));
-		setCallbackPath(url || `/${lang}/catalog`);
+		setCallbackPath(url);
 	}, [lang]);
+
+	const singleProductCallBackPath = () => {
+		localStorage.setItem(
+			'callbackPath',
+			JSON.stringify(`/catalog/${product.attributes.uid}`)
+		);
+	};
 
 	return (
 		<>
@@ -77,7 +84,7 @@ const BreadcrumbBar = ({
 						>
 							{segment === 'catalog' && (
 								<Link
-									href={callbackPath}
+									href={callbackPath || '/catalog'}
 									onClick={() => {
 										localStorage.removeItem('callbackPath');
 									}}
@@ -121,7 +128,11 @@ const BreadcrumbBar = ({
 					/>
 				</form>
 			) : (
-				<CallToAuth pos={'static'} />
+				<CallToAuth
+					pos={'static'}
+					dictionary={dictionary}
+					setCallbackPath={singleProductCallBackPath}
+				/>
 			)}
 		</>
 	);

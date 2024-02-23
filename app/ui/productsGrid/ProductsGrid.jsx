@@ -121,6 +121,10 @@ const ProductsGrid = ({
 
 					return;
 				} else {
+					const activeTabIndex =
+						categories.findIndex(el => el.id === category) + 1;
+					setActiveTab(activeTabIndex);
+
 					if (category && sub_category) {
 						const response = await fetchProductBySubCategorie(
 							lang,
@@ -131,9 +135,12 @@ const ProductsGrid = ({
 							sub_category
 						);
 
-						if (page > 1) setRenderList(prev => [...prev, ...response.data]);
-						if (page === 1) setRenderList(response.data);
-						setTotal(response.total);
+						if (response !== undefined) {
+							if (page > 1 && response.data.length !== 0)
+								setRenderList(prev => [...prev, ...response.data]);
+							if (page === 1) setRenderList(response.data);
+							setTotal(response.total);
+						}
 
 						return;
 					}
@@ -147,9 +154,12 @@ const ProductsGrid = ({
 							category
 						);
 
-						if (page > 1) setRenderList(prev => [...prev, ...response.data]);
-						if (page === 1) setRenderList(response.data);
-						setTotal(response.total);
+						if (response !== undefined) {
+							if (page > 1 && response.data.length !== 0)
+								setRenderList(prev => [...prev, ...response.data]);
+							if (page === 1) setRenderList(response.data);
+							setTotal(response.total);
+						}
 
 						return;
 					}
@@ -160,11 +170,12 @@ const ProductsGrid = ({
 						sortOrder,
 						page
 					);
+					if (response !== undefined) {
+						if (page > 1 && response.data.length !== 0)
+							setRenderList(prev => [...prev, ...new Set(response.data)]);
 
-					if (page > 1)
-						setRenderList(prev => [...prev, ...new Set(response.data)]);
-
-					if (page === 1) setRenderList(response.data);
+						if (page === 1) setRenderList(response.data);
+					}
 					setTotal(response.total);
 				}
 			} catch (error) {
@@ -176,11 +187,10 @@ const ProductsGrid = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [categories, category, page, sub_category, sortValue, sortOrder, query]);
 
-	useEffect(() => {
-		const activeTabIndex = categories.findIndex(el => el.id === category) + 1;
-		setActiveTab(activeTabIndex);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [categories]);
+	// useEffect(() => {
+
+	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
+	// }, [categories]);
 
 	useEffect(() => {
 		if (!categoriesList) return;
@@ -250,6 +260,8 @@ const ProductsGrid = ({
 			// total: total,
 			category: category,
 			sub_category: sub_category,
+			sort: sortValue,
+			sort_order: sortOrder,
 			// page: page,
 			// query: query,
 		};
