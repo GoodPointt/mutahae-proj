@@ -22,7 +22,6 @@ const HistoryOfOrders = async ({ params: { lang } }) => {
 			>
 				{title}
 			</Heading>
-
 			<Suspense fallback={<SkeletonOrderHistory lang={lang} />}>
 				<SsrOrderHistory lang={lang} dictionary={dictionary} />
 			</Suspense>

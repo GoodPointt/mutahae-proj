@@ -191,7 +191,7 @@ export const changePasswordAction = async (prevState, formData) => {
 
 		return {
 			data: response.data,
-			status: 'success',
+			status: response.status,
 		};
 	} catch (error) {
 		return {

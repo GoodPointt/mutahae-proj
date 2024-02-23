@@ -1,11 +1,11 @@
 import React from 'react';
 
-const ArrowLeft = ({ width = '6px', height = '12px' }) => {
+const ArrowLeft = () => {
 	return (
 		<svg
-			width={width}
-			height={height}
-			viewBox={`0 0 ${width} ${height}`}
+			width="6"
+			height="12"
+			viewBox="0 0 6 12"
 			xmlns="http://www.w3.org/2000/svg"
 		>
 			<path
