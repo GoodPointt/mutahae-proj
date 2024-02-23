@@ -69,8 +69,13 @@ export const RessetPasswordForm = ({ lang, ressetPassDictionary }) => {
 			: null;
 
 	return (
-		<Box pt="40px" mt="35px" borderTop="1px solid #3B3D46">
-			<Flex gap={'40px'} width={'100%'} alignItems={'flex-start'}>
+		<Box pt="40px" mt="35px" borderTop="1px solid #3B3D46" flex={1}>
+			<Flex
+				width={'100%'}
+				justifyContent={{ base: 'space-between', md: 'flex-start' }}
+				alignItems={'flex-start'}
+				gap={{ base: '0', md: lang === 'en' ? '150px' : '200px' }}
+			>
 				<Heading as="h4" fontSize="20px" fontWeight="600" mb="30px">
 					{title}
 				</Heading>
@@ -94,7 +99,10 @@ export const RessetPasswordForm = ({ lang, ressetPassDictionary }) => {
 			</Flex>
 
 			<Box as="form" action={dispatch} ref={formRef} flex={1}>
-				<Box flexDirection="column" w="calc((100% - 15px) /2 )">
+				<Box
+					flexDirection="column"
+					w={{ base: '100%', md: 'calc((100% - 15px) /2 )' }}
+				>
 					<FormControl isInvalid={passwordError} pb="25px">
 						<Input
 							name="currentPassword"
@@ -135,6 +143,7 @@ export const RessetPasswordForm = ({ lang, ressetPassDictionary }) => {
 							fontSize={'14px'}
 							position="absolute"
 							bottom="4px"
+							width={'100%'}
 						>
 							{newPasswordError === 'required'
 								? validation.password.required
@@ -165,7 +174,9 @@ export const RessetPasswordForm = ({ lang, ressetPassDictionary }) => {
 						</FormErrorMessage>
 					</FormControl>
 				</Box>
-				<SubmitButton w="calc((100% - 15px) /2 )">{btn}</SubmitButton>
+				<SubmitButton w={{ base: '100%', md: 'calc((100% - 15px) /2 )' }}>
+					{btn}
+				</SubmitButton>
 			</Box>
 		</Box>
 	);

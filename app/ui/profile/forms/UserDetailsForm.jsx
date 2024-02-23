@@ -171,7 +171,7 @@ export const UserDetailsForm = ({ lang, userData, userDetailsDictionary }) => {
 						</FormErrorMessage>
 					</FormControl>
 				</Flex>
-				<SubmitButton w="calc((100% - 15px) /2 )">
+				<SubmitButton w={{ base: '100%', md: 'calc((100% - 15px) /2 )' }}>
 					{userDetailsForm.btn}
 				</SubmitButton>
 			</Box>

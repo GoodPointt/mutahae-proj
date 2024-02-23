@@ -314,7 +314,7 @@
 			"error": "Oops! Unable to add address. Please try again",
 			"validation": {
 				"required": "Field is required",
-				"invalid": "Enter no more than 10 characters"
+				"invalid": "Enter no more than 20 characters"
 			}
 		},
 		"addressSection": {

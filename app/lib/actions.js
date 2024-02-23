@@ -59,10 +59,10 @@ const addressSchema = z
 			.string()
 			.trim()
 			.min(1, { message: 'required' })
-			.max(10, { message: 'invalid' }),
-		street: z.string().trim().max(10, { message: 'invalid' }),
-		app: z.string().trim().max(10, { message: 'invalid' }),
-		index: z.string().trim().max(10, { message: 'invalid' }),
+			.max(20, { message: 'invalid' }),
+		street: z.string().trim().max(20, { message: 'invalid' }),
+		app: z.string().trim().max(20, { message: 'invalid' }),
+		index: z.string().trim().max(20, { message: 'invalid' }),
 	})
 	.partial();
 

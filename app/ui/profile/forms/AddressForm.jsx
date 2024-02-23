@@ -133,11 +133,11 @@ export const AddressForm = ({ lang, dictionary }) => {
 					</FormControl>
 				</Flex>
 				<Flex
-					gap={{ lg: '15px' }}
+					gap={{ base: '24px', lg: '15px' }}
 					mb="35px"
 					flexDirection={{ base: 'column', lg: 'row' }}
 				>
-					<FormControl isInvalid={streetError} pb="25px">
+					<FormControl isInvalid={streetError}>
 						<Input
 							name="street"
 							type="text"
@@ -153,14 +153,18 @@ export const AddressForm = ({ lang, dictionary }) => {
 						<FormErrorMessage
 							fontSize={'14px'}
 							position="absolute"
-							bottom="4px"
+							bottom={
+								lang === 'en'
+									? { base: '-20px', md: '-14px' }
+									: { base: '-21px', md: '4px' }
+							}
 						>
 							{streetError === 'required'
 								? validation.required
 								: validation.invalid}
 						</FormErrorMessage>
 					</FormControl>
-					<FormControl isInvalid={appError} pb={{ base: '25px', lg: 0 }}>
+					<FormControl isInvalid={appError}>
 						<Input
 							name="app"
 							type="text"
@@ -176,7 +180,11 @@ export const AddressForm = ({ lang, dictionary }) => {
 						<FormErrorMessage
 							fontSize={'14px'}
 							position="absolute"
-							bottom="4px"
+							bottom={
+								lang === 'en'
+									? { base: '-20px', md: '-14px' }
+									: { base: '-21px', md: '4px' }
+							}
 						>
 							{appError === 'required'
 								? validation.required
@@ -207,7 +215,9 @@ export const AddressForm = ({ lang, dictionary }) => {
 						</FormErrorMessage>
 					</FormControl>
 				</Flex>
-				<SubmitButton w="calc((100% - 15px) /2 )">{btn}</SubmitButton>
+				<SubmitButton w={{ base: '100%', md: 'calc((100% - 15px) /2 )' }}>
+					{btn}
+				</SubmitButton>
 			</Box>
 		</Box>
 	);
