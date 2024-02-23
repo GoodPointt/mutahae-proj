@@ -1,11 +1,11 @@
 import React from 'react';
 
-const ArrowDown = () => {
+const ArrowDown = ({ width = '20px', height = '20px' }) => {
 	return (
 		<svg
-			width="20"
-			height="20"
-			viewBox="0 0 20 20"
+			width={width}
+			height={height}
+			viewBox={`0 0 ${width} ${height}`}
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"
 		>
