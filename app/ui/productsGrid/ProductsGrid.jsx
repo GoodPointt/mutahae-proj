@@ -257,13 +257,13 @@ const ProductsGrid = ({
 	//==================================================
 	const setCallbackPath = () => {
 		const queryParams = {
-			// total: total,
+			total: total,
 			category: category,
 			sub_category: sub_category,
 			sort: sortValue,
 			sort_order: sortOrder,
-			// page: page,
-			// query: query,
+			page: page,
+			query: query,
 		};
 		const queryStringParams = Object.entries(queryParams)
 			.filter(([, value]) => value !== null && value !== undefined)

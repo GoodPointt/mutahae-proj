@@ -48,7 +48,7 @@ const ToolBar = ({
 	const [localGoods] = useLocalBag('localBag');
 
 	useEffect(() => {
-		favorite !== null && setIsInit(false);
+		favorite && setIsInit(false);
 	}, [favorite]);
 
 	const totalPrice = localGoods.reduce((acc, { count, good: { data } }) => {
@@ -86,7 +86,7 @@ const ToolBar = ({
 				style={{ position: 'relative' }}
 			>
 				<FavoriteNavIcon />
-				{((isInit && favorites.length > 0) || (!isInit && favorite !== 0)) && (
+				{((isInit && favorites.length > 0) || (!isInit && favorite > 0)) && (
 					<Box
 						pos={'absolute'}
 						borderRadius={'50%'}
@@ -111,7 +111,7 @@ const ToolBar = ({
 			</Link>
 		),
 		BAG_ICON: (
-			<>
+			<Box fill={bagLength !== 0 ? '#A28445' : 'none'}>
 				<BagNavIcon />
 				{bagLength !== 0 && (
 					<Box
@@ -133,7 +133,7 @@ const ToolBar = ({
 						{bagLength}
 					</Box>
 				)}
-			</>
+			</Box>
 		),
 	};
 

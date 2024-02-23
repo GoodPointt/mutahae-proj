@@ -204,6 +204,11 @@ a:hover,
 .chakra-link:hover {
 	text-decoration: none;
 }
+
+main {
+	min-height: 80dvh;
+}
+
 @media (max-width: 991px) {
 	main {
 		padding-top: 80px;

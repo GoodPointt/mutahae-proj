@@ -7,8 +7,6 @@ import { usePathname } from 'next/navigation';
 import { Box, List, ListItem } from '@chakra-ui/react';
 
 import { Logout } from '../logout/Logout';
-import ArrowDown from '../svg/ArrowDown';
-import ArrowLeft from '../svg/ArrowLeft';
 
 export const Sidebar = ({ lang, sidebarDictionary }) => {
 	const pathname = usePathname();
@@ -69,11 +67,11 @@ export const Sidebar = ({ lang, sidebarDictionary }) => {
 						stroke={pathname === profileRoutes.favorites ? '#a98841' : '#fff'}
 						display={{ lg: 'none' }}
 					>
-						{pathname === profileRoutes.favorites ? (
+						{/* {pathname === profileRoutes.favorites ? (
 							<ArrowDown width="20px" height="20px" />
 						) : (
 							<ArrowLeft width="20px" height="20px" />
-						)}
+						)} */}
 					</Box>
 				</Link>
 			</ListItem>
@@ -98,11 +96,11 @@ export const Sidebar = ({ lang, sidebarDictionary }) => {
 						stroke={pathname === profileRoutes.contactInfo ? '#a98841' : '#fff'}
 						display={{ lg: 'none' }}
 					>
-						{pathname === profileRoutes.contactInfo ? (
+						{/* {pathname === profileRoutes.contactInfo ? (
 							<ArrowDown width="20px" height="20px" />
 						) : (
 							<ArrowLeft width="20px" height="20px" />
-						)}
+						)} */}
 					</Box>
 				</Link>
 			</ListItem>
@@ -131,11 +129,11 @@ export const Sidebar = ({ lang, sidebarDictionary }) => {
 						}
 						display={{ lg: 'none' }}
 					>
-						{pathname === profileRoutes.historyOfOrders ? (
+						{/* {pathname === profileRoutes.historyOfOrders ? (
 							<ArrowDown width="20px" height="20px" />
 						) : (
 							<ArrowLeft width="20px" height="20px" />
-						)}
+						)} */}
 					</Box>
 				</Link>
 			</ListItem>

@@ -114,7 +114,14 @@ const ProductCard = ({
 							/>
 						</Box>
 						<List>
-							<Heading as={'h4'} fontSize={'20px'}>
+							<Heading
+								as={'h4'}
+								fontSize={
+									title.length || localizations[0]?.title.length > 30
+										? '14px'
+										: '20px'
+								}
+							>
 								{(locale === 'he' && lang === 'he') ||
 								(locale === 'en' && lang === 'en')
 									? title

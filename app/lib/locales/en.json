@@ -249,7 +249,8 @@
 		},
 		"favorites": {
 			"title": "Favorites",
-			"btnAdd": "Add To Bag"
+			"btnAdd": "Add To Bag",
+			"empty": "Favorites list is empty"
 		},
 		"contactInformation": {
 			"title": "Contact Information",
@@ -282,7 +283,8 @@
 			}
 		},
 		"historyOfOrders": {
-			"title": "History of orders"
+			"title": "History of orders",
+			"empty": "Order history list is empty"
 		},
 		"ressetPasswordForm": {
 			"title": "Сhange Password",
@@ -312,7 +314,7 @@
 			"error": "Oops! Unable to add address. Please try again",
 			"validation": {
 				"required": "Field is required",
-				"invalid": "Enter no more than 10 characters"
+				"invalid": "Enter no more than 20 characters"
 			}
 		},
 		"addressSection": {
