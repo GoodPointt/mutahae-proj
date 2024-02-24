@@ -9,6 +9,9 @@ import {
 	FormControl,
 	FormErrorMessage,
 	Input,
+	InputGroup,
+	InputLeftElement,
+	InputRightElement,
 	useToast,
 	VisuallyHiddenInput,
 } from '@chakra-ui/react';
@@ -17,8 +20,11 @@ import { loginAction } from '@/app/lib/authActions';
 import useLocalStorage from '@/app/lib/hooks/useLocalStorage';
 
 import SubmitButton from '../submitButton/SubmitButton';
+import CloseEye from '../svg/CloseEye';
+import OpenEye from '../svg/OpenEye';
 
 const LoginForm = ({ dictionary, lang }) => {
+	const [isShown, setIsShown] = useState(false);
 	const [state, dispatch] = useFormState(loginAction, undefined);
 	const toast = useToast();
 	const [localGoods, setLocalGoods] = useLocalStorage('localBag', []);
@@ -94,19 +100,56 @@ const LoginForm = ({ dictionary, lang }) => {
 				</FormErrorMessage>
 			</FormControl>
 			<FormControl isInvalid={passwordError} pb="25px">
-				<Input
-					autoComplete="on"
-					name="password"
-					type="password"
-					bgColor="#3b3d46"
-					placeholder={dictionary.formContact.passwordLabel}
-					style={
-						lang === 'he' ? { direction: 'ltr', textAlign: 'right' } : null
-					}
-					focusBorderColor="#a28445"
-					border={'1px solid transparent'}
-					borderRadius={'2px'}
-				/>
+				<InputGroup>
+					{lang === 'en' ? (
+						<InputRightElement
+							as={'button'}
+							type="button"
+							onClick={() => setIsShown(!isShown)}
+							fill={'#a28445'}
+							stroke={'#5a4e35'}
+							transition={'all 0.3s'}
+							width={'30px'}
+							mr={'10px'}
+							h={'100%'}
+							_hover={{
+								stroke: '#635a46',
+							}}
+						>
+							{!isShown ? <OpenEye /> : <CloseEye />}
+						</InputRightElement>
+					) : (
+						<InputLeftElement
+							as={'button'}
+							type="button"
+							onClick={() => setIsShown(!isShown)}
+							fill={'#a28445'}
+							stroke={'#5a4e35'}
+							transition={'all 0.3s'}
+							width={'30px'}
+							ml={'10px'}
+							h={'100%'}
+							_hover={{
+								stroke: '#635a46',
+							}}
+						>
+							{!isShown ? <OpenEye /> : <CloseEye />}
+						</InputLeftElement>
+					)}
+					<Input
+						autoComplete="on"
+						name="password"
+						type={isShown ? 'text' : 'password'}
+						bgColor="#3b3d46"
+						placeholder={dictionary.formContact.passwordLabel}
+						style={
+							lang === 'he' ? { direction: 'ltr', textAlign: 'right' } : null
+						}
+						focusBorderColor="#a28445"
+						border={'1px solid transparent'}
+						borderRadius={'2px'}
+					/>
+				</InputGroup>
 				<FormErrorMessage fontSize={'14px'} position="absolute" bottom="4px">
 					{passwordError === 'required' ? password.required : password.invalid}
 				</FormErrorMessage>
