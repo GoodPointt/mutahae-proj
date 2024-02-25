@@ -12,14 +12,27 @@ export const AddressList = ({
 	index,
 	id,
 	dictionary,
+	addressDictionary,
 }) => {
 	return (
 		<Box mb="40px" borderBottom="1px solid #3B3D46" pb="30px" key={id}>
-			<List mb="20px">
-				{region && <ListItem fontSize="16px">{region}</ListItem>}
-				{city && <ListItem fontSize="16px">{city}</ListItem>}
-				{street && <ListItem fontSize="16px">{street}</ListItem>}
-				{app && <ListItem fontSize="16px">{app}</ListItem>}
+			<List display={'flex'} gap={'6px'} mb="20px" flexWrap={'wrap'}>
+				<ListItem display={'inline-flex'} gap={'6px'}>
+					{region && <Box fontSize="16px">{region}, </Box>}
+					{city && <Box fontSize="16px">{city}, </Box>}
+				</ListItem>
+				<ListItem display={'inline-flex'} gap={'6px'}>
+					{street && (
+						<Box fontSize="16px">
+							{addressDictionary.street} {street},{' '}
+						</Box>
+					)}
+					{app && (
+						<Box fontSize="16px">
+							{addressDictionary.app} {app},{' '}
+						</Box>
+					)}
+				</ListItem>
 				{index && <ListItem fontSize="16px">{index}</ListItem>}
 			</List>
 			<DeleteBtn id={id} dictionary={dictionary} />

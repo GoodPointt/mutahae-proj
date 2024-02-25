@@ -118,20 +118,18 @@ const ContactInfo = ({
 					setCityId(null);
 					setUserAddressId(null);
 				} else {
-					console.error(`Order rejected ${state.status}`);
+					console.error(`Order rejected 'error send notify'`);
 					onOpen();
 					setOrderReject(true);
 				}
 			} catch (error) {
-				console.error('handleNotification', error);
+				console.error('handleNotification', 'error send notify');
 			} finally {
 				setIsSubmitting(false);
 			}
 		};
 
-		if (state?.message === 'success') {
-			handleNotification();
-		}
+		if (state !== undefined) handleNotification();
 	}, [state, authToken, onOpen, setLocalGoods, setSelectedCity]);
 
 	useEffect(() => {
