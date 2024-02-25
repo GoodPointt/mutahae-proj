@@ -80,7 +80,9 @@ export async function submitData(prevState, formData) {
 		}
 
 		const listGoods = goods.map(good => ({
-			title: flattenAttributes(good.good).title,
+			title: `${flattenAttributes(good.good).title}, ${
+				flattenAttributes(good.good).descShort
+			} `,
 			count: good.count,
 		}));
 
@@ -92,10 +94,14 @@ export async function submitData(prevState, formData) {
 			orderNum,
 		});
 
-		await fetchResetBag();
-		revalidatePath(`/${lang}/order`);
+		if (res.status === 404) {
+			return res;
+		}
 
 		if (res.status === 201) {
+			await fetchResetBag();
+			revalidatePath(`/${lang}/order`);
+
 			return {
 				...formDto,
 				totalPrice,
@@ -105,7 +111,9 @@ export async function submitData(prevState, formData) {
 				status: 201,
 			};
 		} else {
-			return { status: res.status };
+			return {
+				status: 404,
+			};
 		}
 	} catch (error) {
 		console.error('Order/submitData', error.message);

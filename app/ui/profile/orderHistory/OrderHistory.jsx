@@ -5,6 +5,7 @@ import { Flex } from '@chakra-ui/react';
 
 import PaginationDisplay from '../../paginationDisplay/PaginationDisplay';
 
+import OrderHistoryInfo from './OrderHistoryInfo';
 import { OrderHistoryItem } from './OrderHistoryItem';
 
 export const OrderHistory = ({ lang, orders }) => {
@@ -31,7 +32,8 @@ export const OrderHistory = ({ lang, orders }) => {
 							borderTop={index > 0 ? '1px solid #a98841' : null}
 							pt={index > 0 ? '30px' : null}
 							pb={index !== orders.length - 1 ? '30px' : null}
-							//flexDir={{ base: 'column', lg: 'row' }}
+							flexDir={{ base: 'column-reverse', lg: 'row' }}
+							alignItems={'flex-start'}
 						>
 							<Flex gap="30px" flexDir="column" flex={1}>
 								{goods &&
@@ -64,15 +66,18 @@ export const OrderHistory = ({ lang, orders }) => {
 														: descShort
 												}
 												uid={uid}
-												orderNum={orderNum}
-												orderPrice={orderPrice}
-												createdAt={createdAt}
-												city={city}
-												user_address={user_address}
 											/>
 										);
 									})}
 							</Flex>
+							<OrderHistoryInfo
+								createdAt={createdAt}
+								orderPrice={orderPrice}
+								city={city}
+								user_address={user_address}
+								orderNum={orderNum}
+								lang={lang}
+							/>
 						</Flex>
 					);
 				})}

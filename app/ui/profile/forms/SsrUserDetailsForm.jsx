@@ -29,7 +29,11 @@ const SsrUserDetailsForm = async ({ lang, dictionary }) => {
 				lang={lang}
 				userDetailsDictionary={contactInformation}
 			/>
-			<AddressSection userAddress={userAddress} dictionary={addressSection} />
+			<AddressSection
+				userAddress={userAddress}
+				dictionary={addressSection}
+				addressDictionary={addAddressForm}
+			/>
 			<AddressForm dictionary={addAddressForm} lang={lang} />
 			{userData?.provider === 'local' && (
 				<RessetPasswordForm

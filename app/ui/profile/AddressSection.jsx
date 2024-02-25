@@ -5,7 +5,11 @@ import { Box, Heading } from '@chakra-ui/react';
 
 import { AddressList } from './AddressList';
 
-export const AddressSection = ({ dictionary, userAddress }) => {
+export const AddressSection = ({
+	dictionary,
+	userAddress,
+	addressDictionary,
+}) => {
 	const { title } = dictionary;
 	const addressList = userAddress?.data;
 
@@ -32,6 +36,7 @@ export const AddressSection = ({ dictionary, userAddress }) => {
 							index={index}
 							isBorder={i > 0}
 							dictionary={dictionary}
+							addressDictionary={addressDictionary}
 						/>
 					);
 				})}

@@ -9,5 +9,9 @@ export const sendTgNotification = async message => {
 		return await notifyInstance.post(`/notify`, message);
 	} catch (e) {
 		console.error('sendTgNotification', e);
+
+		return {
+			status: 404,
+		};
 	}
 };
