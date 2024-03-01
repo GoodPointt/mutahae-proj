@@ -63,7 +63,7 @@ export async function submitData(prevState, formData) {
 	if (!validatedFields.success) {
 		return {
 			errors: validatedFields.error.flatten().fieldErrors,
-			message: 'Error.',
+			message: 'Error',
 		};
 	}
 	try {
