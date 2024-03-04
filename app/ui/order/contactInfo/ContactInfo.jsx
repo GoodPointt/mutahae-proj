@@ -117,7 +117,7 @@ const ContactInfo = ({
 					setOwnCity('');
 					setCityId(null);
 					setUserAddressId(null);
-				} else {
+				} else if (state.message !== 'Error') {
 					console.error(`Order rejected 'error send notify'`);
 					onOpen();
 					setOrderReject(true);
