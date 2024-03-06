@@ -24,6 +24,7 @@ const ProductItem = ({
 	isAuth = false,
 	setCallbackPath,
 	dictionary,
+	isSlide = false,
 }) => {
 	const [isModileScreen] = useMediaQuery('(max-width: 1024px)');
 
@@ -53,12 +54,16 @@ const ProductItem = ({
 		}
 	};
 
-	const [firstImageUrl] = (product?.img || [])
-		.map(({ url }) => url)
-		.filter(url => url);
+	// const [firstImageUrl] = (product?.img || [])
+	// 	.map(({ url }) => url)
+	// 	.filter(url => url);
 
 	const [sumbnailImageUrl] = (product?.img || [])
 		.map(({ formats }) => formats.thumbnail.url)
+		.filter(url => url);
+
+	const [smallImageUrl] = (product?.img || [])
+		.map(({ formats }) => formats.small.url)
 		.filter(url => url);
 
 	return (
@@ -93,7 +98,11 @@ const ProductItem = ({
 						width="100%"
 						height="360px"
 						transition="all 500ms cubic-bezier(0.4, 0, 0.2, 1)"
-						bgImage={`url(${sumbnailImageUrl})` || 'url(/img/product.png)'}
+						bgImage={
+							isSlide
+								? smallImageUrl || 'url(/img/product.png)'
+								: `url(${sumbnailImageUrl})` || 'url(/img/product.png)'
+						}
 						bgRepeat={'no-repeat'}
 						bgPos={'center'}
 						bgSize={'cover'}
@@ -112,13 +121,15 @@ const ProductItem = ({
 							},
 						}}
 					>
-						<Image
-							src={product.imgUrl || firstImageUrl || '/img/product.png'}
-							alt={product.title + '' + product.descShort || 'product image'}
-							fill
-							sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-							style={{ objectFit: 'cover' }}
-						/>
+						{!isSlide && (
+							<Image
+								src={product.imgUrl || smallImageUrl || '/img/product.png'}
+								alt={product.title + '' + product.descShort || 'product image'}
+								fill
+								sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+								style={{ objectFit: 'cover' }}
+							/>
+						)}
 					</Box>
 					<Box
 						borderRadius={'2px'}

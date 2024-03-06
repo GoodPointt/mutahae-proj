@@ -53,7 +53,10 @@ const Team = ({ dictionary, members }) => {
 							src={attributes?.imgUrl || '/img/member.png'}
 							alt={attributes?.name + ' ' + attributes?.position}
 							fill
-							style={{ objectFit: 'cover', height: '100%' }}
+							sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+							style={{
+								objectFit: 'cover',
+							}}
 						/>
 						<Box
 							display={'flex'}

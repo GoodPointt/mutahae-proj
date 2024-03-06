@@ -18,6 +18,7 @@ import SubmitButton from '../../submitButton/SubmitButton';
 export const UserDetailsForm = ({ lang, userData, userDetailsDictionary }) => {
 	const [state, dispatch] = useFormState(submitUserDetails, null);
 	const { userDetailsForm } = userDetailsDictionary;
+
 	const toast = useToast();
 
 	useEffect(() => {
@@ -94,7 +95,7 @@ export const UserDetailsForm = ({ lang, userData, userDetailsDictionary }) => {
 							type="text"
 							bgColor="#3b3d46"
 							defaultValue={lastName}
-							placeholder="Last name"
+							placeholder={userDetailsForm.lastName}
 							borderRadius={'2px'}
 							style={
 								lang === 'he' ? { direction: 'ltr', textAlign: 'right' } : null
@@ -126,7 +127,7 @@ export const UserDetailsForm = ({ lang, userData, userDetailsDictionary }) => {
 							defaultValue={email}
 							//disabled={true}
 							//readOnly={true}
-							placeholder="Mail"
+							placeholder={userDetailsForm.email}
 							borderRadius={'2px'}
 							style={
 								lang === 'he' ? { direction: 'ltr', textAlign: 'right' } : null
@@ -150,7 +151,7 @@ export const UserDetailsForm = ({ lang, userData, userDetailsDictionary }) => {
 							type="tel"
 							bgColor="#3b3d46"
 							defaultValue={phone}
-							placeholder="Phone"
+							placeholder={userDetailsForm.phone}
 							borderRadius={'2px'}
 							style={
 								lang === 'he' ? { direction: 'ltr', textAlign: 'right' } : null

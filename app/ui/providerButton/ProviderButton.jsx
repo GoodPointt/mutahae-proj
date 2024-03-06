@@ -47,7 +47,7 @@ const ProviderButton = ({
 					} else if (pathname.includes('/order')) {
 						localStorage.setItem('callbackPath', JSON.stringify(pathname));
 					} else {
-						() => setCallbackPath();
+						setCallbackPath();
 					}
 				}}
 				rel="noopener noreferrer"

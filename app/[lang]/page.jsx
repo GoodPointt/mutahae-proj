@@ -9,6 +9,18 @@ import { Box } from '@chakra-ui/react';
 import { getDictionary } from '@/app/lib/locales/dictionary';
 import { fetchContacts, fetchProducts } from '../lib/api/instance';
 
+export const generateMetadata = async () => {
+	return {
+		alternates: {
+			canonical: '/',
+			languages: {
+				en: '/en',
+				he: '/he',
+			},
+		},
+	};
+};
+
 const Homepage = async ({ params: { lang } }) => {
 	const dictionary = await getDictionary(lang);
 

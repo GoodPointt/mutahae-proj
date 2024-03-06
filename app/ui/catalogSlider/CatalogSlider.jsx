@@ -69,6 +69,7 @@ const CatalogSlider = ({ products: { data }, lang, heading, dictionary }) => {
 								lang={lang}
 								setCallbackPath={callbackpath}
 								dictionary={dictionary}
+								isSlide={true}
 							/>
 						</SwiperSlide>
 					))}

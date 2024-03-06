@@ -19,6 +19,7 @@ import axios from 'axios';
 const Bag = ({ bagData, hasToken, onClose, dictionary }) => {
 	const [localGoods, setLocalGoods] = useLocalBag('localBag', []);
 	const [isDeleted, setIsDeleted] = useState(null);
+	const [isOrdering, setIsOrdering] = useState(false);
 
 	// const router = useRouter();
 
@@ -37,6 +38,7 @@ const Bag = ({ bagData, hasToken, onClose, dictionary }) => {
 				count,
 			}));
 			try {
+				setIsOrdering(true);
 				const url =
 					process.env.NEXT_PUBLIC_STRAPI_API_URL +
 					`/api/bags/${bagData.id}?populate=goods`;
@@ -51,9 +53,11 @@ const Bag = ({ bagData, hasToken, onClose, dictionary }) => {
 				);
 			} catch (error) {
 				console.error('onOrderClick', error);
+			} finally {
+				setIsOrdering(false);
+				onClose();
 			}
 		}
-		onClose();
 	};
 
 	const discountThreshold1 = 5000;
@@ -154,6 +158,8 @@ const Bag = ({ bagData, hasToken, onClose, dictionary }) => {
 						<Button
 							as={Link}
 							href={`/order`}
+							isLoading={isOrdering}
+							isDisabled={isOrdering}
 							maxW={{ base: '100%', md: '360px' }}
 							bgColor={'#A28445'}
 							textColor={'#fff'}

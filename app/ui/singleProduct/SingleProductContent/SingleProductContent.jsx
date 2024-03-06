@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import { cookies } from 'next/headers';
 
 import { fetchOneProduct } from '@/app/lib/api/instance';
@@ -8,7 +8,7 @@ import {
 } from '@/app/lib/api/profileInstance';
 
 import SectionWrapper from '../../sectionWrapper/SectionWrapper';
-import SkeletonSingleProduct from '../../skeletons/SkeletonSingleProduct';
+// import SkeletonSingleProduct from '../../skeletons/SkeletonSingleProduct';
 import SingleProduct from '../SingleProduct';
 
 const SingleProductContent = async ({ id, lang, dictionary }) => {
@@ -26,16 +26,14 @@ const SingleProductContent = async ({ id, lang, dictionary }) => {
 
 	return (
 		<SectionWrapper pb={'60px'}>
-			<Suspense fallback={<SkeletonSingleProduct dictionary={dictionary} />}>
-				<SingleProduct
-					favorites={favorites && favorites[0].goods}
-					userId={userId}
-					product={product}
-					dictionary={dictionary}
-					bagData={bagData}
-					lang={lang}
-				/>
-			</Suspense>
+			<SingleProduct
+				favorites={favorites && favorites[0].goods}
+				userId={userId}
+				product={product}
+				dictionary={dictionary}
+				bagData={bagData}
+				lang={lang}
+			/>
 		</SectionWrapper>
 	);
 };

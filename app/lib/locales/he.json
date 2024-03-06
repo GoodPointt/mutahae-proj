@@ -210,6 +210,7 @@
 		"self": "באופן עצמאי",
 		"ownCity": "הזן את העיר שלך",
 		"orderTitle": "הזמנתי",
+		"vat": "מע״מ",
 		"subtotal": "סכום",
 		"shippingPrice": "משלוח",
 		"total": "סך הכול",
@@ -239,7 +240,7 @@
 			"empty": "רשימת המועדפים ריקה"
 		},
 		"contactInformation": {
-			"title": "מידע ליצירת קשר",
+			"title": "פרטים ליצירת קשר",
 			"userDetailsForm": {
 				"firstName": "שם פרטי",
 				"lastName": "שם משפחה",
@@ -334,7 +335,7 @@
 		"sizes": "גדלים: ",
 		"title": "סל קניות",
 		"emptyBag": "ריק",
-		"shipping": "*משלוח מחושב בקופה",
+		"shipping": "*מחיר לא כולל מע״מ",
 		"subtotal": "סה״כ",
 		"total": "סה״כ",
 		"tooltip": "עבור לדף המוצר",
