@@ -5,6 +5,7 @@ import Link from 'next/link';
 
 import { Box, Button, Flex, useDisclosure } from '@chakra-ui/react';
 
+import { instance } from '@/app/lib/api/instance';
 import { useLocalBag } from '@/app/lib/hooks/useLocalBag';
 
 import Bag from '../../bag/Bag';
@@ -16,7 +17,6 @@ import FavoriteNavIcon from '../../svg/FavoriteNavIcon';
 import ProfileNavIcon from '../../svg/ProfileNavIcon';
 import Search from '../../svg/Search';
 
-import axios from 'axios';
 import { setCookie } from 'cookies-next';
 import { parseAsFloat, useQueryState } from 'nuqs';
 
@@ -172,7 +172,7 @@ const ToolBar = ({
 				`/api/bags/${bagData.id}?populate=goods`;
 
 			try {
-				axios.put(url, { data: { goods: flatten, bagPrice: totalPrice } });
+				instance.put(url, { data: { goods: flatten, bagPrice: totalPrice } });
 			} catch (error) {
 				console.error('handleModalBagClose', error);
 			}

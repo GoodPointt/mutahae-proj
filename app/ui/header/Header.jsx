@@ -10,7 +10,7 @@ import HeaderWrapper from './headerWrapper/HeaderWrapper';
 const Header = async ({ lang, dictionary, contacts }) => {
 	const getToken = cookies().get('jwt')?.value ?? '';
 
-	const userId = cookies().get('userId')?.value;
+	const userId = cookies().get('userId')?.value ?? '';
 
 	let bagData = [];
 	let favorites = [];

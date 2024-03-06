@@ -151,14 +151,13 @@ export const logout = (prevState, formData) => {
 		cookies().delete('jwt');
 		cookies().delete('favId');
 
-		// revalidatePath(`/`);
-
-		// redirect(`/${lang}/`);
-		return { status: 200 };
+		revalidatePath(`/${lang}`);
+		redirect(`/${lang}`);
+		// return { status: 200 };
 	} catch (error) {
 		console.error('logout', error.message);
 
-		revalidatePath('/');
+		revalidatePath(`/${lang}/`);
 		redirect(`/${lang}/`);
 	}
 };
@@ -322,8 +321,6 @@ export async function submitGoodToFavorite(prevState, formData) {
 			goods,
 			goodId,
 		});
-
-		//console.log(response);
 
 		if (response?.status === 200) {
 			return {

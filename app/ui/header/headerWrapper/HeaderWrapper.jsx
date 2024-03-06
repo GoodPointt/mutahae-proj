@@ -22,7 +22,7 @@ const HeaderWrapper = ({
 	lang,
 	dictionary,
 	contacts,
-	bagData,
+	bagData = { goods: [] },
 	favorites,
 	isAuth,
 }) => {
