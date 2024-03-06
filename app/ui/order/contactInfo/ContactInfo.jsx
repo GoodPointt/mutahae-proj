@@ -74,6 +74,7 @@ const ContactInfo = ({
 
 	const weightGoods = calculateWeightAndPrice(goodsToMap, 'weight');
 	const bagPrice = calculateWeightAndPrice(goodsToMap, 'price');
+	const vat = Math.ceil(bagPrice * 0.17);
 
 	const deliveryPrice = cityDetails?.zone.data.attributes.price;
 	const totalDeliveryPrice = calculateTotalDeliveryPrice(
@@ -96,8 +97,8 @@ const ContactInfo = ({
 	const discountedBagPrice = Math.round(bagPrice * (1 - discount));
 
 	const totalPrice = totalDeliveryPrice
-		? discountedBagPrice + totalDeliveryPrice
-		: discountedBagPrice;
+		? discountedBagPrice + totalDeliveryPrice + vat
+		: discountedBagPrice + vat;
 
 	useEffect(() => {
 		setGoodsToMap(localGoods);
@@ -376,6 +377,7 @@ const ContactInfo = ({
 						discountedBagPrice={discountedBagPrice}
 						dis={dis}
 						lang={lang}
+						vat={vat}
 					/>
 				</Flex>
 			</Box>

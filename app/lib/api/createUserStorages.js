@@ -53,5 +53,5 @@ export const createFavoritesByUserIdAndJwt = async (jwt, userId) => {
 			cache: 'no-store',
 			body: JSON.stringify({ data: { user: userId } }),
 		});
-	} else return isFavoritesAlreadyExist;
+	} else return isFavoritesAlreadyExist[0].id;
 };

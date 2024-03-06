@@ -22,9 +22,6 @@ const AnimatedMain = ({ children }) => {
 
 	return (
 		<motion.main
-			// style={{
-			// 	overflow: 'hidden',
-			// }}
 			key={path}
 			variants={variants}
 			animate="in"

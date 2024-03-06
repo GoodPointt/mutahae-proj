@@ -258,61 +258,6 @@ export const delAddressAction = async (prevState, formData) => {
 	}
 };
 
-// export async function submitProductToBag(prevState, formData) {
-// 	const { count, goodId, goodPrice } = formData;
-
-// 	try {
-// 		const res = await fetchAddToBag(count, goodId, goodPrice);
-// 		if (res?.status === 200) {
-// 			return {
-// 				status: res?.status,
-// 			};
-// 		}
-// 	} catch (error) {
-// 		return { message: error.message };
-// 	}
-// }
-
-// export async function updateAllGoodsInBag(prevState, formData) {
-// 	const { bagPrice, goods } = formData;
-
-// 	try {
-// 		const res = await fetchUpdateAllGoodsInBag(goods, bagPrice);
-
-// 		if (res.error) {
-// 			throw new Error(res.error);
-// 		}
-
-// 		if (res?.status === 200) {
-// 			return {
-// 				status: res?.status,
-// 			};
-// 		}
-// 	} catch (error) {
-// 		return { isError: true, message: 'Someting goes wrong. Try again please' };
-// 	}
-// }
-
-// export async function deleteProductFromBag(prevState, formData) {
-// 	const { goodId, bagPrice } = formData;
-
-// 	try {
-// 		const res = await fetchDeleteProductFromBag(goodId, bagPrice);
-
-// 		if (res.error) {
-// 			throw new Error(res.error);
-// 		}
-
-// 		if (res?.status === 200) {
-// 			return {
-// 				status: res?.status,
-// 			};
-// 		}
-// 	} catch (error) {
-// 		return { message: error.message };
-// 	}
-// }
-
 export async function submitGoodToFavorite(prevState, formData) {
 	const { goodId, goods } = formData;
 

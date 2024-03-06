@@ -4,21 +4,11 @@ import { redirect } from 'next/navigation';
 
 import { flattenAttributes } from '../utils/flattenAttributes';
 
-import axios from 'axios';
-
-export const profileInstance = axios.create({
-	baseURL: process.env.NEXT_PUBLIC_STRAPI_API_URL,
-});
+import { profileInstance } from './setInstances';
 
 const getFavorites = async () => {
 	try {
-		const token = cookies().get('jwt')?.value;
 		const userId = cookies().get('userId')?.value;
-
-		if (!token || !userId) {
-			throw new Error('getFavorites Not authorized');
-		}
-		profileInstance.defaults.headers.authorization = `Bearer ${token}`;
 
 		const response = await profileInstance.get(
 			`/api/favorites?populate[0]=goods&populate[1]=goods.good&populate[2]=goods.img&populate[3]=goods.localizations&filters[user][id][$eq]=${userId}`
@@ -44,6 +34,10 @@ export const fetchFavorites = cache(getFavorites);
 const handleFavorites = async ({ goods, goodId }) => {
 	try {
 		const favId = cookies().get('favId')?.value;
+
+		const token = cookies().get('jwt')?.value;
+
+		profileInstance.defaults.headers.authorization = `Bearer ${token}`;
 
 		const flattenFavorites = flattenAttributes(goods);
 
@@ -77,30 +71,10 @@ const handleFavorites = async ({ goods, goodId }) => {
 
 export const fetchHandleFavorites = cache(handleFavorites);
 
-// const isFavorite = async goodId => {
-// 	try {
-// 		const response = await fetchFavorites();
-
-// 		const favorites = flattenAttributes(response[0].goods);
-
-// 		return favorites.some(good => good.id === goodId);
-// 	} catch (error) {
-// 		console.error('isFavorite', error.response?.status);
-// 		console.error('isFavorite', error.message);
-// 		if (error.response?.status === 401) redirect('/profile?expired=true');
-// 	}
-// };
-
-// export const fetchIsFavorite = cache(isFavorite);
-
 const getOrders = async () => {
 	try {
-		const token = cookies().get('jwt')?.value;
 		const userId = cookies().get('userId')?.value;
-		if (!token || !userId) {
-			throw new Error('getOrders Not authorized');
-		}
-		profileInstance.defaults.headers.authorization = `Bearer ${token}`;
+		if (!userId) throw new Error('getOrders Not authorized');
 
 		const response = await profileInstance.get(
 			`/api/orders?populate=deep,4&filters[user][id][$eq]=${userId}&sort[0]=createdAt:desc`
@@ -168,13 +142,6 @@ export const updateUserData = async userData => {
 
 export const changePassword = async dataPassword => {
 	try {
-		const token = cookies().get('jwt')?.value;
-
-		if (!token) {
-			throw new Error('changePassword Not authorized');
-		}
-		profileInstance.defaults.headers.authorization = `Bearer ${token}`;
-
 		const { data } = await profileInstance.post(
 			'/api/auth/change-password',
 			dataPassword
@@ -199,13 +166,11 @@ export const changePassword = async dataPassword => {
 
 export const addUserAddress = async dataAddress => {
 	try {
-		const token = cookies().get('jwt')?.value;
 		const userId = cookies().get('userId')?.value;
 
-		if (!token || !userId) {
+		if (!userId) {
 			throw new Error('addUserAddress Not authorized');
 		}
-		profileInstance.defaults.headers.authorization = `Bearer ${token}`;
 
 		const { data } = await profileInstance.post('/api/user-addresses', {
 			data: {
@@ -235,13 +200,6 @@ export const addUserAddress = async dataAddress => {
 
 export const deleteUserAddress = async addressId => {
 	try {
-		const token = cookies().get('jwt')?.value;
-
-		if (!token) {
-			throw new Error('deleteUserAddress Not authorized');
-		}
-		profileInstance.defaults.headers.authorization = `Bearer ${token}`;
-
 		await profileInstance.delete(`/api/user-addresses/${addressId}`);
 
 		return {
@@ -251,7 +209,7 @@ export const deleteUserAddress = async addressId => {
 		console.error('deleteUserAddress', error.response?.status);
 		console.error('deleteUserAddress', error.message);
 
-		if (error.response?.status === 401) {
+		if (error.response?.status === 401 || error.response?.status === 403) {
 			return redirect('/expired?expired=true');
 		} else
 			return {
@@ -263,14 +221,7 @@ export const deleteUserAddress = async addressId => {
 
 export const getUserAddress = async () => {
 	try {
-		const token = cookies().get('jwt')?.value;
 		const userId = cookies().get('userId')?.value;
-
-		if (!token || !userId) {
-			throw new Error('getUserAddress Not authorized');
-		}
-
-		profileInstance.defaults.headers.authorization = `Bearer ${token}`;
 
 		const data = profileInstance.get(
 			`/api/user-addresses?filters[user][id][$eq]=${userId}`
@@ -287,7 +238,7 @@ export const getUserAddress = async () => {
 		console.error('getUserAddress', e.response?.status);
 		console.error('getUserAddress', e.message);
 		if (e.message === 'Not authorized') redirect('/auth/login');
-		if (e.response?.status === 401) {
+		if (e.response?.status === 401 || e.response?.status === 403) {
 			return redirect('/expired?expired=true');
 		} else return { error: 'Server error please try again later.' };
 	}
@@ -330,9 +281,7 @@ const createOrder = async (
 	orderNum
 ) => {
 	try {
-		const token = cookies().get('jwt')?.value;
 		const userId = cookies().get('userId')?.value;
-		profileInstance.defaults.headers.authorization = `Bearer ${token}`;
 
 		const goodsList = goods.map(good => {
 			const imgUrl = good.good.data.attributes.img.data[0].attributes.url;
@@ -359,7 +308,7 @@ const createOrder = async (
 	} catch (error) {
 		console.error('createOrder', error.response?.status);
 		console.error('createOrder', error);
-		if (error.response?.status === 401) {
+		if (error.response?.status === 401 || error.response?.status === 403) {
 			return redirect('/expired?expired=true');
 		} else return { error: error.message };
 	}
@@ -398,7 +347,7 @@ const setLocalBagOnServer = async localGoods => {
 	} catch (error) {
 		console.error('setLocalBagOnServer', error.response?.status);
 		console.error('setLocalBagOnServer', error.message);
-		if (error.response?.status === 401) {
+		if (error.response?.status === 401 || error.response?.status === 403) {
 			return redirect('/expired?expired=true');
 		} else
 			return {
@@ -411,10 +360,6 @@ export const handleLocalBagOnServer = cache(setLocalBagOnServer);
 
 const resetBag = async () => {
 	try {
-		const token = cookies().get('jwt')?.value;
-
-		profileInstance.defaults.headers.authorization = `Bearer ${token}`;
-
 		const bag = await fetchBagByUserId();
 
 		return await profileInstance.put(
@@ -434,7 +379,7 @@ const resetBag = async () => {
 	} catch (error) {
 		console.error('resetBag', error.response?.status);
 		console.error('resetBag', error.message);
-		if (error.response?.status === 401) {
+		if (error.response?.status === 401 || error.response?.status === 403) {
 			return redirect('/expired?expired=true');
 		} else return { error: 'Server error please try again later.' };
 	}
@@ -457,7 +402,7 @@ const getUserDataForOrder = async () => {
 	} catch (e) {
 		console.error('getUserDataForOrder', e.response?.status);
 		console.error('getUserDataForOrder', e.message);
-		if (e.response?.status === 401) {
+		if (e.response?.status === 401 || e.response?.status === 403) {
 			return redirect('/expired?expired=true');
 		} else return { error: 'Server error please try again later.' };
 	}
@@ -467,11 +412,9 @@ export const fetchUserDataForOrder = cache(getUserDataForOrder);
 
 export const getUserAddressForOrder = async () => {
 	try {
-		const token = cookies().get('jwt')?.value;
 		const userId = cookies().get('userId')?.value;
 
-		if (!token || !userId) return null;
-		profileInstance.defaults.headers.authorization = `Bearer ${token}`;
+		if (!userId) return null;
 
 		const data = profileInstance.get(
 			`/api/user-addresses?filters[user][id][$eq]=${userId}`
@@ -484,6 +427,8 @@ export const getUserAddressForOrder = async () => {
 		return data;
 	} catch (e) {
 		console.error('getUserAddressForOrder', e.message);
+
+		return redirect('/expired?expired=true');
 	}
 };
 
@@ -491,15 +436,8 @@ export const fetchUserAddressForOrder = cache(getUserAddressForOrder);
 
 const getOrderByUserId = async userId => {
 	try {
-		const token = cookies().get('jwt').value;
-
 		const res = await profileInstance.get(
-			`/api/orders?populate=deep,4&filters[user][id][$eq]=${userId}`,
-			{
-				headers: {
-					Authorization: 'Bearer ' + token,
-				},
-			}
+			`/api/orders?populate=deep,4&filters[user][id][$eq]=${userId}`
 		);
 
 		const {
@@ -510,7 +448,7 @@ const getOrderByUserId = async userId => {
 	} catch (error) {
 		console.error('getOrderByUserId', error.response?.status);
 		console.error('getOrderByUserId', error.message);
-		if (error.response?.status === 401) {
+		if (error.response?.status === 401 || error.response?.status === 403) {
 			return redirect('/expired?expired=true');
 		} else return { error: 'Server error please try again later.' };
 	}

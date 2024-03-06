@@ -4,20 +4,7 @@ import Image from 'next/image';
 import { Link } from '@chakra-ui/next-js';
 import { Box, Flex, Heading, Text } from '@chakra-ui/react';
 
-// import { format } from 'date-fns';
-
-export const OrderHistoryItem = ({
-	lang,
-	title,
-	descShort,
-	imgurl,
-	uid,
-	// orderNum,
-	// orderPrice,
-	// createdAt,
-	// city,
-	// user_address,
-}) => {
+export const OrderHistoryItem = ({ lang, title, descShort, imgurl, uid }) => {
 	return (
 		<Box display="flex" as={Link} href={`/${lang}/catalog/${uid}`}>
 			<Flex
