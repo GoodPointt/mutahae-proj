@@ -43,6 +43,8 @@ const SingleProductSlider = ({ imgs }) => {
 				<List
 					display={'flex'}
 					maxHeight={'450px'}
+					flexWrap={{ base: 'wrap', md: 'nowrap' }}
+					justifyContent={'start'}
 					maxW={'100%'}
 					flexDir={{ base: 'row', md: 'column' }}
 					gap={'10px'}
@@ -52,8 +54,8 @@ const SingleProductSlider = ({ imgs }) => {
 					{imgs.map(({ id, attributes }) => (
 						<ListItem key={id}>
 							<Button
-								w={'80px'}
-								h={'80px'}
+								w={{ base: '70px', sm: '80px' }}
+								h={{ base: '70px', sm: '80px' }}
 								p={0}
 								position={'relative'}
 								borderRadius={0}
