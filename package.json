@@ -40,6 +40,7 @@
 		"react-input-mask": "^2.0.4",
 		"react-player": "^2.13.0",
 		"react-swipeable": "^7.0.1",
+		"sharp": "^0.33.2",
 		"strip-ansi": "^7.1.0",
 		"swiper": "^11.0.5",
 		"use-debounce": "^9.0.4",
