@@ -28,7 +28,7 @@ const SkeletonSingleProduct = ({ lang }) => {
 					</Text>
 					<Box mx={'10px'}>/</Box>
 					<Text>
-						<Link href={`/${lang}`}>{lang === 'he' ? 'קטלוג' : 'Catalog'}</Link>
+						<Link href={`/catalog`}>{lang === 'he' ? 'קטלוג' : 'Catalog'}</Link>
 					</Text>
 					<Box mx={'10px'}>/</Box>
 				</Flex>
