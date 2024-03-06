@@ -1,12 +1,37 @@
-import { Box, Flex, Grid, Skeleton, SkeletonText } from '@chakra-ui/react';
+import Link from 'next/link';
 
-const SkeletonSingleProduct = () => {
+import {
+	Box,
+	Flex,
+	Grid,
+	Skeleton,
+	SkeletonText,
+	Text,
+} from '@chakra-ui/react';
+
+import HomeIcon from '../svg/HomeIcon';
+
+const SkeletonSingleProduct = ({ lang }) => {
 	return (
 		<>
 			<Box>
-				<Box maxW={'300px'}>
-					<SkeletonText mb={'30px'} noOfLines={1} skeletonHeight="2" />
-				</Box>
+				<Flex
+					mb={'30px'}
+					alignItems={'start'}
+					fontSize={'14px'}
+					textColor={'#A28445'}
+				>
+					<Text>
+						<Link href={`/${lang}`}>
+							<HomeIcon />
+						</Link>
+					</Text>
+					<Box mx={'10px'}>/</Box>
+					<Text>
+						<Link href={`/${lang}`}>{lang === 'he' ? 'קטלוג' : 'Catalog'}</Link>
+					</Text>
+					<Box mx={'10px'}>/</Box>
+				</Flex>
 				<Grid
 					templateColumns={{ base: '1fr', lg: 'repeat(2, 1fr)' }}
 					gap={'50px'}

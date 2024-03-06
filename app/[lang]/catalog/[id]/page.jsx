@@ -41,7 +41,7 @@ const SingleProductPage = async ({ params: { id, lang } }) => {
 			<Suspense
 				fallback={
 					<SectionWrapper>
-						<SkeletonSingleProduct />
+						<SkeletonSingleProduct lang={lang} />
 					</SectionWrapper>
 				}
 			>
