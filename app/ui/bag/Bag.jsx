@@ -30,15 +30,13 @@ const Bag = ({ bagData, hasToken, onClose, dictionary }) => {
 	const { lang } = useParams();
 
 	const onOrderClick = async () => {
-		// router.push(`/${lang}/order`);
-
+		setIsOrdering(true);
 		if (hasToken) {
 			const flatten = localGoods.map(({ count, good: { data } }) => ({
 				good: data,
 				count,
 			}));
 			try {
-				setIsOrdering(true);
 				const url =
 					process.env.NEXT_PUBLIC_STRAPI_API_URL +
 					`/api/bags/${bagData.id}?populate=goods`;
@@ -53,11 +51,12 @@ const Bag = ({ bagData, hasToken, onClose, dictionary }) => {
 				);
 			} catch (error) {
 				console.error('onOrderClick', error);
-			} finally {
-				setIsOrdering(false);
-				onClose();
 			}
 		}
+
+		setIsOrdering(false);
+
+		onClose();
 	};
 
 	const discountThreshold1 = 5000;
