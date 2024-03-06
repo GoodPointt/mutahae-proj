@@ -18,6 +18,7 @@ import {
 
 import {
 	fetchgetProductsByCategorie,
+	fetchListCategoriesAndSubCategories,
 	fetchProductBySubCategorie,
 	fetchProducts,
 	fetchProductsByQuery,
@@ -44,7 +45,7 @@ import {
 const ProductsGrid = ({
 	lang,
 	heading,
-	data: categoriesList,
+	// data: categoriesList,
 	dictionary,
 	isAuth,
 }) => {
@@ -102,6 +103,53 @@ const ProductsGrid = ({
 
 		return () => observer.disconnect();
 	}, [observerCallback, hasNext]);
+
+	useEffect(() => {
+		(async () => {
+			const categoriesList = await fetchListCategoriesAndSubCategories(lang);
+
+			if (!categoriesList) return;
+
+			const dataCategory = categoriesList.map(item => ({
+				title: item.attributes.title,
+				id: item.attributes.uid,
+				subCategories: item.attributes.sub_categories.data,
+				goods: item.attributes.goods.data,
+			}));
+
+			const filteredData = dataCategory.filter(item => item.goods.length > 0);
+
+			const categoriesArr = filteredData.reduce((acc, item) => {
+				const { title, id } = item;
+				const subCategoriesSet = new Set();
+				item.goods.forEach(good => {
+					good.attributes.sub_categories.data.forEach(subCat => {
+						subCategoriesSet.add(
+							JSON.stringify({
+								uid: subCat.attributes.uid,
+								title: subCat.attributes.title,
+							})
+						);
+					});
+				});
+
+				const subCategories = Array.from(subCategoriesSet).map(subCat =>
+					JSON.parse(subCat)
+				);
+
+				acc.push({ title, id, subCategories });
+
+				return acc;
+			}, []);
+
+			const sortedCategoriesArr = categoriesArr.sort(
+				(a, b) => parseInt(a.id) - parseInt(b.id)
+			);
+
+			setCategories(sortedCategoriesArr);
+		})();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	// eslint-disable-next-line sonarjs/cognitive-complexity
 	useEffect(() => {
@@ -185,54 +233,7 @@ const ProductsGrid = ({
 			}
 		})();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [categories, category, page, sub_category, sortValue, sortOrder, query]);
-
-	// useEffect(() => {
-
-	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	// }, [categories]);
-
-	useEffect(() => {
-		if (!categoriesList) return;
-
-		const dataCategory = categoriesList.map(item => ({
-			title: item.attributes.title,
-			id: item.attributes.uid,
-			subCategories: item.attributes.sub_categories.data,
-			goods: item.attributes.goods.data,
-		}));
-
-		const filteredData = dataCategory.filter(item => item.goods.length > 0);
-
-		const categoriesArr = filteredData.reduce((acc, item) => {
-			const { title, id } = item;
-			const subCategoriesSet = new Set();
-			item.goods.forEach(good => {
-				good.attributes.sub_categories.data.forEach(subCat => {
-					subCategoriesSet.add(
-						JSON.stringify({
-							uid: subCat.attributes.uid,
-							title: subCat.attributes.title,
-						})
-					);
-				});
-			});
-
-			const subCategories = Array.from(subCategoriesSet).map(subCat =>
-				JSON.parse(subCat)
-			);
-
-			acc.push({ title, id, subCategories });
-
-			return acc;
-		}, []);
-
-		const sortedCategoriesArr = categoriesArr.sort(
-			(a, b) => parseInt(a.id) - parseInt(b.id)
-		);
-
-		setCategories(sortedCategoriesArr);
-	}, [categoriesList]);
+	}, [category, page, sub_category, sortValue, sortOrder, query]);
 
 	const toggleSort = value => {
 		setSortValue(value);
