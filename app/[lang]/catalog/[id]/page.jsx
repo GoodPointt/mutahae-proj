@@ -1,10 +1,14 @@
+import { Suspense } from 'react';
+
 import DeliveryInfo from '@/app/ui/deliveryInfo/DeliveryInfo';
+import SectionWrapper from '@/app/ui/sectionWrapper/SectionWrapper';
 import SingleProductContent from '@/app/ui/singleProduct/SingleProductContent/SingleProductContent';
+
+// import SkeletonSingleProduct from '@/app/ui/skeletons/SkeletonSingleProduct';
+import { Spinner } from '@chakra-ui/react';
 
 import { fetchOneProduct } from '@/app/lib/api/instance';
 import { getDictionary } from '@/app/lib/locales/dictionary';
-
-// import LoadingProduct from './abc';
 
 export const generateMetadata = async ({ params: { id, lang } }) => {
 	const { attributes: good } = await fetchOneProduct(id, lang);
@@ -36,7 +40,16 @@ const SingleProductPage = async ({ params: { id, lang } }) => {
 
 	return (
 		<>
-			<SingleProductContent id={id} lang={lang} dictionary={dictionary} />
+			{/* <Suspense fallback={<SkeletonSingleProduct dictionary={dictionary} />}> */}
+			<Suspense
+				fallback={
+					<SectionWrapper>
+						<Spinner thickness="10px" />
+					</SectionWrapper>
+				}
+			>
+				<SingleProductContent id={id} lang={lang} dictionary={dictionary} />
+			</Suspense>
 			<DeliveryInfo dictionary={dictionary} />
 			{/* <Contact lang={lang} dictionary={dictionary} contacts={contacts} /> */}
 		</>

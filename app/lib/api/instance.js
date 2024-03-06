@@ -13,14 +13,18 @@ const getProducts = async (
 	lang,
 	sortBy = 'createdAt',
 	sortOrder = 'desc',
-	page = 1
+	page = 1,
+	paginated = true,
+	pageSize = 9
 ) => {
 	try {
+		const url = paginated
+			? `api/goods?locale=${lang}&populate=img&sort[0]=${sortBy}:${sortOrder}&pagination[page]=${page}&pagination[pageSize]=${pageSize}`
+			: `api/goods?locale=${lang}&pagination[page]=${page}&pagination[pageSize]=${pageSize}`;
+
 		const {
 			data: { data, meta },
-		} = await instance.get(
-			`api/goods?locale=${lang}&populate=img&sort[0]=${sortBy}:${sortOrder}&pagination[page]=${page}&pagination[pageSize]=9`
-		);
+		} = await instance.get(url);
 		if (data.length === 0) {
 			return { data: [], total: 0 };
 		}

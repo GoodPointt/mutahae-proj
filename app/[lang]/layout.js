@@ -5,7 +5,6 @@ import Footer from '@/app/ui/footer/Footer';
 import Header from '@/app/ui/header/Header.jsx';
 import AnimatedMain from '../ui/AnimatedMain';
 
-// import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Box } from '@chakra-ui/react';
 
 import { fetchContacts } from '../lib/api/instance';
@@ -16,6 +15,8 @@ import { i18n } from '../lib/locales/i18n.config';
 import Providers from './providers';
 
 import '@/app/ui/globals.css';
+
+// import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const inter = Montserrat({ subsets: ['latin'] });
 
@@ -36,13 +37,13 @@ export const generateMetadata = async ({ params: { lang } }) => {
 		twitter: {
 			card: 'summary_large_image',
 		},
-		alternates: {
-			canonical: '/',
-			languages: {
-				en: '/en',
-				he: '/he',
-			},
-		},
+		// alternates: {
+		// 	canonical: '/',
+		// 	languages: {
+		// 		en: '/en',
+		// 		he: '/he',
+		// 	},
+		// },
 		metadataBase: new URL(process.env.NEXT_PUBLIC_URL),
 		openGraph: {
 			images: '/opengraph-image.png',
@@ -58,20 +59,14 @@ export default async function RootLayout({ children, params: { lang } }) {
 	const dictionary = await getDictionary(lang);
 	const contacts = await fetchContacts(lang);
 
-	// cookies().set({
-	// 	name: 'jwt',
-	// 	value: userData.jwt,
-	// 	httpOnly: true,
-	// });
-
 	return (
 		<html lang={lang} dir={lang === 'he' ? 'rtl' : 'ltr'}>
-			{/* <link
+			<link
 				rel="icon"
 				href={`${process.env.NEXT_PUBLIC_URL}/favicon.ico`}
 				type="image/x-icon"
 				sizes="48x48"
-			/> */}
+			/>
 			{/* <!-- Google tag (gtag.js) --> */}
 			{/* <Script
 				async
@@ -96,7 +91,10 @@ export default async function RootLayout({ children, params: { lang } }) {
 			>
 				<Providers>
 					<Header lang={lang} dictionary={dictionary} contacts={contacts} />
-					<AnimatedMain>{children}</AnimatedMain>
+					<AnimatedMain>
+						{children}
+						{/* <SpeedInsights /> */}
+					</AnimatedMain>
 					<Footer lang={lang} dictionary={dictionary} contacts={contacts} />
 				</Providers>
 			</Box>

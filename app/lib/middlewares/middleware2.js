@@ -23,6 +23,9 @@ export function withI18nMiddleware(middleware) {
 	return async (request, event, response) => {
 		const pathname = request.nextUrl.pathname;
 		const search = request.nextUrl.search;
+
+		if (pathname === '/sitemap.xml') return;
+
 		const lang = cookies().get('lang')?.value;
 
 		const pathnameIsMissingLocale = i18n.locales.every(
