@@ -1,13 +1,10 @@
+import { Suspense } from 'react';
 import { cookies } from 'next/headers';
 
 import Contact from '@/app/ui/contact/Contact';
 import ProductsGrid from '@/app/ui/productsGrid/ProductsGrid';
 
-import {
-	fetchContacts,
-	fetchListCategoriesAndSubCategories,
-} from '@/app/lib/api/instance';
-// import { fetchFavorites } from '@/app/lib/api/profileInstance';
+import { fetchContacts } from '@/app/lib/api/instance';
 import { getDictionary } from '@/app/lib/locales/dictionary';
 
 export const metadata = {
@@ -23,7 +20,6 @@ export const metadata = {
 
 const CatalogPage = async ({ params: { lang } }) => {
 	const dictionary = await getDictionary(lang);
-	const data = await fetchListCategoriesAndSubCategories(lang);
 	const userId = cookies().get('userId')?.value;
 
 	const {
@@ -34,14 +30,15 @@ const CatalogPage = async ({ params: { lang } }) => {
 
 	return (
 		<>
-			<ProductsGrid
-				lang={lang}
-				heading={navItems[1].title}
-				data={data}
-				isAuth={!!userId}
-				dictionary={dictionary}
-			/>
-			<Contact lang={lang} dictionary={dictionary} contacts={contacts} />
+			<Suspense fallback={null}>
+				<ProductsGrid
+					lang={lang}
+					heading={navItems[1].title}
+					isAuth={!!userId}
+					dictionary={dictionary}
+				/>
+				<Contact lang={lang} dictionary={dictionary} contacts={contacts} />
+			</Suspense>
 		</>
 	);
 };
