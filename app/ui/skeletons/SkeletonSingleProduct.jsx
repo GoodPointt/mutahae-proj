@@ -14,8 +14,8 @@ const SkeletonSingleProduct = () => {
 				>
 					<Skeleton
 						display={'block'}
-						w={'550px'}
-						h={'450px'}
+						maxW={'550px'}
+						h={{ base: '320px', sm: '450px' }}
 						overflow={'hidden'}
 						borderRadius={'10px'}
 						startColor="#ad9a74"
