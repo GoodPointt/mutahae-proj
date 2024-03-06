@@ -70,7 +70,8 @@ const handleFavorites = async ({ goods, goodId }) => {
 		console.error('handleFavorites', error.response?.status);
 		console.error('handleFavorites', error.message);
 
-		if (error.response?.status === 401) redirect('/expired?expired=true');
+		if (error.response?.status === 401 || error.response?.status === 403)
+			redirect('/expired?expired=true');
 	}
 };
 
@@ -297,6 +298,9 @@ export const fetchUserAddress = cache(getUserAddress);
 const getBagByUserId = async () => {
 	try {
 		const userId = cookies().get('userId')?.value;
+		const token = cookies().get('jwt')?.value;
+
+		profileInstance.defaults.headers.authorization = `Bearer ${token}`;
 
 		const res = await profileInstance.get(
 			`/api/bags?populate[0]=goods&populate[1]=goods.good&populate[2]=goods.good.img&populate[3]=goods.good.localizations&filters[user][id][$eq]=${userId}`

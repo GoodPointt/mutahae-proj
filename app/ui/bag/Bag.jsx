@@ -4,9 +4,9 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 
-// import { useRouter } from 'next/navigation';
 import { Box, Button, Flex, Heading, List, Text } from '@chakra-ui/react';
 
+import { instance } from '@/app/lib/api/instance';
 import { useLocalBag } from '@/app/lib/hooks/useLocalBag';
 import { flattenAttributes } from '@/app/lib/utils/flattenAttributes';
 
@@ -14,14 +14,10 @@ import ProductCard from '../productCard/ProductCard';
 import ArrowLeft from '../svg/ArrowLeft';
 import ArrowRight from '../svg/ArrowRight';
 
-import axios from 'axios';
-
 const Bag = ({ bagData, hasToken, onClose, dictionary }) => {
 	const [localGoods, setLocalGoods] = useLocalBag('localBag', []);
 	const [isDeleted, setIsDeleted] = useState(null);
 	const [isOrdering, setIsOrdering] = useState(false);
-
-	// const router = useRouter();
 
 	const totalPrice = localGoods.reduce((acc, { count, good: { data } }) => {
 		return acc + data.attributes.price * count;
@@ -30,17 +26,17 @@ const Bag = ({ bagData, hasToken, onClose, dictionary }) => {
 	const { lang } = useParams();
 
 	const onOrderClick = async () => {
-		setIsOrdering(true);
 		if (hasToken) {
 			const flatten = localGoods.map(({ count, good: { data } }) => ({
 				good: data,
 				count,
 			}));
 			try {
+				setIsOrdering(true);
 				const url =
 					process.env.NEXT_PUBLIC_STRAPI_API_URL +
 					`/api/bags/${bagData.id}?populate=goods`;
-				axios.put(
+				await instance.put(
 					url,
 					{ data: { goods: flatten, bagPrice: totalPrice } },
 					{
@@ -51,10 +47,10 @@ const Bag = ({ bagData, hasToken, onClose, dictionary }) => {
 				);
 			} catch (error) {
 				console.error('onOrderClick', error);
+			} finally {
+				setIsOrdering(false);
 			}
 		}
-
-		setIsOrdering(false);
 
 		onClose();
 	};
@@ -85,7 +81,7 @@ const Bag = ({ bagData, hasToken, onClose, dictionary }) => {
 				const url =
 					process.env.NEXT_PUBLIC_STRAPI_API_URL +
 					`/api/bags/${bagData.id}?populate=goods`;
-				await axios.put(
+				await instance.put(
 					url,
 					{ data: { goods: flatten, bagPrice: totalPrice } },
 					{

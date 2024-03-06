@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 
 import { Divider, Flex } from '@chakra-ui/react';
 
+import { instance } from '@/app/lib/api/instance';
 import { flattenAttributes } from '@/app/lib/utils/flattenAttributes';
 
 import ProductCard from '../../productCard/ProductCard';
-
-import axios from 'axios';
 
 const ListProductToBuy = ({
 	goodsToMap,
@@ -28,7 +27,7 @@ const ListProductToBuy = ({
 				const url =
 					process.env.NEXT_PUBLIC_STRAPI_API_URL +
 					`/api/bags/${orderData.id}?populate=goods`;
-				await axios.put(
+				await instance.put(
 					url,
 					{ data: { goods: flatten } },
 					{

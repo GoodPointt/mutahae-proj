@@ -14,6 +14,7 @@ import {
 	useMediaQuery,
 } from '@chakra-ui/react';
 
+import { instance } from '@/app/lib/api/instance';
 import { useLocalBag } from '@/app/lib/hooks/useLocalBag';
 import { flattenAttributes } from '@/app/lib/utils/flattenAttributes';
 
@@ -27,7 +28,6 @@ import IsInBag from './isInBag/IsInBag';
 import SingleProductSlider from './singleProductSlider/SingleProductSlider';
 import TotalBagPrice from './TotalBagPrice/TotalBagPrice';
 
-import axios from 'axios';
 import { AnimatePresence, motion } from 'framer-motion';
 
 export const dynamic = 'force-dynamic';
@@ -108,7 +108,7 @@ const SingleProduct = ({
 				`/api/bags/${bagData[0].id}?populate=goods`;
 
 			try {
-				axios.put(url, { data: { goods: flatten, bagPrice: totalPrice } });
+				instance.put(url, { data: { goods: flatten, bagPrice: totalPrice } });
 			} catch (error) {
 				console.error('SingleProduct_handleModalBagClose', error);
 			}
@@ -147,7 +147,9 @@ const SingleProduct = ({
 				`/api/bags/${bagData[0].id}?populate=goods`;
 
 			try {
-				axios.put(url, { data: { goods: flatten, bagPrice: price * count } });
+				instance.put(url, {
+					data: { goods: flatten, bagPrice: price * count },
+				});
 			} catch (error) {
 				console.error('SingleProduct_addGood', error);
 			}
