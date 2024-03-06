@@ -13,7 +13,8 @@ import {
 	createBagByUserIdAndJwt,
 	createFavoritesByUserIdAndJwt,
 } from './api/createUserStorages';
-import { handleLocalBagOnServer, profileInstance } from './api/profileInstance';
+import { handleLocalBagOnServer } from './api/profileInstance';
+import { profileInstance } from './api/setInstances';
 import { textTrim } from './utils/textTrim';
 
 import { z } from 'zod';
@@ -55,6 +56,8 @@ export async function loginAction(prevState, formData) {
 		if (!response.ok && userData.error)
 			return { ...prevState, message: userData.error.message, errors: null };
 		if (response.ok && userData.jwt) {
+			profileInstance.defaults.headers.authorization = `Bearer ${userData.jwt}`;
+
 			cookies().set({
 				name: 'jwt',
 				value: userData.jwt,
@@ -69,7 +72,6 @@ export async function loginAction(prevState, formData) {
 				name: 'lang',
 				value: lang,
 			});
-			profileInstance.defaults.headers.authorization = `Bearer ${userData.jwt}`;
 		}
 
 		if (response.ok && goods.length !== 0) {

@@ -54,10 +54,6 @@ const ProductItem = ({
 		}
 	};
 
-	// const [firstImageUrl] = (product?.img || [])
-	// 	.map(({ url }) => url)
-	// 	.filter(url => url);
-
 	const [sumbnailImageUrl] = (product?.img || [])
 		.map(({ formats }) => formats.thumbnail.url)
 		.filter(url => url);

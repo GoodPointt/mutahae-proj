@@ -14,9 +14,8 @@ const FinalAmount = ({
 	discountedBagPrice,
 	dis,
 	lang,
+	vat,
 }) => {
-	const vat = Math.ceil(bagPrice * 0.17);
-
 	return (
 		<Box
 			borderRadius={'2px'}
@@ -75,7 +74,7 @@ const FinalAmount = ({
 					paddingBottom={'10px'}
 				>
 					<Box as="span">{dictionary.order.total}</Box>
-					<Box as="span">{`${totalPrice ? totalPrice + vat : 0} ₪`}</Box>
+					<Box as="span">{`${totalPrice ? totalPrice : 0} ₪`}</Box>
 				</Flex>
 				<SubmitButton isSubmitting={isSubmitting} dis={dis}>
 					{dictionary.order.button}

@@ -11,7 +11,6 @@ const ArrowDown = () => {
 		>
 			<path
 				d="M4 7.5L9 12.5L14 7.5"
-				// stroke="white"
 				strokeWidth="1.5"
 				strokeLinecap="round"
 				strokeLinejoin="round"

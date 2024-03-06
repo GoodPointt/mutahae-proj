@@ -39,7 +39,6 @@ const ToolBar = ({
 	const [variant, setVariant] = useState();
 	const [isInit, setIsInit] = useState(true);
 	const [query, setQuery] = useQueryState('query');
-	//const favsLocal = useClientSideState('favs', 0);
 	const [favorite, setFavorite] = useQueryState('favs', parseAsFloat);
 
 	useEffect(() => {

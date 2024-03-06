@@ -8,7 +8,6 @@ import {
 } from '@/app/lib/api/profileInstance';
 
 import SectionWrapper from '../../sectionWrapper/SectionWrapper';
-// import SkeletonSingleProduct from '../../skeletons/SkeletonSingleProduct';
 import SingleProduct from '../SingleProduct';
 
 const SingleProductContent = async ({ id, lang, dictionary }) => {

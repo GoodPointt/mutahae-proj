@@ -19,7 +19,6 @@ const ArrowToSortDown = () => {
 				{' '}
 				<path
 					d="M12 4V20M12 20L8 16M12 20L16 16"
-					// stroke="#000000"
 					strokeWidth="2"
 					strokeLinecap="round"
 					strokeLinejoin="round"

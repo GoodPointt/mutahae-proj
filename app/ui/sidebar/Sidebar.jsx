@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { Box, List, ListItem } from '@chakra-ui/react';
+import { List, ListItem } from '@chakra-ui/react';
 
 import { Logout } from '../logout/Logout';
 
@@ -19,29 +19,6 @@ export const Sidebar = ({ lang, sidebarDictionary }) => {
 		contactInfo: `/${lang}/profile`,
 		historyOfOrders: `/${lang}/profile/history-of-ordres`,
 	};
-
-	// 	<ListItem
-	// 	mb="12px"
-	// 	fontSize="20px"
-	// 	color={pathname === currentPath ? '#a98841' : 'inherit'}
-	// 	_hover={{ color: '#a98841' }}
-	// 	_active={{ backgroundColor: 'transparent' }}
-	// >
-	// 	<Link
-	// 		href={currentPath}
-	// 		style={{
-	// 			display: 'flex',
-	// 			justifyContent: 'space-between',
-	// 			alignItems: 'center',
-	// 		}}
-	// 	>
-	// 		{children}
-
-	// 		<Box as="span" stroke={pathname === currentPath ? '#a98841' : 'fff'}>
-	// 			{pathname === currentPath ? <ArrowDown /> : <ArrowLeft />}
-	// 		</Box>
-	// 	</Link>
-	// </ListItem>
 
 	return (
 		<List>
@@ -62,17 +39,6 @@ export const Sidebar = ({ lang, sidebarDictionary }) => {
 					}}
 				>
 					{favorites}
-					<Box
-						as="span"
-						stroke={pathname === profileRoutes.favorites ? '#a98841' : '#fff'}
-						display={{ lg: 'none' }}
-					>
-						{/* {pathname === profileRoutes.favorites ? (
-							<ArrowDown width="20px" height="20px" />
-						) : (
-							<ArrowLeft width="20px" height="20px" />
-						)} */}
-					</Box>
 				</Link>
 			</ListItem>
 			<ListItem
@@ -91,17 +57,6 @@ export const Sidebar = ({ lang, sidebarDictionary }) => {
 					}}
 				>
 					{contactInformation}
-					<Box
-						as="span"
-						stroke={pathname === profileRoutes.contactInfo ? '#a98841' : '#fff'}
-						display={{ lg: 'none' }}
-					>
-						{/* {pathname === profileRoutes.contactInfo ? (
-							<ArrowDown width="20px" height="20px" />
-						) : (
-							<ArrowLeft width="20px" height="20px" />
-						)} */}
-					</Box>
 				</Link>
 			</ListItem>
 			<ListItem
@@ -122,19 +77,6 @@ export const Sidebar = ({ lang, sidebarDictionary }) => {
 					}}
 				>
 					{historyOfOrders}
-					<Box
-						as="span"
-						stroke={
-							pathname === profileRoutes.historyOfOrders ? '#a98841' : '#fff'
-						}
-						display={{ lg: 'none' }}
-					>
-						{/* {pathname === profileRoutes.historyOfOrders ? (
-							<ArrowDown width="20px" height="20px" />
-						) : (
-							<ArrowLeft width="20px" height="20px" />
-						)} */}
-					</Box>
 				</Link>
 			</ListItem>
 			<ListItem fontSize="20px" color="#808080">

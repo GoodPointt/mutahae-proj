@@ -3,8 +3,6 @@ import React from 'react';
 import { Box, Flex, Skeleton, SkeletonText } from '@chakra-ui/react';
 
 const SkeletonOrderHistory = ({ lang }) => {
-	//const arr = new Array().fill(4);
-
 	return (
 		<Box display={'flex'} flexDir={{ base: 'column', md: 'row-reverse' }}>
 			<Flex

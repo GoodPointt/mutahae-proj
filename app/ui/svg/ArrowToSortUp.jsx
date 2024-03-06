@@ -16,14 +16,12 @@ const ArrowToSortUp = () => {
 				strokeLinejoin="round"
 			></g>
 			<g id="SVGRepo_iconCarrier">
-				{' '}
 				<path
 					d="M12 4V20M12 4L8 8M12 4L16 8"
-					// stroke="#000000"
 					strokeWidth="2"
 					strokeLinecap="round"
 					strokeLinejoin="round"
-				></path>{' '}
+				></path>
 			</g>
 		</svg>
 	);

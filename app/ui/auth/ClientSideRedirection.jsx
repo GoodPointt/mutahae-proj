@@ -9,6 +9,7 @@ import {
 	createBagByUserIdAndJwt,
 	createFavoritesByUserIdAndJwt,
 } from '@/app/lib/api/createUserStorages';
+import { profileInstance } from '@/app/lib/api/setInstances';
 import { useLocalBag } from '@/app/lib/hooks/useLocalBag';
 
 import { setCookie } from 'cookies-next';
@@ -52,12 +53,18 @@ const ClientSideRedirection = ({ dictionary, provider, lang }) => {
 			.then(res => res.json())
 			.then(async res => {
 				if (res.jwt) {
+					profileInstance.defaults.headers.authorization = `Bearer ${res.user.id}`;
+
 					const bagRes = await createBagByUserIdAndJwt(res.jwt, res.user.id);
 
-					await createFavoritesByUserIdAndJwt(res.jwt, res.user.id);
+					const favId = await createFavoritesByUserIdAndJwt(
+						res.jwt,
+						res.user.id
+					);
 					setCookie('jwt', res.jwt);
 					setCookie('userId', res.user.id);
 					setCookie('lang', lang);
+					setCookie('favId', favId);
 
 					if (localBag.length !== 0) {
 						await fetch(

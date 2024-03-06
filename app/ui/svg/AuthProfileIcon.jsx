@@ -20,7 +20,6 @@ const AuthProfileIcon = () => {
 				cy="8"
 				r="4"
 				fill="#A28445"
-				// stroke="#A28445"
 				strokeWidth="1.2"
 				strokeLinecap="round"
 			/>

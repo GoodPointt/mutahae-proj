@@ -42,13 +42,7 @@ import {
 	useQueryState,
 } from 'nuqs';
 
-const ProductsGrid = ({
-	lang,
-	heading,
-	// data: categoriesList,
-	dictionary,
-	isAuth,
-}) => {
+const ProductsGrid = ({ lang, heading, dictionary, isAuth }) => {
 	const [renderList, setRenderList] = useState([]);
 	const [categories, setCategories] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);

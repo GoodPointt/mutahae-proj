@@ -125,8 +125,6 @@ export const UserDetailsForm = ({ lang, userData, userDetailsDictionary }) => {
 							type="email"
 							bgColor="#3b3d46"
 							defaultValue={email}
-							//disabled={true}
-							//readOnly={true}
 							placeholder={userDetailsForm.email}
 							borderRadius={'2px'}
 							style={
